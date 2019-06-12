@@ -16,7 +16,6 @@
 #include <IOKit/IOLib.h>
 #include <os/log.h>
 #include <sys/kern_event.h>
-#include <unistd.h>
 
 #define BASE_ID "com.notrust.firewall"
 
@@ -46,6 +45,9 @@ static void unregistered(sflt_handle handle);
 // New outbound connection.
 static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to);
 
+// When an event happens
+static void filter_event(void **cookie, socket_t so, sflt_event_t event, void* param);
+
 // Used to post a kernel event regarding a new connection.
 bool post_kernel_event(socket_t so, const struct sockaddr *to);
 
@@ -65,7 +67,7 @@ static struct sflt_filter tcpFilterIPV4 = {
     unregistered,
     attach_socket,
     detach_socket,
-    NULL,
+    filter_event,
     NULL,
     NULL,
     NULL,
@@ -152,12 +154,15 @@ static void unregistered(sflt_handle handle) {
     return;
 }
 
+static void filter_event(void **cookie, socket_t so, sflt_event_t event, void* param) {
+    os_log(OS_LOG_TYPE_DEFAULT, "ZeroTrustFirewall: Got filter event");
+    return;
+}
+
 // Kernel Event Functions.
 bool post_kernel_event(socket_t so, const struct sockaddr *to) {
     int pid = proc_selfpid();
     int ppid = proc_selfppid();
-    int euid = geteuid();
-    int uid = getuid();
     
     struct sockaddr_in  local = {0};
     struct sockaddr_in remote = {0};
@@ -183,7 +188,7 @@ bool post_kernel_event(socket_t so, const struct sockaddr *to) {
         memcpy(&remote, to, sizeof(remote));
     }
     
-    os_log(OS_LOG_DEFAULT, "ZeroTrustFirewall: PID: %u, PPID: %u", pid, ppid);
+    //os_log(OS_LOG_DEFAULT, "ZeroTrustFirewall: PID: %u, PPID: %u", pid, ppid);
     
     event.vendor_code = kev_id;
     event.kev_class = KEV_ANY_CLASS;
@@ -203,11 +208,6 @@ bool post_kernel_event(socket_t so, const struct sockaddr *to) {
     event.dv[3].data_length = sizeof(remote);
     event.dv[3].data_ptr = &remote;
     
-    event.dv[4].data_length = sizeof(uid);
-    event.dv[4].data_ptr = &uid;
-    
-    event.dv[5].data_length = sizeof(euid);
-    event.dv[5].data_ptr = &euid;
     
     if(KERN_SUCCESS != kev_msg_post(&event)) {
         os_log(OS_LOG_DEFAULT, "ZeroTrustFirewall: unable to posst kernel event");

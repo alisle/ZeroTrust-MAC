@@ -1,0 +1,336 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F00BD40A22B005BE009E9AD8 /* kern-event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F00BD40822B005BE009E9AD8 /* kern-event.cpp */; };
+		F00BD40B22B005BE009E9AD8 /* kern-event.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F00BD40922B005BE009E9AD8 /* kern-event.hpp */; };
+		F00BD40F22B099A2009E9AD8 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F00BD40D22B099A2009E9AD8 /* client.cpp */; };
+		F00BD41022B099A2009E9AD8 /* client.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F00BD40E22B099A2009E9AD8 /* client.hpp */; };
+		F0789B7622AEBBC70006B154 /* driver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F0789B7522AEBBC70006B154 /* driver.hpp */; };
+		F0789B7822AEBBC70006B154 /* driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0789B7722AEBBC70006B154 /* driver.cpp */; };
+		F0789B8122AECC990006B154 /* filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0789B7F22AECC990006B154 /* filter.cpp */; };
+		F0789B8222AECC990006B154 /* filter.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F0789B8022AECC990006B154 /* filter.hpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F00BD40822B005BE009E9AD8 /* kern-event.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "kern-event.cpp"; sourceTree = "<group>"; };
+		F00BD40922B005BE009E9AD8 /* kern-event.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "kern-event.hpp"; sourceTree = "<group>"; };
+		F00BD40C22B01F7A009E9AD8 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
+		F00BD40D22B099A2009E9AD8 /* client.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = client.cpp; sourceTree = "<group>"; };
+		F00BD40E22B099A2009E9AD8 /* client.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = client.hpp; sourceTree = "<group>"; };
+		F0789B7222AEBBC70006B154 /* kextfirewall.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kextfirewall.kext; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0789B7522AEBBC70006B154 /* driver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = driver.hpp; sourceTree = "<group>"; };
+		F0789B7722AEBBC70006B154 /* driver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = driver.cpp; sourceTree = "<group>"; };
+		F0789B7922AEBBC70006B154 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0789B7F22AECC990006B154 /* filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = filter.cpp; sourceTree = "<group>"; };
+		F0789B8022AECC990006B154 /* filter.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = filter.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F0789B6F22AEBBC70006B154 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F0789B6822AEBBC70006B154 = {
+			isa = PBXGroup;
+			children = (
+				F0789B7422AEBBC70006B154 /* kextfirewall */,
+				F0789B7322AEBBC70006B154 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F0789B7322AEBBC70006B154 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F0789B7222AEBBC70006B154 /* kextfirewall.kext */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F0789B7422AEBBC70006B154 /* kextfirewall */ = {
+			isa = PBXGroup;
+			children = (
+				F0789B7522AEBBC70006B154 /* driver.hpp */,
+				F0789B7722AEBBC70006B154 /* driver.cpp */,
+				F0789B7922AEBBC70006B154 /* Info.plist */,
+				F0789B7F22AECC990006B154 /* filter.cpp */,
+				F0789B8022AECC990006B154 /* filter.hpp */,
+				F00BD40822B005BE009E9AD8 /* kern-event.cpp */,
+				F00BD40922B005BE009E9AD8 /* kern-event.hpp */,
+				F00BD40C22B01F7A009E9AD8 /* defines.h */,
+				F00BD40D22B099A2009E9AD8 /* client.cpp */,
+				F00BD40E22B099A2009E9AD8 /* client.hpp */,
+			);
+			path = kextfirewall;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F0789B6D22AEBBC70006B154 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F00BD40B22B005BE009E9AD8 /* kern-event.hpp in Headers */,
+				F0789B8222AECC990006B154 /* filter.hpp in Headers */,
+				F0789B7622AEBBC70006B154 /* driver.hpp in Headers */,
+				F00BD41022B099A2009E9AD8 /* client.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		F0789B7122AEBBC70006B154 /* kextfirewall */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F0789B7C22AEBBC70006B154 /* Build configuration list for PBXNativeTarget "kextfirewall" */;
+			buildPhases = (
+				F0789B6D22AEBBC70006B154 /* Headers */,
+				F0789B6E22AEBBC70006B154 /* Sources */,
+				F0789B6F22AEBBC70006B154 /* Frameworks */,
+				F0789B7022AEBBC70006B154 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = kextfirewall;
+			productName = kextfirewall;
+			productReference = F0789B7222AEBBC70006B154 /* kextfirewall.kext */;
+			productType = "com.apple.product-type.kernel-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F0789B6922AEBBC70006B154 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Alex Lisle";
+				TargetAttributes = {
+					F0789B7122AEBBC70006B154 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = F0789B6C22AEBBC70006B154 /* Build configuration list for PBXProject "kextfirewall" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F0789B6822AEBBC70006B154;
+			productRefGroup = F0789B7322AEBBC70006B154 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F0789B7122AEBBC70006B154 /* kextfirewall */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F0789B7022AEBBC70006B154 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F0789B6E22AEBBC70006B154 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0789B7822AEBBC70006B154 /* driver.cpp in Sources */,
+				F0789B8122AECC990006B154 /* filter.cpp in Sources */,
+				F00BD40F22B099A2009E9AD8 /* client.cpp in Sources */,
+				F00BD40A22B005BE009E9AD8 /* kern-event.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F0789B7A22AEBBC70006B154 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F0789B7B22AEBBC70006B154 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F0789B7D22AEBBC70006B154 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				DEVELOPMENT_TEAM = XQ3Q86P7E4;
+				INFOPLIST_FILE = kextfirewall/Info.plist;
+				MODULE_NAME = com.notrust.kextfirewall;
+				MODULE_VERSION = 1.0.0d1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.notrust.kextfirewall;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Debug;
+		};
+		F0789B7E22AEBBC70006B154 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				DEVELOPMENT_TEAM = XQ3Q86P7E4;
+				INFOPLIST_FILE = kextfirewall/Info.plist;
+				MODULE_NAME = com.notrust.kextfirewall;
+				MODULE_VERSION = 1.0.0d1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.notrust.kextfirewall;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F0789B6C22AEBBC70006B154 /* Build configuration list for PBXProject "kextfirewall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0789B7A22AEBBC70006B154 /* Debug */,
+				F0789B7B22AEBBC70006B154 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F0789B7C22AEBBC70006B154 /* Build configuration list for PBXNativeTarget "kextfirewall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F0789B7D22AEBBC70006B154 /* Debug */,
+				F0789B7E22AEBBC70006B154 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F0789B6922AEBBC70006B154 /* Project object */;
+}
