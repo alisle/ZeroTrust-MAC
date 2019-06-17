@@ -8,10 +8,12 @@
 
 #include "client.hpp"
 
+
+
 #define super IOUserClient
 
-OSDefineMetaClassAndStructors(com_notrust_firewall_client, IOUserClient)
 
+OSDefineMetaClassAndStructors(com_notrust_firewall_client, IOUserClient)
 const IOExternalMethodDispatch com_notrust_firewall_client::sMethods[numberOfMethods] = {
     {
         (IOExternalMethodAction)&com_notrust_firewall_client::sEnable,
@@ -30,6 +32,11 @@ const IOExternalMethodDispatch com_notrust_firewall_client::sMethods[numberOfMet
 };
 
 bool com_notrust_firewall_client::start(IOService* provider) {
+    
+    if(kIOReturnSuccess != OSKextRetainKextWithLoadTag(OSKextGetCurrentLoadTag())) {
+     return false;
+    }
+     
     driver = OSDynamicCast(com_notrust_firewall_driver, provider);
     if( NULL != driver ) {
         return IOUserClient::start(provider);
@@ -39,6 +46,7 @@ bool com_notrust_firewall_client::start(IOService* provider) {
 }
 
 void com_notrust_firewall_client:: stop(IOService* provider) {
+    
     super::stop(provider);
 }
 

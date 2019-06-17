@@ -18,12 +18,16 @@
 #include <mach/mach_types.h>
 #include <os/log.h>
 #include <sys/proc.h>
+#include <sys/random.h>
+#include <uuid/uuid.h>
+
 
 #include <IOKit/IOSharedDataQueue.h>
 #include <IOKit/IODataQueueShared.h>
 
 #include "kern-event.hpp"
 #include "payload.h"
+
 
 #define BASE_ID "com.notrust.firewall"
 
@@ -76,12 +80,13 @@ static struct sflt_filter tcpFilterIPV4 = {
 };
 
 
-struct event {
-    pid_t pid;
-    pid_t ppid;
-};
+typedef struct {
+    uuid_t* tag;
+} cookie_header;
 
-typedef struct event event;
+// Used to send an outbound event to the queue
+bool send_outbound_event(cookie_header* header, socket_t so, const struct sockaddr *to);
 
-
+// Used to send an event update to the queue.
+bool send_update_event(cookie_header* header, sflt_event_t change);
 #endif /* filter_hpp */

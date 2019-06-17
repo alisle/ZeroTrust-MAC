@@ -44,12 +44,12 @@ while(true) {
         }
     }
 
-    let event = comm.dequeue()
-    if event == nil {
+    guard let event = comm.dequeue() else {
         print("problem getting event")
-    } else {
-        print("got data")
+        continue
     }
+    
+    event.dump()
 }
 
 /*

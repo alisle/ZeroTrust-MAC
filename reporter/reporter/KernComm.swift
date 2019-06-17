@@ -116,16 +116,43 @@ class KernComm {
         var buffer = firewall_event()
         
         if kIOReturnSuccess != IODataQueueDequeue(queue, &buffer, &size) {
+            print("Unable to dequeue data")
             return Optional.none
         }
         
         
         switch buffer.type {
         case outbound_connection:
+            let uuid = UUID.init(uuid: buffer.tag)
             let pid = buffer.data.outbound.pid;
             let ppid = buffer.data.outbound.ppid;
-            return FirewallConnectionOut(pid: pid, ppid: ppid)
-        
+            guard let remote =  Helpers.getHostInformation(sockaddr: &buffer.data.outbound.remote) else {
+                return Optional.none
+            }
+            
+            guard let local = Helpers.getHostInformation(sockaddr: &buffer.data.outbound.local) else {
+                return Optional.none
+            }
+            
+            
+                        
+            return FirewallConnectionOut(
+                tag: uuid,
+                pid: pid,
+                ppid: ppid,
+                remoteAddress: remote.0,
+                localAddress: local.0,
+                remotePort: remote.1,
+                localPort: local.1
+            );
+        case connection_update:
+            let uuid = UUID.init(uuid:buffer.tag)
+            guard let event = FirewallUpdateType.init(rawValue: Int(buffer.data.update_event.rawValue)) else {
+                return Optional.none
+            }
+            
+            return FirewallConnectionUpdate(tag: uuid, update: event)
+            
         default:
             print("Unkown firewall type")
         }

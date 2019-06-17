@@ -8,8 +8,13 @@
 
 #include "filter.hpp"
 
+#include <libkern/OSMalloc.h>
+
 bool filters_registered = false;
+
 extern IOSharedDataQueue* sharedDataQueue;
+extern OSMallocTag mallocTag;
+
 
 kern_return_t register_filters() {
     os_log(OS_LOG_DEFAULT, "IOFirewall: registering socket filters");
@@ -51,29 +56,28 @@ kern_return_t unregister_filters() {
 
 /// Callback functions.
 static kern_return_t attach_socket(void **cookie, socket_t so) {
+    *cookie = NULL;
+    cookie_header* header = (cookie_header*)OSMalloc(sizeof(cookie_header), mallocTag);
+    uuid_t* uuid = (uuid_t*)OSMalloc(sizeof(uuid_t), mallocTag);
+    uuid_generate_random(*uuid);
+    
+    header->tag = uuid;
+    *cookie = header;
     return KERN_SUCCESS;
 }
 
 static void detach_socket(void *cookie, socket_t so) {
+    if( NULL != cookie) {
+        cookie_header* header = (cookie_header*)cookie;
+        OSFree(header->tag, sizeof(uuid_t), mallocTag);
+        OSFree(cookie, sizeof(cookie_header), mallocTag);
+    }
+    
     return;
 }
 
 static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to) {
-    os_log(OS_LOG_DEFAULT, "IOFirewall: got connection out, posting event");
-    post_kernel_event(so, to);
-    
-    firewall_connection_out  outbound;
-    outbound.pid = 101;
-    outbound.ppid = 202;
-    
-    firewall_event event;
-    event.type = outbound_connection;
-    event.data.outbound = outbound;
-    
-    if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
-        os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post event into the queue");
-    }
-    
+    send_outbound_event((cookie_header*)cookie, so, to);
     return KERN_SUCCESS;
 }
 
@@ -82,6 +86,63 @@ static void unregistered(sflt_handle handle) {
 }
 
 static void filter_event(void *cookie, socket_t so, sflt_event_t event, void* param) {
-    os_log(OS_LOG_DEFAULT, "IOFirewall: Got filter event");
+    send_update_event((cookie_header*)cookie, event);
     return;
+}
+
+bool send_update_event(cookie_header* header, sflt_event_t change) {
+    firewall_event event = {0};
+    bzero(&event, sizeof(firewall_event));
+    
+    uuid_copy(event.tag, *header->tag);
+    
+    event.type = connection_update;
+    event.data.update_event = (firewall_event_update_type)change;
+
+    if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post event into the queue");
+    }
+    
+    return true;
+}
+
+bool send_outbound_event(cookie_header* header, socket_t so, const struct sockaddr *to) {
+    
+    firewall_event event = {0};
+    
+    struct sockaddr_in local = {0};
+    struct sockaddr_in remote = {0};
+    
+    bzero(&local, sizeof(local));
+    bzero(&remote, sizeof(remote));
+    bzero(&event, sizeof(firewall_event));
+    
+    if(KERN_SUCCESS != sock_getsockname(so, (struct sockaddr *)&local, sizeof(local))) {
+        return false;
+    }
+    
+    if(NULL == to) {
+        // For some reason we don't have a to address yet.
+        if( KERN_SUCCESS != sock_getpeername(so, (struct sockaddr *)&remote, sizeof(remote))) {
+            return false;
+        }
+    } else {
+        memcpy(&remote, to, sizeof(remote));
+    }
+    
+    
+    
+    uuid_copy(event.tag, *header->tag);
+    event.type = outbound_connection;
+    event.data.outbound.pid = proc_selfpid();
+    event.data.outbound.ppid = proc_selfppid();
+    event.data.outbound.local = local;
+    event.data.outbound.remote = remote;
+    
+    if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post event into the queue");
+    }
+    
+
+    return true;
 }

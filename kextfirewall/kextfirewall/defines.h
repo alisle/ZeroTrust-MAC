@@ -15,12 +15,5 @@
 
 #define MAX_QUEUE_SIZE 1024
 
-struct fwmessage {
-    u_long hash;
-    pid_t pid;
-    pid_t ppid;
-};
-
-typedef struct fwmessage fwmessage;
 
 #endif /* defines_h */

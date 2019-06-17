@@ -18,6 +18,11 @@
 #include "filter.hpp"
 #include "kern-event.hpp"
 
+extern "C" {
+#include "payload.h"
+}
+
+
 class com_notrust_firewall_driver : public IOService
 {
     OSDeclareDefaultStructors(com_notrust_firewall_driver)
