@@ -4,7 +4,8 @@
 
 OSMallocTag mallocTag = NULL;
 
-IOSharedDataQueue *sharedDataQueue = NULL;
+IOSharedDataQueue* sharedDataQueue = NULL;
+IOMemoryDescriptor* sharedMemoryDescriptor = NULL;
 
 #define super IOService
 
@@ -31,6 +32,12 @@ bool com_notrust_firewall_driver::start(IOService* provider) {
         return false;
     }
     
+    sharedMemoryDescriptor = sharedDataQueue->getMemoryDescriptor();
+    if(NULL == sharedMemoryDescriptor) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: Unable to get memory descriptor for shared data queue!");
+        return false;
+    }
+    
     setProperty("IOUserClientClass", USER_CLIENT_CLASS);
     
     /*
@@ -39,17 +46,14 @@ bool com_notrust_firewall_driver::start(IOService* provider) {
         return false;
     }
     */
-    
+    enable();
     registerService();
-    
-    register_filters();
-    register_kernelevents();
     
     return true;
 }
 
 void com_notrust_firewall_driver::stop(IOService* provider) {
-    os_log(OS_LOG_DEFAULT, "IOFirewall: starting");
+    os_log(OS_LOG_DEFAULT, "IOFirewall: stoping");
     unregister_filters();
     
     sharedDataQueue->release();
@@ -62,3 +66,21 @@ void com_notrust_firewall_driver::stop(IOService* provider) {
     
 }
 
+bool com_notrust_firewall_driver::enable(void) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: enabling firewall");
+    if(KERN_SUCCESS != register_filters()) {
+        return false;
+        
+    }
+    
+    if(KERN_SUCCESS != register_kernelevents()) {
+        return false;
+    }
+    
+    return true;
+}
+
+
+void com_notrust_firewall_driver::disable(void) {
+    unregister_filters();
+}

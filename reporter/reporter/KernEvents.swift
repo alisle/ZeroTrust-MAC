@@ -10,7 +10,7 @@ import Foundation
 
 
 
-struct FirewallEvent {
+struct KernEvent {
     let pid : pid_t
     let ppid : pid_t
     let uid : Optional<uid_t>
@@ -147,7 +147,7 @@ class KernEvents {
         socket = create_socket()
     }
     
-    func get() -> Optional<FirewallEvent> {
+    func get() -> Optional<KernEvent> {
         guard let payload = get_kern_message(socket) else {
             return Optional.none
         }
@@ -167,7 +167,7 @@ class KernEvents {
         }
         
         return Optional(
-            FirewallEvent(pid: pid,
+            KernEvent(pid: pid,
                           ppid: ppid,
                           remoteAddress: remote.0,
                           localAddress: local.0,

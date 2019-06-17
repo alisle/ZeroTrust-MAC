@@ -18,7 +18,6 @@
 #include "filter.hpp"
 #include "kern-event.hpp"
 
-
 class com_notrust_firewall_driver : public IOService
 {
     OSDeclareDefaultStructors(com_notrust_firewall_driver)
@@ -29,6 +28,10 @@ public:
     // IOService Methdos
     virtual bool start(IOService* provider) override;
     virtual void stop(IOService* provider) override;
+    
+    
+    bool enable(void);
+    void disable(void);
 };
 
 #endif

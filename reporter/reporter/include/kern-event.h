@@ -15,6 +15,9 @@
 #include <sys/ioctl.h>
 #include <sys/proc_info.h>
 
+#include <IOKit/IODataQueueClient.h>
+#include <IOKit/IODataQueueShared.h>
+
 #include "payload.h"
 
 int create_socket(void);

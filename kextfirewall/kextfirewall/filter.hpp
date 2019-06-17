@@ -19,7 +19,11 @@
 #include <os/log.h>
 #include <sys/proc.h>
 
+#include <IOKit/IOSharedDataQueue.h>
+#include <IOKit/IODataQueueShared.h>
+
 #include "kern-event.hpp"
+#include "payload.h"
 
 #define BASE_ID "com.notrust.firewall"
 

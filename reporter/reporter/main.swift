@@ -8,39 +8,51 @@
 
 import Foundation
 
-while(true) {
-    var connection : io_connect_t = 0;
-    let service = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("com_notrust_firewall_driver"))
-    
-    if service != 0 {
-        print("Found service");
-        let status = IOServiceOpen(service, mach_task_self_, 0, &connection)
-        if status == kIOReturnSuccess {
-            print("Service has been opened")
-            var output : UInt64 = 0;
-            var outputCount : UInt32 = 1;
-            let status = IOConnectCallScalarMethod(connection, 0, nil, 0, &output, &outputCount)
-            
-            if status == kIOReturnSuccess {
-                print("Got return of \(output)")
-            } else {
-                print("Failed to call test function \(status)")
-            }
-            
-            print("Closing Connection")
-            IOServiceClose(connection)
-        }
-        
-        IOObjectRelease(service)
-    } else {
-        print("Unable to get service")
-    }
+let comm = KernComm()
 
-    print("sleeping")
-    sleep(3)
+if comm.open() != true {
+    print("Unable to open communication with driver!")
+    exit(1)
 }
 
+defer {
+    comm.disable()
+    comm.close()
+}
 
+if comm.enable() != true {
+    print("Unable to enable firewall")
+    exit(1)
+}
+
+if comm.createNotificationPort() != true {
+    print("Unable to enable notification port")
+    exit(1)
+}
+
+defer {
+    comm.destroyNotificationPort()
+}
+
+print("Starting the loop")
+while(true) {
+    
+    if !comm.hasData() {
+        print("No data waiting")
+        if !comm.waitForData() {
+            print("Something went wrong")
+        }
+    }
+
+    let event = comm.dequeue()
+    if event == nil {
+        print("problem getting event")
+    } else {
+        print("got data")
+    }
+}
+
+/*
 let events = KernEvents()
 print("Listening for firewall events");
 
@@ -52,3 +64,5 @@ while(true) {
     
     event.dump()
 }
+*/
+

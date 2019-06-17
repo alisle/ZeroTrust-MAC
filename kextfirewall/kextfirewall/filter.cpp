@@ -9,6 +9,7 @@
 #include "filter.hpp"
 
 bool filters_registered = false;
+extern IOSharedDataQueue* sharedDataQueue;
 
 kern_return_t register_filters() {
     os_log(OS_LOG_DEFAULT, "IOFirewall: registering socket filters");
@@ -58,7 +59,21 @@ static void detach_socket(void *cookie, socket_t so) {
 }
 
 static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: got connection out, posting event");
     post_kernel_event(so, to);
+    
+    firewall_connection_out  outbound;
+    outbound.pid = 101;
+    outbound.ppid = 202;
+    
+    firewall_event event;
+    event.type = outbound_connection;
+    event.data.outbound = outbound;
+    
+    if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post event into the queue");
+    }
+    
     return KERN_SUCCESS;
 }
 

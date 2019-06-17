@@ -23,6 +23,7 @@
 		F00BD40C22B01F7A009E9AD8 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
 		F00BD40D22B099A2009E9AD8 /* client.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = client.cpp; sourceTree = "<group>"; };
 		F00BD40E22B099A2009E9AD8 /* client.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = client.hpp; sourceTree = "<group>"; };
+		F04F436422B6903900219F99 /* payload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = payload.h; sourceTree = "<group>"; };
 		F0789B7222AEBBC70006B154 /* kextfirewall.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kextfirewall.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0789B7522AEBBC70006B154 /* driver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = driver.hpp; sourceTree = "<group>"; };
 		F0789B7722AEBBC70006B154 /* driver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = driver.cpp; sourceTree = "<group>"; };
@@ -71,6 +72,7 @@
 				F00BD40C22B01F7A009E9AD8 /* defines.h */,
 				F00BD40D22B099A2009E9AD8 /* client.cpp */,
 				F00BD40E22B099A2009E9AD8 /* client.hpp */,
+				F04F436422B6903900219F99 /* payload.h */,
 			);
 			path = kextfirewall;
 			sourceTree = "<group>";

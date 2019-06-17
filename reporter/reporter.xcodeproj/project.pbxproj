@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F04F436222B170AE00219F99 /* KernComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04F436122B170AE00219F99 /* KernComm.swift */; };
+		F04F436622B7DA0100219F99 /* FirewallEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04F436522B7DA0100219F99 /* FirewallEvent.swift */; };
 		F0789B5522AC01A50006B154 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0789B5422AC01A50006B154 /* main.swift */; };
 		F0789B5C22AC02570006B154 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0789B5B22AC02570006B154 /* Helpers.swift */; };
 		F0789B6222AC06D70006B154 /* kern-event.c in Sources */ = {isa = PBXBuildFile; fileRef = F0789B6122AC06D70006B154 /* kern-event.c */; };
@@ -27,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F04F436122B170AE00219F99 /* KernComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernComm.swift; sourceTree = "<group>"; };
+		F04F436522B7DA0100219F99 /* FirewallEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallEvent.swift; sourceTree = "<group>"; };
 		F0789B5122AC01A50006B154 /* reporter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = reporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0789B5422AC01A50006B154 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		F0789B5B22AC02570006B154 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 				F0789B5F22AC06D70006B154 /* reporter-Bridging-Header.h */,
 				F0789B6422AC0BD70006B154 /* KernEvents.swift */,
 				F0789B6622AC26980006B154 /* BundleExtensions.swift */,
+				F04F436122B170AE00219F99 /* KernComm.swift */,
+				F04F436522B7DA0100219F99 /* FirewallEvent.swift */,
 			);
 			path = reporter;
 			sourceTree = "<group>";
@@ -146,9 +152,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F04F436622B7DA0100219F99 /* FirewallEvent.swift in Sources */,
 				F0789B6522AC0BD70006B154 /* KernEvents.swift in Sources */,
 				F0789B5522AC01A50006B154 /* main.swift in Sources */,
 				F0789B6222AC06D70006B154 /* kern-event.c in Sources */,
+				F04F436222B170AE00219F99 /* KernComm.swift in Sources */,
 				F0789B5C22AC02570006B154 /* Helpers.swift in Sources */,
 				F0789B6722AC26980006B154 /* BundleExtensions.swift in Sources */,
 			);
