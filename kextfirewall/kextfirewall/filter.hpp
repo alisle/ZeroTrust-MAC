@@ -48,6 +48,9 @@ static void unregistered(sflt_handle handle);
 // New outbound connection.
 static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to);
 
+static errno_t udp_data_in(void *cookie, socket_t so, const struct sockaddr *from, mbuf_t* data, mbuf_t* control, sflt_data_flag_t flags);
+static errno_t udp_data_out(void *cookie, socket_t so, const struct sockaddr *to, mbuf_t* data, mbuf_t* control, sflt_data_flag_t flags);
+
 // When an event happens
 static void filter_event(void *cookie, socket_t so, sflt_event_t event, void* param);
 
@@ -72,6 +75,28 @@ static struct sflt_filter tcpFilterIPV4 = {
     NULL,
     NULL,
     connection_out,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL
+};
+
+// socket filer for UDP IPV4
+static struct sflt_filter udpFilterIPV4 = {
+    UDPIPV4_HANDLE,
+    SFLT_GLOBAL,
+    (char*)BASE_ID,
+    unregistered,
+    attach_socket,
+    detach_socket,
+    NULL,
+    NULL,
+    NULL,
+    udp_data_in,
+    udp_data_out,
+    NULL,
+    NULL,
     NULL,
     NULL,
     NULL,

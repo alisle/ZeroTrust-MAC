@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F00B470B22B9519A00D44C65 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00B470A22B9519A00D44C65 /* Connection.swift */; };
+		F00B470D22B98B6400D44C65 /* FirewallEventConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00B470C22B98B6400D44C65 /* FirewallEventConsumer.swift */; };
+		F00B470F22B9995C00D44C65 /* CurrentConnections.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00B470E22B9995C00D44C65 /* CurrentConnections.swift */; };
 		F04F436222B170AE00219F99 /* KernComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04F436122B170AE00219F99 /* KernComm.swift */; };
 		F04F436622B7DA0100219F99 /* FirewallEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04F436522B7DA0100219F99 /* FirewallEvent.swift */; };
 		F0789B5522AC01A50006B154 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0789B5422AC01A50006B154 /* main.swift */; };
 		F0789B5C22AC02570006B154 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0789B5B22AC02570006B154 /* Helpers.swift */; };
 		F0789B6222AC06D70006B154 /* kern-event.c in Sources */ = {isa = PBXBuildFile; fileRef = F0789B6122AC06D70006B154 /* kern-event.c */; };
-		F0789B6522AC0BD70006B154 /* KernEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0789B6422AC0BD70006B154 /* KernEvents.swift */; };
 		F0789B6722AC26980006B154 /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0789B6622AC26980006B154 /* BundleExtensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +31,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F00B470A22B9519A00D44C65 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		F00B470C22B98B6400D44C65 /* FirewallEventConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallEventConsumer.swift; sourceTree = "<group>"; };
+		F00B470E22B9995C00D44C65 /* CurrentConnections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentConnections.swift; sourceTree = "<group>"; };
 		F04F436122B170AE00219F99 /* KernComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernComm.swift; sourceTree = "<group>"; };
 		F04F436522B7DA0100219F99 /* FirewallEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallEvent.swift; sourceTree = "<group>"; };
 		F0789B5122AC01A50006B154 /* reporter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = reporter; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,7 +43,6 @@
 		F0789B6022AC06D70006B154 /* kern-event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kern-event.h"; sourceTree = "<group>"; };
 		F0789B6122AC06D70006B154 /* kern-event.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "kern-event.c"; sourceTree = "<group>"; };
 		F0789B6322AC07AB0006B154 /* payload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = payload.h; sourceTree = "<group>"; };
-		F0789B6422AC0BD70006B154 /* KernEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernEvents.swift; sourceTree = "<group>"; };
 		F0789B6622AC26980006B154 /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,10 +81,12 @@
 				F0789B5B22AC02570006B154 /* Helpers.swift */,
 				F0789B6122AC06D70006B154 /* kern-event.c */,
 				F0789B5F22AC06D70006B154 /* reporter-Bridging-Header.h */,
-				F0789B6422AC0BD70006B154 /* KernEvents.swift */,
 				F0789B6622AC26980006B154 /* BundleExtensions.swift */,
 				F04F436122B170AE00219F99 /* KernComm.swift */,
 				F04F436522B7DA0100219F99 /* FirewallEvent.swift */,
+				F00B470A22B9519A00D44C65 /* Connection.swift */,
+				F00B470C22B98B6400D44C65 /* FirewallEventConsumer.swift */,
+				F00B470E22B9995C00D44C65 /* CurrentConnections.swift */,
 			);
 			path = reporter;
 			sourceTree = "<group>";
@@ -121,7 +127,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Alex Lisle";
 				TargetAttributes = {
 					F0789B5022AC01A50006B154 = {
@@ -136,6 +142,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = F0789B4822AC01A50006B154;
 			productRefGroup = F0789B5222AC01A50006B154 /* Products */;
@@ -153,10 +160,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F04F436622B7DA0100219F99 /* FirewallEvent.swift in Sources */,
-				F0789B6522AC0BD70006B154 /* KernEvents.swift in Sources */,
 				F0789B5522AC01A50006B154 /* main.swift in Sources */,
+				F00B470D22B98B6400D44C65 /* FirewallEventConsumer.swift in Sources */,
 				F0789B6222AC06D70006B154 /* kern-event.c in Sources */,
+				F00B470B22B9519A00D44C65 /* Connection.swift in Sources */,
 				F04F436222B170AE00219F99 /* KernComm.swift in Sources */,
+				F00B470F22B9995C00D44C65 /* CurrentConnections.swift in Sources */,
 				F0789B5C22AC02570006B154 /* Helpers.swift in Sources */,
 				F0789B6722AC26980006B154 /* BundleExtensions.swift in Sources */,
 			);
@@ -216,7 +225,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -271,7 +280,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -284,6 +293,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XQ3Q86P7E4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -302,6 +312,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XQ3Q86P7E4;
 				LD_RUNPATH_SEARCH_PATHS = (

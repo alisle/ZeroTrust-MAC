@@ -8,61 +8,28 @@
 
 import Foundation
 
-let comm = KernComm()
 
-if comm.open() != true {
-    print("Unable to open communication with driver!")
-    exit(1)
-}
-
-defer {
-    comm.disable()
-    comm.close()
-}
-
-if comm.enable() != true {
-    print("Unable to enable firewall")
-    exit(1)
-}
-
-if comm.createNotificationPort() != true {
-    print("Unable to enable notification port")
-    exit(1)
-}
-
-defer {
-    comm.destroyNotificationPort()
-}
-
-print("Starting the loop")
-while(true) {
+class ConsumerThread : Thread {
+    private var consumer = FirewallEventConsumer()
+    convenience init(connectionState : CurrentConnections) {
+        self.init()
+        consumer = FirewallEventConsumer(state : connectionState)
+    }
     
-    if !comm.hasData() {
-        print("No data waiting")
-        if !comm.waitForData() {
-            print("Something went wrong")
+    override func main() {
+        if consumer.open() {
+            consumer.process()
         }
     }
-
-    guard let event = comm.dequeue() else {
-        print("problem getting event")
-        continue
-    }
-    
-    event.dump()
 }
 
-/*
-let events = KernEvents()
-print("Listening for firewall events");
+var state = CurrentConnections()
+let thread = ConsumerThread(connectionState: state)
 
-while(true) {
-    guard let event = events.get() else {
-        print("invalid event, skipping");
-        continue
-    }
-    
-    event.dump()
+thread.start()
+
+while(!thread.isCancelled) {
+    print("Connections:")
+    state.dump()
+    sleep(5)
 }
-*/
-

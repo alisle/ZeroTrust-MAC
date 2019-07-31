@@ -2,15 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:kextfirewall/kextfirewall.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:reporter/reporter.xcodeproj">
+      location = "group:firewall-client/firewall-client.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:client/client.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:firewall/firewall.xcodeproj">
+      location = "group:kextfirewall/kextfirewall.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:reporter/reporter.xcodeproj">
    </FileRef>
 </Workspace>

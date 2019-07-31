@@ -9,12 +9,39 @@
 #include "filter.hpp"
 
 #include <libkern/OSMalloc.h>
+#include <sys/kpi_mbuf.h>
 
 bool filters_registered = false;
 
 extern IOSharedDataQueue* sharedDataQueue;
 extern OSMallocTag mallocTag;
 
+// DNS Header from https://gist.github.com/fffaraz/9d9170b57791c28ccda9255b48315168
+struct DNS_HEADER
+{
+    unsigned short id; // identification number
+    
+    unsigned char rd :1; // recursion desired
+    unsigned char tc :1; // truncated message
+    unsigned char aa :1; // authoritive answer
+    unsigned char opcode :4; // purpose of message
+    unsigned char qr :1; // query/response flag
+    
+    unsigned char rcode :4; // response code
+    unsigned char cd :1; // checking disabled
+    unsigned char ad :1; // authenticated data
+    unsigned char z :1; // its z! reserved
+    unsigned char ra :1; // recursion available
+    
+    unsigned short q_count; // number of question entries
+    unsigned short ans_count; // number of answer entries
+    unsigned short auth_count; // number of authority entries
+    unsigned short add_count; // number of resource entries
+};
+
+//
+// None of this would of been possible without the excellent LuLu opensource firewall.
+//
 
 kern_return_t register_filters() {
     os_log(OS_LOG_DEFAULT, "IOFirewall: registering socket filters");
@@ -26,12 +53,21 @@ kern_return_t register_filters() {
     
     kern_return_t result = sflt_register(&tcpFilterIPV4, AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if(KERN_SUCCESS != result) {
-        os_log(OS_LOG_DEFAULT, "IOFirewall: unable to reigster filters!");
+        os_log(OS_LOG_DEFAULT, "IOFirewall: unable to reigster tcp filter!");
         filters_registered = false;
+        return result;
     } else {
         filters_registered = true;
     }
     
+    result = sflt_register(&udpFilterIPV4, AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    if(KERN_SUCCESS != result) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: unable to register udp filter");
+        filters_registered = false;
+        return result;
+    } else {
+        filters_registered = true;
+    }
     
     return result;
 }
@@ -42,11 +78,17 @@ kern_return_t unregister_filters() {
     if(filters_registered) {
         kern_return_t status = sflt_unregister(TCPIPV4_HANDLE);
         if(KERN_SUCCESS != status) {
-            os_log(OS_LOG_DEFAULT, "IOFirewall: unable to unregister filters!");
+            os_log(OS_LOG_DEFAULT, "IOFirewall: unable to unregister tcp filter!");
         }
-        filters_registered = false;
         
+        status = sflt_unregister(UDPIPV4_HANDLE);
+        if(KERN_SUCCESS != status) {
+            os_log(OS_LOG_DEFAULT, "IOFirewall: unable to unregister udp filter!");
+        }
+        
+        filters_registered = false;
         return status;
+        
     } else {
         os_log(OS_LOG_DEFAULT, "IOFirewall: filters weren't enabled.");
         return KERN_SUCCESS;
@@ -78,6 +120,98 @@ static void detach_socket(void *cookie, socket_t so) {
 
 static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to) {
     send_outbound_event((cookie_header*)cookie, so, to);
+    return KERN_SUCCESS;
+}
+
+static errno_t udp_data_in(void *cookie, socket_t so, const struct sockaddr *from, mbuf_t* data, mbuf_t* control, sflt_data_flag_t flags) {
+    in_port_t port = 0;
+    struct sockaddr_in remote = {0};
+    bzero(&remote, sizeof(remote));
+    mbuf_t buffer = NULL;
+    struct DNS_HEADER* dns_header;
+    
+    if(NULL == from) {
+        // For some reason we don't have a to address yet.
+        if( KERN_SUCCESS != sock_getpeername(so, (struct sockaddr *)&remote, sizeof(remote))) {
+            return false;
+        }
+        
+        from = (const struct sockaddr*)&remote;
+    }
+    
+    port = ntohs(((const struct sockaddr_in*)from)->sin_port);
+    if(53 != port) {
+        return KERN_SUCCESS;
+    }
+    
+    os_log(OS_LOG_DEFAULT, "IOFirewall: udp port is dns.");
+
+    buffer = *data;
+    if(NULL == buffer) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: buffer is null.");
+        return KERN_SUCCESS;
+    }
+    
+    while(MBUF_TYPE_DATA != mbuf_type(buffer)) {
+        buffer = mbuf_next(buffer);
+        if( NULL == buffer) {
+            os_log(OS_LOG_DEFAULT, "IOFirewall: cycle through dns is still null.");
+            return KERN_SUCCESS;
+        }
+    }
+    
+    
+    os_log(OS_LOG_DEFAULT, "IOFirewall: dns packet is fine.");
+
+    if(mbuf_len(buffer) <= sizeof(struct DNS_HEADER)) {
+        return KERN_SUCCESS;
+    }
+    
+    dns_header = (struct DNS_HEADER*)mbuf_data(buffer);
+    
+     os_log(OS_LOG_DEFAULT, "IOFirewall: dns got header.");
+
+    // Check if this is a Reponse or a query.
+    /*
+    if(1 != ntohs(dns_header->qr)) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: dns is query.");
+        return KERN_SUCCESS;
+    }
+    */
+    os_log(OS_LOG_DEFAULT, "IOFirewall: dns is response.");
+
+    if(0 != ntohs(dns_header->rcode)) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: rcode isn't 0.");
+        return KERN_SUCCESS;
+    }
+    
+    if(0 == ntohs(dns_header->ans_count)) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: answer count is 0.");
+        return KERN_SUCCESS;
+    }
+    
+    firewall_event event = {0};
+    bzero(&event, sizeof(firewall_event));
+    
+    event.type = dns_update;
+    size_t size = sizeof(event.data.dns_event.dns_message);
+    if(mbuf_len(buffer) < size) {
+        size = mbuf_len(buffer);
+    }
+    os_log(OS_LOG_DEFAULT, "IOFirewall: calculated size.");
+
+    memcpy(&event.data.dns_event.dns_message, mbuf_data(buffer), size);
+    
+    if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post dns update into event queue");
+    }
+    os_log(OS_LOG_DEFAULT, "IOFirewall: done with dns packet.");
+
+    return KERN_SUCCESS;
+}
+
+static errno_t udp_data_out(void *cookie, socket_t so, const struct sockaddr *to, mbuf_t* data, mbuf_t* control, sflt_data_flag_t flags) {
+    
     return KERN_SUCCESS;
 }
 

@@ -14,33 +14,25 @@ enum FirewallEventType : Int {
          connectionUpdate
 }
 
-enum FirewallUpdateType: Int {
-    case connecting = 1,
-    connected,
-    disconnecting,
-    disconnected,
-    closing,
-    bound
-}
 
 class FirewallEvent {
-    let EventType : FirewallEventType
+    let eventType : FirewallEventType
     let tag : UUID
     
     init(type : FirewallEventType, tag : UUID) {
-        self.EventType = type
+        self.eventType = type
         self.tag = tag
     }
     
     func dump() {
-        print("-------------- \(EventType) --------------")
+        print("-------------- \(eventType) --------------")
         print("Tag: \(tag)")
     }
 }
 
 class FirewallConnectionUpdate : FirewallEvent {
-    let update : FirewallUpdateType
-    init(tag: UUID, update: FirewallUpdateType) {
+    let update : ConnectionState
+    init(tag: UUID, update: ConnectionState) {
         self.update = update;
         super.init(type: FirewallEventType.connectionUpdate, tag: tag)
     }

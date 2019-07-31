@@ -1,16 +1,82 @@
 //
-//  KernEvents.swift
-//  reporter
+//  FirewallEvent.swift
+//  client
 //
-//  Created by Alex Lisle on 6/8/19.
+//  Created by Alex Lisle on 6/24/19.
 //  Copyright © 2019 Alex Lisle. All rights reserved.
 //
 
 import Foundation
 
+enum FirewallEventType : Int {
+    case outboundConnection = 0,
+    inboundConnection,
+    connectionUpdate,
+    dnsUpdate
+}
 
 
-struct KernEvent {
+class FirewallEvent {
+    let eventType : FirewallEventType
+    let tag : Optional<UUID>
+    
+    init(type : FirewallEventType, tag : Optional<UUID>) {
+        self.eventType = type
+        self.tag = tag
+    }
+    
+    func dump() {
+        print("-------------- \(eventType) --------------")
+        print("Tag: \(String(describing: tag))")
+    }
+}
+
+class FirewallDNSUpdate : FirewallEvent {
+    let aRecords : [ARecord]
+    let cNameRecords : [CNameRecord]
+    let questions : [String]
+    
+    init(aRecords: [ARecord], cNameRecords: [CNameRecord], questions: [String]) {
+        self.aRecords = aRecords
+        self.cNameRecords = cNameRecords
+        self.questions = questions
+        super.init(type: FirewallEventType.dnsUpdate, tag: nil)
+    }
+    
+    override func dump() {
+        super.dump()
+        print("A Records:")
+        self.aRecords.forEach {
+            print("  \($0.url) -> \($0.ip)")
+        }
+        
+        print("CName Records:")
+        self.cNameRecords.forEach {
+            print("  \($0.url) -> \($0.cName)")
+        }
+        
+        print("Questions:")
+        self.questions.forEach {
+            print("  \($0)")
+        }
+    }
+}
+
+
+class FirewallConnectionUpdate : FirewallEvent {
+    let update : ConnectionState
+    init(tag: UUID, update: ConnectionState) {
+        self.update = update;
+        super.init(type: FirewallEventType.connectionUpdate, tag: tag)
+    }
+    
+    override func dump() {
+        super.dump()
+        print("Update Type: \(update)")
+    }
+}
+
+class FirewallConnectionOut : FirewallEvent {
     let pid : pid_t
     let ppid : pid_t
     let uid : Optional<uid_t>
@@ -25,11 +91,11 @@ struct KernEvent {
     let processBundle : Optional<Bundle>
     let parentTopLevelBundle : Optional<Bundle>
     let processTopLevelBundle: Optional<Bundle>
-
     
     var displayName : String = ""
     
-    init(pid: pid_t,
+    init(tag: UUID,
+         pid: pid_t,
          ppid: pid_t,
          remoteAddress : String,
          localAddress : String,
@@ -55,7 +121,9 @@ struct KernEvent {
         self.uid = Helpers.getUIDForPID(pid: pid)
         self.user = Helpers.getUsernameFromUID(uid: uid)
         
+        super.init(type: FirewallEventType.outboundConnection, tag: tag)
         displayName = createDisplayName()
+        
     }
     
     private func createDisplayName()  -> String {
@@ -76,23 +144,21 @@ struct KernEvent {
         }
         
         if process != nil {
-            let lastIndex = process?.lastIndex(of: "/")
-            let substring = String(process!.substring(from: lastIndex!).dropFirst())
-            return substring
+            let lastIndex = process?.lastIndex(of: "/") ?? process!.endIndex
+            let substring = process![..<lastIndex]
+            return String(substring)
         }
-
+        
         if parentProcess != nil {
-            let lastIndex = parentProcess?.lastIndex(of: "/")
-            let substring = String(parentProcess!.substring(from: lastIndex!).dropFirst())
-            return substring
+            return String(parentProcess!)
         }
         
         
         return "unknown"
     }
     
-    func dump() {
-        print("-------------- NEW CONNECTION --------------")
+    override func dump() {
+        super.dump()
         print("PID: \(pid)")
         print("PPID: \(ppid)")
         print("App Name: \(displayName)")
@@ -100,11 +166,11 @@ struct KernEvent {
         print("Local Port: \(localPort)")
         
         if(self.uid != nil) {
-            print("UID: \(self.uid)")
+            print("UID: \(self.uid!)")
         }
         
         if(self.user != nil) {
-            print("Username: \(self.user)")
+            print("Username: \(self.user!)")
         }
         
         if(self.process != nil) {
@@ -116,63 +182,26 @@ struct KernEvent {
         }
         
         if self.processBundle != nil {
-            print("Local Bundle Name: \(self.processBundle!.displayName)")
+            print("Local Bundle Name: \(self.processBundle!.displayName ?? "null" )")
         }
-
+        
         if self.parentBundle != nil {
-            print("Local Parent Bundle Name: \(self.parentBundle!.displayName)")
+            print("Local Parent Bundle Name: \(self.parentBundle!.displayName!)")
         }
         
         if self.processTopLevelBundle != nil {
-            print("Local Top Level Bundle Name: \(self.processTopLevelBundle!.displayName)")
+            print("Local Top Level Bundle Name: \(self.processTopLevelBundle!.displayName ?? "null" )")
         }
         
         if self.parentTopLevelBundle != nil {
-            print("Local Top Level Parent Bundle Name: \(self.parentTopLevelBundle!.displayName)")
+            print("Local Top Level Parent Bundle Name: \(self.parentTopLevelBundle!.displayName ?? "null")")
         }
         
-
+        
         print("Remote Address: \(remoteAddress)")
         print("Remote port: \(remotePort)")
         //print("--------------------------------------------")
         print("")
         
-    }
-}
-
-class KernEvents {
-    let socket : Int32
-    
-    init() {
-        socket = create_socket()
-    }
-    
-    func get() -> Optional<KernEvent> {
-        guard let payload = get_kern_message(socket) else {
-            return Optional.none
-        }
-        
-        defer {
-            payload.deallocate()
-        }
-        
-        let pid = payload.pointee.pid
-        let ppid = payload.pointee.ppid
-        guard let remote = Helpers.getHostInformation(sockaddr: &payload.pointee.remote) else {
-            return Optional.none
-        }
-        
-        guard let local = Helpers.getHostInformation(sockaddr: &payload.pointee.local) else {
-            return Optional.none
-        }
-        
-        return Optional(
-            KernEvent(pid: pid,
-                          ppid: ppid,
-                          remoteAddress: remote.0,
-                          localAddress: local.0,
-                          remotePort: remote.1,
-                          localPort: local.1
-        ));
     }
 }

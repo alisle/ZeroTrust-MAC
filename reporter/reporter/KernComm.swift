@@ -147,11 +147,30 @@ class KernComm {
             );
         case connection_update:
             let uuid = UUID.init(uuid:buffer.tag)
-            guard let event = FirewallUpdateType.init(rawValue: Int(buffer.data.update_event.rawValue)) else {
+            var update : Optional<ConnectionState>
+            
+            switch(buffer.data.update_event) {
+            case connecting:
+                update = Optional(ConnectionState.connecting)
+            case connected:
+                update = Optional(ConnectionState.connected)
+            case disconnecting:
+                update = Optional(ConnectionState.disconnecting)
+            case disconnected:
+                update = Optional(ConnectionState.disconnected)
+            case closing:
+                update = Optional(ConnectionState.closing)
+            case bound:
+                update = Optional(ConnectionState.bound)
+            default:
+                update = Optional.none
+            }
+            
+            if( update == nil) {
                 return Optional.none
             }
             
-            return FirewallConnectionUpdate(tag: uuid, update: event)
+            return FirewallConnectionUpdate(tag: uuid, update: update!)
             
         default:
             print("Unkown firewall type")
