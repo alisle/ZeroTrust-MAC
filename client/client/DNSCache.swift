@@ -52,6 +52,8 @@ class DNSCache {
         ARecord2IPsLock.lock()
         if let ips = ARecord2IPs[question]  {
             // We have an ARecord which was a question.
+            print("ARecord ips")
+            dump(ips)
             ips.forEach {
                 cacheLock.lock()
                 Cache[$0] = Record(type:RecordType.QuestionAnsweredRecord, url:question, ip:$0)
@@ -61,9 +63,26 @@ class DNSCache {
         ARecord2IPsLock.unlock()
         
         CName2ARecordLock.lock()
-        if let aRecord = CName2ARecord[question] {
-            // We have a CName
-            if let ips = ARecord2IPs[aRecord] {
+        print("CName2ARecord")
+        dump(CName2ARecord)
+        
+        var record : Optional<String> = question
+        var searching = true
+        while searching {
+            record = CName2ARecord[record!]
+            if record != nil {
+                if ARecord2IPs[record!] != nil {
+                    searching = false
+                }
+            } else {
+                // we're done here.
+                searching = false
+            }
+        }
+        
+        if record != nil {
+            if let ips = ARecord2IPs[record!] {
+                print("CName ips")
                 ips.forEach {
                     cacheLock.lock()
                     Cache[$0] = Record(type:RecordType.QuestionAnsweredRecord, url: question, ip: $0)
@@ -71,6 +90,10 @@ class DNSCache {
                 }
             }
         }
+        
+        print("Cache")
+        dump(Cache)
+        
         CName2ARecordLock.unlock()
     }
     
@@ -114,18 +137,17 @@ class DNSCache {
     
     private func checkCName(url: String, ip: String) {
         ARecord2CNamesLock.lock()
+        
         if let cNames = ARecord2CNames[url] {
             // See if we have any CNames which point to this URL, if so update our IPs to reflect that.
             if let record = Cache[ip] {
-                
-                // Generally the first CName is normally good enough.
-                if record.type == RecordType.CNameRecord {
-                    return
+                // We over-write an A Record
+                if record.type == RecordType.ARecord {
+                    Cache[ip] = Record(type: RecordType.CNameRecord, url: cNames.first!, ip: ip)
                 }
-                
-                Cache[ip] = Record(type: RecordType.CNameRecord, url: cNames.first!, ip: ip)
             }
         }
+                
         ARecord2CNamesLock.unlock()
     }
     
@@ -149,7 +171,7 @@ class DNSCache {
             ips.forEach {
                 if let record = Cache[$0] {
                     // If the type is CName, we will keep it.
-                    if record.type != RecordType.CNameRecord {
+                    if record.type == RecordType.ARecord {
                         Cache[$0] = Record(type: RecordType.CNameRecord, url: cName, ip: $0)
                     }
                 }

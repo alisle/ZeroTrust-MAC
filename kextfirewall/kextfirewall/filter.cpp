@@ -143,9 +143,6 @@ static errno_t udp_data_in(void *cookie, socket_t so, const struct sockaddr *fro
     if(53 != port) {
         return KERN_SUCCESS;
     }
-    
-    os_log(OS_LOG_DEFAULT, "IOFirewall: udp port is dns.");
-
     buffer = *data;
     if(NULL == buffer) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: buffer is null.");
@@ -160,33 +157,17 @@ static errno_t udp_data_in(void *cookie, socket_t so, const struct sockaddr *fro
         }
     }
     
-    
-    os_log(OS_LOG_DEFAULT, "IOFirewall: dns packet is fine.");
-
     if(mbuf_len(buffer) <= sizeof(struct DNS_HEADER)) {
         return KERN_SUCCESS;
     }
     
     dns_header = (struct DNS_HEADER*)mbuf_data(buffer);
-    
-     os_log(OS_LOG_DEFAULT, "IOFirewall: dns got header.");
-
-    // Check if this is a Reponse or a query.
-    /*
-    if(1 != ntohs(dns_header->qr)) {
-        os_log(OS_LOG_DEFAULT, "IOFirewall: dns is query.");
-        return KERN_SUCCESS;
-    }
-    */
-    os_log(OS_LOG_DEFAULT, "IOFirewall: dns is response.");
 
     if(0 != ntohs(dns_header->rcode)) {
-        os_log(OS_LOG_DEFAULT, "IOFirewall: rcode isn't 0.");
         return KERN_SUCCESS;
     }
     
     if(0 == ntohs(dns_header->ans_count)) {
-        os_log(OS_LOG_DEFAULT, "IOFirewall: answer count is 0.");
         return KERN_SUCCESS;
     }
     
@@ -198,14 +179,16 @@ static errno_t udp_data_in(void *cookie, socket_t so, const struct sockaddr *fro
     if(mbuf_len(buffer) < size) {
         size = mbuf_len(buffer);
     }
-    os_log(OS_LOG_DEFAULT, "IOFirewall: calculated size.");
 
     memcpy(&event.data.dns_event.dns_message, mbuf_data(buffer), size);
     
     if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post dns update into event queue");
+    } else {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: posted DNS event");
     }
-    os_log(OS_LOG_DEFAULT, "IOFirewall: done with dns packet.");
+    
+    
 
     return KERN_SUCCESS;
 }
@@ -235,6 +218,8 @@ bool send_update_event(cookie_header* header, sflt_event_t change) {
 
     if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post event into the queue");
+    } else {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: posted update event");
     }
     
     return true;
@@ -275,6 +260,8 @@ bool send_outbound_event(cookie_header* header, socket_t so, const struct sockad
     
     if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post event into the queue");
+    } else {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: posted outbound event");
     }
     
 

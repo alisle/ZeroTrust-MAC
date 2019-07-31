@@ -219,8 +219,6 @@ class KextComm {
         let qtypeResult = grabUInt16(pointer: offsetResult.updatedPointer)
         pointer = qtypeResult.updatedPointer
         let qtype = qtypeResult.value
-        
-        print("QType: \(qtype)")
 
         // Skip over the QClass and TTL.
         pointer = pointer.advanced(by: 6)
@@ -238,7 +236,6 @@ class KextComm {
             if length == 4 {
                 let (updatedPointer: _, url: url)  = grabURL(startPointer: startPointer, offsetPointer: startPointer.advanced(by: Int(offsetResult.offsetPosition)))
                 let (updatedPointer: _, ip: ip) = grabIPv4String(currentPointer: pointer)
-                print("A Record: \(url) -> \(ip)")
                 aRecord = ARecord(url: url, ip: ip)
             } else {
                 print("We have an A record which is larger than 4 Bytes. This is weird?")
@@ -246,7 +243,6 @@ class KextComm {
         case 0x5:
             let (updatedPointer: _, url: cname)  = grabURL(startPointer: startPointer, offsetPointer: startPointer.advanced(by: Int(offsetResult.offsetPosition)))
             let (_, url) = grabURL(startPointer: startPointer, offsetPointer: pointer)
-            print("CNAME Record: \(url) -> \(cname)")
             cNameRecord = CNameRecord(url: url, cName: cname)
         default: ()
         }
@@ -269,7 +265,6 @@ class KextComm {
         let url = result.url
         var currentPointer = result.updatedPointer
 
-        print("got question for \(url)")
         currentPointer = currentPointer.advanced(by: 2)
         currentPointer = currentPointer.advanced(by: 2)
         
@@ -295,14 +290,12 @@ class KextComm {
     }
     
     func grabURL(startPointer : UnsafeMutableRawPointer, offsetPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, url: String) {
-        print("extracting URL")
         var currentPointer = offsetPointer
         var size = currentPointer.load(as: UInt8.self).bigEndian;
         var array : [UInt8] = []
         
         while( size != 0x0 ) {
             currentPointer = currentPointer.advanced(by: 1)
-            print("Got Section with size: \(size)")
             for _ in 0..<size {
                 array.append(currentPointer.load(as: UInt8.self))
                 currentPointer = currentPointer.advanced(by: 1)
@@ -312,7 +305,6 @@ class KextComm {
             
             // We're at a new jump point.
             if(size == 0xC0) {
-                print("We are skipping to a new point")
                 let (_, offset) = grabUInt16(pointer: currentPointer)
                 let offsetPointer = UInt16(offset & (0xFFFF - 0xC000))
                 currentPointer = startPointer.advanced(by: Int(offsetPointer))
@@ -331,8 +323,6 @@ class KextComm {
         
         // Generate the string.
         let url = String(cString: array)
-        
-        print("This is what we're looking at \(url)")
         return (currentPointer, url)
     }
     

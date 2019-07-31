@@ -22,9 +22,11 @@ class State {
     }
     
     func new(connection: Connection) {
-        lock.lock()
-            state[connection.tag] = connection
-        lock.unlock()
+        if connection.remoteAddress != "127.0.0.1" {
+            lock.lock()
+                state[connection.tag] = connection
+            lock.unlock()
+        }
     }
     
     func update(tag: UUID, update: ConnectionState) {
@@ -40,7 +42,7 @@ class State {
         lock.lock()
         for pair  in state {
             let value = pair.value
-            print("\(value.displayName)->\(value.remoteAddress):\(value.remotePort) -- \(value.state)")
+            print("\(value.displayName)->\(value.remoteDisplayAddress):\(value.remotePort) -- \(value.state)")
         }
         lock.unlock()
     }

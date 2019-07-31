@@ -60,7 +60,7 @@ class Helpers {
     }
     
     static func getPidPath(pid: pid_t) -> Optional<String> {
-        guard pid > 0 else {
+        guard pid > 1 else {
             return Optional.none
         }
         
@@ -69,14 +69,9 @@ class Helpers {
         var size : size_t = maxArgumentSize
         
         guard sysctl(&mib, 3, &buffer, &size, nil, 0) == 0 else {
-            print("Unable to get process path using sysctl, trying proc_name for PID: \(pid)")
-            
             guard let buffer = get_process_name(pid) else {
-                print("Unable to get process path even using proc_name, giving up")
                 return Optional.none
-            }
-            
-            print("successfully got path from proc_name")
+            }            
             defer {
                 buffer.deallocate()
             }
