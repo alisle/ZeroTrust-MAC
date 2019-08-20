@@ -54,6 +54,7 @@ struct Connection : Hashable, Identifiable {
     
     let remoteAddress : String
     let remoteURL: Optional<String>
+    let remoteProtocol : Optional<Protocol>
     
     let localAddress : String
     
@@ -70,13 +71,58 @@ struct Connection : Hashable, Identifiable {
     let parentTopLevelBundle : Optional<Bundle>
     
     let displayName : String
+    
+    var image : Optional<NSImage> = nil
     var state : ConnectionState = ConnectionState.unknown
     
     var remoteDisplayAddress : String {
         return remoteURL ?? remoteAddress
     }
 
-    init(connectionOut: FirewallConnectionOut, remoteURL : Optional<String>) {
+    
+    init(tag : UUID,
+         pid : pid_t,
+         ppid : pid_t,
+         uid : Optional<uid_t>,
+         user : Optional<String>,
+         remoteAddress : String,
+         remoteURL: Optional<String>,
+         remoteProtocol : Optional<Protocol>,
+         localAddress : String,
+         localPort : Int,
+         remotePort : Int,
+         process : Optional<String>,
+         parentProcess : Optional<String>,
+         processBundle : Optional<Bundle>,
+         parentBundle: Optional<Bundle>,
+         processTopLevelBundle: Optional<Bundle>,
+         parentTopLevelBundle : Optional<Bundle>,
+         displayName : String) {
+
+        self.direction = ConnectionDirection.Outbound
+        self.tag = tag
+        self.pid = pid
+        self.ppid = ppid
+        self.uid = uid
+        self.user = user
+        self.remoteAddress = remoteAddress
+        self.remoteURL = remoteURL
+        self.remoteProtocol = remoteProtocol
+        self.localAddress = localAddress
+        self.localPort = localPort
+        self.remotePort = remotePort
+        self.process = process
+        self.parentProcess = parentProcess
+        self.processBundle = processBundle
+        self.parentBundle = parentBundle
+        self.processTopLevelBundle = processTopLevelBundle
+        self.parentTopLevelBundle = parentTopLevelBundle
+        self.displayName = displayName
+    }
+    
+    init(connectionOut: FirewallConnectionOut,
+         remoteURL : Optional<String>,
+         remoteProtocol : Optional<Protocol> ) {
         self.direction = ConnectionDirection.Outbound
         
         self.tag = connectionOut.tag!
@@ -89,6 +135,7 @@ struct Connection : Hashable, Identifiable {
         
         self.remoteAddress = connectionOut.remoteAddress
         self.remoteURL = remoteURL
+        self.remoteProtocol = remoteProtocol
         
         self.localAddress = connectionOut.localAddress
         
@@ -105,12 +152,41 @@ struct Connection : Hashable, Identifiable {
         self.parentTopLevelBundle = connectionOut.parentTopLevelBundle
         
         self.displayName = connectionOut.displayName
+        
+        self.image = getImage()
+    }
+    
+    func getImage() -> Optional<NSImage> {
+        if let nsimage = self.processBundle?.icon {
+            return nsimage
+        }
+        
+        if let nsimage = self.processTopLevelBundle?.icon {
+            return nsimage
+        }
+        
+        if let nsimage = self.parentBundle?.icon {
+            return nsimage
+        }
+        
+        if let nsimage = self.parentTopLevelBundle?.icon {
+            return nsimage
+        }
+        
+        return nil
     }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(tag)
     }
     
+    func getRemoteProtocol() -> String {
+        guard let port = self.remoteProtocol else {
+            return "\(self.remotePort)"
+        }
+        
+        return port.name
+    }
 }
 
 func ==(lhs: Connection, rhs: Connection) -> Bool {

@@ -13,6 +13,7 @@ import SwiftUI
 class ConsumerThread : Thread {
     private let state = State()
     private let dnsCache = DNSCache()
+    private let protocolCache = ProtocolCache()
     
     public var connections : [Connection] {
         return Array(state.connections)
@@ -72,14 +73,19 @@ class ConsumerThread : Thread {
             case FirewallEventType.outboundConnection:
                 let firewallEvent = event as! FirewallConnectionOut
                 let remoteURL = dnsCache.get(ip: firewallEvent.remoteAddress)
-                let connection = Connection(connectionOut: event as! FirewallConnectionOut, remoteURL: remoteURL)
+                let remoteProtocol = protocolCache.get(port: firewallEvent.remotePort)
+                
+                let connection = Connection(
+                    connectionOut: event as! FirewallConnectionOut,
+                    remoteURL: remoteURL,
+                    remoteProtocol: remoteProtocol)
+                
                 state.new(connection: connection)
                 
             case FirewallEventType.connectionUpdate:
                 let update = event as! FirewallConnectionUpdate
                 state.update(tag: update.tag!, update: update.update)
             case FirewallEventType.dnsUpdate:
-                print("got dnsupdate event");
                 let update = event as! FirewallDNSUpdate
                 update.aRecords.forEach { dnsCache.update(url: $0.url, ip: $0.ip) }
                 update.cNameRecords.forEach { dnsCache.update(url: $0.url, cName: $0.cName)}

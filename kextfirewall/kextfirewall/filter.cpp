@@ -8,6 +8,8 @@
 
 #include "filter.hpp"
 
+#include <kern/clock.h>
+#include <sys/time.h>
 #include <libkern/OSMalloc.h>
 #include <sys/kpi_mbuf.h>
 
@@ -211,6 +213,7 @@ bool send_update_event(cookie_header* header, sflt_event_t change) {
     firewall_event event = {0};
     bzero(&event, sizeof(firewall_event));
     
+    event.timestamp = current_time();
     uuid_copy(event.tag, *header->tag);
     
     event.type = connection_update;
@@ -223,6 +226,13 @@ bool send_update_event(cookie_header* header, sflt_event_t change) {
     }
     
     return true;
+}
+
+long current_time() {
+    clock_sec_t seconds;
+    clock_get_calendar_microtime(&seconds, NULL);
+    
+    return seconds;
 }
 
 bool send_outbound_event(cookie_header* header, socket_t so, const struct sockaddr *to) {
@@ -249,10 +259,10 @@ bool send_outbound_event(cookie_header* header, socket_t so, const struct sockad
         memcpy(&remote, to, sizeof(remote));
     }
     
-    
-    
     uuid_copy(event.tag, *header->tag);
     event.type = outbound_connection;
+    event.timestamp = current_time();
+    
     event.data.outbound.pid = proc_selfpid();
     event.data.outbound.ppid = proc_selfppid();
     event.data.outbound.local = local;

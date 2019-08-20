@@ -6,7 +6,7 @@
 //  Copyright © 2019 Alex Lisle. All rights reserved.
 //
 
-#include "include/kext-helpers.h"
+#include "Include/kext-helpers.h"
 
 
 char* get_process_name(pid_t pid) {

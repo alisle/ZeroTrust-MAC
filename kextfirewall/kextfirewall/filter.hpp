@@ -114,4 +114,7 @@ bool send_outbound_event(cookie_header* header, socket_t so, const struct sockad
 
 // Used to send an event update to the queue.
 bool send_update_event(cookie_header* header, sflt_event_t change);
+
+long current_time();
+
 #endif /* filter_hpp */

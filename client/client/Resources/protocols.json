@@ -1,0 +1,26 @@
+[
+    {
+        "name" : "HTTP",
+        "port" : 80,
+        "description" : "The Hypertext Transfer Protocol (HTTP) is an application protocol for distributed, collaborative, hypermedia information systems. HTTP is the foundation of data communication for the World Wide Web, where hypertext documents include hyperlinks to other resources that the user can easily access, for example by a mouse click or by tapping the screen in a web browser.",
+        "url" : "https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol"
+    },
+    {
+        "name" : "HTTPS",
+        "port" : 443,
+        "description" : "Hypertext Transfer Protocol Secure (HTTPS) is an extension of the Hypertext Transfer Protocol (HTTP). It is used for secure communication over a computer network, and is widely used on the Internet.",
+        "url" : "https://en.wikipedia.org/wiki/HTTPS"
+    },
+    {
+        "name" : "SSH",
+        "port" : 22,
+        "description" : "Secure Shell (SSH) is a cryptographic network protocol for operating network services securely over an unsecured network. Typical applications include remote command-line, login, and remote command execution, but any network service can be secured with SSH.",
+        "url" : "https://en.wikipedia.org/wiki/Secure_Shell"
+    },
+    {
+        "name" : "FTP",
+        "port" : 21,
+        "description" : "The File Transfer Protocol (FTP) is a standard network protocol used for the transfer of computer files between a client and server on a computer network.",
+        "url" : "https://en.wikipedia.org/wiki/File_Transfer_Protocol"
+    }
+]

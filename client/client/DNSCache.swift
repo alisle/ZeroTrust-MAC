@@ -52,8 +52,6 @@ class DNSCache {
         ARecord2IPsLock.lock()
         if let ips = ARecord2IPs[question]  {
             // We have an ARecord which was a question.
-            print("ARecord ips")
-            dump(ips)
             ips.forEach {
                 cacheLock.lock()
                 Cache[$0] = Record(type:RecordType.QuestionAnsweredRecord, url:question, ip:$0)
@@ -63,8 +61,6 @@ class DNSCache {
         ARecord2IPsLock.unlock()
         
         CName2ARecordLock.lock()
-        print("CName2ARecord")
-        dump(CName2ARecord)
         
         var record : Optional<String> = question
         var searching = true
@@ -82,7 +78,6 @@ class DNSCache {
         
         if record != nil {
             if let ips = ARecord2IPs[record!] {
-                print("CName ips")
                 ips.forEach {
                     cacheLock.lock()
                     Cache[$0] = Record(type:RecordType.QuestionAnsweredRecord, url: question, ip: $0)
@@ -90,9 +85,6 @@ class DNSCache {
                 }
             }
         }
-        
-        print("Cache")
-        dump(Cache)
         
         CName2ARecordLock.unlock()
     }
@@ -153,7 +145,7 @@ class DNSCache {
     
     func update(url: String, cName: String) {
         // Update our ARecord 2 Names.
-        var records : Set<String> = []
+         var records : Set<String> = []
         
         CName2ARecord[cName] = url
                 

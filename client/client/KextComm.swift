@@ -113,10 +113,13 @@ class KextComm {
     }
     
     func hasData() -> Bool {
+        print("getting for data")
         if IODataQueueDataAvailable(queue) {
+            print("got data")
             return true
         }
-        
+
+        print("has got data")
         return false
     }
     

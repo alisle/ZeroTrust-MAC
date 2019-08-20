@@ -60,8 +60,10 @@ typedef union  {
 
 typedef struct {
     uuid_t tag;
+    long timestamp;
     firewall_event_type type;
     firewall_event_data data;
 } firewall_event;
 
 #endif /* payload_h */
+

@@ -13,7 +13,16 @@ import SwiftUI
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     var window: NSWindow!
-    var connections = Connections()
+    let main = Main()
+    
+    @IBOutlet weak var statusMenu: NSMenu!
+    
+    let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    
+    @IBAction func quitClicked(_ sender: Any) {
+        NSApplication.shared.terminate(self)
+    }
+    
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -24,13 +33,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.center()
         window.setFrameAutosaveName("Main Window")
 
-        window.contentView = NSHostingView(rootView: ContentView().environmentObject(connections))
+        main.entryPoint()
+        window.contentView = NSHostingView(rootView: ContentView().environmentObject(main.currentConnections))
         
         window.makeKeyAndOrderFront(nil)
+        
+        setupStatusBar()
     }
-
+    
+    func setupStatusBar() {
+        let icon = NSImage(named: "StatusBarIcon")
+        icon?.isTemplate = false
+        
+        statusItem.menu = statusMenu
+        statusItem.button?.image = icon
+        //statusItem.image = icon
+    }
+    
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+        main.exitPoint()
     }
 
 

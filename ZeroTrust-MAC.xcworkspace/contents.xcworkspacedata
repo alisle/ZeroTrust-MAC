@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:firewall-client/firewall-client.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:client/client.xcodeproj">
    </FileRef>
    <FileRef

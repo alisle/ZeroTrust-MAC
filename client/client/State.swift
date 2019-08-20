@@ -36,6 +36,7 @@ class State {
             state.removeValue(forKey: tag)
         }
         lock.unlock()
+        dump()
     }
     
     func dump() {
