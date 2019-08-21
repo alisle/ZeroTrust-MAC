@@ -33,13 +33,14 @@ func generateTestConnection() -> Connection {
     let displayName = [ "ssh", "Google Chrome", "Mozilla Firefox", "Brave" ].randomElement()
     
     let connection = Connection(tag: UUID(),
+                                start: Date(),
                                 pid: 1021,
                                 ppid: 1020,
                                 uid: 1000,
                                 user: "alisle",
                                 remoteAddress: "192.168.2.3",
                                 remoteURL: "www.google.com",
-                                remoteProtocol: remoteProtocol,
+                                portProtocol: remoteProtocol,
                                 localAddress: "0.0.0.0",
                                 localPort: localPort,
                                 remotePort: remotePort!,

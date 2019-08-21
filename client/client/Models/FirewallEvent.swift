@@ -65,8 +65,11 @@ class FirewallDNSUpdate : FirewallEvent {
 
 class FirewallConnectionUpdate : FirewallEvent {
     let update : ConnectionState
-    init(tag: UUID, update: ConnectionState) {
+    let timestamp : Date
+    
+    init(tag: UUID, timestamp: TimeInterval, update: ConnectionState) {
         self.update = update;
+        self.timestamp = Date(timeIntervalSince1970: timestamp)
         super.init(type: FirewallEventType.connectionUpdate, tag: tag)
     }
     
@@ -77,6 +80,7 @@ class FirewallConnectionUpdate : FirewallEvent {
 }
 
 class FirewallConnectionOut : FirewallEvent {
+    let timestamp : Date
     let pid : pid_t
     let ppid : pid_t
     let uid : Optional<uid_t>
@@ -95,6 +99,7 @@ class FirewallConnectionOut : FirewallEvent {
     var displayName : String = ""
     
     init(tag: UUID,
+         timestamp : TimeInterval,
          pid: pid_t,
          ppid: pid_t,
          remoteAddress : String,
@@ -102,6 +107,8 @@ class FirewallConnectionOut : FirewallEvent {
          remotePort: Int,
          localPort: Int
         ) {
+        self.timestamp = Date(timeIntervalSince1970: timestamp)
+
         self.pid = pid
         self.ppid = ppid
         self.localPort = localPort

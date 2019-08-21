@@ -230,7 +230,9 @@ bool send_update_event(cookie_header* header, sflt_event_t change) {
 
 long current_time() {
     clock_sec_t seconds;
-    clock_get_calendar_microtime(&seconds, NULL);
+    clock_usec_t micro;
+    
+    clock_get_calendar_microtime(&seconds, &micro);
     
     return seconds;
 }

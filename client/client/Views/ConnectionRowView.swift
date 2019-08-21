@@ -18,7 +18,7 @@ struct ConnectionRowView: View {
                 HStack {
                     Text(connection.remoteDisplayAddress)
                     Spacer()
-                    Text("\(connection.getRemoteProtocol())")
+                    Text("\(connection.remotePort)")
                 }
                 
             }

@@ -138,6 +138,8 @@ class KextComm {
             let uuid = UUID.init(uuid: buffer.tag)
             let pid = buffer.data.outbound.pid;
             let ppid = buffer.data.outbound.ppid;
+            let timestamp = Double(buffer.timestamp);
+            
             guard let remote =  Helpers.getHostInformation(sockaddr: &buffer.data.outbound.remote) else {
                 return Optional.none
             }
@@ -150,6 +152,7 @@ class KextComm {
             
             return FirewallConnectionOut(
                 tag: uuid,
+                timestamp: timestamp,
                 pid: pid,
                 ppid: ppid,
                 remoteAddress: remote.0,
@@ -159,6 +162,7 @@ class KextComm {
             )
         case connection_update:
             let uuid = UUID.init(uuid:buffer.tag)
+            let timestamp = Double(buffer.timestamp);
             var update : Optional<ConnectionState>
             
             switch(buffer.data.update_event) {
@@ -182,7 +186,7 @@ class KextComm {
                 return Optional.none
             }
             
-            return FirewallConnectionUpdate(tag: uuid, update: update!)
+            return FirewallConnectionUpdate(tag: uuid, timestamp: timestamp, update: update!)
         case dns_update:
             var aRecords : [ARecord] = []
             var cNameRecords : [CNameRecord] = []

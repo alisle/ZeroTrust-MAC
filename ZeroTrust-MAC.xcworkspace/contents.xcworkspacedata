@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:client/client.xcodeproj">
+      location = "group:/Users/alisle/Documents/code/personal/ZeroTrust-MAC/client/ZeroTrust FW.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:kextfirewall/kextfirewall.xcodeproj">

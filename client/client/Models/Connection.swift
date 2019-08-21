@@ -10,27 +10,7 @@ import Foundation
 import SwiftUI
 
 
-enum ConnectionState: Int {
-    case connecting = 1,
-    connected,
-    disconnecting,
-    disconnected,
-    closing,
-    bound,
-    unknown
-    
-    var description : String {
-        switch self {
-        case .connecting: return "Connecting"
-        case .connected: return "Connected"
-        case .disconnecting: return "Disconnecting"
-        case .disconnected: return "Disconnected"
-        case .closing: return "Closing"
-        case .bound: return "Bound"
-        case .unknown: return "Unknown"
-        }
-    }
-}
+
 
 enum ConnectionDirection : Int {
     case Inbound = 1,
@@ -46,6 +26,9 @@ struct Connection : Hashable, Identifiable {
         get { self.tag }
     }
     
+    let startTimestamp : Date
+    var endDateTimestamp : Optional<Date> = nil
+    
     let pid : pid_t
     let ppid : pid_t
     
@@ -54,7 +37,7 @@ struct Connection : Hashable, Identifiable {
     
     let remoteAddress : String
     let remoteURL: Optional<String>
-    let remoteProtocol : Optional<Protocol>
+    let portProtocol : Optional<Protocol>
     
     let localAddress : String
     
@@ -79,15 +62,25 @@ struct Connection : Hashable, Identifiable {
         return remoteURL ?? remoteAddress
     }
 
+    var remoteProtocol : String {
+        guard let port = self.portProtocol else {
+            return "\(self.remotePort)"
+        }
+        
+        return port.name
+    }
+    
+    
     
     init(tag : UUID,
+         start: Date,
          pid : pid_t,
          ppid : pid_t,
          uid : Optional<uid_t>,
          user : Optional<String>,
          remoteAddress : String,
          remoteURL: Optional<String>,
-         remoteProtocol : Optional<Protocol>,
+         portProtocol : Optional<Protocol>,
          localAddress : String,
          localPort : Int,
          remotePort : Int,
@@ -100,6 +93,7 @@ struct Connection : Hashable, Identifiable {
          displayName : String) {
 
         self.direction = ConnectionDirection.Outbound
+        self.startTimestamp = start
         self.tag = tag
         self.pid = pid
         self.ppid = ppid
@@ -107,7 +101,7 @@ struct Connection : Hashable, Identifiable {
         self.user = user
         self.remoteAddress = remoteAddress
         self.remoteURL = remoteURL
-        self.remoteProtocol = remoteProtocol
+        self.portProtocol = portProtocol
         self.localAddress = localAddress
         self.localPort = localPort
         self.remotePort = remotePort
@@ -122,9 +116,9 @@ struct Connection : Hashable, Identifiable {
     
     init(connectionOut: FirewallConnectionOut,
          remoteURL : Optional<String>,
-         remoteProtocol : Optional<Protocol> ) {
+         portProtocol : Optional<Protocol> ) {
         self.direction = ConnectionDirection.Outbound
-        
+        self.startTimestamp = connectionOut.timestamp
         self.tag = connectionOut.tag!
         
         self.pid = connectionOut.pid
@@ -135,7 +129,7 @@ struct Connection : Hashable, Identifiable {
         
         self.remoteAddress = connectionOut.remoteAddress
         self.remoteURL = remoteURL
-        self.remoteProtocol = remoteProtocol
+        self.portProtocol = portProtocol
         
         self.localAddress = connectionOut.localAddress
         
@@ -180,13 +174,6 @@ struct Connection : Hashable, Identifiable {
         hasher.combine(tag)
     }
     
-    func getRemoteProtocol() -> String {
-        guard let port = self.remoteProtocol else {
-            return "\(self.remotePort)"
-        }
-        
-        return port.name
-    }
 }
 
 func ==(lhs: Connection, rhs: Connection) -> Bool {

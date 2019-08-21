@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		F008CBB822E8B32800791486 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F008CBB722E8B32800791486 /* SwiftUI.framework */; };
 		F00A491422EF8AFA006932A0 /* DNSCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00A491322EF8AFA006932A0 /* DNSCache.swift */; };
+		F043D4A1230DC35300746BED /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F043D4A0230DC35300746BED /* DateExtension.swift */; };
+		F043D4A3230DC51A00746BED /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F043D4A2230DC51A00746BED /* ConnectionState.swift */; };
 		F047056C22F34C470082D593 /* ConnectionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F047056B22F34C470082D593 /* ConnectionDetailsView.swift */; };
 		F052C9EB22C1278D005DE1D7 /* ConsumerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052C9EA22C1278D005DE1D7 /* ConsumerThread.swift */; };
 		F052C9ED22C163A2005DE1D7 /* KextComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052C9EC22C163A2005DE1D7 /* KextComm.swift */; };
@@ -56,6 +58,8 @@
 /* Begin PBXFileReference section */
 		F008CBB722E8B32800791486 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		F00A491322EF8AFA006932A0 /* DNSCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DNSCache.swift; path = "../../../../../../../../System/Volumes/Data/Users/alisle/Documents/code/personal/ZeroTrust-MAC/client/client/DNSCache.swift"; sourceTree = "<group>"; };
+		F043D4A0230DC35300746BED /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		F043D4A2230DC51A00746BED /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		F047056B22F34C470082D593 /* ConnectionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDetailsView.swift; sourceTree = "<group>"; };
 		F052C9EA22C1278D005DE1D7 /* ConsumerThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumerThread.swift; sourceTree = "<group>"; };
 		F052C9EC22C163A2005DE1D7 /* KextComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KextComm.swift; sourceTree = "<group>"; };
@@ -85,10 +89,10 @@
 		F0E4F82D22BBE4E200A38601 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F0E4F82F22BBE4E200A38601 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0E4F83022BBE4E200A38601 /* client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = client.entitlements; sourceTree = "<group>"; };
-		F0E4F83522BBE4E200A38601 /* clientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = clientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0E4F83522BBE4E200A38601 /* ZeroTrust FWTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZeroTrust FWTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E4F83922BBE4E200A38601 /* clientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clientTests.swift; sourceTree = "<group>"; };
 		F0E4F83B22BBE4E200A38601 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F0E4F84022BBE4E300A38601 /* clientUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = clientUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0E4F84022BBE4E300A38601 /* ZeroTrust FWUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZeroTrust FWUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E4F84422BBE4E300A38601 /* clientUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clientUITests.swift; sourceTree = "<group>"; };
 		F0E4F84622BBE4E300A38601 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,6 +143,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		F043D49F230DC32E00746BED /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F052C9F822C17606005DE1D7 /* BundleExtension.swift */,
+				F043D4A0230DC35300746BED /* DateExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		F052C9F622C17540005DE1D7 /* Include */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +169,7 @@
 				F0DA1BA02301C6EA00D07905 /* CurrentConnections.swift */,
 				F0D065DF23064E300076A1AC /* Protocol.swift */,
 				F0D065E4230654120076A1AC /* DNSRecords.swift */,
+				F043D4A2230DC51A00746BED /* ConnectionState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -183,8 +197,8 @@
 			isa = PBXGroup;
 			children = (
 				F0E4F82022BBE4E000A38601 /* ZeroTrust FW.app */,
-				F0E4F83522BBE4E200A38601 /* clientTests.xctest */,
-				F0E4F84022BBE4E300A38601 /* clientUITests.xctest */,
+				F0E4F83522BBE4E200A38601 /* ZeroTrust FWTests.xctest */,
+				F0E4F84022BBE4E300A38601 /* ZeroTrust FWUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -192,6 +206,7 @@
 		F0E4F82222BBE4E000A38601 /* client */ = {
 			isa = PBXGroup;
 			children = (
+				F043D49F230DC32E00746BED /* Extensions */,
 				F0D065E1230652830076A1AC /* Resources */,
 				F00A491522F20445006932A0 /* Views */,
 				F052C9FB22C17678005DE1D7 /* Models */,
@@ -207,7 +222,6 @@
 				F052C9EE22C1740A005DE1D7 /* Helpers.swift */,
 				F052C9F422C17531005DE1D7 /* kext-helpers.c */,
 				F052C9F222C17531005DE1D7 /* client-Bridging-Header.h */,
-				F052C9F822C17606005DE1D7 /* BundleExtension.swift */,
 				F052CA0022C3C77F005DE1D7 /* State.swift */,
 				F00A491322EF8AFA006932A0 /* DNSCache.swift */,
 				F0DA1B9E2301C50400D07905 /* Main.swift */,
@@ -262,9 +276,9 @@
 			productReference = F0E4F82022BBE4E000A38601 /* ZeroTrust FW.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F0E4F83422BBE4E200A38601 /* clientTests */ = {
+		F0E4F83422BBE4E200A38601 /* ZeroTrust FWTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F0E4F84C22BBE4E300A38601 /* Build configuration list for PBXNativeTarget "clientTests" */;
+			buildConfigurationList = F0E4F84C22BBE4E300A38601 /* Build configuration list for PBXNativeTarget "ZeroTrust FWTests" */;
 			buildPhases = (
 				F0E4F83122BBE4E200A38601 /* Sources */,
 				F0E4F83222BBE4E200A38601 /* Frameworks */,
@@ -275,14 +289,14 @@
 			dependencies = (
 				F0E4F83722BBE4E200A38601 /* PBXTargetDependency */,
 			);
-			name = clientTests;
+			name = "ZeroTrust FWTests";
 			productName = clientTests;
-			productReference = F0E4F83522BBE4E200A38601 /* clientTests.xctest */;
+			productReference = F0E4F83522BBE4E200A38601 /* ZeroTrust FWTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		F0E4F83F22BBE4E300A38601 /* clientUITests */ = {
+		F0E4F83F22BBE4E300A38601 /* ZeroTrust FWUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F0E4F84F22BBE4E300A38601 /* Build configuration list for PBXNativeTarget "clientUITests" */;
+			buildConfigurationList = F0E4F84F22BBE4E300A38601 /* Build configuration list for PBXNativeTarget "ZeroTrust FWUITests" */;
 			buildPhases = (
 				F0E4F83C22BBE4E300A38601 /* Sources */,
 				F0E4F83D22BBE4E300A38601 /* Frameworks */,
@@ -293,9 +307,9 @@
 			dependencies = (
 				F0E4F84222BBE4E300A38601 /* PBXTargetDependency */,
 			);
-			name = clientUITests;
+			name = "ZeroTrust FWUITests";
 			productName = clientUITests;
-			productReference = F0E4F84022BBE4E300A38601 /* clientUITests.xctest */;
+			productReference = F0E4F84022BBE4E300A38601 /* ZeroTrust FWUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -322,7 +336,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F0E4F81B22BBE4E000A38601 /* Build configuration list for PBXProject "client" */;
+			buildConfigurationList = F0E4F81B22BBE4E000A38601 /* Build configuration list for PBXProject "ZeroTrust FW" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -336,8 +350,8 @@
 			projectRoot = "";
 			targets = (
 				F0E4F81F22BBE4E000A38601 /* ZeroTrust FW */,
-				F0E4F83422BBE4E200A38601 /* clientTests */,
-				F0E4F83F22BBE4E300A38601 /* clientUITests */,
+				F0E4F83422BBE4E200A38601 /* ZeroTrust FWTests */,
+				F0E4F83F22BBE4E300A38601 /* ZeroTrust FWUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -376,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0D065E7230656A00076A1AC /* ProtocolCache.swift in Sources */,
+				F043D4A1230DC35300746BED /* DateExtension.swift in Sources */,
 				F052C9F122C1743D005DE1D7 /* FirewallEvent.swift in Sources */,
 				F0DA1BA52303206800D07905 /* ConnectionIconView.swift in Sources */,
 				F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */,
@@ -389,6 +404,7 @@
 				F0D065E023064E300076A1AC /* Protocol.swift in Sources */,
 				F052C9F522C17531005DE1D7 /* kext-helpers.c in Sources */,
 				F052C9ED22C163A2005DE1D7 /* KextComm.swift in Sources */,
+				F043D4A3230DC51A00746BED /* ConnectionState.swift in Sources */,
 				F0DA1BA12301C6EA00D07905 /* CurrentConnections.swift in Sources */,
 				F0DA1BA72303530700D07905 /* ConnectionListView.swift in Sources */,
 				F052C9FD22C17699005DE1D7 /* Connection.swift in Sources */,
@@ -560,6 +576,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "client/Preview\\ Content";
@@ -572,8 +589,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.notrust.client;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.notrust.ZeroTrust-FW";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "client/client-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -586,6 +604,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "client/Preview\\ Content";
@@ -598,8 +617,9 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.notrust.client;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.notrust.ZeroTrust-FW";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "client/client-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -622,7 +642,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.notrust.clientTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/client.app/Contents/MacOS/client";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZeroTrust FW.app/Contents/MacOS/ZeroTrust FW";
 			};
 			name = Debug;
 		};
@@ -643,7 +663,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.notrust.clientTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/client.app/Contents/MacOS/client";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZeroTrust FW.app/Contents/MacOS/ZeroTrust FW";
 			};
 			name = Release;
 		};
@@ -690,7 +710,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F0E4F81B22BBE4E000A38601 /* Build configuration list for PBXProject "client" */ = {
+		F0E4F81B22BBE4E000A38601 /* Build configuration list for PBXProject "ZeroTrust FW" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F0E4F84722BBE4E300A38601 /* Debug */,
@@ -708,7 +728,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F0E4F84C22BBE4E300A38601 /* Build configuration list for PBXNativeTarget "clientTests" */ = {
+		F0E4F84C22BBE4E300A38601 /* Build configuration list for PBXNativeTarget "ZeroTrust FWTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F0E4F84D22BBE4E300A38601 /* Debug */,
@@ -717,7 +737,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F0E4F84F22BBE4E300A38601 /* Build configuration list for PBXNativeTarget "clientUITests" */ = {
+		F0E4F84F22BBE4E300A38601 /* Build configuration list for PBXNativeTarget "ZeroTrust FWUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F0E4F85022BBE4E300A38601 /* Debug */,

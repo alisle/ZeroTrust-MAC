@@ -20,6 +20,15 @@ struct SiteDetails: View {
 }
 struct ConnectionDetailsView: View {
     let connection : Connection
+    
+    func getEndDate() -> String {
+        if let end = connection.endDateTimestamp {
+            return end.timeAgoSinceDate()
+        } else {
+            return "Ongoing"
+        }
+    }
+    
     var title: some View {
         let hstack = HStack() {
             ConnectionIconView(connection: connection)
@@ -39,11 +48,11 @@ struct ConnectionDetailsView: View {
     
     var metadata: some View {
         let hstack = HStack() {
-            Text("Start Date: just now")
+            Text("Start Date: \(connection.startTimestamp.timeAgoSinceDate())")
             Spacer()
-            Text("End Date: Ongoing")
+            Text("End Date: \(getEndDate())")
             Spacer()
-            Text("Current State: Connected")
+            Text("Current State: \(connection.state.description)")
         }
 
         return hstack
@@ -54,10 +63,10 @@ struct ConnectionDetailsView: View {
             Text("Protocol Details").font(.headline).bold()
             HStack {
                 Text("Type:").bold()
-                Text("\(connection.remoteProtocol!.name) - \(connection.remoteProtocol!.port)")
+                Text("\(connection.portProtocol!.name) - \(connection.portProtocol!.port)")
             }
             
-            Text(connection.remoteProtocol!.description)
+            Text(connection.portProtocol!.description)
                 .lineLimit(nil)
                 .multilineTextAlignment(.leading)
                 .frame(minWidth: 500,

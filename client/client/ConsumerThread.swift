@@ -78,7 +78,7 @@ class ConsumerThread : Thread {
                 let connection = Connection(
                     connectionOut: event as! FirewallConnectionOut,
                     remoteURL: remoteURL,
-                    remoteProtocol: remoteProtocol)
+                    portProtocol: remoteProtocol)
                 
                 state.new(connection: connection)
                 

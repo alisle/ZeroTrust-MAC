@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import client
+@testable import ZeroTrust_FW
 
 class clientTests: XCTestCase {
 
