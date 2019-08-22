@@ -64,10 +64,10 @@ class FirewallDNSUpdate : FirewallEvent {
 
 
 class FirewallConnectionUpdate : FirewallEvent {
-    let update : ConnectionState
+    let update : ConnectionStateType
     let timestamp : Date
     
-    init(tag: UUID, timestamp: TimeInterval, update: ConnectionState) {
+    init(tag: UUID, timestamp: TimeInterval, update: ConnectionStateType) {
         self.update = update;
         self.timestamp = Date(timeIntervalSince1970: timestamp)
         super.init(type: FirewallEventType.connectionUpdate, tag: tag)

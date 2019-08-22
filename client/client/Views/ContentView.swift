@@ -9,17 +9,34 @@
 import SwiftUI
 
 struct ContentView : View  {
-    
+    @State private var filterBy: ViewLength = .current    
     @EnvironmentObject var connections : CurrentConnections
- 
-    var body: some View {
+    
+    var picker : some View {
+        HStack {
+            Spacer()
+            Picker(selection: $filterBy, label: Text("Time Window")) {
+                ForEach(ViewLength.allCases, id: \.rawValue) { length in
+                    Text(length.description).tag(length)
+                }
+            }.pickerStyle(SegmentedPickerStyle())
+        }
+    }
+    
+    var connectionsContainer : some View {
         NavigationView {
-            ConnectionListView()
-                .frame(minWidth: 400.0, maxWidth: 600)
+            ConnectionListView(filter: filterBy)
+                .frame(minWidth: 400, maxWidth: 600)
             Text("Select Something")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }.frame(minWidth: 800, maxWidth: 1024)
+        }
+    }
     
+    var body: some View {
+        VStack {
+            picker
+            connectionsContainer
+        }.frame(minWidth: 800, maxWidth: 1024)
     }
 }
 
@@ -58,12 +75,42 @@ func generateTestConnection() -> Connection {
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
         let connections = CurrentConnections()
-        connections.establishedConnections = [
+        
+        connections.connections[.current] = [
             generateTestConnection(),
             generateTestConnection(),
             generateTestConnection(),
             generateTestConnection()
         ]
+
+        connections.connections[.five] = [
+            generateTestConnection(),
+            generateTestConnection(),
+            generateTestConnection(),
+            generateTestConnection()
+        ]
+
+        connections.connections[.ten] = [
+            generateTestConnection(),
+            generateTestConnection(),
+            generateTestConnection(),
+            generateTestConnection()
+        ]
+
+        connections.connections[.thirty] = [
+            generateTestConnection(),
+            generateTestConnection(),
+            generateTestConnection(),
+            generateTestConnection()
+        ]
+
+        connections.connections[.hour] = [
+            generateTestConnection(),
+            generateTestConnection(),
+            generateTestConnection(),
+            generateTestConnection()
+        ]
+
         
         return ContentView().environmentObject(connections)
     }

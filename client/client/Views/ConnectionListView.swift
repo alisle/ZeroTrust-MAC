@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct ConnectionListView: View {
+    let filter : ViewLength
     @EnvironmentObject var connections : CurrentConnections
     
     var body: some View {        
         List {
-            Section(header: Text("Current Connections")) {
-                ForEach(connections.establishedConnections) { connection in
+            Section(header: Text(filter.description)) {
+                ForEach(connections.connections[filter] != nil ? connections.connections[filter]! : []) { connection in
                     NavigationLink(destination: ConnectionDetailsView(connection: connection)) {
                         ConnectionRowView(connection: connection)
                             .tag(connection.id)
@@ -29,14 +30,15 @@ struct ConnectionListView: View {
 struct ConnectionListView_Previews: PreviewProvider {
     static var previews: some View {
         let connections = CurrentConnections()
-            connections.establishedConnections = [
+        
+        connections.connections[.current] = [
                 generateTestConnection(),
                 generateTestConnection(),
                 generateTestConnection(),
                 generateTestConnection()
-            ]
+        ]
             
-        return ConnectionListView().environmentObject(connections)
+        return ConnectionListView(filter: .current).environmentObject(connections)
         }
 }
 #endif

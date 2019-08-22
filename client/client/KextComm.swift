@@ -163,21 +163,21 @@ class KextComm {
         case connection_update:
             let uuid = UUID.init(uuid:buffer.tag)
             let timestamp = Double(buffer.timestamp);
-            var update : Optional<ConnectionState>
+            var update : Optional<ConnectionStateType>
             
             switch(buffer.data.update_event) {
             case connecting:
-                update = Optional(ConnectionState.connecting)
+                update = Optional(ConnectionStateType.connecting)
             case connected:
-                update = Optional(ConnectionState.connected)
+                update = Optional(ConnectionStateType.connected)
             case disconnecting:
-                update = Optional(ConnectionState.disconnecting)
+                update = Optional(ConnectionStateType.disconnecting)
             case disconnected:
-                update = Optional(ConnectionState.disconnected)
+                update = Optional(ConnectionStateType.disconnected)
             case closing:
-                update = Optional(ConnectionState.closing)
+                update = Optional(ConnectionStateType.closing)
             case bound:
-                update = Optional(ConnectionState.bound)
+                update = Optional(ConnectionStateType.bound)
             default:
                 update = Optional.none
             }

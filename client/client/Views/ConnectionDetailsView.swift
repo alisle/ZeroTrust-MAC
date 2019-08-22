@@ -88,7 +88,7 @@ struct ConnectionDetailsView: View {
                 .frame(minWidth: 500, minHeight: 150)
 
             Spacer()
-            if connection.remoteProtocol != nil {
+            if connection.portProtocol != nil {
                 protocolDetails
             }
             

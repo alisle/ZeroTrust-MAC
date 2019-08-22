@@ -56,7 +56,7 @@ struct Connection : Hashable, Identifiable {
     let displayName : String
     
     var image : Optional<NSImage> = nil
-    var state : ConnectionState = ConnectionState.unknown
+    var state : ConnectionStateType = ConnectionStateType.unknown
     
     var remoteDisplayAddress : String {
         return remoteURL ?? remoteAddress

@@ -12,5 +12,5 @@ import SwiftUI
 
 class CurrentConnections : BindableObject {
     var willChange = PassthroughSubject<Void, Never>()
-    var establishedConnections = [Connection]() { didSet { willChange.send() }}
+    var connections  = [ ViewLength: [Connection]]() { didSet { willChange.send() }}
 }

@@ -11,12 +11,18 @@ import SwiftUI
 
 
 class ConsumerThread : Thread {
-    private let state = State()
+    private let state = ConnectionState()
     private let dnsCache = DNSCache()
     private let protocolCache = ProtocolCache()
     
-    public var connections : [Connection] {
-        return Array(state.connections)
+    public var connections : [ViewLength : [Connection]] {
+        var sets = [ViewLength : [Connection]]()
+        
+        ViewLength.allCases.forEach {
+            sets[$0] = state.connections(filter: $0)
+        }
+        
+        return sets
     }
     
     private var isOpen = false
@@ -84,7 +90,7 @@ class ConsumerThread : Thread {
                 
             case FirewallEventType.connectionUpdate:
                 let update = event as! FirewallConnectionUpdate
-                state.update(tag: update.tag!, update: update.update)
+                state.update(tag: update.tag!, timestamp: update.timestamp, update: update.update)
             case FirewallEventType.dnsUpdate:
                 let update = event as! FirewallDNSUpdate
                 update.aRecords.forEach { dnsCache.update(url: $0.url, ip: $0.ip) }

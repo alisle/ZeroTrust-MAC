@@ -51,4 +51,15 @@ extension Date {
 
         return "A moment ago"
     }
+    
+    func olderThan(minutes : Int) -> Bool {
+        let fromDate = self
+        let toDate = Date()
+        
+        if let interval = Calendar.current.dateComponents([.minute], from: fromDate, to: toDate).minute, interval >= minutes {
+            return true
+        }
+        
+        return false
+    }
 }

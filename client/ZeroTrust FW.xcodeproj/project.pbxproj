@@ -10,7 +10,9 @@
 		F008CBB822E8B32800791486 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F008CBB722E8B32800791486 /* SwiftUI.framework */; };
 		F00A491422EF8AFA006932A0 /* DNSCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00A491322EF8AFA006932A0 /* DNSCache.swift */; };
 		F043D4A1230DC35300746BED /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F043D4A0230DC35300746BED /* DateExtension.swift */; };
-		F043D4A3230DC51A00746BED /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F043D4A2230DC51A00746BED /* ConnectionState.swift */; };
+		F043D4A3230DC51A00746BED /* ConnectionStateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F043D4A2230DC51A00746BED /* ConnectionStateType.swift */; };
+		F043D4A5230DCE7000746BED /* ContentViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F043D4A4230DCE7000746BED /* ContentViewState.swift */; };
+		F043D4A7230DCEB300746BED /* ViewLengths.swift in Sources */ = {isa = PBXBuildFile; fileRef = F043D4A6230DCEB300746BED /* ViewLengths.swift */; };
 		F047056C22F34C470082D593 /* ConnectionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F047056B22F34C470082D593 /* ConnectionDetailsView.swift */; };
 		F052C9EB22C1278D005DE1D7 /* ConsumerThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052C9EA22C1278D005DE1D7 /* ConsumerThread.swift */; };
 		F052C9ED22C163A2005DE1D7 /* KextComm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052C9EC22C163A2005DE1D7 /* KextComm.swift */; };
@@ -19,7 +21,7 @@
 		F052C9F522C17531005DE1D7 /* kext-helpers.c in Sources */ = {isa = PBXBuildFile; fileRef = F052C9F422C17531005DE1D7 /* kext-helpers.c */; };
 		F052C9F922C17606005DE1D7 /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052C9F822C17606005DE1D7 /* BundleExtension.swift */; };
 		F052C9FD22C17699005DE1D7 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052C9FC22C17699005DE1D7 /* Connection.swift */; };
-		F052CA0122C3C77F005DE1D7 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052CA0022C3C77F005DE1D7 /* State.swift */; };
+		F052CA0122C3C77F005DE1D7 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052CA0022C3C77F005DE1D7 /* ConnectionState.swift */; };
 		F0D065E023064E300076A1AC /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065DF23064E300076A1AC /* Protocol.swift */; };
 		F0D065E3230652BD0076A1AC /* protocols.json in Resources */ = {isa = PBXBuildFile; fileRef = F0D065E2230652BD0076A1AC /* protocols.json */; };
 		F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065E4230654120076A1AC /* DNSRecords.swift */; };
@@ -59,7 +61,9 @@
 		F008CBB722E8B32800791486 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		F00A491322EF8AFA006932A0 /* DNSCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DNSCache.swift; path = "../../../../../../../../System/Volumes/Data/Users/alisle/Documents/code/personal/ZeroTrust-MAC/client/client/DNSCache.swift"; sourceTree = "<group>"; };
 		F043D4A0230DC35300746BED /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
-		F043D4A2230DC51A00746BED /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
+		F043D4A2230DC51A00746BED /* ConnectionStateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStateType.swift; sourceTree = "<group>"; };
+		F043D4A4230DCE7000746BED /* ContentViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewState.swift; sourceTree = "<group>"; };
+		F043D4A6230DCEB300746BED /* ViewLengths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewLengths.swift; sourceTree = "<group>"; };
 		F047056B22F34C470082D593 /* ConnectionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDetailsView.swift; sourceTree = "<group>"; };
 		F052C9EA22C1278D005DE1D7 /* ConsumerThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsumerThread.swift; sourceTree = "<group>"; };
 		F052C9EC22C163A2005DE1D7 /* KextComm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KextComm.swift; sourceTree = "<group>"; };
@@ -71,7 +75,7 @@
 		F052C9F722C17570005DE1D7 /* payload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = payload.h; sourceTree = "<group>"; };
 		F052C9F822C17606005DE1D7 /* BundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = "<group>"; };
 		F052C9FC22C17699005DE1D7 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
-		F052CA0022C3C77F005DE1D7 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		F052CA0022C3C77F005DE1D7 /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
 		F0D065DF23064E300076A1AC /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		F0D065E2230652BD0076A1AC /* protocols.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = protocols.json; sourceTree = "<group>"; };
 		F0D065E4230654120076A1AC /* DNSRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSRecords.swift; sourceTree = "<group>"; };
@@ -169,7 +173,8 @@
 				F0DA1BA02301C6EA00D07905 /* CurrentConnections.swift */,
 				F0D065DF23064E300076A1AC /* Protocol.swift */,
 				F0D065E4230654120076A1AC /* DNSRecords.swift */,
-				F043D4A2230DC51A00746BED /* ConnectionState.swift */,
+				F043D4A2230DC51A00746BED /* ConnectionStateType.swift */,
+				F043D4A6230DCEB300746BED /* ViewLengths.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -222,10 +227,11 @@
 				F052C9EE22C1740A005DE1D7 /* Helpers.swift */,
 				F052C9F422C17531005DE1D7 /* kext-helpers.c */,
 				F052C9F222C17531005DE1D7 /* client-Bridging-Header.h */,
-				F052CA0022C3C77F005DE1D7 /* State.swift */,
+				F052CA0022C3C77F005DE1D7 /* ConnectionState.swift */,
 				F00A491322EF8AFA006932A0 /* DNSCache.swift */,
 				F0DA1B9E2301C50400D07905 /* Main.swift */,
 				F0D065E6230656A00076A1AC /* ProtocolCache.swift */,
+				F043D4A4230DCE7000746BED /* ContentViewState.swift */,
 			);
 			path = client;
 			sourceTree = "<group>";
@@ -393,19 +399,21 @@
 				F043D4A1230DC35300746BED /* DateExtension.swift in Sources */,
 				F052C9F122C1743D005DE1D7 /* FirewallEvent.swift in Sources */,
 				F0DA1BA52303206800D07905 /* ConnectionIconView.swift in Sources */,
+				F043D4A7230DCEB300746BED /* ViewLengths.swift in Sources */,
 				F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */,
 				F0DA1B9F2301C50400D07905 /* Main.swift in Sources */,
 				F0E4F82622BBE4E000A38601 /* ContentView.swift in Sources */,
 				F052C9F922C17606005DE1D7 /* BundleExtension.swift in Sources */,
 				F047056C22F34C470082D593 /* ConnectionDetailsView.swift in Sources */,
-				F052CA0122C3C77F005DE1D7 /* State.swift in Sources */,
+				F052CA0122C3C77F005DE1D7 /* ConnectionState.swift in Sources */,
 				F0DA1BA32301EC8B00D07905 /* ConnectionRowView.swift in Sources */,
 				F052C9EF22C1740A005DE1D7 /* Helpers.swift in Sources */,
 				F0D065E023064E300076A1AC /* Protocol.swift in Sources */,
 				F052C9F522C17531005DE1D7 /* kext-helpers.c in Sources */,
 				F052C9ED22C163A2005DE1D7 /* KextComm.swift in Sources */,
-				F043D4A3230DC51A00746BED /* ConnectionState.swift in Sources */,
+				F043D4A3230DC51A00746BED /* ConnectionStateType.swift in Sources */,
 				F0DA1BA12301C6EA00D07905 /* CurrentConnections.swift in Sources */,
+				F043D4A5230DCE7000746BED /* ContentViewState.swift in Sources */,
 				F0DA1BA72303530700D07905 /* ConnectionListView.swift in Sources */,
 				F052C9FD22C17699005DE1D7 /* Connection.swift in Sources */,
 				F0E4F82422BBE4E000A38601 /* AppDelegate.swift in Sources */,

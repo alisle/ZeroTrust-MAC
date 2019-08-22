@@ -22,13 +22,17 @@ class Main {
     
     private func queueUpdate() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.currentConnections.establishedConnections = self.consumerThread.connections
+            self.currentConnections.connections = self.consumerThread.connections
             self.queueUpdate()
         }
     }
-    
-    func getCurrentConnections() -> [Connection] {
+
+    func getAllConnections() -> [ViewLength: [Connection]] {
         return consumerThread.connections
+    }
+
+    func getConnections(filter: ViewLength) -> [Connection] {
+        return consumerThread.connections[filter]!
     }
     
     func exitPoint() {
