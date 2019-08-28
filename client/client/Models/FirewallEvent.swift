@@ -105,7 +105,8 @@ class FirewallConnectionOut : FirewallEvent {
          remoteAddress : String,
          localAddress : String,
          remotePort: Int,
-         localPort: Int
+         localPort: Int,
+         procName : String
         ) {
         self.timestamp = Date(timeIntervalSince1970: timestamp)
 
@@ -116,7 +117,7 @@ class FirewallConnectionOut : FirewallEvent {
         self.remotePort = remotePort
         self.remoteAddress = remoteAddress
         
-        self.process = Helpers.getPidPath(pid: pid)
+        self.process = Helpers.getPidPath(pid: pid) ?? procName
         self.parentProcess = Helpers.getPidPath(pid: ppid)
         
         self.parentBundle = Helpers.getBinaryAppBundle(fullBinaryPath: parentProcess)
@@ -129,8 +130,7 @@ class FirewallConnectionOut : FirewallEvent {
         self.user = Helpers.getUsernameFromUID(uid: uid)
         
         super.init(type: FirewallEventType.outboundConnection, tag: tag)
-        displayName = createDisplayName()
-        
+        displayName = createDisplayName()        
     }
     
     private func createDisplayName()  -> String {

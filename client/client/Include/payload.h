@@ -10,16 +10,7 @@
 #define payload_h
 
 #include <netinet/in.h>
-
-
-struct payload {
-    int pid;
-    int ppid;
-    struct sockaddr_in remote;
-    struct sockaddr_in local;
-};
-
-typedef struct payload payload;
+#include <limits.h>
 
 typedef enum {
     outbound_connection = 0,
@@ -44,6 +35,7 @@ typedef enum {
 typedef struct  {
     int pid;
     int ppid;
+    char proc_name[PATH_MAX];
     struct sockaddr_in remote;
     struct sockaddr_in local;
 } firewall_connection_out;
@@ -66,4 +58,3 @@ typedef struct {
 } firewall_event;
 
 #endif /* payload_h */
-

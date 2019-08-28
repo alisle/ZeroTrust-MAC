@@ -113,13 +113,9 @@ class KextComm {
     }
     
     func hasData() -> Bool {
-        print("getting for data")
         if IODataQueueDataAvailable(queue) {
-            print("got data")
             return true
         }
-
-        print("has got data")
         return false
     }
     
@@ -127,18 +123,26 @@ class KextComm {
         var size : UInt32 = UInt32(MemoryLayout<firewall_event>.size)
         var buffer = firewall_event()
         
+        print("trying to dequeue")
         if kIOReturnSuccess != IODataQueueDequeue(queue, &buffer, &size) {
             print("Unable to dequeue data")
             return Optional.none
         }
         
         
+        print("checking buffer type")
         switch buffer.type {
         case outbound_connection:
+            print("outbound connection")
             let uuid = UUID.init(uuid: buffer.tag)
             let pid = buffer.data.outbound.pid;
             let ppid = buffer.data.outbound.ppid;
             let timestamp = Double(buffer.timestamp);
+            
+            let procName = withUnsafeBytes(of: &buffer.data.outbound.proc_name) { (rawPtr) -> String in
+                let ptr = rawPtr.baseAddress!.assumingMemoryBound(to: CChar.self)
+                return String(cString: ptr)
+            }
             
             guard let remote =  Helpers.getHostInformation(sockaddr: &buffer.data.outbound.remote) else {
                 return Optional.none
@@ -148,8 +152,7 @@ class KextComm {
                 return Optional.none
             }
             
-            
-            
+            print("posting connection out")
             return FirewallConnectionOut(
                 tag: uuid,
                 timestamp: timestamp,
@@ -158,9 +161,12 @@ class KextComm {
                 remoteAddress: remote.0,
                 localAddress: local.0,
                 remotePort: remote.1,
-                localPort: local.1
+                localPort: local.1,
+                procName: procName
             )
         case connection_update:
+            print("connection update")
+
             let uuid = UUID.init(uuid:buffer.tag)
             let timestamp = Double(buffer.timestamp);
             var update : Optional<ConnectionStateType>
@@ -182,12 +188,16 @@ class KextComm {
                 update = Optional.none
             }
             
-            if( update == nil) {
+            if( update == nil) {                
+                print("have an update type we don't care about skipping")
                 return Optional.none
             }
             
             return FirewallConnectionUpdate(tag: uuid, timestamp: timestamp, update: update!)
         case dns_update:
+            
+            print("dns update")
+
             var aRecords : [ARecord] = []
             var cNameRecords : [CNameRecord] = []
             var questions: [ String ] = []
@@ -215,6 +225,7 @@ class KextComm {
             print("Unknown firewall type")
         }
         
+        print("nothing..")
         return Optional.none
     }
     

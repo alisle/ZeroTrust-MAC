@@ -12,31 +12,43 @@ struct ContentView : View  {
     @State private var filterBy: ViewLength = .current    
     @EnvironmentObject var connections : CurrentConnections
     
-    var picker : some View {
-        HStack {
-            Spacer()
-            Picker(selection: $filterBy, label: Text("Time Window")) {
-                ForEach(ViewLength.allCases, id: \.rawValue) { length in
-                    Text(length.description).tag(length)
+    var header : some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Zero Trust").bold()
+                Spacer()
+                Picker(selection: $filterBy, label: Text("Filter")) {
+                    ForEach(ViewLength.allCases, id: \.rawValue) { length in
+                        Text(length.description).tag(length)
+                    }
                 }
-            }.pickerStyle(SegmentedPickerStyle())
-        }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(3)
+            }
+        }.padding(5)
     }
     
     var connectionsContainer : some View {
         NavigationView {
             ConnectionListView(filter: filterBy)
                 .frame(minWidth: 400, maxWidth: 600)
-            Text("Select Something")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            if connections.enabled {
+                Text("Such Empty!")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                Text("Not Enabled")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            
         }
     }
     
     var body: some View {
         VStack {
-            picker
+            header
             connectionsContainer
-        }.frame(minWidth: 800, maxWidth: 1024)
+        }.frame(minWidth: 800, maxWidth: .infinity)
     }
 }
 

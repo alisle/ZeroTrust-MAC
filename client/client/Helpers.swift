@@ -88,15 +88,16 @@ class Helpers {
     }
     
     static func getBinaryAppBundle(fullBinaryPath : Optional<String>) -> Optional<Bundle> {
-        guard let path = fullBinaryPath else {
+        guard var path = fullBinaryPath else {
             return Optional.none
         }
         
         var bundle : Optional<Bundle> = Bundle(path: path)
         while !path.isEqual("/") && !path.isEqual("") && bundle == nil {
-            let index  = path.lastIndex(of: "/") ?? path.endIndex
+            let index  = path.lastIndex(of: "/") ?? path.startIndex
             let substring = path[..<index]
             bundle = Bundle(path: String(substring))
+            path = String(substring)
         }
         
         return bundle

@@ -15,14 +15,28 @@ class Main {
     
     
     func entryPoint() {
-        let _ = consumerThread.open()
         consumerThread.start()
         queueUpdate()
     }
     
+    func enable() {
+        let _ = consumerThread.open()
+        consumerThread.open()
+        currentConnections.enabled = true
+    }
+    
+    func disable() {
+        self.currentConnections.connections = [ ViewLength: [Connection]]()
+        consumerThread.close()
+        currentConnections.enabled = false
+    }
+    
     private func queueUpdate() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.currentConnections.connections = self.consumerThread.connections
+            if self.currentConnections.enabled {
+                self.currentConnections.connections = self.consumerThread.connections
+            }
+            
             self.queueUpdate()
         }
     }

@@ -14,8 +14,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var window: NSWindow!
     let main = Main()
+    let disabledIcon = NSImage(named: "DisabledEthernet")
+    let enabledIcon = NSImage(named: "EnabledEthernet")
+    let Quarantine = NSImage(named: "Quarantine")
+    
+    var enabled = true
     
     @IBOutlet weak var statusMenu: NSMenu!
+    @IBOutlet weak var enabledMenuItem: NSMenuItem!
+    @IBOutlet weak var quarantineMenuItem: NSMenuItem!
+    @IBOutlet weak var showConnectionsMenuItem: NSMenuItem!
+    @IBOutlet weak var quitMenuItem: NSMenuItem!
     
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
@@ -23,7 +32,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApplication.shared.terminate(self)
     }
     
+    @IBAction func enabledClicked(_ sender: Any) {
+        enabled.toggle()
+        
+        if enabled {
+            enableService()
+        } else {
+            disableService()
+        }
+    }
     
+    @IBAction func quarantineClicked(_ sender: Any) {
+        
+    }
+    
+    @IBAction func showConnectionsClicked(_ sender: Any) {
+        window.makeKeyAndOrderFront(nil)
+    }
+    
+    private func enableService(){
+        enabledMenuItem.title = "Disable Service..."
+        enabledMenuItem.image = disabledIcon
+        main.enable()
+    }
+    
+    private func disableService() {
+        enabledMenuItem.title = "Enable Service..."
+        enabledMenuItem.image = enabledIcon
+        main.disable()
+    }
+    
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         window = NSWindow(
@@ -34,9 +73,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.setFrameAutosaveName("Main Window")
 
         main.entryPoint()
+        main.enable()
+        
         window.contentView = NSHostingView(rootView: ContentView().environmentObject(main.currentConnections))
         
-        window.makeKeyAndOrderFront(nil)
+        //window.makeKeyAndOrderFront(nil)
         
         setupStatusBar()
     }
@@ -47,11 +88,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         statusItem.menu = statusMenu
         statusItem.button?.image = icon
-        //statusItem.image = icon
+        
+        enableService()
+        
+        quarantineMenuItem.image = Quarantine
+
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+        
+        main.disable()
         main.exitPoint()
     }
 

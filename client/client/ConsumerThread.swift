@@ -55,50 +55,67 @@ class ConsumerThread : Thread {
             return
         }
         
+        isOpen.toggle()
+
         comm.destroyNotificationPort()
         comm.disable()
         comm.close()
         
-        isOpen.toggle()
     }
     
     override func main() {
-        while isOpen {
-            if !comm.hasData() {
-                if !comm.waitForData() {
-                    return
+        while true {
+            while isOpen {
+                print("checking for data")
+                if !comm.hasData() {
+                    print("waiting on data")
+
+                    if !comm.waitForData() {
+                        print("wait for data failed....")
+                        return
+                    }
+                    
+                    print("got data")
                 }
-            }
-            
-            guard let event = comm.dequeue() else {
-                continue
-            }
-            
-            
-            switch(event.eventType) {
-            case FirewallEventType.outboundConnection:
-                let firewallEvent = event as! FirewallConnectionOut
-                let remoteURL = dnsCache.get(ip: firewallEvent.remoteAddress)
-                let remoteProtocol = protocolCache.get(port: firewallEvent.remotePort)
+
+                print("dequeuing data")
+                guard let event = comm.dequeue() else {
+                    print("event is null skipping")
+                    continue
+                }
                 
-                let connection = Connection(
-                    connectionOut: event as! FirewallConnectionOut,
-                    remoteURL: remoteURL,
-                    portProtocol: remoteProtocol)
+                print("processing event")
+                switch(event.eventType) {
+                case FirewallEventType.outboundConnection:
+                    let firewallEvent = event as! FirewallConnectionOut
+                    let remoteURL = dnsCache.get(ip: firewallEvent.remoteAddress)
+                    let remoteProtocol = protocolCache.get(port: firewallEvent.remotePort)
+                    
+                    let connection = Connection(
+                        connectionOut: event as! FirewallConnectionOut,
+                        remoteURL: remoteURL,
+                        portProtocol: remoteProtocol)
+                    
+                    print("updating state")
+                    state.new(connection: connection)
+                    print("updated state")
+
+                case FirewallEventType.connectionUpdate:
+                    let update = event as! FirewallConnectionUpdate
+                    state.update(tag: update.tag!, timestamp: update.timestamp, update: update.update)
+                case FirewallEventType.dnsUpdate:
+                    let update = event as! FirewallDNSUpdate
+                    update.aRecords.forEach { dnsCache.update(url: $0.url, ip: $0.ip) }
+                    update.cNameRecords.forEach { dnsCache.update(url: $0.url, cName: $0.cName)}
+                    update.questions.forEach{ dnsCache.update(question: $0) }
+                default:
+                    continue
+                }
                 
-                state.new(connection: connection)
-                
-            case FirewallEventType.connectionUpdate:
-                let update = event as! FirewallConnectionUpdate
-                state.update(tag: update.tag!, timestamp: update.timestamp, update: update.update)
-            case FirewallEventType.dnsUpdate:
-                let update = event as! FirewallDNSUpdate
-                update.aRecords.forEach { dnsCache.update(url: $0.url, ip: $0.ip) }
-                update.cNameRecords.forEach { dnsCache.update(url: $0.url, cName: $0.cName)}
-                update.questions.forEach{ dnsCache.update(question: $0) }
-            default:
-                continue
+                print("finished processing event")
             }
+            print("sleeping because we aren't open")
+            Thread.sleep(forTimeInterval: 10)
         }
     }
 }

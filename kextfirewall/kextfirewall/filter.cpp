@@ -12,6 +12,10 @@
 #include <sys/time.h>
 #include <libkern/OSMalloc.h>
 #include <sys/kpi_mbuf.h>
+#include <sys/proc.h>
+#include <sys/sysctl.h>
+#include <libkern/sysctl.h>
+
 
 bool filters_registered = false;
 
@@ -269,7 +273,11 @@ bool send_outbound_event(cookie_header* header, socket_t so, const struct sockad
     event.data.outbound.ppid = proc_selfppid();
     event.data.outbound.local = local;
     event.data.outbound.remote = remote;
+        
+     
+    proc_selfname(event.data.outbound.proc_name, PATH_MAX);
     
+    os_log(OS_LOG_DEFAULT, "IOFirewall: Got proc: %s", event.data.outbound.proc_name);
     if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post event into the queue");
     } else {
@@ -279,3 +287,4 @@ bool send_outbound_event(cookie_header* header, socket_t so, const struct sockad
 
     return true;
 }
+

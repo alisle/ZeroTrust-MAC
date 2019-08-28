@@ -8,16 +8,6 @@
 
 import SwiftUI
 
-struct SiteDetails: View {
-    let selected: String
-    
-    var body: some View {
-        VStack {
-            Text("Site Details").font(.headline).bold()
-            Text("Jerry Love Base")
-        }
-    }
-}
 struct ConnectionDetailsView: View {
     let connection : Connection
     
@@ -58,14 +48,73 @@ struct ConnectionDetailsView: View {
         return hstack
     }
     
+    private func createPair(prompt: String, value: String) -> some View {
+        return HStack {
+                Text("\(prompt):").bold().multilineTextAlignment(.leading)
+                Text("\(value)")
+                    .lineLimit(3)
+                    .multilineTextAlignment(.leading)
+            }
+
+    }
+    
+    var userDetails: some View {
+        let group = HStack {
+            if connection.user != nil {
+                if connection.uid != nil {
+                    createPair(prompt: "User", value: "\(connection.user!)(\(connection.uid!))")
+                } else {
+                    createPair(prompt: "User", value: connection.user!)
+                }
+            }
+        }
+        
+        return group
+    }
+    
+    var processDetails: some View {
+        let pid = createPair(prompt: "PID", value: "\(connection.pid)")
+        let ppid = createPair(prompt: "PPID", value: "\(connection.ppid)")
+        
+        let group = VStack(alignment: .leading, spacing: 5) {
+            Text("Process Details").font(.headline).bold()
+            HStack {
+                userDetails
+                Spacer()
+                pid
+                Spacer()
+                ppid
+            }
+
+            if connection.process != nil {
+                createPair(prompt: "Process", value: connection.process!)
+            }
+            
+            
+            if connection.processBundle != nil {
+                createPair(prompt:"Process Bundle", value: connection.processBundle!.bundlePath)
+            }
+            
+            if connection.processTopLevelBundle != nil {
+                createPair(prompt:"Top Level Bundle", value: connection.processTopLevelBundle!.bundlePath)
+            }
+            
+            if connection.parentBundle != nil {
+                createPair(prompt: "Parent Bundle", value : connection.parentBundle!.bundlePath)
+            }
+            
+            if connection.parentTopLevelBundle != nil {
+                createPair(prompt: "Parent Top Level Bundle", value: connection.parentTopLevelBundle!.bundlePath)
+            }
+        }
+        
+        return group
+    }
+    
     var protocolDetails: some View {
         let group = VStack(alignment: .leading, spacing: 5) {
             Text("Protocol Details").font(.headline).bold()
-            HStack {
-                Text("Type:").bold()
-                Text("\(connection.portProtocol!.name) - \(connection.portProtocol!.port)")
-            }
-            
+            createPair(prompt:"Type", value:"\(connection.portProtocol!.name) - \(connection.portProtocol!.port)")
             Text(connection.portProtocol!.description)
                 .lineLimit(nil)
                 .multilineTextAlignment(.leading)
@@ -86,10 +135,12 @@ struct ConnectionDetailsView: View {
             metadata
             Text("I will be a pretty graphic")
                 .frame(minWidth: 500, minHeight: 150)
-
+            processDetails
             Spacer()
             if connection.portProtocol != nil {
                 protocolDetails
+            } else {
+                createPair(prompt: "Remote Port", value: "\(connection.remotePort)")
             }
             
         }
