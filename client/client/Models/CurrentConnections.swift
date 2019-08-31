@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class CurrentConnections : BindableObject {
+class CurrentConnections : ObservableObject {
     var willChange = PassthroughSubject<Void, Never>()
     var connections  = [ ViewLength: [Connection]]() { didSet { willChange.send() }}
     var enabled = true { didSet { willChange.send() }}

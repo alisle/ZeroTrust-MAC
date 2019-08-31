@@ -21,7 +21,6 @@ class Main {
     
     func enable() {
         let _ = consumerThread.open()
-        consumerThread.open()
         currentConnections.enabled = true
     }
     

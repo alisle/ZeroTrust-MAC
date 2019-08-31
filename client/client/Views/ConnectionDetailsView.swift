@@ -20,7 +20,7 @@ struct ConnectionDetailsView: View {
     }
     
     var title: some View {
-        let hstack = HStack() {
+        let hstack = HStack(alignment: .top) {
             ConnectionIconView(connection: connection)
             VStack(alignment: .leading) {
                 Text(connection.displayName)
@@ -54,6 +54,7 @@ struct ConnectionDetailsView: View {
                 Text("\(value)")
                     .lineLimit(3)
                     .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
             }
 
     }
@@ -132,17 +133,16 @@ struct ConnectionDetailsView: View {
     var body: some View {
         let list = List {
             title
-            metadata
-            Text("I will be a pretty graphic")
-                .frame(minWidth: 500, minHeight: 150)
-            processDetails
-            Spacer()
-            if connection.portProtocol != nil {
-                protocolDetails
-            } else {
-                createPair(prompt: "Remote Port", value: "\(connection.remotePort)")
-            }
-            
+            VStack {
+                metadata
+                processDetails
+                Spacer()
+                if connection.portProtocol != nil {
+                    protocolDetails
+                } else {
+                    createPair(prompt: "Remote Port", value: "\(connection.remotePort)")
+                }
+            }            
         }
         
         return list
