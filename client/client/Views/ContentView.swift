@@ -13,19 +13,18 @@ struct ContentView : View  {
     @EnvironmentObject var connections : CurrentConnections
     
     var header : some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text("Zero Trust").bold()
-                Spacer()
-                Picker(selection: $filterBy, label: Text("Filter")) {
-                    ForEach(ViewLength.allCases, id: \.rawValue) { length in
-                        Text(length.description).tag(length)
-                    }
+        HStack {
+            Text("Zero Trust").bold()
+            Spacer()
+            Picker(selection: $filterBy, label: Text("Filter:")) {
+                ForEach(ViewLength.allCases, id: \.rawValue) { length in
+                    Text(length.description).tag(length)
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(3)
             }
-        }.padding(5)
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(3)
+            .frame(width: 200, alignment: .bottomTrailing)
+        }
     }
     
     var connectionsContainer : some View {
@@ -54,14 +53,16 @@ struct ContentView : View  {
 
 
 #if DEBUG
-func generateTestConnection() -> Connection {
+func generateTestConnection(direction: ConnectionDirection) -> Connection {
     let localPort = Int.random(in: 1025..<40000)
     let remotePort = [ 80, 443, 22, 21, 8100].randomElement()
     let protocolCache = ProtocolCache()
     let remoteProtocol = protocolCache.get(port: remotePort!)
     let displayName = [ "ssh", "Google Chrome", "Mozilla Firefox", "Brave" ].randomElement()
     
-    let connection = Connection(tag: UUID(),
+    let connection = Connection(direction: direction,
+                                outcome: Outcome.allowed,
+                                tag: UUID(),
                                 start: Date(),
                                 pid: 1021,
                                 ppid: 1020,
@@ -89,38 +90,38 @@ struct ContentView_Previews : PreviewProvider {
         let connections = CurrentConnections()
         
         connections.connections[.current] = [
-            generateTestConnection(),
-            generateTestConnection(),
-            generateTestConnection(),
-            generateTestConnection()
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound)
         ]
 
         connections.connections[.five] = [
-            generateTestConnection(),
-            generateTestConnection(),
-            generateTestConnection(),
-            generateTestConnection()
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound)
         ]
 
         connections.connections[.ten] = [
-            generateTestConnection(),
-            generateTestConnection(),
-            generateTestConnection(),
-            generateTestConnection()
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound)
         ]
 
         connections.connections[.thirty] = [
-            generateTestConnection(),
-            generateTestConnection(),
-            generateTestConnection(),
-            generateTestConnection()
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound)
         ]
 
         connections.connections[.hour] = [
-            generateTestConnection(),
-            generateTestConnection(),
-            generateTestConnection(),
-            generateTestConnection()
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound),
+            generateTestConnection(direction: ConnectionDirection.outbound)
         ]
 
         

@@ -32,10 +32,10 @@ struct ConnectionListView_Previews: PreviewProvider {
         let connections = CurrentConnections()
         
         connections.connections[.current] = [
-                generateTestConnection(),
-                generateTestConnection(),
-                generateTestConnection(),
-                generateTestConnection()
+                generateTestConnection(direction: ConnectionDirection.outbound),
+                generateTestConnection(direction: ConnectionDirection.outbound),
+                generateTestConnection(direction: ConnectionDirection.outbound),
+                generateTestConnection(direction: ConnectionDirection.outbound)
         ]
             
         return ConnectionListView(filter: .current).environmentObject(connections)

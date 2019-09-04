@@ -30,7 +30,7 @@ struct ConnectionRowView: View {
 #if DEBUG
 struct ConnectionRow_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionRowView(connection: generateTestConnection())
+        ConnectionRowView(connection: generateTestConnection(direction: ConnectionDirection.outbound))
     }
 }
 #endif

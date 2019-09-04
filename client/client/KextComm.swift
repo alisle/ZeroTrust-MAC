@@ -134,36 +134,11 @@ class KextComm {
         switch buffer.type {
         case outbound_connection:
             print("outbound connection")
-            let uuid = UUID.init(uuid: buffer.tag)
-            let pid = buffer.data.outbound.pid;
-            let ppid = buffer.data.outbound.ppid;
-            let timestamp = Double(buffer.timestamp);
+            return processTCPConnection(event: &buffer, inbound: false)
+        case inbound_connection:
+            print("inbound connection")
+            return processTCPConnection(event: &buffer, inbound: true)
             
-            let procName = withUnsafeBytes(of: &buffer.data.outbound.proc_name) { (rawPtr) -> String in
-                let ptr = rawPtr.baseAddress!.assumingMemoryBound(to: CChar.self)
-                return String(cString: ptr)
-            }
-            
-            guard let remote =  Helpers.getHostInformation(sockaddr: &buffer.data.outbound.remote) else {
-                return Optional.none
-            }
-            
-            guard let local = Helpers.getHostInformation(sockaddr: &buffer.data.outbound.local) else {
-                return Optional.none
-            }
-            
-            print("posting connection out")
-            return FirewallConnectionOut(
-                tag: uuid,
-                timestamp: timestamp,
-                pid: pid,
-                ppid: ppid,
-                remoteAddress: remote.0,
-                localAddress: local.0,
-                remotePort: remote.1,
-                localPort: local.1,
-                procName: procName
-            )
         case connection_update:
             print("connection update")
 
@@ -227,6 +202,50 @@ class KextComm {
         
         print("nothing..")
         return Optional.none
+    }
+    
+    func processTCPConnection(event : inout firewall_event, inbound: Bool) -> Optional<TCPConnection> {
+        let uuid = UUID.init(uuid: event.tag)
+        let pid = event.data.tcp_connection.pid;
+        let ppid = event.data.tcp_connection.ppid;
+        let timestamp = Double(event.timestamp);
+        
+        let procName = withUnsafeBytes(of: &event.data.tcp_connection.proc_name) { (rawPtr) -> String in
+            let ptr = rawPtr.baseAddress!.assumingMemoryBound(to: CChar.self)
+            return String(cString: ptr)
+        }
+        
+        guard let remote =  Helpers.getHostInformation(sockaddr: &event.data.tcp_connection.remote) else {
+            return nil
+        }
+        
+        guard let local = Helpers.getHostInformation(sockaddr: &event.data.tcp_connection.local) else {
+            return nil
+        }
+        
+        let outcome : Outcome = {
+            switch(event.data.tcp_connection.result) {
+            case ALLOWED: return Outcome.allowed
+            case BLOCKED: return Outcome.blocked
+            case QUARANTINED: return Outcome.quarantined
+            case ISOLATED: return Outcome.isolated
+            default: return Outcome.unknown
+            }
+        }()
+                
+        return TCPConnection(
+            tag: uuid,
+            timestamp: timestamp,
+            inbound:  inbound,
+            pid: pid,
+            ppid: ppid,
+            remoteAddress: remote.0,
+            localAddress: local.0,
+            remotePort: remote.1,
+            localPort: local.1,
+            procName: procName,
+            outcome: outcome
+        )
     }
     
     func processDNSAnswer(startPointer: UnsafeMutableRawPointer, currentPointer: UnsafeMutableRawPointer) ->  (updatedPointer: UnsafeMutableRawPointer, cNameRecord: Optional<CNameRecord>, aRecord: Optional<ARecord>) {
@@ -394,4 +413,38 @@ class KextComm {
             print("unable to communicate with driver!")
         }
     }
+    
+    func isolate(enable: Bool) {
+        var output : UInt64 = 0
+        var outputCount : UInt32 = 1
+        
+        let methodNum : UInt32 = {
+            switch enable {
+            case true: return 2
+            case false: return 3
+            }
+        }()
+
+        if kIOReturnSuccess != IOConnectCallScalarMethod(connection, methodNum, nil, 0, &output, &outputCount) {
+            print("unable to communicate with driver!")
+        }
+    }
+    
+    
+    func quarantine(enable: Bool) {
+        var output : UInt64 = 0
+        var outputCount : UInt32 = 1
+        
+        let methodNum : UInt32 = {
+            switch enable {
+            case true: return 4
+            case false: return 5
+            }
+        }()
+
+        if kIOReturnSuccess != IOConnectCallScalarMethod(connection, methodNum, nil, 0, &output, &outputCount) {
+            print("unable to communicate with driver!")
+        }
+    }
+    
 }

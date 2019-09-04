@@ -16,10 +16,10 @@
 #include <libkern/OSMalloc.h>
 
 #include "filter.hpp"
-#include "kern-event.hpp"
 
 extern "C" {
 #include "payload.h"
+#include "defines.h"
 }
 
 
@@ -34,9 +34,14 @@ public:
     virtual bool start(IOService* provider) override;
     virtual void stop(IOService* provider) override;
     
-    
     bool enable(void);
     void disable(void);
+    
+    bool startQuarantine(void);
+    bool stopQuarantine(void);
+    
+    bool startIsolate(void);
+    bool stopIsolate(void);
 };
 
 #endif

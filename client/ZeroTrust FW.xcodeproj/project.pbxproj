@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		F008CBB822E8B32800791486 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F008CBB722E8B32800791486 /* SwiftUI.framework */; };
 		F00A491422EF8AFA006932A0 /* DNSCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00A491322EF8AFA006932A0 /* DNSCache.swift */; };
+		F0269F35231F4D080067D3BA /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269F34231F4D080067D3BA /* Outcome.swift */; };
+		F0269F3923201A7B0067D3BA /* ConnectionDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269F3823201A7B0067D3BA /* ConnectionDirection.swift */; };
+		F0269F3B23201EFB0067D3BA /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269F3A23201EFB0067D3BA /* TimeIntervalExtension.swift */; };
 		F043D4A1230DC35300746BED /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F043D4A0230DC35300746BED /* DateExtension.swift */; };
 		F043D4A3230DC51A00746BED /* ConnectionStateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F043D4A2230DC51A00746BED /* ConnectionStateType.swift */; };
 		F043D4A5230DCE7000746BED /* ContentViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F043D4A4230DCE7000746BED /* ContentViewState.swift */; };
@@ -60,6 +63,9 @@
 /* Begin PBXFileReference section */
 		F008CBB722E8B32800791486 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		F00A491322EF8AFA006932A0 /* DNSCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DNSCache.swift; path = "../../../../../../../../System/Volumes/Data/Users/alisle/Documents/code/personal/ZeroTrust-MAC/client/client/DNSCache.swift"; sourceTree = "<group>"; };
+		F0269F34231F4D080067D3BA /* Outcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
+		F0269F3823201A7B0067D3BA /* ConnectionDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDirection.swift; sourceTree = "<group>"; };
+		F0269F3A23201EFB0067D3BA /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 		F043D4A0230DC35300746BED /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		F043D4A2230DC51A00746BED /* ConnectionStateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStateType.swift; sourceTree = "<group>"; };
 		F043D4A4230DCE7000746BED /* ContentViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewState.swift; sourceTree = "<group>"; };
@@ -152,6 +158,7 @@
 			children = (
 				F052C9F822C17606005DE1D7 /* BundleExtension.swift */,
 				F043D4A0230DC35300746BED /* DateExtension.swift */,
+				F0269F3A23201EFB0067D3BA /* TimeIntervalExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -175,6 +182,8 @@
 				F0D065E4230654120076A1AC /* DNSRecords.swift */,
 				F043D4A2230DC51A00746BED /* ConnectionStateType.swift */,
 				F043D4A6230DCEB300746BED /* ViewLengths.swift */,
+				F0269F34231F4D080067D3BA /* Outcome.swift */,
+				F0269F3823201A7B0067D3BA /* ConnectionDirection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -396,11 +405,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0D065E7230656A00076A1AC /* ProtocolCache.swift in Sources */,
+				F0269F35231F4D080067D3BA /* Outcome.swift in Sources */,
 				F043D4A1230DC35300746BED /* DateExtension.swift in Sources */,
 				F052C9F122C1743D005DE1D7 /* FirewallEvent.swift in Sources */,
 				F0DA1BA52303206800D07905 /* ConnectionIconView.swift in Sources */,
 				F043D4A7230DCEB300746BED /* ViewLengths.swift in Sources */,
 				F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */,
+				F0269F3923201A7B0067D3BA /* ConnectionDirection.swift in Sources */,
 				F0DA1B9F2301C50400D07905 /* Main.swift in Sources */,
 				F0E4F82622BBE4E000A38601 /* ContentView.swift in Sources */,
 				F052C9F922C17606005DE1D7 /* BundleExtension.swift in Sources */,
@@ -415,6 +426,7 @@
 				F0DA1BA12301C6EA00D07905 /* CurrentConnections.swift in Sources */,
 				F043D4A5230DCE7000746BED /* ContentViewState.swift in Sources */,
 				F0DA1BA72303530700D07905 /* ConnectionListView.swift in Sources */,
+				F0269F3B23201EFB0067D3BA /* TimeIntervalExtension.swift in Sources */,
 				F052C9FD22C17699005DE1D7 /* Connection.swift in Sources */,
 				F0E4F82422BBE4E000A38601 /* AppDelegate.swift in Sources */,
 				F00A491422EF8AFA006932A0 /* DNSCache.swift in Sources */,

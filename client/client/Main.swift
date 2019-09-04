@@ -29,6 +29,14 @@ class Main {
         consumerThread.close()
         currentConnections.enabled = false
     }
+        
+    func isolate(enable: Bool) {
+        consumerThread.isolate(enable: enable)
+    }
+    
+    func quanrantine(enable: Bool) {
+        consumerThread.quarantine(enable: enable)
+    }
     
     private func queueUpdate() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -40,6 +48,7 @@ class Main {
         }
     }
 
+    
     func getAllConnections() -> [ViewLength: [Connection]] {
         return consumerThread.connections
     }

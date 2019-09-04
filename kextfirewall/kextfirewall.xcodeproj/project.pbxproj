@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F00BD40A22B005BE009E9AD8 /* kern-event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F00BD40822B005BE009E9AD8 /* kern-event.cpp */; };
-		F00BD40B22B005BE009E9AD8 /* kern-event.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F00BD40922B005BE009E9AD8 /* kern-event.hpp */; };
 		F00BD40F22B099A2009E9AD8 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F00BD40D22B099A2009E9AD8 /* client.cpp */; };
 		F00BD41022B099A2009E9AD8 /* client.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F00BD40E22B099A2009E9AD8 /* client.hpp */; };
 		F0789B7622AEBBC70006B154 /* driver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F0789B7522AEBBC70006B154 /* driver.hpp */; };
@@ -18,8 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F00BD40822B005BE009E9AD8 /* kern-event.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "kern-event.cpp"; sourceTree = "<group>"; };
-		F00BD40922B005BE009E9AD8 /* kern-event.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "kern-event.hpp"; sourceTree = "<group>"; };
 		F00BD40C22B01F7A009E9AD8 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
 		F00BD40D22B099A2009E9AD8 /* client.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = client.cpp; sourceTree = "<group>"; };
 		F00BD40E22B099A2009E9AD8 /* client.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = client.hpp; sourceTree = "<group>"; };
@@ -67,8 +63,6 @@
 				F0789B7922AEBBC70006B154 /* Info.plist */,
 				F0789B7F22AECC990006B154 /* filter.cpp */,
 				F0789B8022AECC990006B154 /* filter.hpp */,
-				F00BD40822B005BE009E9AD8 /* kern-event.cpp */,
-				F00BD40922B005BE009E9AD8 /* kern-event.hpp */,
 				F00BD40C22B01F7A009E9AD8 /* defines.h */,
 				F00BD40D22B099A2009E9AD8 /* client.cpp */,
 				F00BD40E22B099A2009E9AD8 /* client.hpp */,
@@ -84,7 +78,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F00BD40B22B005BE009E9AD8 /* kern-event.hpp in Headers */,
 				F0789B8222AECC990006B154 /* filter.hpp in Headers */,
 				F0789B7622AEBBC70006B154 /* driver.hpp in Headers */,
 				F00BD41022B099A2009E9AD8 /* client.hpp in Headers */,
@@ -162,7 +155,6 @@
 				F0789B7822AEBBC70006B154 /* driver.cpp in Sources */,
 				F0789B8122AECC990006B154 /* filter.cpp in Sources */,
 				F00BD40F22B099A2009E9AD8 /* client.cpp in Sources */,
-				F00BD40A22B005BE009E9AD8 /* kern-event.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

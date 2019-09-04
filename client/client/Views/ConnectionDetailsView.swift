@@ -37,15 +37,27 @@ struct ConnectionDetailsView: View {
     }
     
     var metadata: some View {
-        let hstack = HStack() {
-            Text("Start Date: \(connection.startTimestamp.timeAgoSinceDate())")
+        
+        let timeStack = HStack() {
+            createPair(prompt: "Start Time", value: "\(connection.startTimestamp.timeAgoSinceDate())")
             Spacer()
-            Text("End Date: \(getEndDate())")
-            Spacer()
-            Text("Current State: \(connection.state.description)")
+            createPair(prompt: "End Time", value: "\(getEndDate())")
         }
+        
+        let stateStack = HStack() {
+            createPair(prompt: "Direction", value: "\(connection.direction.description)")
+            Spacer()
+            createPair(prompt: "Current State", value: "\(connection.state.description)")
+            Spacer()
+            createPair(prompt: "Decision", value: "\(connection.outcome.description)")
+        }
+        
+        let metadataStack = VStack {
+            timeStack
+            stateStack
+        }.padding(EdgeInsets(top: 5, leading: 0, bottom: 10, trailing: 0))
 
-        return hstack
+        return metadataStack
     }
     
     private func createPair(prompt: String, value: String) -> some View {
@@ -63,9 +75,9 @@ struct ConnectionDetailsView: View {
         let group = HStack {
             if connection.user != nil {
                 if connection.uid != nil {
-                    createPair(prompt: "User", value: "\(connection.user!)(\(connection.uid!))")
+                    createPair(prompt: "Process Owner", value: "\(connection.user!)(\(connection.uid!))")
                 } else {
-                    createPair(prompt: "User", value: connection.user!)
+                    createPair(prompt: "Process Owner", value: connection.user!)
                 }
             }
         }
@@ -74,8 +86,8 @@ struct ConnectionDetailsView: View {
     }
     
     var processDetails: some View {
-        let pid = createPair(prompt: "PID", value: "\(connection.pid)")
-        let ppid = createPair(prompt: "PPID", value: "\(connection.ppid)")
+        let pid = createPair(prompt: "Process ID", value: "\(connection.pid)")
+        let ppid = createPair(prompt: "Parent Process ID", value: "\(connection.ppid)")
         
         let group = VStack(alignment: .leading, spacing: 5) {
             Text("Process Details").font(.headline).bold()
@@ -93,19 +105,19 @@ struct ConnectionDetailsView: View {
             
             
             if connection.processBundle != nil {
-                createPair(prompt:"Process Bundle", value: connection.processBundle!.bundlePath)
+                createPair(prompt:"Process App", value: connection.processBundle!.bundlePath)
             }
             
             if connection.processTopLevelBundle != nil {
-                createPair(prompt:"Top Level Bundle", value: connection.processTopLevelBundle!.bundlePath)
+                createPair(prompt:"Top Level Process App", value: connection.processTopLevelBundle!.bundlePath)
             }
             
             if connection.parentBundle != nil {
-                createPair(prompt: "Parent Bundle", value : connection.parentBundle!.bundlePath)
+                createPair(prompt: "Parent Process App", value : connection.parentBundle!.bundlePath)
             }
             
             if connection.parentTopLevelBundle != nil {
-                createPair(prompt: "Parent Top Level Bundle", value: connection.parentTopLevelBundle!.bundlePath)
+                createPair(prompt: "Top Level Parent Procc App", value: connection.parentTopLevelBundle!.bundlePath)
             }
         }
         
@@ -152,7 +164,7 @@ struct ConnectionDetailsView: View {
 #if DEBUG
 struct ConnectionDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionDetailsView(connection: generateTestConnection())
+        ConnectionDetailsView(connection: generateTestConnection(direction: ConnectionDirection.outbound))
     }
 }
 #endif

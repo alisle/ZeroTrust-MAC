@@ -25,7 +25,6 @@
 #include <IOKit/IOSharedDataQueue.h>
 #include <IOKit/IODataQueueShared.h>
 
-#include "kern-event.hpp"
 #include "payload.h"
 
 
@@ -45,6 +44,9 @@ static errno_t attach_socket(void **cookie, socket_t so);
 // Call back when uregistering filter.
 static void unregistered(sflt_handle handle);
 
+// New inbound connection.
+static errno_t connection_in(void *cookie, socket_t so, const struct sockaddr *from);
+
 // New outbound connection.
 static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to);
 
@@ -59,6 +61,11 @@ static void filter_event(void *cookie, socket_t so, sflt_event_t event, void* pa
 kern_return_t register_filters();
 kern_return_t unregister_filters();
 
+kern_return_t start_quarantine();
+kern_return_t stop_quaratine();
+
+kern_return_t start_isolation();
+kern_return_t stop_isolation();
 
 //socket filter, TCP IPV4
 static struct sflt_filter tcpFilterIPV4 = {
@@ -73,7 +80,7 @@ static struct sflt_filter tcpFilterIPV4 = {
     NULL,
     NULL,
     NULL,
-    NULL,
+    connection_in,
     connection_out,
     NULL,
     NULL,
@@ -110,7 +117,7 @@ typedef struct {
 } cookie_header;
 
 // Used to send an outbound event to the queue
-bool send_outbound_event(cookie_header* header, socket_t so, const struct sockaddr *to);
+bool send_tcpconnection_event(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, firewall_outcome_type result, firewall_event_type type);
 
 // Used to send an event update to the queue.
 bool send_update_event(cookie_header* header, sflt_event_t change);

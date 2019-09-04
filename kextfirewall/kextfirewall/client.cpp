@@ -29,6 +29,20 @@ const IOExternalMethodDispatch com_notrust_firewall_client::sMethods[numberOfMet
         0,
         0,
     },
+    {
+        (IOExternalMethodAction)&com_notrust_firewall_client::sQuarantineEnable,
+        0, // Number of scalar arguments
+        0, // NUmber of Struct Arguments
+        1, // Number of outputs
+        0, // Numbers of struct out values.
+    },
+    {
+        (IOExternalMethodAction)&com_notrust_firewall_client::sQuarantineDisable,
+        0, // Number of scalar arguments
+        0, // NUmber of Struct Arguments
+        1, // Number of outputs
+        0, // Numbers of struct out values.
+    },
 };
 
 bool com_notrust_firewall_client::start(IOService* provider) {
@@ -93,6 +107,38 @@ IOReturn com_notrust_firewall_client::sDisable(com_notrust_firewall_driver *targ
     target->disable();
     return kIOReturnSuccess;
 }
+
+IOReturn com_notrust_firewall_client::sQuarantineEnable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments) {
+    bool status = target->startQuarantine();
+    arguments->scalarOutput[0] = status;
+    
+    return kIOReturnSuccess;
+}
+
+IOReturn com_notrust_firewall_client::sQuarantineDisable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments) {
+    bool status = target->stopQuarantine();
+    arguments->scalarOutput[0] = status;
+    
+    return kIOReturnSuccess;
+}
+
+IOReturn com_notrust_firewall_client::sIsolateEnable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments) {
+    bool status = target->startIsolate();
+    arguments->scalarOutput[0] = status;
+    
+    return kIOReturnSuccess;
+}
+
+IOReturn com_notrust_firewall_client::sIsolateDisable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments) {
+    bool status = target->stopIsolate();
+    arguments->scalarOutput[0] = status;
+    
+    return kIOReturnSuccess;
+}
+
+
+
+
 
 
 IOReturn com_notrust_firewall_client::registerNotificationPort(mach_port_t port, UInt32 type, UInt32 ref) {

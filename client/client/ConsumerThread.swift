@@ -28,6 +28,7 @@ class ConsumerThread : Thread {
     private var isOpen = false
     private var comm = KextComm()
     
+    
     func open() -> Bool {
         if isOpen {
             return true
@@ -63,6 +64,14 @@ class ConsumerThread : Thread {
         
     }
     
+    func quarantine(enable: Bool) {
+        comm.quarantine(enable: enable)
+    }
+    
+    func isolate(enable: Bool) {
+        comm.isolate(enable: enable)
+    }
+    
     override func main() {
         while true {
             while isOpen {
@@ -87,12 +96,12 @@ class ConsumerThread : Thread {
                 print("processing event")
                 switch(event.eventType) {
                 case FirewallEventType.outboundConnection:
-                    let firewallEvent = event as! FirewallConnectionOut
+                    let firewallEvent = event as! TCPConnection
                     let remoteURL = dnsCache.get(ip: firewallEvent.remoteAddress)
                     let remoteProtocol = protocolCache.get(port: firewallEvent.remotePort)
                     
                     let connection = Connection(
-                        connectionOut: event as! FirewallConnectionOut,
+                        connection: event as! TCPConnection,
                         remoteURL: remoteURL,
                         portProtocol: remoteProtocol)
                     

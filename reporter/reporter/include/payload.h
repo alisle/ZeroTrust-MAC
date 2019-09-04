@@ -45,10 +45,10 @@ typedef struct  {
     int ppid;
     struct sockaddr_in remote;
     struct sockaddr_in local;
-} firewall_connection_out;
+} firewall_connection;
 
 typedef union  {
-    firewall_connection_out outbound;
+    firewall_connection outbound;
     firewall_event_update_type update_event;
 } firewall_event_data;
 

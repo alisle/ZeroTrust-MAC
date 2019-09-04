@@ -15,8 +15,11 @@
 #include <sys/proc.h>
 #include <sys/sysctl.h>
 #include <libkern/sysctl.h>
+#include <IOKit/IOReturn.h>
 
 
+bool in_isolation = false;
+bool in_quarantine = false;
 bool filters_registered = false;
 
 extern IOSharedDataQueue* sharedDataQueue;
@@ -48,6 +51,34 @@ struct DNS_HEADER
 //
 // None of this would of been possible without the excellent LuLu opensource firewall.
 //
+
+
+
+kern_return_t start_isolation() {
+    in_isolation = true;
+    
+    return kIOReturnSuccess;
+}
+
+kern_return_t stop_isolation() {
+    in_isolation = false;
+    
+    return kIOReturnSuccess;
+}
+
+
+
+kern_return_t start_quarantine() {
+    in_quarantine = true;
+    
+    return kIOReturnSuccess;
+}
+
+kern_return_t stop_quaratine() {
+    in_quarantine = false;
+    
+    return kIOReturnSuccess;
+}
 
 kern_return_t register_filters() {
     os_log(OS_LOG_DEFAULT, "IOFirewall: registering socket filters");
@@ -124,9 +155,32 @@ static void detach_socket(void *cookie, socket_t so) {
     return;
 }
 
+static errno_t connection_in(void *cookie, socket_t so, const struct sockaddr *from) {
+    firewall_outcome_type result = ALLOWED;
+    
+    if(in_isolation) {
+        result = ISOLATED;
+    } else if(in_quarantine) {
+        result = QUARANTINED;
+    }
+
+    send_tcpconnection_event((cookie_header*)cookie, so, from, result, inbound_connection);
+
+    return kIOReturnSuccess;
+}
+
 static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to) {
-    send_outbound_event((cookie_header*)cookie, so, to);
-    return KERN_SUCCESS;
+    firewall_outcome_type result = ALLOWED;
+    
+    if(in_isolation) {
+        result = ISOLATED;
+    } else if(in_quarantine) {
+        result = QUARANTINED;
+    }
+    
+    send_tcpconnection_event((cookie_header*)cookie, so, to, result, outbound_connection);
+    
+    return kIOReturnSuccess;
 }
 
 static errno_t udp_data_in(void *cookie, socket_t so, const struct sockaddr *from, mbuf_t* data, mbuf_t* control, sflt_data_flag_t flags) {
@@ -241,7 +295,8 @@ long current_time() {
     return seconds;
 }
 
-bool send_outbound_event(cookie_header* header, socket_t so, const struct sockaddr *to) {
+
+bool send_tcpconnection_event(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, firewall_outcome_type result, firewall_event_type type) {
     
     firewall_event event = {0};
     
@@ -252,32 +307,29 @@ bool send_outbound_event(cookie_header* header, socket_t so, const struct sockad
     bzero(&remote, sizeof(remote));
     bzero(&event, sizeof(firewall_event));
     
-    if(KERN_SUCCESS != sock_getsockname(so, (struct sockaddr *)&local, sizeof(local))) {
+    if(KERN_SUCCESS != sock_getsockname(local_socket, (struct sockaddr *)&local, sizeof(local))) {
         return false;
     }
     
-    if(NULL == to) {
+    if(NULL == remote_socket) {
         // For some reason we don't have a to address yet.
-        if( KERN_SUCCESS != sock_getpeername(so, (struct sockaddr *)&remote, sizeof(remote))) {
+        if( KERN_SUCCESS != sock_getpeername(local_socket, (struct sockaddr *)&remote, sizeof(remote))) {
             return false;
         }
     } else {
-        memcpy(&remote, to, sizeof(remote));
+        memcpy(&remote, remote_socket, sizeof(remote));
     }
     
     uuid_copy(event.tag, *header->tag);
-    event.type = outbound_connection;
+    event.type = type;
     event.timestamp = current_time();
-    
-    event.data.outbound.pid = proc_selfpid();
-    event.data.outbound.ppid = proc_selfppid();
-    event.data.outbound.local = local;
-    event.data.outbound.remote = remote;
+    event.data.tcp_connection.result = result;
+    event.data.tcp_connection.pid = proc_selfpid();
+    event.data.tcp_connection.ppid = proc_selfppid();
+    event.data.tcp_connection.local = local;
+    event.data.tcp_connection.remote = remote;
+    proc_selfname(event.data.tcp_connection.proc_name, PATH_MAX);
         
-     
-    proc_selfname(event.data.outbound.proc_name, PATH_MAX);
-    
-    os_log(OS_LOG_DEFAULT, "IOFirewall: Got proc: %s", event.data.outbound.proc_name);
     if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post event into the queue");
     } else {

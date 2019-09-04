@@ -9,14 +9,6 @@
 import Foundation
 import SwiftUI
 
-
-
-
-enum ConnectionDirection : Int {
-    case Inbound = 1,
-    Outbound
-}
-
 struct Connection : Hashable, Identifiable {
     let direction : ConnectionDirection
     
@@ -58,6 +50,8 @@ struct Connection : Hashable, Identifiable {
     var image : Optional<NSImage> = nil
     var state : ConnectionStateType = ConnectionStateType.unknown
     
+    let outcome : Outcome
+    
     var remoteDisplayAddress : String {
         return remoteURL ?? remoteAddress
     }
@@ -70,9 +64,14 @@ struct Connection : Hashable, Identifiable {
         return port.name
     }
     
+    var duration : TimeInterval {
+        let date = self.endDateTimestamp ?? Date()
+        return date.timeIntervalSince(startTimestamp)
+    }
     
-    
-    init(tag : UUID,
+    init(direction : ConnectionDirection,
+         outcome : Outcome,
+         tag : UUID,
          start: Date,
          pid : pid_t,
          ppid : pid_t,
@@ -91,8 +90,9 @@ struct Connection : Hashable, Identifiable {
          processTopLevelBundle: Optional<Bundle>,
          parentTopLevelBundle : Optional<Bundle>,
          displayName : String) {
-
-        self.direction = ConnectionDirection.Outbound
+        
+        self.outcome = outcome
+        self.direction = direction
         self.startTimestamp = start
         self.tag = tag
         self.pid = pid
@@ -114,40 +114,48 @@ struct Connection : Hashable, Identifiable {
         self.displayName = displayName
     }
     
-    init(connectionOut: FirewallConnectionOut,
+    init(connection: TCPConnection,
          remoteURL : Optional<String>,
          portProtocol : Optional<Protocol> ) {
-        self.direction = ConnectionDirection.Outbound
-        self.startTimestamp = connectionOut.timestamp
-        self.tag = connectionOut.tag!
+        self.direction = {
+            switch(connection.inbound) {
+            case true: return ConnectionDirection.inbound
+            case false: return ConnectionDirection.outbound
+            }
+        }()
         
-        self.pid = connectionOut.pid
-        self.ppid = connectionOut.ppid
+        self.outcome = connection.outcome
+        self.startTimestamp = connection.timestamp
+        self.tag = connection.tag!
         
-        self.uid = connectionOut.uid
-        self.user = connectionOut.user
+        self.pid = connection.pid
+        self.ppid = connection.ppid
         
-        self.remoteAddress = connectionOut.remoteAddress
+        self.uid = connection.uid
+        self.user = connection.user
+        
+        self.remoteAddress = connection.remoteAddress
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
         
-        self.localAddress = connectionOut.localAddress
+        self.localAddress = connection.localAddress
         
-        self.localPort = connectionOut.localPort
-        self.remotePort = connectionOut.remotePort
+        self.localPort = connection.localPort
+        self.remotePort = connection.remotePort
         
-        self.process = connectionOut.process
-        self.parentProcess = connectionOut.parentProcess
+        self.process = connection.process
+        self.parentProcess = connection.parentProcess
         
-        self.processBundle = connectionOut.processBundle
-        self.parentBundle = connectionOut.parentBundle
+        self.processBundle = connection.processBundle
+        self.parentBundle = connection.parentBundle
         
-        self.processTopLevelBundle = connectionOut.processTopLevelBundle
-        self.parentTopLevelBundle = connectionOut.parentTopLevelBundle
+        self.processTopLevelBundle = connection.processTopLevelBundle
+        self.parentTopLevelBundle = connection.parentTopLevelBundle
         
-        self.displayName = connectionOut.displayName
+        self.displayName = connection.displayName
         
         self.image = getImage()
+        
     }
     
     func getImage() -> Optional<NSImage> {

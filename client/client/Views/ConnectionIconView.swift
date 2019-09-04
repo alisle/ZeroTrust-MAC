@@ -25,7 +25,7 @@ struct ConnectionIconView: View {
 #if DEBUG
 struct ConnectionIcon_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionIconView(connection: generateTestConnection())
+        ConnectionIconView(connection: generateTestConnection(direction: ConnectionDirection.outbound))
     }
 }
 #endif

@@ -9,8 +9,9 @@
 #ifndef payload_h
 #define payload_h
 
-#include <netinet/in.h>
 #include <limits.h>
+#include <netinet/in.h>
+
 
 typedef enum {
     outbound_connection = 0,
@@ -18,6 +19,13 @@ typedef enum {
     connection_update = 2,
     dns_update = 3
 } firewall_event_type;
+
+typedef enum {
+    ALLOWED = 0,
+    BLOCKED = 1,
+    QUARANTINED = 2,
+    ISOLATED = 3
+} firewall_outcome_type;
 
 typedef enum {
     connecting = 1,
@@ -33,19 +41,20 @@ typedef enum {
 } firewall_event_update_type;
 
 typedef struct  {
+    firewall_outcome_type result;
     int pid;
     int ppid;
     char proc_name[PATH_MAX];
     struct sockaddr_in remote;
     struct sockaddr_in local;
-} firewall_connection_out;
+} firewall_connection;
 
 typedef struct {
     char dns_message[1024];
 } firewall_dns_update;
 
 typedef union  {
-    firewall_connection_out outbound;
+    firewall_connection tcp_connection;
     firewall_event_update_type update_event;
     firewall_dns_update dns_event;
 } firewall_event_data;

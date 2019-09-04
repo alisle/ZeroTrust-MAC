@@ -15,7 +15,7 @@
 
 #include "driver.hpp"
 
-#define numberOfMethods 2
+#define numberOfMethods 4
 
 extern IOSharedDataQueue* sharedDataQueue;
 extern IOMemoryDescriptor* sharedMemoryDescriptor;
@@ -44,6 +44,14 @@ protected:
     
     static IOReturn sDisable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
     
+    static IOReturn sQuarantineEnable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
+    
+    static IOReturn sQuarantineDisable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
+    
+    static IOReturn sIsolateEnable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
+    
+    static IOReturn sIsolateDisable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
+
     IOReturn registerNotificationPort(mach_port_t port, UInt32 type, UInt32 ref) override;
     
     IOReturn clientMemoryForType(UInt32 type, IOOptionBits *options, IOMemoryDescriptor** memory) override;

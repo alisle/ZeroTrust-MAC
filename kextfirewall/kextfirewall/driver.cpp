@@ -39,14 +39,13 @@ bool com_notrust_firewall_driver::start(IOService* provider) {
         return false;
     }
 
-    //enable();
     registerService();
     
     return true;
 }
 
 void com_notrust_firewall_driver::stop(IOService* provider) {
-    os_log(OS_LOG_DEFAULT, "IOFirewall: stoping");
+    os_log(OS_LOG_DEFAULT, "IOFirewall: stopping");
     unregister_filters();
     
     sharedDataQueue->release();
@@ -66,14 +65,41 @@ bool com_notrust_firewall_driver::enable(void) {
         
     }
     
-    if(KERN_SUCCESS != register_kernelevents()) {
-        return false;
-    }
-    
     return true;
 }
 
 
 void com_notrust_firewall_driver::disable(void) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: disabling firewall");
     unregister_filters();
+}
+
+bool com_notrust_firewall_driver::startQuarantine(void) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: starting quarantine");
+    start_quarantine();
+    
+    return true;
+}
+
+bool com_notrust_firewall_driver::stopQuarantine(void) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: stopping quarantine");
+    stop_quaratine();
+    
+    return true;
+}
+
+
+
+bool com_notrust_firewall_driver::startIsolate(void) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: starting isolation...so alone...");
+    start_isolation();
+    
+    return true;
+}
+
+bool com_notrust_firewall_driver::stopIsolate(void) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: stopping isolation");
+    stop_isolation();
+    
+    return true;
 }

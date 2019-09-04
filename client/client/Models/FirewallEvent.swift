@@ -79,7 +79,7 @@ class FirewallConnectionUpdate : FirewallEvent {
     }
 }
 
-class FirewallConnectionOut : FirewallEvent {
+class TCPConnection : FirewallEvent {
     let timestamp : Date
     let pid : pid_t
     let ppid : pid_t
@@ -95,21 +95,25 @@ class FirewallConnectionOut : FirewallEvent {
     let processBundle : Optional<Bundle>
     let parentTopLevelBundle : Optional<Bundle>
     let processTopLevelBundle: Optional<Bundle>
-    
+    let outcome : Outcome
+    let inbound : Bool
     var displayName : String = ""
     
     init(tag: UUID,
          timestamp : TimeInterval,
+         inbound : Bool,
          pid: pid_t,
          ppid: pid_t,
          remoteAddress : String,
          localAddress : String,
          remotePort: Int,
          localPort: Int,
-         procName : String
+         procName : String,
+         outcome : Outcome
         ) {
         self.timestamp = Date(timeIntervalSince1970: timestamp)
-
+        self.outcome = outcome
+        self.inbound = inbound
         self.pid = pid
         self.ppid = ppid
         self.localPort = localPort
