@@ -420,8 +420,12 @@ class KextComm {
         
         let methodNum : UInt32 = {
             switch enable {
-            case true: return 2
-            case false: return 3
+            case true:
+                print("starting isolation")
+                return 4
+            case false:
+                print("stopping isolation")
+                return 5
             }
         }()
 
@@ -437,8 +441,12 @@ class KextComm {
         
         let methodNum : UInt32 = {
             switch enable {
-            case true: return 4
-            case false: return 5
+            case true:
+                print("starting quarantine")
+                return 2
+            case false:
+                print("stopping quarantine")
+                return 3
             }
         }()
 

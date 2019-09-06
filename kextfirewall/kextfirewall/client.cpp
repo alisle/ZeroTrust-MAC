@@ -43,6 +43,20 @@ const IOExternalMethodDispatch com_notrust_firewall_client::sMethods[numberOfMet
         1, // Number of outputs
         0, // Numbers of struct out values.
     },
+    {
+        (IOExternalMethodAction)&com_notrust_firewall_client::sIsolateEnable,
+        0, // Number of scalar arguments
+        0, // NUmber of Struct Arguments
+        1, // Number of outputs
+        0, // Numbers of struct out values.
+    },
+    {
+        (IOExternalMethodAction)&com_notrust_firewall_client::sIsolateDisable,
+        0, // Number of scalar arguments
+        0, // NUmber of Struct Arguments
+        1, // Number of outputs
+        0, // Numbers of struct out values.
+    },
 };
 
 bool com_notrust_firewall_client::start(IOService* provider) {

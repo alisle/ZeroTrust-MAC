@@ -15,11 +15,10 @@
 
 #include "driver.hpp"
 
-#define numberOfMethods 4
+#define numberOfMethods 6
 
 extern IOSharedDataQueue* sharedDataQueue;
 extern IOMemoryDescriptor* sharedMemoryDescriptor;
-
 
 
 class com_notrust_firewall_client : public IOUserClient {

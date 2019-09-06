@@ -71,6 +71,8 @@ bool com_notrust_firewall_driver::enable(void) {
 
 void com_notrust_firewall_driver::disable(void) {
     os_log(OS_LOG_DEFAULT, "IOFirewall: disabling firewall");
+    stopQuarantine();
+    stopIsolate();
     unregister_filters();
 }
 
