@@ -71,7 +71,7 @@ class Main {
     }
     
     func getRules() {
-        print("getting rules")
+        print("Getting Rules")
         self.rulesDispatcher.getRules { [weak self] results, errorMessage in
             if let results = results {
                 self?.decisionEngine.set(rules: results)

@@ -11,7 +11,6 @@ import Combine
 import SwiftUI
 
 class CurrentConnections : ObservableObject {
-    var willChange = PassthroughSubject<Void, Never>()
-    var connections  = [ ViewLength: [Connection]]() { didSet { willChange.send() }}
-    var enabled = true { didSet { willChange.send() }}
+    @Published var connections  = [ ViewLength: [Connection]]()
+    @Published var enabled = true
 }
