@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>rulesUpdateInterval</key>
+	<integer>120</integer>
+	<key>rulesUpdateURL</key>
+	<string>https://zero-trust-io.s3.us-east-2.amazonaws.com/rules.json</string>
+</dict>
+</plist>

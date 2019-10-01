@@ -12,10 +12,11 @@
 #include <IOKit/IOUserClient.h>
 #include <IOKit/IOLib.h>
 #include <IOKit/IOKitKeys.h>
+#include <os/log.h>
 
 #include "driver.hpp"
 
-#define numberOfMethods 6
+#define numberOfMethods 7
 
 extern IOSharedDataQueue* sharedDataQueue;
 extern IOMemoryDescriptor* sharedMemoryDescriptor;
@@ -51,6 +52,8 @@ protected:
     
     static IOReturn sIsolateDisable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
 
+    static IOReturn sQueryDecision(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
+    
     IOReturn registerNotificationPort(mach_port_t port, UInt32 type, UInt32 ref) override;
     
     IOReturn clientMemoryForType(UInt32 type, IOOptionBits *options, IOMemoryDescriptor** memory) override;

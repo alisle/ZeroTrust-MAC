@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		F00BD40F22B099A2009E9AD8 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F00BD40D22B099A2009E9AD8 /* client.cpp */; };
 		F00BD41022B099A2009E9AD8 /* client.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F00BD40E22B099A2009E9AD8 /* client.hpp */; };
+		F031F1172332B3AD00601D47 /* state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F031F1152332B3AD00601D47 /* state.cpp */; };
+		F031F1182332B3AD00601D47 /* state.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F031F1162332B3AD00601D47 /* state.hpp */; };
 		F0789B7622AEBBC70006B154 /* driver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F0789B7522AEBBC70006B154 /* driver.hpp */; };
 		F0789B7822AEBBC70006B154 /* driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0789B7722AEBBC70006B154 /* driver.cpp */; };
 		F0789B8122AECC990006B154 /* filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0789B7F22AECC990006B154 /* filter.cpp */; };
@@ -19,6 +21,8 @@
 		F00BD40C22B01F7A009E9AD8 /* defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defines.h; sourceTree = "<group>"; };
 		F00BD40D22B099A2009E9AD8 /* client.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = client.cpp; sourceTree = "<group>"; };
 		F00BD40E22B099A2009E9AD8 /* client.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = client.hpp; sourceTree = "<group>"; };
+		F031F1152332B3AD00601D47 /* state.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = state.cpp; sourceTree = "<group>"; };
+		F031F1162332B3AD00601D47 /* state.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = state.hpp; sourceTree = "<group>"; };
 		F04F436422B6903900219F99 /* payload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = payload.h; sourceTree = "<group>"; };
 		F0789B7222AEBBC70006B154 /* kextfirewall.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = kextfirewall.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0789B7522AEBBC70006B154 /* driver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = driver.hpp; sourceTree = "<group>"; };
@@ -67,6 +71,8 @@
 				F00BD40D22B099A2009E9AD8 /* client.cpp */,
 				F00BD40E22B099A2009E9AD8 /* client.hpp */,
 				F04F436422B6903900219F99 /* payload.h */,
+				F031F1152332B3AD00601D47 /* state.cpp */,
+				F031F1162332B3AD00601D47 /* state.hpp */,
 			);
 			path = kextfirewall;
 			sourceTree = "<group>";
@@ -78,6 +84,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F031F1182332B3AD00601D47 /* state.hpp in Headers */,
 				F0789B8222AECC990006B154 /* filter.hpp in Headers */,
 				F0789B7622AEBBC70006B154 /* driver.hpp in Headers */,
 				F00BD41022B099A2009E9AD8 /* client.hpp in Headers */,
@@ -155,6 +162,7 @@
 				F0789B7822AEBBC70006B154 /* driver.cpp in Sources */,
 				F0789B8122AECC990006B154 /* filter.cpp in Sources */,
 				F00BD40F22B099A2009E9AD8 /* client.cpp in Sources */,
+				F031F1172332B3AD00601D47 /* state.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -156,7 +156,7 @@ class KextComm {
             case disconnected:
                 update = Optional(ConnectionStateType.disconnected)
             case closing:
-                update = Optional(ConnectionStateType.closing)
+                update = Optional(ConnectionStateType.closed)
             case bound:
                 update = Optional(ConnectionStateType.bound)
             default:
@@ -195,7 +195,48 @@ class KextComm {
                 cNameRecord.map { cNameRecords.append($0) }
             }
             
-            return FirewallDNSUpdate(aRecords: aRecords, cNameRecords: cNameRecords, questions: questions)
+            return FirewallDNSUpdate(
+                aRecords: aRecords,
+                cNameRecords: cNameRecords,
+                questions: questions
+            )
+            
+        case query:
+            print("query")
+            var message = buffer.data.query_event
+            
+            let tag = UUID.init(uuid: buffer.tag)
+            let timestamp = Double(buffer.timestamp)
+            let pid = message.pid
+            let ppid = message.ppid
+            let id = message.query_id
+            
+            let procName = withUnsafeBytes(of: &message.proc_name) { (rawPtr) -> String in
+                let ptr = rawPtr.baseAddress!.assumingMemoryBound(to: CChar.self)
+                return String(cString: ptr)
+            }
+            
+            guard let remote =  Helpers.getHostInformation(sockaddr: &message.remote) else {
+                return nil
+            }
+                
+            guard let local = Helpers.getHostInformation(sockaddr: &message.local) else {
+                return nil
+            }
+            
+            return FirewallQuery(
+                tag: tag,
+                id: id,
+                timestamp: timestamp,
+                pid: pid,
+                ppid: ppid,
+                remoteAddress: remote.host,
+                localAddress: local.host,
+                remotePort: remote.port,
+                localPort: local.port,
+                procName: procName
+            )
+            
         default:
             print("Unknown firewall type")
         }
@@ -204,7 +245,7 @@ class KextComm {
         return Optional.none
     }
     
-    func processTCPConnection(event : inout firewall_event, inbound: Bool) -> Optional<TCPConnection> {
+    private func processTCPConnection(event : inout firewall_event, inbound: Bool) -> Optional<TCPConnection> {
         let uuid = UUID.init(uuid: event.tag)
         let pid = event.data.tcp_connection.pid;
         let ppid = event.data.tcp_connection.ppid;
@@ -248,7 +289,7 @@ class KextComm {
         )
     }
     
-    func processDNSAnswer(startPointer: UnsafeMutableRawPointer, currentPointer: UnsafeMutableRawPointer) ->  (updatedPointer: UnsafeMutableRawPointer, cNameRecord: Optional<CNameRecord>, aRecord: Optional<ARecord>) {
+    private func processDNSAnswer(startPointer: UnsafeMutableRawPointer, currentPointer: UnsafeMutableRawPointer) ->  (updatedPointer: UnsafeMutableRawPointer, cNameRecord: Optional<CNameRecord>, aRecord: Optional<ARecord>) {
         var pointer = currentPointer
         let offsetResult = grabAnswerOffsetPosition(currentPointer: pointer)
         
@@ -287,7 +328,7 @@ class KextComm {
         return (updatedPointer: pointer.advanced(by: Int(length)), cNameRecord: cNameRecord, aRecord: aRecord)
     }
     
-    func processDNSHeader(startPointer: UnsafeMutableRawPointer) -> (UnsafeMutableRawPointer, DNSHeader) {
+    private func processDNSHeader(startPointer: UnsafeMutableRawPointer) -> (UnsafeMutableRawPointer, DNSHeader) {
         var header = startPointer.load(as: DNSHeader.self)
         let headerSize = MemoryLayout<DNSHeader>.size
         
@@ -297,7 +338,7 @@ class KextComm {
         return (startPointer.advanced(by: headerSize), header)
     }
     
-    func processDNSQuestion(startPointer: UnsafeMutableRawPointer, offsetPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, question: String) {
+    private func processDNSQuestion(startPointer: UnsafeMutableRawPointer, offsetPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, question: String) {
         let result = grabURL(startPointer: startPointer, offsetPointer: offsetPointer)
         let url = result.url
         var currentPointer = result.updatedPointer
@@ -308,14 +349,14 @@ class KextComm {
         return (currentPointer, url)
     }
     
-    func grabIPv4String(currentPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, ip: String) {
+    private func grabIPv4String(currentPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, ip: String) {
         var (updatedPointer: pointer, value: address) = grabUInt32(pointer: currentPointer)
         address = address.bigEndian
         let addressString = Helpers.getIPString(address: &address)
         return (pointer, addressString!)
     }
     
-    func grabAnswerOffsetPosition(currentPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, offsetPosition: UInt16) {
+    private func grabAnswerOffsetPosition(currentPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, offsetPosition: UInt16) {
         var (pointer, offset) = grabUInt16(pointer: currentPointer)
         
         if( offset & 0xC000 == 0xC000 ) {
@@ -326,7 +367,7 @@ class KextComm {
         return (pointer, offset)
     }
     
-    func grabURL(startPointer : UnsafeMutableRawPointer, offsetPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, url: String) {
+    private func grabURL(startPointer : UnsafeMutableRawPointer, offsetPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, url: String) {
         var currentPointer = offsetPointer
         var size = currentPointer.load(as: UInt8.self).bigEndian;
         var array : [UInt8] = []
@@ -363,7 +404,7 @@ class KextComm {
         return (currentPointer, url)
     }
     
-    func grabUInt16(pointer : UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, value: UInt16) {
+    private func grabUInt16(pointer : UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, value: UInt16) {
         let first = UInt16(pointer.load(as: UInt8.self)) << 8
         var updatedPointer = pointer.advanced(by: 1)
         
@@ -373,7 +414,7 @@ class KextComm {
         return (updatedPointer, first | second)
     }
     
-    func grabUInt32(pointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, value: UInt32) {
+    private func grabUInt32(pointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, value: UInt32) {
         let (firstPointer, first) = grabUInt16(pointer: pointer)
         let (secondPointer, second) = grabUInt16(pointer: firstPointer)
         let full = UInt32(first) << 16 | UInt32(second)
@@ -454,5 +495,14 @@ class KextComm {
             print("unable to communicate with driver!")
         }
     }
+    
+    func postDecision(id: UInt32, allowed: UInt32) {
+        var inputs = [ UInt64(id), UInt64(allowed) ];
+        
+        if kIOReturnSuccess != IOConnectCallScalarMethod(connection, 6, &inputs, 2, nil, nil) {
+            print("unable to write to driver!")
+        }
+    }
+        
     
 }

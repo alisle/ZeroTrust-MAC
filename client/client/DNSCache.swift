@@ -119,7 +119,7 @@ class DNSCache {
         checkCName(url: url, ip: ip)
     }
     
-    func get(ip: String) -> Optional<String> {
+    func get(_ ip: String) -> Optional<String> {
         guard let record = Cache[ip] else {
             return nil
         }

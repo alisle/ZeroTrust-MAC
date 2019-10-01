@@ -22,8 +22,14 @@ bool in_isolation = false;
 bool in_quarantine = false;
 bool filters_registered = false;
 
+
+
+
+static uint32_t query_offset = 0;
+
 extern IOSharedDataQueue* sharedDataQueue;
 extern OSMallocTag mallocTag;
+extern IOLock* state_query_lock;
 
 // DNS Header from https://gist.github.com/fffaraz/9d9170b57791c28ccda9255b48315168
 struct DNS_HEADER
@@ -84,12 +90,12 @@ kern_return_t register_filters() {
     os_log(OS_LOG_DEFAULT, "IOFirewall: registering socket filters");
     if(filters_registered) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: filters were already registered, skipping");
-        return KERN_SUCCESS;
+        return kIOReturnSuccess;
     }
     
     
     kern_return_t result = sflt_register(&tcpFilterIPV4, AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    if(KERN_SUCCESS != result) {
+    if(kIOReturnSuccess != result) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: unable to reigster tcp filter!");
         filters_registered = false;
         return result;
@@ -98,7 +104,7 @@ kern_return_t register_filters() {
     }
     
     result = sflt_register(&udpFilterIPV4, AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    if(KERN_SUCCESS != result) {
+    if(kIOReturnSuccess != result) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: unable to register udp filter");
         filters_registered = false;
         return result;
@@ -114,12 +120,12 @@ kern_return_t unregister_filters() {
     
     if(filters_registered) {
         kern_return_t status = sflt_unregister(TCPIPV4_HANDLE);
-        if(KERN_SUCCESS != status) {
+        if(kIOReturnSuccess != status) {
             os_log(OS_LOG_DEFAULT, "IOFirewall: unable to unregister tcp filter!");
         }
         
         status = sflt_unregister(UDPIPV4_HANDLE);
-        if(KERN_SUCCESS != status) {
+        if(kIOReturnSuccess != status) {
             os_log(OS_LOG_DEFAULT, "IOFirewall: unable to unregister udp filter!");
         }
         
@@ -128,7 +134,7 @@ kern_return_t unregister_filters() {
         
     } else {
         os_log(OS_LOG_DEFAULT, "IOFirewall: filters weren't enabled.");
-        return KERN_SUCCESS;
+        return kIOReturnSuccess;
     }
     
 }
@@ -141,8 +147,10 @@ static kern_return_t attach_socket(void **cookie, socket_t so) {
     uuid_generate_random(*uuid);
     
     header->tag = uuid;
+    header->outcome = UNKNOWN;
+    
     *cookie = header;
-    return KERN_SUCCESS;
+    return kIOReturnSuccess;
 }
 
 static void detach_socket(void *cookie, socket_t so) {
@@ -156,29 +164,26 @@ static void detach_socket(void *cookie, socket_t so) {
 }
 
 static errno_t connection_in(void *cookie, socket_t so, const struct sockaddr *from) {
-    firewall_outcome_type result = ALLOWED;
+    firewall_outcome_type outcome = determineDecision((cookie_header*)cookie, so, from, inbound_tcp_v4);
     
-    if(in_isolation) {
-        result = ISOLATED;
-    } else if(in_quarantine) {
-        result = QUARANTINED;
+    send_tcpconnection_event((cookie_header*)cookie, so, from, outcome, inbound_connection);
+
+    if (outcome != ALLOWED) {
+        return kIOReturnError;
     }
-
-    send_tcpconnection_event((cookie_header*)cookie, so, from, result, inbound_connection);
-
+    
     return kIOReturnSuccess;
 }
 
 static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to) {
-    firewall_outcome_type result = ALLOWED;
+    firewall_outcome_type outcome = determineDecision((cookie_header*)cookie, so, to, outbound_tcp_v4);
     
-    if(in_isolation) {
-        result = ISOLATED;
-    } else if(in_quarantine) {
-        result = QUARANTINED;
+    send_tcpconnection_event((cookie_header*)cookie, so, to, outcome, outbound_connection);
+    
+    if (outcome != ALLOWED) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: rejecting connection");
+        return kIOReturnError;
     }
-    
-    send_tcpconnection_event((cookie_header*)cookie, so, to, result, outbound_connection);
     
     return kIOReturnSuccess;
 }
@@ -192,7 +197,7 @@ static errno_t udp_data_in(void *cookie, socket_t so, const struct sockaddr *fro
     
     if(NULL == from) {
         // For some reason we don't have a to address yet.
-        if( KERN_SUCCESS != sock_getpeername(so, (struct sockaddr *)&remote, sizeof(remote))) {
+        if( kIOReturnSuccess != sock_getpeername(so, (struct sockaddr *)&remote, sizeof(remote))) {
             return false;
         }
         
@@ -201,34 +206,34 @@ static errno_t udp_data_in(void *cookie, socket_t so, const struct sockaddr *fro
     
     port = ntohs(((const struct sockaddr_in*)from)->sin_port);
     if(53 != port) {
-        return KERN_SUCCESS;
+        return kIOReturnSuccess;
     }
     buffer = *data;
     if(NULL == buffer) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: buffer is null.");
-        return KERN_SUCCESS;
+        return kIOReturnSuccess;
     }
     
     while(MBUF_TYPE_DATA != mbuf_type(buffer)) {
         buffer = mbuf_next(buffer);
         if( NULL == buffer) {
             os_log(OS_LOG_DEFAULT, "IOFirewall: cycle through dns is still null.");
-            return KERN_SUCCESS;
+            return kIOReturnSuccess;
         }
     }
     
     if(mbuf_len(buffer) <= sizeof(struct DNS_HEADER)) {
-        return KERN_SUCCESS;
+        return kIOReturnSuccess;
     }
     
     dns_header = (struct DNS_HEADER*)mbuf_data(buffer);
 
     if(0 != ntohs(dns_header->rcode)) {
-        return KERN_SUCCESS;
+        return kIOReturnSuccess;
     }
     
     if(0 == ntohs(dns_header->ans_count)) {
-        return KERN_SUCCESS;
+        return kIOReturnSuccess;
     }
     
     firewall_event event = {0};
@@ -250,12 +255,12 @@ static errno_t udp_data_in(void *cookie, socket_t so, const struct sockaddr *fro
     
     
 
-    return KERN_SUCCESS;
+    return kIOReturnSuccess;
 }
 
 static errno_t udp_data_out(void *cookie, socket_t so, const struct sockaddr *to, mbuf_t* data, mbuf_t* control, sflt_data_flag_t flags) {
     
-    return KERN_SUCCESS;
+    return kIOReturnSuccess;
 }
 
 static void unregistered(sflt_handle handle) {
@@ -295,6 +300,91 @@ long current_time() {
     return seconds;
 }
 
+firewall_outcome_type determineDecision(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, protocol_type protocol) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: processing connection");
+    
+    // Send the query then sleep waiting for response.
+    query_offset += 1;
+
+    if(in_isolation) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: in quartine, setting it denied");
+        header->outcome = ISOLATED;
+    }
+    
+    header->query_id = query_offset;
+    send_firewall_query(header, local_socket, remote_socket, protocol);
+    
+    
+    while(header->outcome == UNKNOWN) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: getting state");
+        header->outcome = state_get(header->query_id);
+        
+        if(header->outcome == UNKNOWN) {
+            os_log(OS_LOG_DEFAULT, "IOFirewall: going to sleep");
+            IOLockLock(state_query_lock);
+            int sleep_return = IOLockSleep(state_query_lock, &state_query_lock, THREAD_ABORTSAFE);
+            IOLockUnlock(state_query_lock);
+            
+            os_log(OS_LOG_DEFAULT, "IOFirewall: woken up");
+            if(sleep_return != THREAD_AWAKENED) {
+                header->outcome = BLOCKED;
+            }
+            
+            if(!filters_registered) {
+                // We are shutting down
+                header->outcome = ALLOWED;
+            }
+        }
+    }
+    
+    os_log(OS_LOG_DEFAULT, "IOFirewall: removing state");
+    state_rm(header->query_id);
+    return header->outcome;
+}
+
+bool send_firewall_query(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, protocol_type protocol) {
+    firewall_event event = {0};
+
+    struct sockaddr_in local = {0};
+    struct sockaddr_in remote = {0};
+    
+    bzero(&local, sizeof(local));
+    bzero(&remote, sizeof(remote));
+
+    if(kIOReturnSuccess != sock_getsockname(local_socket, (struct sockaddr *)&local, sizeof(local))) {
+        return false;
+    }
+    
+    if(NULL == remote_socket) {
+        // For some reason we don't have a to address yet.
+        if( kIOReturnSuccess != sock_getpeername(local_socket, (struct sockaddr *)&remote, sizeof(remote))) {
+            return false;
+        }
+    } else {
+        memcpy(&remote, remote_socket, sizeof(remote));
+    }
+
+    uuid_copy(event.tag, *header->tag);
+    
+    event.type = query;
+    event.timestamp = current_time();
+    event.data.query_event.query_id = header->query_id;
+    event.data.query_event.type = protocol;
+    event.data.query_event.pid = proc_selfpid();
+    event.data.query_event.ppid = proc_selfppid();
+    event.data.query_event.local = local;
+    event.data.query_event.remote = remote;
+    proc_selfname(event.data.query_event.proc_name, PATH_MAX);
+
+    if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post query into the queue");
+    } else {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: posted query event");
+    }
+    
+
+    return true;
+}
 
 bool send_tcpconnection_event(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, firewall_outcome_type result, firewall_event_type type) {
     
@@ -307,13 +397,13 @@ bool send_tcpconnection_event(cookie_header* header, socket_t local_socket, cons
     bzero(&remote, sizeof(remote));
     bzero(&event, sizeof(firewall_event));
     
-    if(KERN_SUCCESS != sock_getsockname(local_socket, (struct sockaddr *)&local, sizeof(local))) {
+    if(kIOReturnSuccess != sock_getsockname(local_socket, (struct sockaddr *)&local, sizeof(local))) {
         return false;
     }
     
     if(NULL == remote_socket) {
         // For some reason we don't have a to address yet.
-        if( KERN_SUCCESS != sock_getpeername(local_socket, (struct sockaddr *)&remote, sizeof(remote))) {
+        if( kIOReturnSuccess != sock_getpeername(local_socket, (struct sockaddr *)&remote, sizeof(remote))) {
             return false;
         }
     } else {
@@ -333,7 +423,7 @@ bool send_tcpconnection_event(cookie_header* header, socket_t local_socket, cons
     if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post event into the queue");
     } else {
-        os_log(OS_LOG_DEFAULT, "IOFirewall: posted outbound event");
+        os_log(OS_LOG_DEFAULT, "IOFirewall: posted connect event");
     }
     
 

@@ -57,7 +57,7 @@ func generateTestConnection(direction: ConnectionDirection) -> Connection {
     let localPort = Int.random(in: 1025..<40000)
     let remotePort = [ 80, 443, 22, 21, 8100].randomElement()
     let protocolCache = ProtocolCache()
-    let remoteProtocol = protocolCache.get(port: remotePort!)
+    let remoteProtocol = protocolCache.get(remotePort!)
     let displayName = [ "ssh", "Google Chrome", "Mozilla Firefox", "Brave" ].randomElement()
     
     let connection = Connection(direction: direction,

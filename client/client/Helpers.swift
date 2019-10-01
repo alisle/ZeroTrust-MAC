@@ -132,11 +132,16 @@ class Helpers {
             fatalError("Couldn't load \(filename) from main bundle:\n\(error)")
         }
         
+        return loadJSON(data)
+    }
+    
+    
+    static func loadJSON<T: Decodable>(_ data: Data, as type: T.Type = T.self) -> T {
         do {
             let decoder = JSONDecoder()
             return try decoder.decode(T.self, from: data)
         } catch {
-            fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
+            fatalError("Couldn't parse to json")
         }
     }
 }

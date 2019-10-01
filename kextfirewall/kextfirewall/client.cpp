@@ -57,6 +57,13 @@ const IOExternalMethodDispatch com_notrust_firewall_client::sMethods[numberOfMet
         1, // Number of outputs
         0, // Numbers of struct out values.
     },
+    {
+        (IOExternalMethodAction)&com_notrust_firewall_client::sQueryDecision,
+        2, // Number of scalar arguments
+        0, // NUmber of Struct Arguments
+        0, // Number of outputs
+        0, // Numbers of struct out values.
+    }
 };
 
 bool com_notrust_firewall_client::start(IOService* provider) {
@@ -88,12 +95,19 @@ bool com_notrust_firewall_client::initWithTask(task_t owningTask
 }
 
 IOReturn com_notrust_firewall_client::clientClose(void) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: closing client");
+    if(driver != NULL) {
+        driver->disable();
+    }
+    
     terminate();
+    
     
     return kIOReturnSuccess;
 }
 
 IOReturn com_notrust_firewall_client::clientDied() {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: client died");
     return super::clientDied();
 }
 
@@ -151,8 +165,15 @@ IOReturn com_notrust_firewall_client::sIsolateDisable(com_notrust_firewall_drive
 }
 
 
-
-
+IOReturn com_notrust_firewall_client::sQueryDecision(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments) {
+    
+    uint32_t query_id = (uint32_t)arguments->scalarInput[0];
+    uint32_t decision = (uint32_t)arguments->scalarInput[1];
+    
+    target->queryDecision(query_id, decision);
+    
+    return kIOReturnSuccess;
+}
 
 
 IOReturn com_notrust_firewall_client::registerNotificationPort(mach_port_t port, UInt32 type, UInt32 ref) {

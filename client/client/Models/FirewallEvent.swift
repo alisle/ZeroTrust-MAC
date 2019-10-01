@@ -12,7 +12,8 @@ enum FirewallEventType : Int {
     case outboundConnection = 0,
     inboundConnection,
     connectionUpdate,
-    dnsUpdate
+    dnsUpdate,
+    query
 }
 
 
@@ -79,6 +80,49 @@ class FirewallConnectionUpdate : FirewallEvent {
     }
 }
 
+class FirewallQuery : FirewallEvent {
+    let id : UInt32
+    let timestamp : Date
+    
+    let procName : String
+    let pid: pid_t
+    let ppid: pid_t
+    
+    let remoteAddress : String
+    let remotePort : Int
+    var remoteURL : Optional<String> = nil
+    var remoteProtocol: Optional<Protocol> = nil
+    
+    let localAddress : String
+    let localPort : Int
+    var localURL: Optional<String> = nil
+    var localProtocol: Optional<Protocol> = nil
+    
+    init(tag: UUID,
+         id: UInt32,
+         timestamp : TimeInterval,
+         pid: pid_t,
+         ppid: pid_t,
+         remoteAddress : String,
+         localAddress : String,
+         remotePort: Int,
+         localPort: Int,
+         procName : String
+        )  {
+        self.id = id
+        self.timestamp = Date(timeIntervalSince1970: timestamp)
+        self.pid = pid
+        self.ppid = pid
+        self.localPort = localPort
+        self.localAddress = localAddress
+        self.remotePort = remotePort
+        self.remoteAddress = remoteAddress
+        self.procName = procName
+        super.init(type: FirewallEventType.query, tag: tag)
+    }
+}
+
+
 class TCPConnection : FirewallEvent {
     let timestamp : Date
     let pid : pid_t
@@ -97,6 +141,7 @@ class TCPConnection : FirewallEvent {
     let processTopLevelBundle: Optional<Bundle>
     let outcome : Outcome
     let inbound : Bool
+    let procName : String
     var displayName : String = ""
     
     init(tag: UUID,
@@ -120,8 +165,8 @@ class TCPConnection : FirewallEvent {
         self.localAddress = localAddress
         self.remotePort = remotePort
         self.remoteAddress = remoteAddress
-        
-        self.process = Helpers.getPidPath(pid: pid) ?? procName
+        self.process = Helpers.getPidPath(pid: pid)
+        self.procName = procName
         self.parentProcess = Helpers.getPidPath(pid: ppid)
         
         self.parentBundle = Helpers.getBinaryAppBundle(fullBinaryPath: parentProcess)
@@ -154,18 +199,17 @@ class TCPConnection : FirewallEvent {
             return parentTopLevelBundle!.displayName!
         }
         
-        if process != nil {
-            let lastIndex = process?.lastIndex(of: "/") ?? process!.endIndex
-            let substring = process![..<lastIndex]
+        if  let proc = process,
+            let lastIndex = proc.lastIndex(of: "/") {
+            
+            let start = proc.index(after: lastIndex)
+            let end = proc.endIndex
+            let substring = proc[start..<end]
+            
             return String(substring)
         }
         
-        if parentProcess != nil {
-            return String(parentProcess!)
-        }
-        
-        
-        return "unknown"
+        return procName
     }
     
     override func dump() {

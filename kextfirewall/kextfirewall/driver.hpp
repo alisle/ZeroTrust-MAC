@@ -16,12 +16,15 @@
 #include <libkern/OSMalloc.h>
 
 #include "filter.hpp"
+#include "state.hpp"
 
 extern "C" {
 #include "payload.h"
 #include "defines.h"
 }
 
+
+extern IOLock* state_query_lock;
 
 class com_notrust_firewall_driver : public IOService
 {
@@ -42,6 +45,8 @@ public:
     
     bool startIsolate(void);
     bool stopIsolate(void);
+    
+    bool queryDecision(uint32_t query_id, uint32_t decision);
 };
 
 #endif

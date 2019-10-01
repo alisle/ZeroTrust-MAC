@@ -13,7 +13,7 @@ enum ConnectionStateType: Int {
     connected,
     disconnecting,
     disconnected,
-    closing,
+    closed,
     bound,
     unknown
     
@@ -23,7 +23,7 @@ enum ConnectionStateType: Int {
         case .connected: return "Connected"
         case .disconnecting: return "Disconnecting"
         case .disconnected: return "Disconnected"
-        case .closing: return "Closing"
+        case .closed: return "Closed"
         case .bound: return "Bound"
         case .unknown: return "Unknown"
         }

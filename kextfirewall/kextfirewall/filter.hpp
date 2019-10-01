@@ -22,10 +22,12 @@
 #include <uuid/uuid.h>
 
 
+
 #include <IOKit/IOSharedDataQueue.h>
 #include <IOKit/IODataQueueShared.h>
 
 #include "payload.h"
+#include "state.hpp"
 
 
 #define BASE_ID "com.notrust.firewall"
@@ -114,6 +116,8 @@ static struct sflt_filter udpFilterIPV4 = {
 
 typedef struct {
     uuid_t* tag;
+    uint32_t query_id;
+    firewall_outcome_type outcome;
 } cookie_header;
 
 // Used to send an outbound event to the queue
@@ -121,6 +125,15 @@ bool send_tcpconnection_event(cookie_header* header, socket_t local_socket, cons
 
 // Used to send an event update to the queue.
 bool send_update_event(cookie_header* header, sflt_event_t change);
+
+// Used to send a query about allowing the connection.
+bool send_firewall_query(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, protocol_type protocol);
+
+// Processes each connection, stating if the connection was allowed or not.
+firewall_outcome_type determineDecision(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, protocol_type protocol);
+
+
+void set_decision(uint32_t query_id, uint32_t decision);
 
 long current_time();
 

@@ -11,6 +11,7 @@ IOMemoryDescriptor* sharedMemoryDescriptor = NULL;
 OSDefineMetaClassAndStructors(com_notrust_firewall_driver, IOService)
 
 OSMallocTag mallocTag;
+
 bool com_notrust_firewall_driver::start(IOService* provider) {
     IOLog("IOFirewall: IOKit Starting");
     os_log(OS_LOG_DEFAULT, "IOFirewall: starting");
@@ -41,6 +42,9 @@ bool com_notrust_firewall_driver::start(IOService* provider) {
 
     registerService();
     
+    // Initilaize our state engine.
+    state_init();
+    
     return true;
 }
 
@@ -53,6 +57,8 @@ void com_notrust_firewall_driver::stop(IOService* provider) {
     
     OSMalloc_Tagfree(mallocTag);
     mallocTag = NULL;
+    
+    state_release();
 
     super::stop(provider);
     
@@ -64,6 +70,7 @@ bool com_notrust_firewall_driver::enable(void) {
         return false;
         
     }
+    
     
     return true;
 }
@@ -102,6 +109,18 @@ bool com_notrust_firewall_driver::startIsolate(void) {
 bool com_notrust_firewall_driver::stopIsolate(void) {
     os_log(OS_LOG_DEFAULT, "IOFirewall: stopping isolation");
     stop_isolation();
+    
+    return true;
+}
+
+
+bool com_notrust_firewall_driver::queryDecision(uint32_t query_id, uint32_t decision) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: got a decision");
+    // Update the state for this query.
+    state_set(query_id, decision);
+    
+    // Wakeup the thread.
+    IOLockWakeup(state_query_lock, &state_query_lock, false);
     
     return true;
 }

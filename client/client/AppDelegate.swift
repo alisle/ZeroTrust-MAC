@@ -85,6 +85,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     
+    @IBAction func updateRulesClicked(_ sender: Any) {
+        main.getRules()
+    }
     
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
