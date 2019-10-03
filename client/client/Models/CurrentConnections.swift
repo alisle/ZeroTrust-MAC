@@ -11,6 +11,12 @@ import Combine
 import SwiftUI
 
 class CurrentConnections : ObservableObject {
-    @Published var connections  = [ ViewLength: [Connection]]()
+    @Published var connections  = [ ViewLength: Set<Connection>]()
     @Published var enabled = true
+    
+    init() {
+        for view in ViewLength.allCases {
+            connections[view] = []
+        }
+    }
 }

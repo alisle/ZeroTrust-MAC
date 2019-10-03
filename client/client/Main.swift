@@ -40,7 +40,7 @@ class Main {
     }
     
     func disable() {
-        self.currentConnections.connections = [ ViewLength: [Connection]]()
+        self.currentConnections.connections = [ ViewLength: Set<Connection>]()
         consumerThread.close()
         currentConnections.enabled = false
     }
@@ -62,10 +62,22 @@ class Main {
     
     private func connectionsUpdate() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            if self.currentConnections.enabled {
-                self.currentConnections.connections = self.consumerThread.connections                
-            }
             
+            if self.currentConnections.enabled {
+                for (key, set) in self.currentConnections.connections {
+                    set.forEach {
+                        if !self.consumerThread.connections[key]!.contains($0) {
+                            self.currentConnections.connections[key]!.remove($0)
+                        }
+                    }
+                    
+                    self.consumerThread.connections[key]!.forEach {
+                        if !set.contains($0) {
+                            self.currentConnections.connections[key]!.insert($0)
+                        }
+                    }
+                }
+            }
             self.connectionsUpdate()
         }
     }

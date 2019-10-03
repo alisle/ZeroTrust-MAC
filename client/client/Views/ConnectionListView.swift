@@ -15,7 +15,7 @@ struct ConnectionListView: View {
     var body: some View {        
         List {
             Section(header: Text(filter.description)) {
-                ForEach(connections.connections[filter] != nil ? connections.connections[filter]! : []) { connection in
+                ForEach(connections.connections[filter] != nil ? Array(connections.connections[filter]!) : []) { connection in
                     NavigationLink(destination: ConnectionDetailsView(connection: connection)) {
                         ConnectionRowView(connection: connection)
                             .tag(connection.id)
