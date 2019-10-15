@@ -49,7 +49,7 @@ class DecisionEngine {
         
         rulesLock.lock()
         for tld in set {
-            if domain.hasSuffix(tld) {
+            if domain.hasSuffix(tld.indicator) {
                 rulesLock.unlock()
                 return Decision.Deny
             }
@@ -70,7 +70,7 @@ class DecisionEngine {
         
         rulesLock.lock()
         for actor in set {
-            if hostname.contains(actor) {
+            if hostname.contains(actor.indicator) {
                 rulesLock.unlock()
                 return Decision.Deny
             }

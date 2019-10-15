@@ -10,11 +10,11 @@ import SwiftUI
 
 struct ContentView : View  {
     @State private var filterBy: ViewLength = .current    
-    @EnvironmentObject var connections : CurrentConnections
+    @EnvironmentObject var viewState : ViewState
     
     var header : some View {
         HStack {
-            Text("Zero Trust").bold()
+            Text("Zero Trust - Connections").bold()
             Spacer()
             Picker(selection: $filterBy, label: Text("Filter:")) {
                 ForEach(ViewLength.allCases, id: \.rawValue) { length in
@@ -32,7 +32,7 @@ struct ContentView : View  {
             ConnectionListView(filter: filterBy)
                 .frame(minWidth: 400, maxWidth: 600)
             
-            if connections.enabled {
+            if viewState.enabled {
                 Text("Such Empty!")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
@@ -53,6 +53,14 @@ struct ContentView : View  {
 
 
 #if DEBUG
+func generateTestRules() -> Rules {
+    var json : JSONRules  = Helpers.loadJSON("rules.json")
+    json.hostnames.sort()
+    json.domains.sort()
+    
+    return json.convert()
+}
+
 func generateTestConnection(direction: ConnectionDirection) -> Connection {
     let localPort = Int.random(in: 1025..<40000)
     let remotePort = [ 80, 443, 22, 21, 8100].randomElement()
@@ -87,37 +95,37 @@ func generateTestConnection(direction: ConnectionDirection) -> Connection {
 
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        let connections = CurrentConnections()
+        let viewState = ViewState()
         
-        connections.connections[.current] = [
+        viewState.connections[.current] = [
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound)
         ]
 
-        connections.connections[.five] = [
+        viewState.connections[.five] = [
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound)
         ]
 
-        connections.connections[.ten] = [
+        viewState.connections[.ten] = [
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound)
         ]
 
-        connections.connections[.thirty] = [
+        viewState.connections[.thirty] = [
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound)
         ]
 
-        connections.connections[.hour] = [
+        viewState.connections[.hour] = [
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
@@ -125,7 +133,7 @@ struct ContentView_Previews : PreviewProvider {
         ]
 
         
-        return ContentView().environmentObject(connections)
+        return ContentView().environmentObject(viewState)
     }
 }
 #endif

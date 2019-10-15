@@ -20,6 +20,7 @@
                         <outlet property="quarantineMenuItem" destination="OFk-fA-NKm" id="a7Y-hz-TNo"/>
                         <outlet property="quitMenuItem" destination="oUL-kx-HNY" id="kVy-5f-O1Y"/>
                         <outlet property="showConnectionsMenuItem" destination="iDD-rE-Dd4" id="u45-Io-g69"/>
+                        <outlet property="showRulesMenuItem" destination="gTb-es-ywI" id="47S-s0-p6Q"/>
                         <outlet property="statusMenu" destination="rLV-aw-jCn" id="DEf-VN-Amx"/>
                     </connections>
                 </customObject>
@@ -27,12 +28,12 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <menu id="rLV-aw-jCn">
                     <items>
-                        <menuItem title="Connections..." id="iDD-rE-Dd4">
-                            <modifierMask key="keyEquivalentModifierMask"/>
+                        <menuItem title="Show Connections..." keyEquivalent="c" id="iDD-rE-Dd4">
                             <connections>
                                 <action selector="showConnectionsClicked:" target="Voe-Tx-rLC" id="u5M-1P-LqK"/>
                             </connections>
                         </menuItem>
+                        <menuItem isSeparatorItem="YES" id="7jt-YX-8A5"/>
                         <menuItem title="Start Quarantine Mode..." id="OFk-fA-NKm">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
@@ -45,10 +46,17 @@
                                 <action selector="isolationClicked:" target="Voe-Tx-rLC" id="BpX-pf-r6I"/>
                             </connections>
                         </menuItem>
+                        <menuItem isSeparatorItem="YES" id="QgK-bs-Mwz"/>
                         <menuItem title="Disable Service..." id="ZJ0-zg-Dh0">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
                                 <action selector="enabledClicked:" target="Voe-Tx-rLC" id="h8P-14-tUA"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem isSeparatorItem="YES" id="xaj-1l-dNF"/>
+                        <menuItem title="Show Rules..." keyEquivalent="r" id="gTb-es-ywI" userLabel="Show Rules Menu Item">
+                            <connections>
+                                <action selector="showRulesClicked:" target="Voe-Tx-rLC" id="1ao-eI-HOh"/>
                             </connections>
                         </menuItem>
                         <menuItem title="Check for Rules Update..." id="wyU-ub-fNE" userLabel="Check for Rules Update">
@@ -57,8 +65,8 @@
                                 <action selector="updateRulesClicked:" target="Voe-Tx-rLC" id="hOW-x2-rnr"/>
                             </connections>
                         </menuItem>
-                        <menuItem title="Quit..." id="oUL-kx-HNY">
-                            <modifierMask key="keyEquivalentModifierMask"/>
+                        <menuItem isSeparatorItem="YES" id="qpv-7M-qSC"/>
+                        <menuItem title="Quit..." keyEquivalent="q" id="oUL-kx-HNY">
                             <connections>
                                 <action selector="quitClicked:" target="Voe-Tx-rLC" id="SNd-gf-jfv"/>
                             </connections>

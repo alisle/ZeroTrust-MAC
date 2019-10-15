@@ -34,18 +34,22 @@ class RulesDispatcher {
             if let error = error {
                 self?.errorMessage = error.localizedDescription
             } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                print("rules downloaded..converting from json..")
                 let rules = self?.processData(data)
+                print("rules have been converted")
+                
                 DispatchQueue.main.async {
                     callback(rules, self?.errorMessage ?? "")
                 }
             }
         }
         
+        print("starting to download rules..")
         task?.resume()
     }
     
     private func processData(_ data: Data) -> Optional<Rules> {
-        let newRules : Rules = Helpers.loadJSON(data)
-        return newRules
+        let newRules : JSONRules = Helpers.loadJSON(data)
+        return newRules.convert()
     }
 }

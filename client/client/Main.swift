@@ -11,7 +11,7 @@ import Foundation
 
 class Main {
     let consumerThread : ConsumerThread
-    let currentConnections : CurrentConnections = CurrentConnections()
+    let viewState : ViewState = ViewState()
     let decisionEngine = DecisionEngine()
     let rulesDispatcher = RulesDispatcher()
     let connectionState = ConnectionState()
@@ -36,13 +36,13 @@ class Main {
     
     func enable() {
         let _ = consumerThread.open()
-        currentConnections.enabled = true
+        viewState.enabled = true
     }
     
     func disable() {
-        self.currentConnections.connections = [ ViewLength: Set<Connection>]()
+        self.viewState.connections = [ ViewLength: Set<Connection>]()
         consumerThread.close()
-        currentConnections.enabled = false
+        viewState.enabled = false
     }
         
     func isolate(enable: Bool) {
@@ -63,17 +63,17 @@ class Main {
     private func connectionsUpdate() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             
-            if self.currentConnections.enabled {
-                for (key, set) in self.currentConnections.connections {
+            if self.viewState.enabled {
+                for (key, set) in self.viewState.connections {
                     set.forEach {
                         if !self.consumerThread.connections[key]!.contains($0) {
-                            self.currentConnections.connections[key]!.remove($0)
+                            self.viewState.connections[key]!.remove($0)
                         }
                     }
                     
                     self.consumerThread.connections[key]!.forEach {
                         if !set.contains($0) {
-                            self.currentConnections.connections[key]!.insert($0)
+                            self.viewState.connections[key]!.insert($0)
                         }
                     }
                 }
@@ -87,6 +87,7 @@ class Main {
         self.rulesDispatcher.getRules { [weak self] results, errorMessage in
             if let results = results {
                 self?.decisionEngine.set(rules: results)
+                self?.viewState.rules = results
             } else {
                 print(errorMessage)
             }

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ConnectionListView: View {
     let filter : ViewLength
-    @EnvironmentObject var connections : CurrentConnections
+    @EnvironmentObject var connections : ViewState
     
     var body: some View {        
         List {
@@ -29,16 +29,16 @@ struct ConnectionListView: View {
 #if DEBUG
 struct ConnectionListView_Previews: PreviewProvider {
     static var previews: some View {
-        let connections = CurrentConnections()
+        let viewState = ViewState()
         
-        connections.connections[.current] = [
+        viewState.connections[.current] = [
                 generateTestConnection(direction: ConnectionDirection.outbound),
                 generateTestConnection(direction: ConnectionDirection.outbound),
                 generateTestConnection(direction: ConnectionDirection.outbound),
                 generateTestConnection(direction: ConnectionDirection.outbound)
         ]
             
-        return ConnectionListView(filter: .current).environmentObject(connections)
+        return ConnectionListView(filter: .current).environmentObject(viewState)
         }
 }
 #endif

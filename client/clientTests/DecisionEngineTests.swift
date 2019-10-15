@@ -27,8 +27,12 @@ class DecisionEngineTests : XCTestCase {
         
     }
     
+    private func generateRulesEntry(indicator: String)  -> RulesEntry {
+        return RulesEntry(indicator: indicator, meta_id: "id")
+    }
+    
     func testDomainDeny() {
-        let rules = Rules(domains: [ "badguy.com" ], hostnames: [])
+        let rules = Rules(domains: [ generateRulesEntry(indicator: "newgay.badguy.com") ], hostnames: [], metadata: [:])
         let engine = DecisionEngine()
         engine.set(rules: rules)
         
@@ -42,7 +46,7 @@ class DecisionEngineTests : XCTestCase {
     }
     
     func testDomainAllow() {
-        let rules = Rules(domains: ["badguy.com"], hostnames: [])
+        let rules = Rules(domains: [ generateRulesEntry(indicator: "badguy.com") ], hostnames: [], metadata: [:])
         let engine = DecisionEngine()
         engine.set(rules: rules)
         
@@ -54,7 +58,7 @@ class DecisionEngineTests : XCTestCase {
     }
     
     func testHostnameIPDeny() {
-            let rules = Rules(domains: [], hostnames: [ "192.168.1.23" ])
+        let rules = Rules(domains: [], hostnames: [ generateRulesEntry(indicator: "192.168.1.23") ], metadata: [:])
             let engine = DecisionEngine()
             engine.set(rules: rules)
             
@@ -64,7 +68,7 @@ class DecisionEngineTests : XCTestCase {
     }
     
     func testHostnameURLDeny() {
-        let rules = Rules(domains: [], hostnames: [ "i.am.the.bad.guy.com" ])
+        let rules = Rules(domains: [], hostnames: [ generateRulesEntry(indicator: "i.am.the.bad.guy.com") ], metadata: [:])
         let engine = DecisionEngine()
         engine.set(rules: rules)
         
@@ -76,7 +80,7 @@ class DecisionEngineTests : XCTestCase {
     }
     
     func testHostnameURLAllow() {
-        let rules = Rules(domains: [], hostnames: [ "i.am.the.bad.guy.com" ])
+        let rules = Rules(domains: [], hostnames: [ generateRulesEntry(indicator: "i.am.the.bad.guy.com") ], metadata: [:])
         let engine = DecisionEngine()
         engine.set(rules: rules)
         

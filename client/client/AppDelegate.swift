@@ -12,7 +12,9 @@ import SwiftUI
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    var window: NSWindow!
+    var connectionsWindow: NSWindow!
+    var rulesWindow: NSWindow!
+    
     let main = Main()
     
     let disabledIcon = NSImage(named: "DisabledEthernet")
@@ -33,7 +35,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var showConnectionsMenuItem: NSMenuItem!
     @IBOutlet weak var quitMenuItem: NSMenuItem!
     @IBOutlet weak var isolationMenuItem: NSMenuItem!
+    @IBOutlet weak var showRulesMenuItem: NSMenuItem!
     
+
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
     @IBAction func quitClicked(_ sender: Any) {
@@ -80,8 +84,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    @IBAction func showRulesClicked(_ sender: Any) {
+        print("opening rules window")
+        rulesWindow.makeKeyAndOrderFront(nil)
+    }
+    
     @IBAction func showConnectionsClicked(_ sender: Any) {
-        window.makeKeyAndOrderFront(nil)
+        print("opening connections window")
+        connectionsWindow.makeKeyAndOrderFront(nil)
     }
     
     
@@ -90,22 +100,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
 
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
-        window = NSWindow(
+    func createConnectionsWindow() {
+        connectionsWindow = NSWindow(
+               contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
+               styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
+               backing: .buffered, defer: false)
+        connectionsWindow.isReleasedWhenClosed = false
+        connectionsWindow.center()
+        connectionsWindow.setFrameAutosaveName("Connections Window")
+        connectionsWindow.contentView = NSHostingView(rootView: ContentView().environmentObject(main.viewState))
+    }
+
+    func createRulesWindow() {
+        rulesWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered, defer: false)
-        window.center()
-        window.setFrameAutosaveName("Main Window")
+        rulesWindow.isReleasedWhenClosed = false
+        rulesWindow.center()
+        rulesWindow.setFrameAutosaveName("Rules Window")
+        rulesWindow.contentView = NSHostingView(rootView: RulesView().environmentObject(main.viewState))
+        
+    }
 
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        createConnectionsWindow()
+        createRulesWindow()
         main.entryPoint()
         main.enable()
-        
-        window.contentView = NSHostingView(rootView: ContentView().environmentObject(main.currentConnections))
-        
-        //window.makeKeyAndOrderFront(nil)
-        
+                
         setupStatusBar()
     }
     

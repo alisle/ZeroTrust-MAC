@@ -9,7 +9,91 @@
 import Foundation
 
 
-struct Rules : Codable {
-    var domains : [String]
-    var hostnames : [String]
+struct RulesEntry : Codable, Identifiable, Comparable {
+    var indicator : String
+    var meta_id : String
+    
+    var id : String {
+        get { self.meta_id }
+    }
+    
+    static func < (lhs: RulesEntry, rhs: RulesEntry) -> Bool {
+        return lhs.indicator < rhs.indicator
+    }
+    
 }
+
+struct RulesMetaData : Identifiable {
+    var id : String
+    var created : Date
+    var description : String
+    var name : String
+    var references : [URL]
+}
+
+struct Rules  {
+    var domains : [RulesEntry]
+    var hostnames : [RulesEntry]
+    var metadata: [String: RulesMetaData]
+}
+
+struct JSONRulesMetadata : Codable {
+    var id : String
+    var created : String
+    var description : String
+    var name: String
+    var references : [String]
+    
+}
+
+struct JSONRules : Codable {
+    var domains: [RulesEntry]
+    var hostnames: [RulesEntry]
+    var metadata : [JSONRulesMetadata]
+        
+    func convert() -> Rules {
+        var dictionary : [ String: RulesMetaData] = [:]
+        let formatter = DateFormatter()
+        
+        // Example: 2018-05-23T19:36:47.037000
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        metadata.forEach {
+            let id = $0.id
+            
+            
+            let startIndex = $0.created.startIndex
+            let endIndex = $0.created.index(startIndex, offsetBy: formatter.dateFormat.count - 2)
+            let dateString = String($0.created[startIndex..<endIndex])
+            let created = formatter.date(from: dateString)!
+            
+            
+            
+            let description = $0.description
+            let name = $0.name
+            var references : [URL] = []
+            $0.references.forEach { ref in
+                if let url = URL(string: ref) {
+                    references.append(url)
+                }
+            }
+            
+            let entry = RulesMetaData(
+                id: id,
+                created: created,
+                description: description,
+                name: name,
+                references: references
+            )
+            
+            dictionary[id] = entry
+        }
+        
+        
+        return Rules( domains: self.domains, hostnames: self.hostnames, metadata: dictionary)
+    }
+
+}
+
+
+
+
