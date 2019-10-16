@@ -10,6 +10,12 @@ import Foundation
 
 extension Date {
 
+    func toString() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        return formatter.string(from: self)
+    }
+    
     func timeAgoSinceDate() -> String {
 
         // From Time

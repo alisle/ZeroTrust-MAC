@@ -29,13 +29,24 @@ struct RulesMetaData : Identifiable {
     var description : String
     var name : String
     var references : [URL]
+    
 }
 
 struct Rules  {
     var domains : [RulesEntry]
     var hostnames : [RulesEntry]
     var metadata: [String: RulesMetaData]
+    var updated : Date = Date()
+    
+    func getHostnames(metaId: String) -> [String] {
+        return hostnames.filter { $0.meta_id == metaId }.map { $0.indicator }
+    }
+    
+    func getDomains(metaId: String) -> [String] {
+        return domains.filter { $0.meta_id == metaId }.map { $0.indicator }
+    }
 }
+
 
 struct JSONRulesMetadata : Codable {
     var id : String

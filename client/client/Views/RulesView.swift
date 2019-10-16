@@ -12,28 +12,32 @@ struct RulesView: View {
     @EnvironmentObject var viewState : ViewState
 
     var header : some View {
-        HStack {
-            Text("Zero Trust - Rules").bold()
-            Spacer()
+        VStack(alignment: .leading) {
+            HStack(alignment: .center) {
+                Text("Zero Trust - Rules")
+                    .bold()
+            }
+            Text("Last updated: \(viewState.rules.updated.toString())")
+                .font(.caption)
         }
+        .padding()
     }
 
-    var body: some View {
-        VStack {
-            header
-            HStack {
-                List {
-                    Section(header: Text("Rules")) {
-                        ForEach(Array(viewState.rules.metadata.values)) { metadata in
-                            HStack {
-                                Text(metadata.name)
-                            }
-                        }
-                    }
-                }.listStyle(SidebarListStyle())
-            }
+    var rulesContainer : some View {
+        NavigationView {
+            RulesListView()
+                .frame(minWidth: 400, maxWidth: 600)
+            
+            Text("Please Select a Rule")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+    }
     
+    var body: some View {
+        VStack(alignment: .leading) {
+            header
+            rulesContainer
+        }.frame(minWidth: 800, maxWidth: .infinity)
     }
 }
 

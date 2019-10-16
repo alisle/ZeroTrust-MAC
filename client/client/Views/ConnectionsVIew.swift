@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ContentView : View  {
+struct ConnectionsVIew : View  {
     @State private var filterBy: ViewLength = .current    
     @EnvironmentObject var viewState : ViewState
     
@@ -133,7 +133,7 @@ struct ContentView_Previews : PreviewProvider {
         ]
 
         
-        return ContentView().environmentObject(viewState)
+        return ConnectionsVIew().environmentObject(viewState)
     }
 }
 #endif

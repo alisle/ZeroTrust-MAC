@@ -108,7 +108,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         connectionsWindow.isReleasedWhenClosed = false
         connectionsWindow.center()
         connectionsWindow.setFrameAutosaveName("Connections Window")
-        connectionsWindow.contentView = NSHostingView(rootView: ContentView().environmentObject(main.viewState))
+        connectionsWindow.contentView = NSHostingView(rootView: ConnectionsVIew().environmentObject(main.viewState))
     }
 
     func createRulesWindow() {

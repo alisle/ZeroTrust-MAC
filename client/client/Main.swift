@@ -24,7 +24,6 @@ class Main {
     
     func entryPoint() {
         consumerThread.start()
-        getRules()
         startTimers()
     }
     
