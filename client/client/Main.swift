@@ -10,77 +10,54 @@ import Foundation
 
 
 class Main {
-    let consumerThread : ConsumerThread
+    private let consumer : Consumer
+    private let decisionEngine = DecisionEngine()
+    private let rulesDispatcher = RulesDispatcher()
+    private let connectionState = ConnectionState()
+    private let preferences : Preferences
+    private let consumerQueue = DispatchQueue(label: "com.zeortrust.mac.consumerQueue", attributes: .concurrent)
+    
     let viewState : ViewState = ViewState()
-    let decisionEngine = DecisionEngine()
-    let rulesDispatcher = RulesDispatcher()
-    let connectionState = ConnectionState()
-    let preferences : Preferences
 
     init() {
-        self.consumerThread = ConsumerThread(decisionEngine: decisionEngine, state: connectionState)
+        self.consumer = Consumer(decisionEngine: decisionEngine, state: connectionState)
+        connectionState.addListener(listener: viewState)
         self.preferences = Preferences.load()!
     }
     
     func entryPoint() {
-        consumerThread.start()
+        consumerQueue.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            self.consumer.loop()
+        }
+        
         startTimers()
     }
     
     private func startTimers() {
-        connectionsUpdate()
         rulesUpdate()
-        connectionsStateUpdate()
     }
     
     func enable() {
-        let _ = consumerThread.open()
+        let _ = consumer.open()
         viewState.enabled = true
     }
     
     func disable() {
-        self.viewState.connections = [ ViewLength: Set<Connection>]()
-        consumerThread.close()
+        consumer.close()
         viewState.enabled = false
     }
         
     func isolate(enable: Bool) {
-        consumerThread.isolate(enable: enable)
+        consumer.isolate(enable: enable)
     }
     
     func quanrantine(enable: Bool) {
-        consumerThread.quarantine(enable: enable)
+        consumer.quarantine(enable: enable)
     }
-    
-    private func connectionsStateUpdate() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
-            self.connectionState.trim()
-            self.connectionsStateUpdate()
-        }
-    }
-    
-    private func connectionsUpdate() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
-            if self.viewState.enabled {
-                for (key, set) in self.viewState.connections {
-                    set.forEach {
-                        if !self.consumerThread.connections[key]!.contains($0) {
-                            self.viewState.connections[key]!.remove($0)
-                        }
-                    }
-                    
-                    self.consumerThread.connections[key]!.forEach {
-                        if !set.contains($0) {
-                            self.viewState.connections[key]!.insert($0)
-                        }
-                    }
-                }
-            }
-            self.connectionsUpdate()
-        }
-    }
-    
     func getRules() {
         print("Getting Rules")
         self.rulesDispatcher.getRules { [weak self] results, errorMessage in
@@ -102,13 +79,6 @@ class Main {
         }
     }
     
-    func getAllConnections() -> [ViewLength: [Connection]] {
-        return consumerThread.connections
-    }
-
-    func getConnections(filter: ViewLength) -> [Connection] {
-        return consumerThread.connections[filter]!
-    }
     
     func exitPoint() {
         

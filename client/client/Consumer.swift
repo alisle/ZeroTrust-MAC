@@ -10,21 +10,11 @@ import Foundation
 import SwiftUI
 
 
-class ConsumerThread : Thread {
+class Consumer {
     private let decisionEngine : DecisionEngine
     private let state : ConnectionState
     private let dnsCache = DNSCache()
     private let protocolCache = ProtocolCache()
-    
-    public var connections : [ViewLength : [Connection]] {
-        var sets = [ViewLength : [Connection]]()
-        
-        ViewLength.allCases.forEach {
-            sets[$0] = state.connections(filter: $0)
-        }
-        
-        return sets
-    }
     
     private var isOpen = false
     private var comm = KextComm()
@@ -33,6 +23,7 @@ class ConsumerThread : Thread {
         self.decisionEngine = decisionEngine
         self.state = state
     }
+    
     
     func open() -> Bool {
         if isOpen {
@@ -77,7 +68,7 @@ class ConsumerThread : Thread {
         comm.isolate(enable: enable)
     }
     
-    override func main() {
+    func loop() {
         while true {
             while isOpen {
                 print("checking for data")
@@ -150,7 +141,7 @@ class ConsumerThread : Thread {
                 print("finished processing event")
             }
             print("sleeping because we aren't open")
-            Thread.sleep(forTimeInterval: 10)
+            sleep(10)
         }
     }
 }

@@ -12,6 +12,9 @@ struct ConnectionRowView: View {
     let connection : Connection
     var body: some View {
         HStack(spacing: 5) {
+            Rectangle()
+                .fill(connection.outcome.color)
+                .frame(width: 5, height: 64)
             ConnectionIconView(connection: connection)
             VStack(alignment: .leading) {
                 Text(connection.displayName).bold()
@@ -20,7 +23,6 @@ struct ConnectionRowView: View {
                     Spacer()
                     Text("\(connection.remoteProtocol)")
                 }
-                
             }
         }
     }

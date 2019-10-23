@@ -12,14 +12,11 @@ import SwiftUI
 struct Connection : Hashable, Identifiable {
     let direction : ConnectionDirection
     
+    let id = UUID()
+    
     let tag : UUID
-    
-    var id : UUID {
-        get { self.tag }
-    }
-    
     let startTimestamp : Date
-    var endDateTimestamp : Optional<Date> = nil
+    let endDateTimestamp : Optional<Date>
     
     let pid : pid_t
     let ppid : pid_t
@@ -47,10 +44,23 @@ struct Connection : Hashable, Identifiable {
     
     let displayName : String
     
-    var image : Optional<NSImage> = nil
-    var state : ConnectionStateType = ConnectionStateType.unknown
+    let image : Optional<NSImage>
+    let state : ConnectionStateType
     
     let outcome : Outcome
+    
+    var  dupeHash : Int {
+        get {
+            var hasher = Hasher()
+            
+            hasher.combine(self.direction)
+            hasher.combine(self.remoteURL)
+            hasher.combine(self.remoteAddress)
+            hasher.combine(self.pid)
+            
+            return hasher.finalize()
+        }
+    }
     
     var remoteDisplayAddress : String {
         return remoteURL ?? remoteAddress
@@ -68,7 +78,7 @@ struct Connection : Hashable, Identifiable {
         let date = self.endDateTimestamp ?? Date()
         return date.timeIntervalSince(startTimestamp)
     }
-    
+        
     init(direction : ConnectionDirection,
          outcome : Outcome,
          tag : UUID,
@@ -112,6 +122,13 @@ struct Connection : Hashable, Identifiable {
         self.processTopLevelBundle = processTopLevelBundle
         self.parentTopLevelBundle = parentTopLevelBundle
         self.displayName = displayName
+        self.state = ConnectionStateType.unknown
+        self.image = Connection.getImage(
+            processBundle: processBundle,
+            processTopLevelBundle: processTopLevelBundle,
+            parentBundle: parentBundle,
+            parentTopLevelBundle: parentTopLevelBundle)
+        self.endDateTimestamp = nil
     }
     
     init(connection: TCPConnection,
@@ -154,24 +171,147 @@ struct Connection : Hashable, Identifiable {
         
         self.displayName = connection.displayName
         
-        self.image = getImage()
+        self.state = ConnectionStateType.unknown
+        
+        self.image = Connection.getImage(
+            processBundle: connection.processBundle,
+            processTopLevelBundle: connection.processTopLevelBundle,
+            parentBundle: connection.parentBundle,
+            parentTopLevelBundle: connection.parentTopLevelBundle)
+        
+        self.endDateTimestamp = nil
         
     }
     
-    func getImage() -> Optional<NSImage> {
-        if let nsimage = self.processBundle?.icon {
+    private init(
+        direction : ConnectionDirection,
+        outcome : Outcome,
+        state: ConnectionStateType,
+        tag : UUID,
+        start: Date,
+        end: Optional<Date>,
+        pid : pid_t,
+        ppid : pid_t,
+        uid : Optional<uid_t>,
+        user : Optional<String>,
+        remoteAddress : String,
+        remoteURL: Optional<String>,
+        portProtocol : Optional<Protocol>,
+        localAddress : String,
+        localPort : Int,
+        remotePort : Int,
+        process : Optional<String>,
+        parentProcess : Optional<String>,
+        processBundle : Optional<Bundle>,
+        parentBundle: Optional<Bundle>,
+        processTopLevelBundle: Optional<Bundle>,
+        parentTopLevelBundle : Optional<Bundle>,
+        displayName : String) {
+        self.outcome = outcome
+        self.direction = direction
+        self.startTimestamp = start
+        self.tag = tag
+        self.pid = pid
+        self.ppid = ppid
+        self.uid = uid
+        self.user = user
+        self.remoteAddress = remoteAddress
+        self.remoteURL = remoteURL
+        self.portProtocol = portProtocol
+        self.localAddress = localAddress
+        self.localPort = localPort
+        self.remotePort = remotePort
+        self.process = process
+        self.parentProcess = parentProcess
+        self.processBundle = processBundle
+        self.parentBundle = parentBundle
+        self.processTopLevelBundle = processTopLevelBundle
+        self.parentTopLevelBundle = parentTopLevelBundle
+        self.displayName = displayName
+        self.state = state
+        self.image = Connection.getImage(
+            processBundle: processBundle,
+            processTopLevelBundle: processTopLevelBundle,
+            parentBundle: parentBundle,
+            parentTopLevelBundle: parentTopLevelBundle)
+        self.endDateTimestamp = end
+    }
+    
+    func clone() -> Connection {
+        return Connection(
+            direction : self.direction,
+            outcome : self.outcome,
+            state: self.state,
+            tag : self.tag,
+            start: self.startTimestamp,
+            end: self.endDateTimestamp,
+            pid : self.pid,
+            ppid : self.ppid,
+            uid : self.uid,
+            user : self.user,
+            remoteAddress : self.remoteAddress,
+            remoteURL: self.remoteURL,
+            portProtocol : self.portProtocol,
+            localAddress : self.localAddress,
+            localPort : self.localPort,
+            remotePort : self.remotePort,
+            process : self.process,
+            parentProcess : self.parentProcess,
+            processBundle : self.processBundle,
+            parentBundle: self.parentBundle,
+            processTopLevelBundle: self.processTopLevelBundle,
+            parentTopLevelBundle : self.parentTopLevelBundle,
+            displayName : self.displayName)
+    }
+    
+    func changeState(state: ConnectionStateType, timestamp: Date) -> Connection {
+        return Connection(
+            direction : self.direction,
+            outcome : self.outcome,
+            state: state,
+            tag : self.tag,
+            start: self.startTimestamp,
+            end: timestamp,
+            pid : self.pid,
+            ppid : self.ppid,
+            uid : self.uid,
+            user : self.user,
+            remoteAddress : self.remoteAddress,
+            remoteURL: self.remoteURL,
+            portProtocol : self.portProtocol,
+            localAddress : self.localAddress,
+            localPort : self.localPort,
+            remotePort : self.remotePort,
+            process : self.process,
+            parentProcess : self.parentProcess,
+            processBundle : self.processBundle,
+            parentBundle: self.parentBundle,
+            processTopLevelBundle: self.processTopLevelBundle,
+            parentTopLevelBundle : self.parentTopLevelBundle,
+            displayName : self.displayName)
+    }
+    
+    
+    
+    private static func getImage(
+        processBundle : Optional<Bundle>,
+        processTopLevelBundle: Optional<Bundle>,
+        parentBundle: Optional<Bundle>,
+        parentTopLevelBundle: Optional<Bundle>
+        ) -> Optional<NSImage> {
+        if let nsimage = processBundle?.icon {
             return nsimage
         }
         
-        if let nsimage = self.processTopLevelBundle?.icon {
+        if let nsimage = processTopLevelBundle?.icon {
             return nsimage
         }
         
-        if let nsimage = self.parentBundle?.icon {
+        if let nsimage = parentBundle?.icon {
             return nsimage
         }
         
-        if let nsimage = self.parentTopLevelBundle?.icon {
+        if let nsimage = parentTopLevelBundle?.icon {
             return nsimage
         }
         
@@ -180,6 +320,7 @@ struct Connection : Hashable, Identifiable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(tag)
+        
     }
     
 }

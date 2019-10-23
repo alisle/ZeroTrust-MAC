@@ -11,73 +11,84 @@ import Foundation
 
 class ConnectionState {
     private var state = [UUID: Connection]()
-    private let lock =  NSLock()
-
-    func connections(filter : ViewLength) -> [Connection] {
-        let filtered = state.filter {
-            if $1.state != .disconnected {
-                return true
-            } else {
-                if !$1.endDateTimestamp!.olderThan(minutes: filter.length) {
-                    return true
-                }
-            }
-            
-            return false
-        }
-  
-        return Array(filtered.values).sorted(by: {
-            switch $0.startTimestamp.compare($1.startTimestamp) {
-            case .orderedAscending: return false
-            case .orderedDescending: return true
-            case .orderedSame:
-                switch $0.remoteDisplayAddress.compare($1.remoteDisplayAddress) {
-                case .orderedAscending : return true
-                case .orderedDescending : return false
-                case .orderedSame:
-                    return $0.id.hashValue > $1.id.hashValue
-                }
-            }
-        })
+    private let connectionQueue = DispatchQueue(label: "com.zerotrust.mac.connectionQueue", attributes: .concurrent)
+    private var listeners : [StateListener] = []
+    
+    init() {
+        trim()
     }
     
-    func trim() {
-        lock.lock()
-            state = state.filter {
-                if $1.state == .disconnected, $1.endDateTimestamp!.olderThan(minutes: ViewLength.max()) {
-                        return false
-                }
-                
-                return true
+    var connections :  Set<Connection> {        
+        get {
+            var set: Set<Connection>!
+            self.connectionQueue.sync {
+                set = Set(state.values.map{ $0.clone() })
             }
-        lock.unlock()
+            return set
+        }
+    }
+
+    func addListener(listener : StateListener) {
+        self.connectionQueue.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            self.listeners.append(listener)
+        }
+    }
+        
+        
+    func trim() {
+        self.connectionQueue.asyncAfter(deadline: .now() + 60, flags: .barrier) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            self.state = self.state.filter { !(($1.state == .disconnected || $1.state == .disconnecting) && $1.endDateTimestamp!.olderThan(minutes: 60)) }
+            self.trim()
+        }
     }
     
     func new(connection: Connection) {
         if connection.remoteAddress != "127.0.0.1" {
-            lock.lock()
-                state[connection.tag] = connection
-            lock.unlock()
+            self.connectionQueue.async(flags: .barrier) { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                
+                self.state[connection.tag] = connection
+                self.listeners.forEach{ $0.connectionChanged( connection.clone() )}
+            }
         }
     }
     
     func update(tag: UUID, timestamp : Date, update: ConnectionStateType) {
-        lock.lock()
-        state[tag]?.state = update
-        if update == ConnectionStateType.disconnected {
-            state[tag]?.endDateTimestamp = timestamp
+        self.connectionQueue.async(flags: .barrier) { [weak self] in
+            guard let self = self else {
+                return
+            }
+
+            if let conn = self.state[tag] {
+                let updated = conn.changeState(state: update, timestamp: timestamp)
+                self.state[tag] = updated
+                self.listeners.forEach { $0.connectionChanged( updated ) }
+            }
         }
-        lock.unlock()
-        dump()
+        
     }
     
     func dump() {
-        lock.lock()
-        for pair  in state {
-            let value = pair.value
-            print("\(value.displayName)->\(value.remoteDisplayAddress):\(value.remotePort) -- \(value.state)")
+        self.connectionQueue.async(flags: .barrier) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            for pair  in self.state {
+                let value = pair.value
+                print("\(value.displayName)->\(value.remoteDisplayAddress):\(value.remotePort) -- \(value.state) -- DupeHash: \(value.dupeHash)")
+            }
         }
-        lock.unlock()
     }
     
     

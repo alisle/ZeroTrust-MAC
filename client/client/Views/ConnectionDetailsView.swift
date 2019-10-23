@@ -21,6 +21,10 @@ struct ConnectionDetailsView: View {
     
     var title: some View {
         let hstack = HStack(alignment: .top) {
+            Rectangle()
+                .fill(connection.outcome.color)
+                .frame(width: 5)
+            
             ConnectionIconView(connection: connection)
             VStack(alignment: .leading) {
                 Text(connection.displayName)

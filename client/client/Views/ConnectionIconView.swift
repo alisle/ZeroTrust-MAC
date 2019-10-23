@@ -13,9 +13,13 @@ struct ConnectionIconView: View {
      var body: some View {
          Group() {
              if connection.image == nil {
-                 Image("Console").resizable().frame(width: 64, height: 64, alignment: .leading)
+                 Image("Console")
+                    .resizable()
+                    .frame(width: 64, height: 64, alignment: .leading)
              } else {
-                 Image(nsImage: connection.image!).resizable().frame(width: 64, height: 64, alignment: .leading)
+                 Image(nsImage: connection.image!)
+                    .resizable()
+                    .frame(width: 64, height: 64, alignment: .leading)
              }
          }
      }

@@ -9,36 +9,60 @@
 import SwiftUI
 
 struct ConnectionListView: View {
-    let filter : ViewLength
-    @EnvironmentObject var connections : ViewState
+    @EnvironmentObject var viewState : ViewState
     
-    var body: some View {        
+    
+    var body: some View {
         List {
-            Section(header: Text(filter.description)) {
-                ForEach(connections.connections[filter] != nil ? Array(connections.connections[filter]!) : []) { connection in
-                    NavigationLink(destination: ConnectionDetailsView(connection: connection)) {
-                        ConnectionRowView(connection: connection)
-                            .tag(connection.id)
+            Section(header: Text("Alive Connections")) {
+                if viewState.aliveConnections.count == 0 {
+                    Text("Empty.")
+                } else {
+                    ForEach(viewState.aliveConnections) { connection in
+                        NavigationLink(destination: ConnectionDetailsView(connection: connection)) {
+                            ConnectionRowView(connection: connection)
+                                .tag(connection.id)
+                                .foregroundColor(.white)
+                        }
+                        .frame(height: 64)
                     }
                 }
             }
-        }.listStyle(SidebarListStyle())
+
+            Section(header: Text("Dead Connections")) {
+                if viewState.deadConnections.count == 0 {
+                    Text("Empty.")
+                } else {
+                    ForEach(viewState.deadConnections) { connection in
+                        NavigationLink(destination: ConnectionDetailsView(connection: connection)) {
+                            ConnectionRowView(connection: connection)
+                                .tag(connection.id)
+                                .foregroundColor(.gray)
+                        }
+                    }.frame(height: 64)
+                }
+            }
+        }
+        .listStyle(SidebarListStyle())
     }
 }
 
 #if DEBUG
 struct ConnectionListView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewState = ViewState()
-        
-        viewState.connections[.current] = [
+        let viewState = ViewState(aliveConnections: [
                 generateTestConnection(direction: ConnectionDirection.outbound),
                 generateTestConnection(direction: ConnectionDirection.outbound),
                 generateTestConnection(direction: ConnectionDirection.outbound),
                 generateTestConnection(direction: ConnectionDirection.outbound)
-        ]
-            
-        return ConnectionListView(filter: .current).environmentObject(viewState)
+        ], deadConnections:  [
+                generateTestConnection(direction: ConnectionDirection.outbound),
+                generateTestConnection(direction: ConnectionDirection.outbound),
+                generateTestConnection(direction: ConnectionDirection.outbound),
+                generateTestConnection(direction: ConnectionDirection.outbound)
+        ])
+
+        return ConnectionListView().environmentObject(viewState)
         }
 }
 #endif

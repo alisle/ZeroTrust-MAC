@@ -58,8 +58,12 @@ struct RulesDetailView: View {
                 .font(.subheadline)
                 .bold()
             
-            ForEach(rule.references) { reference in
-                Text(reference.absoluteString)
+            if rule.references.count == 0 {
+                Text("No References.")
+            } else {
+                ForEach(rule.references) { reference in
+                    Text(reference.absoluteString)
+                }
             }
         }
     }
@@ -72,24 +76,16 @@ struct RulesDetailView: View {
             
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    Text("Hostnames")
-                        .bold()
-                        .padding(2)
                     ForEach(viewState.rules.getHostnames(metaId: rule.id), id: \.self) { hostname in
-                        Text(hostname)
+                        Text("Hostname - \(hostname)")
                     }
-                }.padding()
-                Spacer()
+                }
                 VStack(alignment: .leading) {
-                    Text("Domains")
-                        .bold()
-                        .padding(2)
-                    
                     ForEach(viewState.rules.getDomains(metaId: rule.id), id: \.self) { domain in
-                        Text(domain)
+                        Text("Domain - \(domain)")
                     }
 
-                }.padding()
+                }
             }
         }
     }

@@ -9,27 +9,22 @@
 import SwiftUI
 
 struct ConnectionsVIew : View  {
-    @State private var filterBy: ViewLength = .current    
+    
     @EnvironmentObject var viewState : ViewState
     
     var header : some View {
-        HStack {
-            Text("Zero Trust - Connections").bold()
-            Spacer()
-            Picker(selection: $filterBy, label: Text("Filter:")) {
-                ForEach(ViewLength.allCases, id: \.rawValue) { length in
-                    Text(length.description).tag(length)
-                }
+        VStack(alignment: .leading) {
+            HStack(alignment: .center) {
+                Text("Zero Trust - Connections")
+                    .bold()
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding(3)
-            .frame(width: 200, alignment: .bottomTrailing)
         }
+        .padding()
     }
-    
+
     var connectionsContainer : some View {
         NavigationView {
-            ConnectionListView(filter: filterBy)
+            ConnectionListView()
                 .frame(minWidth: 400, maxWidth: 600)
             
             if viewState.enabled {
@@ -44,7 +39,7 @@ struct ConnectionsVIew : View  {
     }
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             header
             connectionsContainer
         }.frame(minWidth: 800, maxWidth: .infinity)
@@ -95,44 +90,18 @@ func generateTestConnection(direction: ConnectionDirection) -> Connection {
 
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        let viewState = ViewState()
-        
-        viewState.connections[.current] = [
+        let viewState = ViewState( aliveConnections: [
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound)
-        ]
-
-        viewState.connections[.five] = [
+        ], deadConnections:  [
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound),
             generateTestConnection(direction: ConnectionDirection.outbound)
-        ]
+        ])
 
-        viewState.connections[.ten] = [
-            generateTestConnection(direction: ConnectionDirection.outbound),
-            generateTestConnection(direction: ConnectionDirection.outbound),
-            generateTestConnection(direction: ConnectionDirection.outbound),
-            generateTestConnection(direction: ConnectionDirection.outbound)
-        ]
-
-        viewState.connections[.thirty] = [
-            generateTestConnection(direction: ConnectionDirection.outbound),
-            generateTestConnection(direction: ConnectionDirection.outbound),
-            generateTestConnection(direction: ConnectionDirection.outbound),
-            generateTestConnection(direction: ConnectionDirection.outbound)
-        ]
-
-        viewState.connections[.hour] = [
-            generateTestConnection(direction: ConnectionDirection.outbound),
-            generateTestConnection(direction: ConnectionDirection.outbound),
-            generateTestConnection(direction: ConnectionDirection.outbound),
-            generateTestConnection(direction: ConnectionDirection.outbound)
-        ]
-
-        
         return ConnectionsVIew().environmentObject(viewState)
     }
 }
