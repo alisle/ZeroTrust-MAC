@@ -290,42 +290,47 @@ class KextComm {
     }
     
     private func processDNSAnswer(startPointer: UnsafeMutableRawPointer, currentPointer: UnsafeMutableRawPointer) ->  (updatedPointer: UnsafeMutableRawPointer, cNameRecord: Optional<CNameRecord>, aRecord: Optional<ARecord>) {
-        var pointer = currentPointer
-        let offsetResult = grabAnswerOffsetPosition(currentPointer: pointer)
-        
-        // Get the QType
-        let qtypeResult = grabUInt16(pointer: offsetResult.updatedPointer)
-        pointer = qtypeResult.updatedPointer
-        let qtype = qtypeResult.value
+        do {
+            var pointer = currentPointer
+            let offsetResult = grabAnswerOffsetPosition(currentPointer: pointer)
+            
+            // Get the QType
+            let qtypeResult = grabUInt16(pointer: offsetResult.updatedPointer)
+            pointer = qtypeResult.updatedPointer
+            let qtype = qtypeResult.value
 
-        // Skip over the QClass and TTL.
-        pointer = pointer.advanced(by: 6)
+            // Skip over the QClass and TTL.
+            pointer = pointer.advanced(by: 6)
 
-        // Grab the Length
-        let lengthResult = grabUInt16(pointer: pointer)
-        pointer = lengthResult.updatedPointer
-        let length = lengthResult.value
-        
-        var cNameRecord : Optional<CNameRecord> = nil
-        var aRecord : Optional<ARecord> = nil
-        
-        switch(qtype) {
-        case 0x1:
-            if length == 4 {
-                let (updatedPointer: _, url: url)  = grabURL(startPointer: startPointer, offsetPointer: startPointer.advanced(by: Int(offsetResult.offsetPosition)))
-                let (updatedPointer: _, ip: ip) = grabIPv4String(currentPointer: pointer)
-                aRecord = ARecord(url: url, ip: ip)
-            } else {
-                print("We have an A record which is larger than 4 Bytes. This is weird?")
+            // Grab the Length
+            let lengthResult = grabUInt16(pointer: pointer)
+            pointer = lengthResult.updatedPointer
+            let length = lengthResult.value
+            
+            var cNameRecord : Optional<CNameRecord> = nil
+            var aRecord : Optional<ARecord> = nil
+            
+            switch(qtype) {
+            case 0x1:
+                if length == 4 {
+                    let (updatedPointer: _, url: url)  = grabURL(startPointer: startPointer, offsetPointer: startPointer.advanced(by: Int(offsetResult.offsetPosition)))
+                    let (updatedPointer: _, ip: ip) = grabIPv4String(currentPointer: pointer)
+                    aRecord = ARecord(url: url, ip: ip)
+                } else {
+                    print("We have an A record which is larger than 4 Bytes. This is weird?")
+                }
+            case 0x5:
+                let (updatedPointer: _, url: cname)  = grabURL(startPointer: startPointer, offsetPointer: startPointer.advanced(by: Int(offsetResult.offsetPosition)))
+                let (_, url) = grabURL(startPointer: startPointer, offsetPointer: pointer)
+                cNameRecord = CNameRecord(url: url, cName: cname)
+            default: ()
             }
-        case 0x5:
-            let (updatedPointer: _, url: cname)  = grabURL(startPointer: startPointer, offsetPointer: startPointer.advanced(by: Int(offsetResult.offsetPosition)))
-            let (_, url) = grabURL(startPointer: startPointer, offsetPointer: pointer)
-            cNameRecord = CNameRecord(url: url, cName: cname)
-        default: ()
+            
+            return (updatedPointer: pointer.advanced(by: Int(length)), cNameRecord: cNameRecord, aRecord: aRecord)
+        } catch {
+            print("unable to process answer")
         }
         
-        return (updatedPointer: pointer.advanced(by: Int(length)), cNameRecord: cNameRecord, aRecord: aRecord)
     }
     
     private func processDNSHeader(startPointer: UnsafeMutableRawPointer) -> (UnsafeMutableRawPointer, DNSHeader) {
@@ -405,6 +410,7 @@ class KextComm {
     }
     
     private func grabUInt16(pointer : UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, value: UInt16) {
+                        
         let first = UInt16(pointer.load(as: UInt8.self)) << 8
         var updatedPointer = pointer.advanced(by: 1)
         

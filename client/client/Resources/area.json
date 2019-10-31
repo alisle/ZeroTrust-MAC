@@ -1,0 +1,2846 @@
+[
+    {
+        "area": 14440.772691897295,
+        "centroid": [
+            612.8656343507567,
+            53.258968798068
+        ],
+        "properties": {
+            "admin": "Russia"
+        },
+        "side": 120.16976613065907,
+        "type": "Feature"
+    },
+    {
+        "area": 8331.780409000961,
+        "centroid": [
+            185.4515444169702,
+            65.73525507529104
+        ],
+        "properties": {
+            "admin": "Canada"
+        },
+        "side": 91.27858680435934,
+        "type": "Feature"
+    },
+    {
+        "area": 5507.31209021558,
+        "centroid": [
+            169.709382632116,
+            100.57032788756183
+        ],
+        "properties": {
+            "admin": "United States of America"
+        },
+        "side": 74.2112665989173,
+        "type": "Feature"
+    },
+    {
+        "area": 4696.256470055665,
+        "centroid": [
+            629.7263638870486,
+            118.46183759771554
+        ],
+        "properties": {
+            "admin": "China"
+        },
+        "side": 68.5292380670883,
+        "type": "Feature"
+    },
+    {
+        "area": 3489.8417752283167,
+        "centroid": [
+            281.74310327230074,
+            223.6422604940304
+        ],
+        "properties": {
+            "admin": "Brazil"
+        },
+        "side": 59.07488277794816,
+        "type": "Feature"
+    },
+    {
+        "area": 3436.836557000497,
+        "centroid": [
+            698.4570223224875,
+            257.25218779057843
+        ],
+        "properties": {
+            "admin": "Australia"
+        },
+        "side": 58.62453886386226,
+        "type": "Feature"
+    },
+    {
+        "area": 3279.2315760914553,
+        "centroid": [
+            307.0820883220007,
+            37.5949923244915
+        ],
+        "properties": {
+            "admin": "Greenland"
+        },
+        "side": 57.26457522842071,
+        "type": "Feature"
+    },
+    {
+        "area": 1626.392650662132,
+        "centroid": [
+            549.433834582974,
+            92.52977027180025
+        ],
+        "properties": {
+            "admin": "Kazakhstan"
+        },
+        "side": 40.328558747643484,
+        "type": "Feature"
+    },
+    {
+        "area": 1375.5180560696754,
+        "centroid": [
+            256.0854640018731,
+            277.0761808424967
+        ],
+        "properties": {
+            "admin": "Argentina"
+        },
+        "side": 37.08797724424554,
+        "type": "Feature"
+    },
+    {
+        "area": 1374.4839735428468,
+        "centroid": [
+            576.8121857122926,
+            149.38343380020183
+        ],
+        "properties": {
+            "admin": "India"
+        },
+        "side": 37.074033683197285,
+        "type": "Feature"
+    },
+    {
+        "area": 1055.197874482139,
+        "centroid": [
+            405.8441980525859,
+            137.65482620425666
+        ],
+        "properties": {
+            "admin": "Algeria"
+        },
+        "side": 32.48380942072741,
+        "type": "Feature"
+    },
+    {
+        "area": 936.6040427428597,
+        "centroid": [
+            452.5275100506905,
+            206.36823105826497
+        ],
+        "properties": {
+            "admin": "Democratic Republic of the Congo"
+        },
+        "side": 30.60398736672821,
+        "type": "Feature"
+    },
+    {
+        "area": 911.5530076829964,
+        "centroid": [
+            629.1635698897883,
+            95.65281337033815
+        ],
+        "properties": {
+            "admin": "Mongolia"
+        },
+        "side": 30.19193613670704,
+        "type": "Feature"
+    },
+    {
+        "area": 860.157562701781,
+        "centroid": [
+            172.9538375314082,
+            146.83609825390835
+        ],
+        "properties": {
+            "admin": "Mexico"
+        },
+        "side": 29.328442895963313,
+        "type": "Feature"
+    },
+    {
+        "area": 844.5506335831633,
+        "centroid": [
+            499.25405111512526,
+            146.47421314495534
+        ],
+        "properties": {
+            "admin": "Saudi Arabia"
+        },
+        "side": 29.061153342274,
+        "type": "Feature"
+    },
+    {
+        "area": 775.6097405973705,
+        "centroid": [
+            466.4626458660698,
+            164.51226625906685
+        ],
+        "properties": {
+            "admin": "Sudan"
+        },
+        "side": 27.849770925402073,
+        "type": "Feature"
+    },
+    {
+        "area": 770.4779131330397,
+        "centroid": [
+            520.9785094249046,
+            127.71557736695455
+        ],
+        "properties": {
+            "admin": "Iran"
+        },
+        "side": 27.757483912145922,
+        "type": "Feature"
+    },
+    {
+        "area": 749.4026938775714,
+        "centroid": [
+            660.3655184709428,
+            205.0251480278659
+        ],
+        "properties": {
+            "admin": "Indonesia"
+        },
+        "side": 27.375220435232507,
+        "type": "Feature"
+    },
+    {
+        "area": 730.0437429342674,
+        "centroid": [
+            440.1335608149368,
+            139.9578964010032
+        ],
+        "properties": {
+            "admin": "Libya"
+        },
+        "side": 27.019321659402692,
+        "type": "Feature"
+    },
+    {
+        "area": 559.1685507356888,
+        "centroid": [
+            455.9738078138736,
+            264.3867352334154
+        ],
+        "properties": {
+            "admin": "South Africa"
+        },
+        "side": 23.64674503469111,
+        "type": "Feature"
+    },
+    {
+        "area": 527.8188727038178,
+        "centroid": [
+            441.4160527462296,
+            166.05581902063562
+        ],
+        "properties": {
+            "admin": "Chad"
+        },
+        "side": 22.974308971192535,
+        "type": "Feature"
+    },
+    {
+        "area": 527.2231176959431,
+        "centroid": [
+            392.0228035433906,
+            161.52385571998028
+        ],
+        "properties": {
+            "admin": "Mali"
+        },
+        "side": 22.961339631997586,
+        "type": "Feature"
+    },
+    {
+        "area": 526.144276373303,
+        "centroid": [
+            234.6222037666248,
+            220.23808298108918
+        ],
+        "properties": {
+            "admin": "Peru"
+        },
+        "side": 22.937835041112816,
+        "type": "Feature"
+    },
+    {
+        "area": 511.46802152873715,
+        "centroid": [
+            438.96156144294446,
+            227.27079463702373
+        ],
+        "properties": {
+            "admin": "Angola"
+        },
+        "side": 22.61565876840065,
+        "type": "Feature"
+    },
+    {
+        "area": 496.58649358547336,
+        "centroid": [
+            420.7384071898855,
+            161.30608424508378
+        ],
+        "properties": {
+            "admin": "Niger"
+        },
+        "side": 22.284220730944874,
+        "type": "Feature"
+    },
+    {
+        "area": 457.6494279401377,
+        "centroid": [
+            488.02200436711155,
+            180.85749211442626
+        ],
+        "properties": {
+            "admin": "Ethiopia"
+        },
+        "side": 21.392742412793588,
+        "type": "Feature"
+    },
+    {
+        "area": 456.7480783945866,
+        "centroid": [
+            237.60540685263197,
+            191.32108210516486
+        ],
+        "properties": {
+            "admin": "Colombia"
+        },
+        "side": 21.37166531636191,
+        "type": "Feature"
+    },
+    {
+        "area": 455.304993077556,
+        "centroid": [
+            256.2262225432424,
+            237.07224047338084
+        ],
+        "properties": {
+            "admin": "Bolivia"
+        },
+        "side": 21.337876958065813,
+        "type": "Feature"
+    },
+    {
+        "area": 448.65599677180944,
+        "centroid": [
+            466.3881011325789,
+            141.19609744841972
+        ],
+        "properties": {
+            "admin": "Egypt"
+        },
+        "side": 21.181501287014797,
+        "type": "Feature"
+    },
+    {
+        "area": 442.77716043746113,
+        "centroid": [
+            376.9584886976933,
+            155.06874674018707
+        ],
+        "properties": {
+            "admin": "Mauritania"
+        },
+        "side": 21.04227080040225,
+        "type": "Feature"
+    },
+    {
+        "area": 427.24894506337296,
+        "centroid": [
+            428.33184109902254,
+            52.524983035726876
+        ],
+        "properties": {
+            "admin": "Norway"
+        },
+        "side": 20.67000109006705,
+        "type": "Feature"
+    },
+    {
+        "area": 403.6039535585951,
+        "centroid": [
+            553.7060672383925,
+            133.592775780926
+        ],
+        "properties": {
+            "admin": "Pakistan"
+        },
+        "side": 20.089896803084756,
+        "type": "Feature"
+    },
+    {
+        "area": 401.17926154447923,
+        "centroid": [
+            478.16660739580516,
+            113.03072493244177
+        ],
+        "properties": {
+            "admin": "Turkey"
+        },
+        "side": 20.02945984155537,
+        "type": "Feature"
+    },
+    {
+        "area": 387.4352243805897,
+        "centroid": [
+            436.1499859183338,
+            61.37435927132651
+        ],
+        "properties": {
+            "admin": "Sweden"
+        },
+        "side": 19.683374313887082,
+        "type": "Feature"
+    },
+    {
+        "area": 380.3957461655373,
+        "centroid": [
+            477.3394485806284,
+            213.9306702095882
+        ],
+        "properties": {
+            "admin": "United Republic of Tanzania"
+        },
+        "side": 19.503736723139422,
+        "type": "Feature"
+    },
+    {
+        "area": 379.1178053714066,
+        "centroid": [
+            242.09961734305696,
+            280.1739058130995
+        ],
+        "properties": {
+            "admin": "Chile"
+        },
+        "side": 19.470947726585024,
+        "type": "Feature"
+    },
+    {
+        "area": 369.4205807223334,
+        "centroid": [
+            417.95503948698894,
+            178.68574560553822
+        ],
+        "properties": {
+            "admin": "Nigeria"
+        },
+        "side": 19.220316873619264,
+        "type": "Feature"
+    },
+    {
+        "area": 368.36489050109594,
+        "centroid": [
+            252.96010978368946,
+            184.17459082009648
+        ],
+        "properties": {
+            "admin": "Venezuela"
+        },
+        "side": 19.19283435298434,
+        "type": "Feature"
+    },
+    {
+        "area": 363.68373780947877,
+        "centroid": [
+            469.9160436478179,
+            91.0606463295244
+        ],
+        "properties": {
+            "admin": "Ukraine"
+        },
+        "side": 19.070493905756052,
+        "type": "Feature"
+    },
+    {
+        "area": 355.34779791927576,
+        "centroid": [
+            438.20065288600006,
+            249.03728823242795
+        ],
+        "properties": {
+            "admin": "Namibia"
+        },
+        "side": 18.850671020398075,
+        "type": "Feature"
+    },
+    {
+        "area": 353.09596746198804,
+        "centroid": [
+            385.1061593254874,
+            104.55608234963545
+        ],
+        "properties": {
+            "admin": "France"
+        },
+        "side": 18.79084797080717,
+        "type": "Feature"
+    },
+    {
+        "area": 331.4882728752127,
+        "centroid": [
+            479.1158931797413,
+            238.21346479950213
+        ],
+        "properties": {
+            "admin": "Mozambique"
+        },
+        "side": 18.20681940579443,
+        "type": "Feature"
+    },
+    {
+        "area": 310.44855197482684,
+        "centroid": [
+            461.79901599541677,
+            229.89906687134234
+        ],
+        "properties": {
+            "admin": "Zambia"
+        },
+        "side": 17.61955027731488,
+        "type": "Feature"
+    },
+    {
+        "area": 308.82951828745354,
+        "centroid": [
+            546.5069850404404,
+            124.84549327155845
+        ],
+        "properties": {
+            "admin": "Afghanistan"
+        },
+        "side": 17.573545979325104,
+        "type": "Feature"
+    },
+    {
+        "area": 306.96662633285814,
+        "centroid": [
+            458.21005727892486,
+            57.208114849568744
+        ],
+        "properties": {
+            "admin": "Finland"
+        },
+        "side": 17.520463074155835,
+        "type": "Feature"
+    },
+    {
+        "area": 284.5640772666593,
+        "centroid": [
+            614.4322265431954,
+            153.09495522306182
+        ],
+        "properties": {
+            "admin": "Myanmar"
+        },
+        "side": 16.86902715827618,
+        "type": "Feature"
+    },
+    {
+        "area": 268.76885252381544,
+        "centroid": [
+            380.60181459521624,
+            133.8557584893543
+        ],
+        "properties": {
+            "admin": "Morocco"
+        },
+        "side": 16.39417129725731,
+        "type": "Feature"
+    },
+    {
+        "area": 264.93657354820243,
+        "centroid": [
+            391.77780107908995,
+            110.64699675068307
+        ],
+        "properties": {
+            "admin": "Spain"
+        },
+        "side": 16.276872351536163,
+        "type": "Feature"
+    },
+    {
+        "area": 252.1787733014571,
+        "centroid": [
+            503.8728467987639,
+            242.92543267258557
+        ],
+        "properties": {
+            "admin": "Madagascar"
+        },
+        "side": 15.8801376978116,
+        "type": "Feature"
+    },
+    {
+        "area": 251.34379024629743,
+        "centroid": [
+            467.22882708868366,
+            183.75927767690925
+        ],
+        "properties": {
+            "admin": "South Sudan"
+        },
+        "side": 15.853825729025074,
+        "type": "Feature"
+    },
+    {
+        "area": 250.95793855727243,
+        "centroid": [
+            452.89767887673827,
+            249.25692286752286
+        ],
+        "properties": {
+            "admin": "Botswana"
+        },
+        "side": 15.841652014776503,
+        "type": "Feature"
+    },
+    {
+        "area": 249.7479076603704,
+        "centroid": [
+            445.4737913682466,
+            185.39649854830157
+        ],
+        "properties": {
+            "admin": "Central African Republic"
+        },
+        "side": 15.80341443044415,
+        "type": "Feature"
+    },
+    {
+        "area": 242.50778656711555,
+        "centroid": [
+            532.106388423014,
+            113.05792665774787
+        ],
+        "properties": {
+            "admin": "Turkmenistan"
+        },
+        "side": 15.572661511993239,
+        "type": "Feature"
+    },
+    {
+        "area": 239.7358280329463,
+        "centroid": [
+            540.6685832034927,
+            107.16712233341254
+        ],
+        "properties": {
+            "admin": "Uzbekistan"
+        },
+        "side": 15.48340492375454,
+        "type": "Feature"
+    },
+    {
+        "area": 237.7679844189115,
+        "centroid": [
+            483.98639624314666,
+            198.66660312401834
+        ],
+        "properties": {
+            "admin": "Kenya"
+        },
+        "side": 15.419727118821251,
+        "type": "Feature"
+    },
+    {
+        "area": 226.64619533371115,
+        "centroid": [
+            423.0332449146277,
+            86.5516013131568
+        ],
+        "properties": {
+            "admin": "Germany"
+        },
+        "side": 15.054773174435779,
+        "type": "Feature"
+    },
+    {
+        "area": 213.82974563024618,
+        "centroid": [
+            624.4476109597607,
+            166.48199722359615
+        ],
+        "properties": {
+            "admin": "Thailand"
+        },
+        "side": 14.62291850590183,
+        "type": "Feature"
+    },
+    {
+        "area": 208.53740386331265,
+        "centroid": [
+            497.27094536939666,
+            126.64541232288934
+        ],
+        "properties": {
+            "admin": "Iraq"
+        },
+        "side": 14.440824209971973,
+        "type": "Feature"
+    },
+    {
+        "area": 203.37933848407556,
+        "centroid": [
+            443.1568261015152,
+            84.19516968169862
+        ],
+        "properties": {
+            "admin": "Poland"
+        },
+        "side": 14.261112806652767,
+        "type": "Feature"
+    },
+    {
+        "area": 190.14462554975762,
+        "centroid": [
+            501.5016027016729,
+            189.48224355697923
+        ],
+        "properties": {
+            "admin": "Somalia"
+        },
+        "side": 13.78929387422567,
+        "type": "Feature"
+    },
+    {
+        "area": 188.78179738398467,
+        "centroid": [
+            505.69843240348393,
+            164.6302729509752
+        ],
+        "properties": {
+            "admin": "Yemen"
+        },
+        "side": 13.739788840589387,
+        "type": "Feature"
+    },
+    {
+        "area": 187.09485379946273,
+        "centroid": [
+            428.3025868376395,
+            187.37491345037702
+        ],
+        "properties": {
+            "admin": "Cameroon"
+        },
+        "side": 13.678262089880524,
+        "type": "Feature"
+    },
+    {
+        "area": 187.03311752923764,
+        "centroid": [
+            705.9013679383454,
+            116.76068531248244
+        ],
+        "properties": {
+            "admin": "Japan"
+        },
+        "side": 13.676005174364246,
+        "type": "Feature"
+    },
+    {
+        "area": 186.81086695640988,
+        "centroid": [
+            722.6568915489321,
+            214.37917809198018
+        ],
+        "properties": {
+            "admin": "Papua New Guinea"
+        },
+        "side": 13.667877192761496,
+        "type": "Feature"
+    },
+    {
+        "area": 174.23518870684347,
+        "centroid": [
+            270.1282541653254,
+            251.5745069682154
+        ],
+        "properties": {
+            "admin": "Paraguay"
+        },
+        "side": 13.199817752788993,
+        "type": "Feature"
+    },
+    {
+        "area": 164.9778349832195,
+        "centroid": [
+            466.3343682584504,
+            242.211215517384
+        ],
+        "properties": {
+            "admin": "Zimbabwe"
+        },
+        "side": 12.84436977758035,
+        "type": "Feature"
+    },
+    {
+        "area": 163.4652963621047,
+        "centroid": [
+            427.1040226706225,
+            105.07259726766956
+        ],
+        "properties": {
+            "admin": "Italy"
+        },
+        "side": 12.785354760901424,
+        "type": "Feature"
+    },
+    {
+        "area": 163.33256338105093,
+        "centroid": [
+            393.8748413924907,
+            79.97719993261762
+        ],
+        "properties": {
+            "admin": "United Kingdom"
+        },
+        "side": 12.780162885544572,
+        "type": "Feature"
+    },
+    {
+        "area": 143.22506016143484,
+        "centroid": [
+            784.2650126003984,
+            292.67218463517935
+        ],
+        "properties": {
+            "admin": "New Zealand"
+        },
+        "side": 11.967667281531302,
+        "type": "Feature"
+    },
+    {
+        "area": 138.9050646508149,
+        "centroid": [
+            462.25421551750543,
+            81.0665887541762
+        ],
+        "properties": {
+            "admin": "Belarus"
+        },
+        "side": 11.785799279251913,
+        "type": "Feature"
+    },
+    {
+        "area": 138.5176695550108,
+        "centroid": [
+            433.8270244791596,
+            201.8607377232685
+        ],
+        "properties": {
+            "admin": "Republic of Congo"
+        },
+        "side": 11.769352979455192,
+        "type": "Feature"
+    },
+    {
+        "area": 137.55458373911097,
+        "centroid": [
+            636.3244203818653,
+            163.2194970561859
+        ],
+        "properties": {
+            "admin": "Vietnam"
+        },
+        "side": 11.728366627076038,
+        "type": "Feature"
+    },
+    {
+        "area": 135.16693348727495,
+        "centroid": [
+            455.52259152861103,
+            98.11345875601813
+        ],
+        "properties": {
+            "admin": "Romania"
+        },
+        "side": 11.626131492774153,
+        "type": "Feature"
+    },
+    {
+        "area": 133.2747168041533,
+        "centroid": [
+            524.5856727738428,
+            154.25186194584805
+        ],
+        "properties": {
+            "admin": "Oman"
+        },
+        "side": 11.54446693460349,
+        "type": "Feature"
+    },
+    {
+        "area": 131.2065517509618,
+        "centroid": [
+            643.7640631547614,
+            191.52905897926846
+        ],
+        "properties": {
+            "admin": "Malaysia"
+        },
+        "side": 11.454542843385841,
+        "type": "Feature"
+    },
+    {
+        "area": 129.90700326210208,
+        "centroid": [
+            387.62430509695423,
+            183.05417835367547
+        ],
+        "properties": {
+            "admin": "Ivory Coast"
+        },
+        "side": 11.397675344652614,
+        "type": "Feature"
+    },
+    {
+        "area": 118.61543943377183,
+        "centroid": [
+            673.162125667523,
+            173.94056693926274
+        ],
+        "properties": {
+            "admin": "Philippines"
+        },
+        "side": 10.891071546628083,
+        "type": "Feature"
+    },
+    {
+        "area": 111.90625026465568,
+        "centroid": [
+            396.0880747647205,
+            172.73024039184682
+        ],
+        "properties": {
+            "admin": "Burkina Faso"
+        },
+        "side": 10.578575058326885,
+        "type": "Feature"
+    },
+    {
+        "area": 105.73262323991366,
+        "centroid": [
+            565.5723505786368,
+            107.83438140627979
+        ],
+        "properties": {
+            "admin": "Kyrgyzstan"
+        },
+        "side": 10.282636978903499,
+        "type": "Feature"
+    },
+    {
+        "area": 104.09043845132692,
+        "centroid": [
+            426.19975385393786,
+            201.30232687053098
+        ],
+        "properties": {
+            "admin": "Gabon"
+        },
+        "side": 10.202472173513973,
+        "type": "Feature"
+    },
+    {
+        "area": 102.2151992425679,
+        "centroid": [
+            225.00439209758727,
+            203.16470606139544
+        ],
+        "properties": {
+            "admin": "Ecuador"
+        },
+        "side": 10.11015327492951,
+        "type": "Feature"
+    },
+    {
+        "area": 99.55745280837073,
+        "centroid": [
+            375.69901911315065,
+            176.80322939049228
+        ],
+        "properties": {
+            "admin": "Guinea"
+        },
+        "side": 9.977848105096145,
+        "type": "Feature"
+    },
+    {
+        "area": 96.82253603637946,
+        "centroid": [
+            471.9311281080684,
+            197.1720681803864
+        ],
+        "properties": {
+            "admin": "Uganda"
+        },
+        "side": 9.839844309559957,
+        "type": "Feature"
+    },
+    {
+        "area": 96.64658766618231,
+        "centroid": [
+            397.29545391006275,
+            182.33704375243877
+        ],
+        "properties": {
+            "admin": "Ghana"
+        },
+        "side": 9.830899636665116,
+        "type": "Feature"
+    },
+    {
+        "area": 96.24684531634557,
+        "centroid": [
+            630.606899147213,
+            158.9138683359312
+        ],
+        "properties": {
+            "admin": "Laos"
+        },
+        "side": 9.810547656290426,
+        "type": "Feature"
+    },
+    {
+        "area": 95.57700678412584,
+        "centroid": [
+            358.7075342378473,
+            55.559353332375224
+        ],
+        "properties": {
+            "admin": "Iceland"
+        },
+        "side": 9.77634935873948,
+        "type": "Feature"
+    },
+    {
+        "area": 90.63038813050298,
+        "centroid": [
+            485.52641112141043,
+            122.18041891427978
+        ],
+        "properties": {
+            "admin": "Syria"
+        },
+        "side": 9.519999376602026,
+        "type": "Feature"
+    },
+    {
+        "area": 84.86113367587677,
+        "centroid": [
+            268.93688946527664,
+            189.35950253560253
+        ],
+        "properties": {
+            "admin": "Guyana"
+        },
+        "side": 9.212010295037494,
+        "type": "Feature"
+    },
+    {
+        "area": 84.4783688003663,
+        "centroid": [
+            275.4973895558637,
+            272.87052416102114
+        ],
+        "properties": {
+            "admin": "Uruguay"
+        },
+        "side": 9.1912114979673,
+        "type": "Feature"
+    },
+    {
+        "area": 81.33136242445471,
+        "centroid": [
+            367.8426714280904,
+            168.0787162495665
+        ],
+        "properties": {
+            "admin": "Senegal"
+        },
+        "side": 9.018390234651344,
+        "type": "Feature"
+    },
+    {
+        "area": 75.52352280082778,
+        "centroid": [
+            421.233442103793,
+            124.2460412785516
+        ],
+        "properties": {
+            "admin": "Tunisia"
+        },
+        "side": 8.690427078160646,
+        "type": "Feature"
+    },
+    {
+        "area": 74.29342761620501,
+        "centroid": [
+            633.1245134322774,
+            171.73509644723254
+        ],
+        "properties": {
+            "admin": "Cambodia"
+        },
+        "side": 8.619363527326424,
+        "type": "Feature"
+    },
+    {
+        "area": 72.60031040465401,
+        "centroid": [
+            557.8381768691736,
+            114.36052957088907
+        ],
+        "properties": {
+            "admin": "Tajikistan"
+        },
+        "side": 8.520581576667992,
+        "type": "Feature"
+    },
+    {
+        "area": 68.45780667104555,
+        "centroid": [
+            502.79329808787355,
+            178.36840213927215
+        ],
+        "properties": {
+            "admin": "Somaliland"
+        },
+        "side": 8.273923293761282,
+        "type": "Feature"
+    },
+    {
+        "area": 66.90205266082558,
+        "centroid": [
+            451.04169412915,
+            113.21883056171421
+        ],
+        "properties": {
+            "admin": "Greece"
+        },
+        "side": 8.179367497601852,
+        "type": "Feature"
+    },
+    {
+        "area": 66.61034878379724,
+        "centroid": [
+            586.5496033319765,
+            137.20248766110504
+        ],
+        "properties": {
+            "admin": "Nepal"
+        },
+        "side": 8.161516328709833,
+        "type": "Feature"
+    },
+    {
+        "area": 64.04520675509411,
+        "centroid": [
+            682.5731414164541,
+            110.7988797703713
+        ],
+        "properties": {
+            "admin": "North Korea"
+        },
+        "side": 8.002824923431358,
+        "type": "Feature"
+    },
+    {
+        "area": 61.18990425611992,
+        "centroid": [
+            456.0163452457542,
+            104.95133044013983
+        ],
+        "properties": {
+            "admin": "Bulgaria"
+        },
+        "side": 7.822397602789053,
+        "type": "Feature"
+    },
+    {
+        "area": 59.32238208101626,
+        "centroid": [
+            600.5499337525378,
+            146.98032188240705
+        ],
+        "properties": {
+            "admin": "Bangladesh"
+        },
+        "side": 7.702102445502543,
+        "type": "Feature"
+    },
+    {
+        "area": 58.297559994982294,
+        "centroid": [
+            275.74570703867244,
+            190.81996660720816
+        ],
+        "properties": {
+            "admin": "Suriname"
+        },
+        "side": 7.635283884374064,
+        "type": "Feature"
+    },
+    {
+        "area": 54.60264422063483,
+        "centroid": [
+            443.0670882386178,
+            95.18833228877615
+        ],
+        "properties": {
+            "admin": "Hungary"
+        },
+        "side": 7.389360203741243,
+        "type": "Feature"
+    },
+    {
+        "area": 52.803031942956295,
+        "centroid": [
+            211.04057881774,
+            171.4563217243874
+        ],
+        "properties": {
+            "admin": "Nicaragua"
+        },
+        "side": 7.266569475547336,
+        "type": "Feature"
+    },
+    {
+        "area": 51.31364442323684,
+        "centroid": [
+            486.3494355939298,
+            165.86313880177246
+        ],
+        "properties": {
+            "admin": "Eritrea"
+        },
+        "side": 7.163354271794523,
+        "type": "Feature"
+    },
+    {
+        "area": 49.82888712372005,
+        "centroid": [
+            431.3509875478608,
+            94.2410319660135
+        ],
+        "properties": {
+            "admin": "Austria"
+        },
+        "side": 7.058957934689797,
+        "type": "Feature"
+    },
+    {
+        "area": 49.16522221861669,
+        "centroid": [
+            476.1868406134571,
+            229.34344858952053
+        ],
+        "properties": {
+            "admin": "Malawi"
+        },
+        "side": 7.0117916553914155,
+        "type": "Feature"
+    },
+    {
+        "area": 48.47686280532071,
+        "centroid": [
+            434.04168675744353,
+            89.47056797764948
+        ],
+        "properties": {
+            "admin": "Czech Republic"
+        },
+        "side": 6.962532786660376,
+        "type": "Feature"
+    },
+    {
+        "area": 48.2715897067028,
+        "centroid": [
+            684.0744879659608,
+            119.16926354015995
+        ],
+        "properties": {
+            "admin": "South Korea"
+        },
+        "side": 6.947775882014532,
+        "type": "Feature"
+    },
+    {
+        "area": 47.1850313503528,
+        "centroid": [
+            405.17471478475215,
+            178.5843693622141
+        ],
+        "properties": {
+            "admin": "Benin"
+        },
+        "side": 6.869136142947874,
+        "type": "Feature"
+    },
+    {
+        "area": 47.01988682746378,
+        "centroid": [
+            381.0914115216566,
+            111.98697911709465
+        ],
+        "properties": {
+            "admin": "Portugal"
+        },
+        "side": 6.857104842968625,
+        "type": "Feature"
+    },
+    {
+        "area": 46.97049781126043,
+        "centroid": [
+            207.5194413283237,
+            167.04637542837054
+        ],
+        "properties": {
+            "admin": "Honduras"
+        },
+        "side": 6.85350259438635,
+        "type": "Feature"
+    },
+    {
+        "area": 46.93654286268065,
+        "centroid": [
+            224.4823973111148,
+            151.92190695880353
+        ],
+        "properties": {
+            "admin": "Cuba"
+        },
+        "side": 6.851024949792596,
+        "type": "Feature"
+    },
+    {
+        "area": 46.89024065992999,
+        "centroid": [
+            455.37712009658503,
+            73.64667200032073
+        ],
+        "properties": {
+            "admin": "Latvia"
+        },
+        "side": 6.847644898790385,
+        "type": "Feature"
+    },
+    {
+        "area": 45.76355372794933,
+        "centroid": [
+            381.898508344701,
+            81.86130753389743
+        ],
+        "properties": {
+            "admin": "Ireland"
+        },
+        "side": 6.764876475439099,
+        "type": "Feature"
+    },
+    {
+        "area": 45.27429378626039,
+        "centroid": [
+            453.0986738270649,
+            77.05919019924082
+        ],
+        "properties": {
+            "admin": "Lithuania"
+        },
+        "side": 6.72861752414717,
+        "type": "Feature"
+    },
+    {
+        "area": 45.263489938926796,
+        "centroid": [
+            505.6564339424617,
+            110.47151209200136
+        ],
+        "properties": {
+            "admin": "Azerbaijan"
+        },
+        "side": 6.7278146480805185,
+        "type": "Feature"
+    },
+    {
+        "area": 45.030435518745435,
+        "centroid": [
+            199.18648625699836,
+            165.13169310190992
+        ],
+        "properties": {
+            "admin": "Guatemala"
+        },
+        "side": 6.710472078680116,
+        "type": "Feature"
+    },
+    {
+        "area": 43.201498512637045,
+        "centroid": [
+            446.23756436649916,
+            101.7500063463743
+        ],
+        "properties": {
+            "admin": "Republic of Serbia"
+        },
+        "side": 6.572784684792059,
+        "type": "Feature"
+    },
+    {
+        "area": 41.448188437621866,
+        "centroid": [
+            481.680141050953,
+            130.5838680780861
+        ],
+        "properties": {
+            "admin": "Jordan"
+        },
+        "side": 6.4380267503033775,
+        "type": "Feature"
+    },
+    {
+        "area": 39.72883331119738,
+        "centroid": [
+            372.71657150341343,
+            146.20641464945226
+        ],
+        "properties": {
+            "admin": "Western Sahara"
+        },
+        "side": 6.3030812553224616,
+        "type": "Feature"
+    },
+    {
+        "area": 38.435458449494035,
+        "centroid": [
+            379.2929182728919,
+            185.66825084609425
+        ],
+        "properties": {
+            "admin": "Liberia"
+        },
+        "side": 6.199633735108392,
+        "type": "Feature"
+    },
+    {
+        "area": 37.32729239860055,
+        "centroid": [
+            496.72650083863914,
+            106.28609326762034
+        ],
+        "properties": {
+            "admin": "Georgia"
+        },
+        "side": 6.109606566596621,
+        "type": "Feature"
+    },
+    {
+        "area": 34.85938499542681,
+        "centroid": [
+            456.76029714630755,
+            69.61612787538232
+        ],
+        "properties": {
+            "admin": "Estonia"
+        },
+        "side": 5.90418368577967,
+        "type": "Feature"
+    },
+    {
+        "area": 31.05797415496636,
+        "centroid": [
+            520.6485338689591,
+            146.88377215071574
+        ],
+        "properties": {
+            "admin": "United Arab Emirates"
+        },
+        "side": 5.572968163821354,
+        "type": "Feature"
+    },
+    {
+        "area": 30.823376327971346,
+        "centroid": [
+            436.44880653583203,
+            99.83674267385312
+        ],
+        "properties": {
+            "admin": "Croatia"
+        },
+        "side": 5.551880431707022,
+        "type": "Feature"
+    },
+    {
+        "area": 30.310965284899794,
+        "centroid": [
+            422.31542550024193,
+            75.61655710836834
+        ],
+        "properties": {
+            "admin": "Denmark"
+        },
+        "side": 5.505539508976372,
+        "type": "Feature"
+    },
+    {
+        "area": 29.935917443148355,
+        "centroid": [
+            221.96170543423858,
+            181.06242666721957
+        ],
+        "properties": {
+            "admin": "Panama"
+        },
+        "side": 5.471372537412194,
+        "type": "Feature"
+    },
+    {
+        "area": 29.304664079903887,
+        "centroid": [
+            443.27253299805193,
+            91.75063711252535
+        ],
+        "properties": {
+            "admin": "Slovakia"
+        },
+        "side": 5.413378250215284,
+        "type": "Feature"
+    },
+    {
+        "area": 29.083956913731527,
+        "centroid": [
+            373.79815297668574,
+            180.96793452628643
+        ],
+        "properties": {
+            "admin": "Sierra Leone"
+        },
+        "side": 5.39295437712313,
+        "type": "Feature"
+    },
+    {
+        "area": 28.761384901717975,
+        "centroid": [
+            439.5021870797803,
+            101.84240550657108
+        ],
+        "properties": {
+            "admin": "Bosnia and Herzegovina"
+        },
+        "side": 5.362964189859744,
+        "type": "Feature"
+    },
+    {
+        "area": 26.57283412139077,
+        "centroid": [
+            579.3435952525975,
+            183.0934266949283
+        ],
+        "properties": {
+            "admin": "Sri Lanka"
+        },
+        "side": 5.1548844915663015,
+        "type": "Feature"
+    },
+    {
+        "area": 24.19907453039923,
+        "centroid": [
+            411.10294771476396,
+            83.94643691409486
+        ],
+        "properties": {
+            "admin": "Netherlands"
+        },
+        "side": 4.919255485375732,
+        "type": "Feature"
+    },
+    {
+        "area": 24.03084319395566,
+        "centroid": [
+            418.23584253347735,
+            96.0037099050968
+        ],
+        "properties": {
+            "admin": "Switzerland"
+        },
+        "side": 4.902126395142791,
+        "type": "Feature"
+    },
+    {
+        "area": 23.175795851093426,
+        "centroid": [
+            402.14875209861924,
+            181.07916141473416
+        ],
+        "properties": {
+            "admin": "Togo"
+        },
+        "side": 4.814124619397947,
+        "type": "Feature"
+    },
+    {
+        "area": 20.9177917667148,
+        "centroid": [
+            212.90799601014325,
+            177.82266248648773
+        ],
+        "properties": {
+            "admin": "Costa Rica"
+        },
+        "side": 4.57359724579185,
+        "type": "Feature"
+    },
+    {
+        "area": 20.5149626033417,
+        "centroid": [
+            243.319140857815,
+            158.01209807846948
+        ],
+        "properties": {
+            "admin": "Dominican Republic"
+        },
+        "side": 4.529344610795441,
+        "type": "Feature"
+    },
+    {
+        "area": 19.400622925368225,
+        "centroid": [
+            463.2581779802149,
+            95.13927271095622
+        ],
+        "properties": {
+            "admin": "Moldova"
+        },
+        "side": 4.404613822501154,
+        "type": "Feature"
+    },
+    {
+        "area": 19.309561926751485,
+        "centroid": [
+            410.32250288466,
+            87.46732399246852
+        ],
+        "properties": {
+            "admin": "Belgium"
+        },
+        "side": 4.394264662802127,
+        "type": "Feature"
+    },
+    {
+        "area": 18.011556844750885,
+        "centroid": [
+            600.8949977666482,
+            139.08161393537898
+        ],
+        "properties": {
+            "admin": "Bhutan"
+        },
+        "side": 4.244002455789921,
+        "type": "Feature"
+    },
+    {
+        "area": 15.687186269955419,
+        "centroid": [
+            668.7814475348779,
+            147.2258019613098
+        ],
+        "properties": {
+            "admin": "Taiwan"
+        },
+        "side": 3.960705274311056,
+        "type": "Feature"
+    },
+    {
+        "area": 15.43252415520692,
+        "centroid": [
+            499.8600152378313,
+            110.46771679912636
+        ],
+        "properties": {
+            "admin": "Armenia"
+        },
+        "side": 3.9284251494978135,
+        "type": "Feature"
+    },
+    {
+        "area": 15.072910380989924,
+        "centroid": [
+            444.5596695735667,
+            108.58312739523195
+        ],
+        "properties": {
+            "admin": "Albania"
+        },
+        "side": 3.882384625586435,
+        "type": "Feature"
+    },
+    {
+        "area": 13.807316840910062,
+        "centroid": [
+            462.7275434991882,
+            265.73048221668375
+        ],
+        "properties": {
+            "admin": "Lesotho"
+        },
+        "side": 3.7158198073789936,
+        "type": "Feature"
+    },
+    {
+        "area": 13.531047031538037,
+        "centroid": [
+            448.1805317207336,
+            107.56610284489007
+        ],
+        "properties": {
+            "admin": "Macedonia"
+        },
+        "side": 3.6784571536906663,
+        "type": "Feature"
+    },
+    {
+        "area": 13.064938191157125,
+        "centroid": [
+            366.77744277722485,
+            173.2242973714724
+        ],
+        "properties": {
+            "admin": "Guinea Bissau"
+        },
+        "side": 3.614545364379471,
+        "type": "Feature"
+    },
+    {
+        "area": 11.61876606064834,
+        "centroid": [
+            432.89270748534904,
+            97.51883683232359
+        ],
+        "properties": {
+            "admin": "Slovenia"
+        },
+        "side": 3.4086311124333095,
+        "type": "Feature"
+    },
+    {
+        "area": 11.353300098577165,
+        "centroid": [
+            238.47577837226194,
+            157.9202877900645
+        ],
+        "properties": {
+            "admin": "Haiti"
+        },
+        "side": 3.369465847664458,
+        "type": "Feature"
+    },
+    {
+        "area": 10.876387410877214,
+        "centroid": [
+            466.39230063615935,
+            207.4566045971192
+        ],
+        "properties": {
+            "admin": "Burundi"
+        },
+        "side": 3.297936841553703,
+        "type": "Feature"
+    },
+    {
+        "area": 10.652593431252171,
+        "centroid": [
+            422.9727219225747,
+            196.19883651853317
+        ],
+        "properties": {
+            "admin": "Equatorial Guinea"
+        },
+        "side": 3.2638310972310087,
+        "type": "Feature"
+    },
+    {
+        "area": 10.434973078637995,
+        "centroid": [
+            477.7761969701823,
+            130.1122588755456
+        ],
+        "properties": {
+            "admin": "Israel"
+        },
+        "side": 3.2303208940657884,
+        "type": "Feature"
+    },
+    {
+        "area": 10.308413724633283,
+        "centroid": [
+            754.7221542218682,
+            219.84327281182343
+        ],
+        "properties": {
+            "admin": "Solomon Islands"
+        },
+        "side": 3.210671849416144,
+        "type": "Feature"
+    },
+    {
+        "area": 10.12937854095071,
+        "centroid": [
+            466.4906006868215,
+            204.42582344337566
+        ],
+        "properties": {
+            "admin": "Rwanda"
+        },
+        "side": 3.1826684623049744,
+        "type": "Feature"
+    },
+    {
+        "area": 9.570665295177605,
+        "centroid": [
+            202.87105954076748,
+            161.77286159918623
+        ],
+        "properties": {
+            "admin": "Belize"
+        },
+        "side": 3.093649187477081,
+        "type": "Feature"
+    },
+    {
+        "area": 8.817482798149285,
+        "centroid": [
+            494.5780905241529,
+            173.8921193195406
+        ],
+        "properties": {
+            "admin": "Djibouti"
+        },
+        "side": 2.969424657766094,
+        "type": "Feature"
+    },
+    {
+        "area": 8.380698686149117,
+        "centroid": [
+            202.50779790020607,
+            169.4663237112463
+        ],
+        "properties": {
+            "admin": "El Salvador"
+        },
+        "side": 2.8949436412733696,
+        "type": "Feature"
+    },
+    {
+        "area": 8.038062386214733,
+        "centroid": [
+            768.177884763533,
+            247.33170294314849
+        ],
+        "properties": {
+            "admin": "New Caledonia"
+        },
+        "side": 2.8351476833164675,
+        "type": "Feature"
+    },
+    {
+        "area": 7.911503032242763,
+        "centroid": [
+            505.74184791371846,
+            134.81826489007963
+        ],
+        "properties": {
+            "admin": "Kuwait"
+        },
+        "side": 2.812739417763893,
+        "type": "Feature"
+    },
+    {
+        "area": 7.667536720946607,
+        "centroid": [
+            796.6837407522416,
+            238.74217138835044
+        ],
+        "properties": {
+            "admin": "Fiji"
+        },
+        "side": 2.7690317298555116,
+        "type": "Feature"
+    },
+    {
+        "area": 7.522564529666852,
+        "centroid": [
+            469.9520297362578,
+            259.01401406542595
+        ],
+        "properties": {
+            "admin": "Swaziland"
+        },
+        "side": 2.742729394174141,
+        "type": "Feature"
+    },
+    {
+        "area": 7.394461768919427,
+        "centroid": [
+            442.7534389528086,
+            104.9137653866357
+        ],
+        "properties": {
+            "admin": "Montenegro"
+        },
+        "side": 2.719275964097691,
+        "type": "Feature"
+    },
+    {
+        "area": 7.374397481122287,
+        "centroid": [
+            268.09972294562294,
+            314.9890145189904
+        ],
+        "properties": {
+            "admin": "Falkland Islands"
+        },
+        "side": 2.715584187817105,
+        "type": "Feature"
+    },
+    {
+        "area": 6.091826466625207,
+        "centroid": [
+            679.6619560878373,
+            219.61951462233307
+        ],
+        "properties": {
+            "admin": "East Timor"
+        },
+        "side": 2.468162568921506,
+        "type": "Feature"
+    },
+    {
+        "area": 5.929768757312559,
+        "centroid": [
+            446.3819971956281,
+            105.39678867529595
+        ],
+        "properties": {
+            "admin": "Kosovo"
+        },
+        "side": 2.43511165191918,
+        "type": "Feature"
+    },
+    {
+        "area": 5.520765966930412,
+        "centroid": [
+            229.8123002908109,
+            146.0742717103606
+        ],
+        "properties": {
+            "admin": "The Bahamas"
+        },
+        "side": 2.3496310278276487,
+        "type": "Feature"
+    },
+    {
+        "area": 4.918837331984832,
+        "centroid": [
+            513.7478461660475,
+            143.76176688670523
+        ],
+        "properties": {
+            "admin": "Qatar"
+        },
+        "side": 2.2178452001852684,
+        "type": "Feature"
+    },
+    {
+        "area": 4.753692809099448,
+        "centroid": [
+            479.7324061437139,
+            124.62603404200448
+        ],
+        "properties": {
+            "admin": "Lebanon"
+        },
+        "side": 2.180296495685724,
+        "type": "Feature"
+    },
+    {
+        "area": 4.702760386149748,
+        "centroid": [
+            772.5918683458847,
+            235.99910552338775
+        ],
+        "properties": {
+            "admin": "Vanuatu"
+        },
+        "side": 2.168584881011059,
+        "type": "Feature"
+    },
+    {
+        "area": 4.574657625365944,
+        "centroid": [
+            228.1868750800408,
+            159.65162611129364
+        ],
+        "properties": {
+            "admin": "Jamaica"
+        },
+        "side": 2.138844927844453,
+        "type": "Feature"
+    },
+    {
+        "area": 4.247455392993288,
+        "centroid": [
+            553.6919535936456,
+            309.4784043406134
+        ],
+        "properties": {
+            "admin": "French Southern and Antarctic Lands"
+        },
+        "side": 2.060935562552427,
+        "type": "Feature"
+    },
+    {
+        "area": 4.241281766015163,
+        "centroid": [
+            365.77379282723683,
+            170.10889747095237
+        ],
+        "properties": {
+            "admin": "Gambia"
+        },
+        "side": 2.0594372449810563,
+        "type": "Feature"
+    },
+    {
+        "area": 3.747391604047152,
+        "centroid": [
+            252.29048290671247,
+            159.4851021093274
+        ],
+        "properties": {
+            "admin": "Puerto Rico"
+        },
+        "side": 1.9358180710095545,
+        "type": "Feature"
+    },
+    {
+        "area": 2.9772316326962027,
+        "centroid": [
+            478.2102661141403,
+            129.0785015396888
+        ],
+        "properties": {
+            "admin": "Palestine"
+        },
+        "side": 1.725465627793322,
+        "type": "Feature"
+    },
+    {
+        "area": 2.807456889509922,
+        "centroid": [
+            473.3583925866495,
+            122.40504569548939
+        ],
+        "properties": {
+            "admin": "Cyprus"
+        },
+        "side": 1.6755467434571683,
+        "type": "Feature"
+    },
+    {
+        "area": 2.5034057585071423,
+        "centroid": [
+            318.9050159780081,
+            321.01538623568223
+        ],
+        "properties": {
+            "admin": "South Georgia and South Sandwich Islands"
+        },
+        "side": 1.582215458939503,
+        "type": "Feature"
+    },
+    {
+        "area": 2.24874364376592,
+        "centroid": [
+            654.9402589528609,
+            189.94957167308797
+        ],
+        "properties": {
+            "admin": "Brunei"
+        },
+        "side": 1.4995811561119057,
+        "type": "Feature"
+    },
+    {
+        "area": 2.06970846006152,
+        "centroid": [
+            263.8470733110613,
+            176.7595579944761
+        ],
+        "properties": {
+            "admin": "Trinidad and Tobago"
+        },
+        "side": 1.4386481362937638,
+        "type": "Feature"
+    },
+    {
+        "area": 1.6622490764202666,
+        "centroid": [
+            474.58917592786264,
+            121.63518585016065
+        ],
+        "properties": {
+            "admin": "Northern Cyprus"
+        },
+        "side": 1.2892823881602768,
+        "type": "Feature"
+    },
+    {
+        "area": 1.6159468737314455,
+        "centroid": [
+            413.4991511409802,
+            89.40726466469359
+        ],
+        "properties": {
+            "admin": "Luxembourg"
+        },
+        "side": 1.2711989906114014,
+        "type": "Feature"
+    },
+    {
+        "area": 1.4430853170451883,
+        "centroid": [
+            346.7578850196074,
+            164.5669302448353
+        ],
+        "properties": {
+            "admin": "Cape Verde"
+        },
+        "side": 1.2012848609073488,
+        "type": "Feature"
+    },
+    {
+        "area": 1.1143396779580144,
+        "centroid": [
+            78.24840525410332,
+            232.7709922484849
+        ],
+        "properties": {
+            "admin": "French Polynesia"
+        },
+        "side": 1.0556228862420587,
+        "type": "Feature"
+    },
+    {
+        "area": 1.09118857662952,
+        "centroid": [
+            17.403391450950096,
+            230.56440119260665
+        ],
+        "properties": {
+            "admin": "Samoa"
+        },
+        "side": 1.0445997207684483,
+        "type": "Feature"
+    },
+    {
+        "area": 1.0387127469366533,
+        "centroid": [
+            571.5129465357941,
+            121.34724791536951
+        ],
+        "properties": {
+            "admin": "Siachen Glacier"
+        },
+        "side": 1.0191725795647435,
+        "type": "Feature"
+    },
+    {
+        "area": 0.8843720713011862,
+        "centroid": [
+            384.7094800645338,
+            62.10545361180692
+        ],
+        "properties": {
+            "admin": "Faroe Islands"
+        },
+        "side": 0.9404105865531216,
+        "type": "Feature"
+    },
+    {
+        "area": 0.7979412929635146,
+        "centroid": [
+            527.9350054634766,
+            245.0588532716655
+        ],
+        "properties": {
+            "admin": "Mauritius"
+        },
+        "side": 0.8932755974297711,
+        "type": "Feature"
+    },
+    {
+        "area": 0.6405138038317091,
+        "centroid": [
+            497.0937679722088,
+            226.42109466273175
+        ],
+        "properties": {
+            "admin": "Comoros"
+        },
+        "side": 0.8003210629689245,
+        "type": "Feature"
+    },
+    {
+        "area": 0.6142758889673132,
+        "centroid": [
+            444.34043261353537,
+            66.19525270915088
+        ],
+        "properties": {
+            "admin": "Aland"
+        },
+        "side": 0.7837575447594194,
+        "type": "Feature"
+    },
+    {
+        "area": 0.44758795927191386,
+        "centroid": [
+            653.5875494001904,
+            150.2200727792404
+        ],
+        "properties": {
+            "admin": "Hong Kong S.A.R."
+        },
+        "side": 0.6690201486292575,
+        "type": "Feature"
+    },
+    {
+        "area": 0.38585168904683087,
+        "centroid": [
+            389.92507802008646,
+            79.49324659202551
+        ],
+        "properties": {
+            "admin": "Isle of Man"
+        },
+        "side": 0.6211696137504078,
+        "type": "Feature"
+    },
+    {
+        "area": 0.3719610282496433,
+        "centroid": [
+            414.9389086429288,
+            199.00729142592925
+        ],
+        "properties": {
+            "admin": "Sao Tome and Principe"
+        },
+        "side": 0.6098860780913459,
+        "type": "Feature"
+    },
+    {
+        "area": 0.36270058758555024,
+        "centroid": [
+            28.01960407165143,
+            198.4911298532568
+        ],
+        "properties": {
+            "admin": "Kiribati"
+        },
+        "side": 0.6022462848250293,
+        "type": "Feature"
+    },
+    {
+        "area": 0.28553024992288556,
+        "centroid": [
+            563.3786358706178,
+            317.9723846732235
+        ],
+        "properties": {
+            "admin": "Heard Island and McDonald Islands"
+        },
+        "side": 0.5343503063748402,
+        "type": "Feature"
+    },
+    {
+        "area": 0.2670093688175257,
+        "centroid": [
+            263.65308536204213,
+            165.67681266842453
+        ],
+        "properties": {
+            "admin": "Dominica"
+        },
+        "side": 0.5167294928853255,
+        "type": "Feature"
+    },
+    {
+        "area": 0.25157530125943595,
+        "centroid": [
+            403.46983334485105,
+            105.45820388575872
+        ],
+        "properties": {
+            "admin": "Andorra"
+        },
+        "side": 0.5015728274731756,
+        "type": "Feature"
+    },
+    {
+        "area": 0.24077145398769062,
+        "centroid": [
+            512.3069950459109,
+            142.11895874168937
+        ],
+        "properties": {
+            "admin": "Bahrain"
+        },
+        "side": 0.4906846787782258,
+        "type": "Feature"
+    },
+    {
+        "area": 0.21916375937871635,
+        "centroid": [
+            264.50080124182426,
+            169.11622902475784
+        ],
+        "properties": {
+            "admin": "Saint Lucia"
+        },
+        "side": 0.4681492917635531,
+        "type": "Feature"
+    },
+    {
+        "area": 0.208359912110609,
+        "centroid": [
+            741.2916987870788,
+            183.35281982314063
+        ],
+        "properties": {
+            "admin": "Federated States of Micronesia"
+        },
+        "side": 0.45646457925079903,
+        "type": "Feature"
+    },
+    {
+        "area": 0.20835991208878113,
+        "centroid": [
+            721.7028693718823,
+            170.1380328870167
+        ],
+        "properties": {
+            "admin": "Guam"
+        },
+        "side": 0.4564645792268893,
+        "type": "Feature"
+    },
+    {
+        "area": 0.1960126580306678,
+        "centroid": [
+            630.6965618909978,
+            196.98052542605848
+        ],
+        "properties": {
+            "admin": "Singapore"
+        },
+        "side": 0.44273316798119816,
+        "type": "Feature"
+    },
+    {
+        "area": 0.18057859047985403,
+        "centroid": [
+            246.7398166189886,
+            172.90593114745243
+        ],
+        "properties": {
+            "admin": "Cura\u00e7ao"
+        },
+        "side": 0.424945397056909,
+        "type": "Feature"
+    },
+    {
+        "area": 0.17903518371849714,
+        "centroid": [
+            11.520523307118424,
+            245.41857550555363
+        ],
+        "properties": {
+            "admin": "Tonga"
+        },
+        "side": 0.42312549405406563,
+        "type": "Feature"
+    },
+    {
+        "area": 0.1713181499580969,
+        "centroid": [
+            723.5971889167336,
+            164.7975759210919
+        ],
+        "properties": {
+            "admin": "Northern Mariana Islands"
+        },
+        "side": 0.41390596753139103,
+        "type": "Feature"
+    },
+    {
+        "area": 0.1682313364217407,
+        "centroid": [
+            262.6778464343038,
+            161.61943115077662
+        ],
+        "properties": {
+            "admin": "Antigua and Barbuda"
+        },
+        "side": 0.41016013509572175,
+        "type": "Feature"
+    },
+    {
+        "area": 0.15434067561363918,
+        "centroid": [
+            267.6497224720615,
+            170.72098144135066
+        ],
+        "properties": {
+            "admin": "Barbados"
+        },
+        "side": 0.392862158541185,
+        "type": "Feature"
+    },
+    {
+        "area": 0.14662364186369814,
+        "centroid": [
+            698.7521513701439,
+            183.7170451949882
+        ],
+        "properties": {
+            "admin": "Palau"
+        },
+        "side": 0.38291466655600714,
+        "type": "Feature"
+    },
+    {
+        "area": 0.14199342157371575,
+        "centroid": [
+            432.00206188501915,
+            120.1709177958014
+        ],
+        "properties": {
+            "admin": "Malta"
+        },
+        "side": 0.37682014486186344,
+        "type": "Feature"
+    },
+    {
+        "area": 0.14045001482008956,
+        "centroid": [
+            255.98223779102634,
+            160.08234279515796
+        ],
+        "properties": {
+            "admin": "United States Virgin Islands"
+        },
+        "side": 0.3747666138012958,
+        "type": "Feature"
+    },
+    {
+        "area": 0.13581979453010717,
+        "centroid": [
+            240.0433199132595,
+            151.48877285013958
+        ],
+        "properties": {
+            "admin": "Turks and Caicos Islands"
+        },
+        "side": 0.36853737195853986,
+        "type": "Feature"
+    },
+    {
+        "area": 0.1296461675192404,
+        "centroid": [
+            220.26949196315186,
+            156.79793987729548
+        ],
+        "properties": {
+            "admin": "Cayman Islands"
+        },
+        "side": 0.36006411584499837,
+        "type": "Feature"
+    },
+    {
+        "area": 0.1250159472510859,
+        "centroid": [
+            262.91615678393225,
+            173.0669611422222
+        ],
+        "properties": {
+            "admin": "Grenada"
+        },
+        "side": 0.3535759426927769,
+        "type": "Feature"
+    },
+    {
+        "area": 0.11575550671477686,
+        "centroid": [
+            260.71069825244456,
+            161.6455673798645
+        ],
+        "properties": {
+            "admin": "Saint Kitts and Nevis"
+        },
+        "side": 0.34022860948893885,
+        "type": "Feature"
+    },
+    {
+        "area": 0.10958187968935817,
+        "centroid": [
+            274.8747740024941,
+            95.7357019186136
+        ],
+        "properties": {
+            "admin": "Saint Pierre and Miquelon"
+        },
+        "side": 0.3310315388136879,
+        "type": "Feature"
+    },
+    {
+        "area": 0.10649506617846782,
+        "centroid": [
+            264.00704939913226,
+            170.58353062852612
+        ],
+        "properties": {
+            "admin": "Saint Vincent and the Grenadines"
+        },
+        "side": 0.326335818105319,
+        "type": "Feature"
+    },
+    {
+        "area": 0.09260440536309034,
+        "centroid": [
+            778.6527620633847,
+            184.25719147529003
+        ],
+        "properties": {
+            "admin": "Marshall Islands"
+        },
+        "side": 0.3043097194686531,
+        "type": "Feature"
+    },
+    {
+        "area": 0.08025715131225297,
+        "centroid": [
+            377.76910940540995,
+            226.83279127326873
+        ],
+        "properties": {
+            "admin": "Saint Helena"
+        },
+        "side": 0.28329693134987005,
+        "type": "Feature"
+    },
+    {
+        "area": 0.07871374456499325,
+        "centroid": [
+            22.482262437771453,
+            242.34378529160657
+        ],
+        "properties": {
+            "admin": "Niue"
+        },
+        "side": 0.2805596987541034,
+        "type": "Feature"
+    },
+    {
+        "area": 0.0771703378050006,
+        "centroid": [
+            421.1909539465842,
+            95.24108562812057
+        ],
+        "properties": {
+            "admin": "Liechtenstein"
+        },
+        "side": 0.27779549637278245,
+        "type": "Feature"
+    },
+    {
+        "area": 0.07408352430502418,
+        "centroid": [
+            395.2678535151742,
+            90.62906114692635
+        ],
+        "properties": {
+            "admin": "Jersey"
+        },
+        "side": 0.27218288760505166,
+        "type": "Feature"
+    },
+    {
+        "area": 0.07099671077958192,
+        "centroid": [
+            244.48708824683914,
+            172.18112556543494
+        ],
+        "properties": {
+            "admin": "Aruba"
+        },
+        "side": 0.26645207970586743,
+        "type": "Feature"
+    },
+    {
+        "area": 0.06482308374688728,
+        "centroid": [
+            523.2815275829324,
+            210.3649573173989
+        ],
+        "properties": {
+            "admin": "Seychelles"
+        },
+        "side": 0.2546037779509316,
+        "type": "Feature"
+    },
+    {
+        "area": 0.06327967700394765,
+        "centroid": [
+            6.085314921794804,
+            230.7669306401402
+        ],
+        "properties": {
+            "admin": "Wallis and Futuna"
+        },
+        "side": 0.25155452093720687,
+        "type": "Feature"
+    },
+    {
+        "area": 0.05864945673965849,
+        "centroid": [
+            632.7725483285471,
+            223.73423349719488
+        ],
+        "properties": {
+            "admin": "Indian Ocean Territories"
+        },
+        "side": 0.24217649914815947,
+        "type": "Feature"
+    },
+    {
+        "area": 0.057106049978756346,
+        "centroid": [
+            20.641366013951256,
+            231.786589917865
+        ],
+        "properties": {
+            "admin": "American Samoa"
+        },
+        "side": 0.23896872175821743,
+        "type": "Feature"
+    },
+    {
+        "area": 0.05401923645695206,
+        "centroid": [
+            560.9970505354354,
+            216.26714827996597
+        ],
+        "properties": {
+            "admin": "British Indian Ocean Territory"
+        },
+        "side": 0.23242038735221154,
+        "type": "Feature"
+    },
+    {
+        "area": 0.04938901619971148,
+        "centroid": [
+            256.7912130436689,
+            158.78497384333906
+        ],
+        "properties": {
+            "admin": "British Virgin Islands"
+        },
+        "side": 0.22223639710837528,
+        "type": "Feature"
+    },
+    {
+        "area": 0.04475879593519494,
+        "centroid": [
+            259.84295795089014,
+            159.51583655000883
+        ],
+        "properties": {
+            "admin": "Anguilla"
+        },
+        "side": 0.2115627470401983,
+        "type": "Feature"
+    },
+    {
+        "area": 0.03704176214887411,
+        "centroid": [
+            427.6960895728173,
+            102.34708354838232
+        ],
+        "properties": {
+            "admin": "San Marino"
+        },
+        "side": 0.19246236553901677,
+        "type": "Feature"
+    },
+    {
+        "area": 0.035498355398885906,
+        "centroid": [
+            256.077731649902,
+            128.2051277224719
+        ],
+        "properties": {
+            "admin": "Bermuda"
+        },
+        "side": 0.18841007244541336,
+        "type": "Feature"
+    },
+    {
+        "area": 0.03549835539160995,
+        "centroid": [
+            261.7954611557328,
+            162.78238624503
+        ],
+        "properties": {
+            "admin": "Montserrat"
+        },
+        "side": 0.18841007242610452,
+        "type": "Feature"
+    },
+    {
+        "area": 0.029324728369829245,
+        "centroid": [
+            394.2892106950423,
+            90.07458018105449
+        ],
+        "properties": {
+            "admin": "Guernsey"
+        },
+        "side": 0.17124464479168172,
+        "type": "Feature"
+    },
+    {
+        "area": 0.02469450809803675,
+        "centroid": [
+            44.92449555793854,
+            247.15777614790366
+        ],
+        "properties": {
+            "admin": "Cook Islands"
+        },
+        "side": 0.157144863416011,
+        "type": "Feature"
+    },
+    {
+        "area": 0.02469450809439877,
+        "centroid": [
+            563.2612552763543,
+            191.45648502667598
+        ],
+        "properties": {
+            "admin": "Maldives"
+        },
+        "side": 0.15714486340443576,
+        "type": "Feature"
+    },
+    {
+        "area": 0.02006428783352021,
+        "centroid": [
+            259.8433451109729,
+            159.8734629369988
+        ],
+        "properties": {
+            "admin": "Sint Maarten"
+        },
+        "side": 0.14164846569419737,
+        "type": "Feature"
+    },
+    {
+        "area": 0.018520881043514237,
+        "centroid": [
+            773.2039778093949,
+            264.5643413266856
+        ],
+        "properties": {
+            "admin": "Norfolk Island"
+        },
+        "side": 0.13609144368223242,
+        "type": "Feature"
+    },
+    {
+        "area": 0.015434067565365694,
+        "centroid": [
+            259.83932316986824,
+            159.79552746171822
+        ],
+        "properties": {
+            "admin": "Saint Martin"
+        },
+        "side": 0.12423392276413756,
+        "type": "Feature"
+    },
+    {
+        "area": 0.01389066080628254,
+        "centroid": [
+            114.84995042812977,
+            254.15024560506959
+        ],
+        "properties": {
+            "admin": "Pitcairn Islands"
+        },
+        "side": 0.11785864756683126,
+        "type": "Feature"
+    },
+    {
+        "area": 0.012347254072665237,
+        "centroid": [
+            770.9670738690861,
+            201.14956082585257
+        ],
+        "properties": {
+            "admin": "Nauru"
+        },
+        "side": 0.11111819865649927,
+        "type": "Feature"
+    },
+    {
+        "area": 0.01080384728993522,
+        "centroid": [
+            652.2213231510817,
+            150.62454829895242
+        ],
+        "properties": {
+            "admin": "Macao S.A.R"
+        },
+        "side": 0.10394155708827543,
+        "type": "Feature"
+    },
+    {
+        "area": 0.009260440536309034,
+        "centroid": [
+            260.3505869752612,
+            160.22760218406123
+        ],
+        "properties": {
+            "admin": "Monaco"
+        },
+        "side": 0.07857243171379312,
+        "type": "Feature"
+    }
+]

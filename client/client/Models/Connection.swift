@@ -24,6 +24,8 @@ struct Connection : Hashable, Identifiable {
     let uid : Optional<uid_t>
     let user : Optional<String>
     
+    let country : Optional<String>
+    
     let remoteAddress : String
     let remoteURL: Optional<String>
     let portProtocol : Optional<Protocol>
@@ -99,7 +101,8 @@ struct Connection : Hashable, Identifiable {
          parentBundle: Optional<Bundle>,
          processTopLevelBundle: Optional<Bundle>,
          parentTopLevelBundle : Optional<Bundle>,
-         displayName : String) {
+         displayName : String,
+         country: Optional<String>) {
         
         self.outcome = outcome
         self.direction = direction
@@ -129,9 +132,11 @@ struct Connection : Hashable, Identifiable {
             parentBundle: parentBundle,
             parentTopLevelBundle: parentTopLevelBundle)
         self.endDateTimestamp = nil
+        self.country = country
     }
     
     init(connection: TCPConnection,
+         country: Optional<String>,
          remoteURL : Optional<String>,
          portProtocol : Optional<Protocol> ) {
         self.direction = {
@@ -180,7 +185,7 @@ struct Connection : Hashable, Identifiable {
             parentTopLevelBundle: connection.parentTopLevelBundle)
         
         self.endDateTimestamp = nil
-        
+        self.country = country        
     }
     
     private init(
@@ -206,7 +211,8 @@ struct Connection : Hashable, Identifiable {
         parentBundle: Optional<Bundle>,
         processTopLevelBundle: Optional<Bundle>,
         parentTopLevelBundle : Optional<Bundle>,
-        displayName : String) {
+        displayName : String,
+        country: Optional<String>) {
         self.outcome = outcome
         self.direction = direction
         self.startTimestamp = start
@@ -235,6 +241,7 @@ struct Connection : Hashable, Identifiable {
             parentBundle: parentBundle,
             parentTopLevelBundle: parentTopLevelBundle)
         self.endDateTimestamp = end
+        self.country = country
     }
     
     func clone() -> Connection {
@@ -261,7 +268,9 @@ struct Connection : Hashable, Identifiable {
             parentBundle: self.parentBundle,
             processTopLevelBundle: self.processTopLevelBundle,
             parentTopLevelBundle : self.parentTopLevelBundle,
-            displayName : self.displayName)
+            displayName : self.displayName,
+            country: self.country
+            )
     }
     
     func changeState(state: ConnectionStateType, timestamp: Date) -> Connection {
@@ -288,7 +297,9 @@ struct Connection : Hashable, Identifiable {
             parentBundle: self.parentBundle,
             processTopLevelBundle: self.processTopLevelBundle,
             parentTopLevelBundle : self.parentTopLevelBundle,
-            displayName : self.displayName)
+            displayName : self.displayName,
+            country: self.country
+        )
     }
     
     

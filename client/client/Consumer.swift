@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftUI
-
+import MMDB
 
 class Consumer {
     private let decisionEngine : DecisionEngine
@@ -18,6 +18,8 @@ class Consumer {
     
     private var isOpen = false
     private var comm = KextComm()
+    
+    private let mmdb : Optional<MMDB> = MMDB()
     
     init(decisionEngine : DecisionEngine, state: ConnectionState) {
         self.decisionEngine = decisionEngine
@@ -95,9 +97,12 @@ class Consumer {
                     let firewallEvent = event as! TCPConnection
                     let remoteURL = dnsCache.get(firewallEvent.remoteAddress)
                     let remoteProtocol = protocolCache.get(firewallEvent.remotePort)
+                    let tcpConnection = event as! TCPConnection
+                    let country = mmdb?.lookup(tcpConnection.remoteAddress)?.isoCode
                     
                     let connection = Connection(
-                        connection: event as! TCPConnection,
+                        connection: tcpConnection,
+                        country: country,
                         remoteURL: remoteURL,
                         portProtocol: remoteProtocol)
                     

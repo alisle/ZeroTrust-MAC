@@ -18,6 +18,9 @@
 		F028F81E233B04DF003EA345 /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028F81D233B04DF003EA345 /* Rules.swift */; };
 		F02EAC5423282928008186E7 /* DecisionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02EAC5323282928008186E7 /* DecisionEngine.swift */; };
 		F0331F822360B7F900A634D5 /* StateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0331F812360B7F900A634D5 /* StateListener.swift */; };
+		F0331F842360EDB100A634D5 /* ConnectionGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0331F832360EDB100A634D5 /* ConnectionGraphView.swift */; };
+		F0331F882360F44000A634D5 /* GeoMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0331F872360F44000A634D5 /* GeoMap.swift */; };
+		F0331F8A2363607F00A634D5 /* GeoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0331F892363607F00A634D5 /* GeoMapTests.swift */; };
 		F042BDDA2343995700965781 /* preferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = F042BDD92343995700965781 /* preferences.plist */; };
 		F042BDDC23439A6D00965781 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = F042BDDB23439A6D00965781 /* Preferences.swift */; };
 		F042BDDF23439C7400965781 /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F042BDDD23439C6000965781 /* PreferencesTests.swift */; };
@@ -36,6 +39,7 @@
 		F08982982356A554003DB49B /* RulesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982972356A554003DB49B /* RulesListView.swift */; };
 		F089829A2356A633003DB49B /* RulesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982992356A633003DB49B /* RulesDetailView.swift */; };
 		F0925F33234B79BB00C01F72 /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0925F32234B79BB00C01F72 /* RulesView.swift */; };
+		F0C157D0236A39570082F7E3 /* area.json in Resources */ = {isa = PBXBuildFile; fileRef = F0C157CF236A39570082F7E3 /* area.json */; };
 		F0D065E023064E300076A1AC /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065DF23064E300076A1AC /* Protocol.swift */; };
 		F0D065E3230652BD0076A1AC /* protocols.json in Resources */ = {isa = PBXBuildFile; fileRef = F0D065E2230652BD0076A1AC /* protocols.json */; };
 		F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065E4230654120076A1AC /* DNSRecords.swift */; };
@@ -52,6 +56,7 @@
 		F0E4F82E22BBE4E200A38601 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0E4F82C22BBE4E200A38601 /* Main.storyboard */; };
 		F0E4F83A22BBE4E200A38601 /* clientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E4F83922BBE4E200A38601 /* clientTests.swift */; };
 		F0E4F84522BBE4E300A38601 /* clientUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E4F84422BBE4E300A38601 /* clientUITests.swift */; };
+		F0ECB7BF2368D37800D3662A /* MMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0ECB7BE2368D37800D3662A /* MMDB.framework */; };
 		F0FB570E23576E4300AAB5F6 /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FB570D23576E4300AAB5F6 /* URLExtension.swift */; };
 		F0FB57102358AED900AAB5F6 /* OutcomeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FB570F2358AED900AAB5F6 /* OutcomeExtension.swift */; };
 /* End PBXBuildFile section */
@@ -85,6 +90,9 @@
 		F028F81D233B04DF003EA345 /* Rules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
 		F02EAC5323282928008186E7 /* DecisionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionEngine.swift; sourceTree = "<group>"; };
 		F0331F812360B7F900A634D5 /* StateListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateListener.swift; sourceTree = "<group>"; };
+		F0331F832360EDB100A634D5 /* ConnectionGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionGraphView.swift; sourceTree = "<group>"; };
+		F0331F872360F44000A634D5 /* GeoMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoMap.swift; sourceTree = "<group>"; };
+		F0331F892363607F00A634D5 /* GeoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoMapTests.swift; sourceTree = "<group>"; };
 		F042BDD92343995700965781 /* preferences.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = preferences.plist; sourceTree = "<group>"; };
 		F042BDDB23439A6D00965781 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		F042BDDD23439C6000965781 /* PreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
@@ -106,6 +114,7 @@
 		F08982972356A554003DB49B /* RulesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesListView.swift; sourceTree = "<group>"; };
 		F08982992356A633003DB49B /* RulesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesDetailView.swift; sourceTree = "<group>"; };
 		F0925F32234B79BB00C01F72 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
+		F0C157CF236A39570082F7E3 /* area.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = area.json; sourceTree = "<group>"; };
 		F0D065DF23064E300076A1AC /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		F0D065E2230652BD0076A1AC /* protocols.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = protocols.json; sourceTree = "<group>"; };
 		F0D065E4230654120076A1AC /* DNSRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSRecords.swift; sourceTree = "<group>"; };
@@ -129,6 +138,7 @@
 		F0E4F84022BBE4E300A38601 /* ZeroTrust FWUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ZeroTrust FWUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E4F84422BBE4E300A38601 /* clientUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clientUITests.swift; sourceTree = "<group>"; };
 		F0E4F84622BBE4E300A38601 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F0ECB7BE2368D37800D3662A /* MMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMDB.framework; path = Carthage/Build/Mac/MMDB.framework; sourceTree = "<group>"; };
 		F0FB570D23576E4300AAB5F6 /* URLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
 		F0FB570F2358AED900AAB5F6 /* OutcomeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,6 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0ECB7BF2368D37800D3662A /* MMDB.framework in Frameworks */,
 				F008CBB822E8B32800791486 /* SwiftUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,6 +173,7 @@
 		F008CBB622E8B32800791486 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F0ECB7BE2368D37800D3662A /* MMDB.framework */,
 				F008CBB722E8B32800791486 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
@@ -178,6 +190,7 @@
 				F0925F32234B79BB00C01F72 /* RulesView.swift */,
 				F08982972356A554003DB49B /* RulesListView.swift */,
 				F08982992356A633003DB49B /* RulesDetailView.swift */,
+				F0331F832360EDB100A634D5 /* ConnectionGraphView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -223,6 +236,7 @@
 				F0269F34231F4D080067D3BA /* Outcome.swift */,
 				F0269F3823201A7B0067D3BA /* ConnectionDirection.swift */,
 				F028F81D233B04DF003EA345 /* Rules.swift */,
+				F0331F872360F44000A634D5 /* GeoMap.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -230,6 +244,7 @@
 		F0D065E1230652830076A1AC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F0C157CF236A39570082F7E3 /* area.json */,
 				F0D065E2230652BD0076A1AC /* protocols.json */,
 				F028F8172339210D003EA345 /* rules.json */,
 			);
@@ -305,6 +320,7 @@
 				F016775E233D02D50018DA77 /* DecisionEngineTests.swift */,
 				F042BDDD23439C6000965781 /* PreferencesTests.swift */,
 				F042BDE02343A02C00965781 /* ProtocolCacheTests.swift */,
+				F0331F892363607F00A634D5 /* GeoMapTests.swift */,
 			);
 			path = clientTests;
 			sourceTree = "<group>";
@@ -328,6 +344,7 @@
 				F0E4F81C22BBE4E000A38601 /* Sources */,
 				F0E4F81D22BBE4E000A38601 /* Frameworks */,
 				F0E4F81E22BBE4E000A38601 /* Resources */,
+				F0ECB7B52368CC9800D3662A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -426,6 +443,7 @@
 				F0E4F82E22BBE4E200A38601 /* Main.storyboard in Resources */,
 				F0E4F82B22BBE4E200A38601 /* Preview Assets.xcassets in Resources */,
 				F042BDDA2343995700965781 /* preferences.plist in Resources */,
+				F0C157D0236A39570082F7E3 /* area.json in Resources */,
 				F028F8182339210D003EA345 /* rules.json in Resources */,
 				F0E4F82822BBE4E200A38601 /* Assets.xcassets in Resources */,
 				F0D065E3230652BD0076A1AC /* protocols.json in Resources */,
@@ -448,11 +466,34 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		F0ECB7B52368CC9800D3662A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/Mac/MMDB.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/MMDB.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage  copy-frameworks \n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F0E4F81C22BBE4E000A38601 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0331F882360F44000A634D5 /* GeoMap.swift in Sources */,
 				F0D065E7230656A00076A1AC /* ProtocolCache.swift in Sources */,
 				F0269F35231F4D080067D3BA /* Outcome.swift in Sources */,
 				F043D4A1230DC35300746BED /* DateExtension.swift in Sources */,
@@ -462,6 +503,7 @@
 				F01677652342496C0018DA77 /* RulesDispatcher.swift in Sources */,
 				F089829A2356A633003DB49B /* RulesDetailView.swift in Sources */,
 				F0DA1BA52303206800D07905 /* ConnectionIconView.swift in Sources */,
+				F0331F842360EDB100A634D5 /* ConnectionGraphView.swift in Sources */,
 				F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */,
 				F028F81E233B04DF003EA345 /* Rules.swift in Sources */,
 				F02EAC5423282928008186E7 /* DecisionEngine.swift in Sources */,
@@ -498,6 +540,7 @@
 				F042BDE22343A04B00965781 /* ProtocolCacheTests.swift in Sources */,
 				F042BDDF23439C7400965781 /* PreferencesTests.swift in Sources */,
 				F0E4F83A22BBE4E200A38601 /* clientTests.swift in Sources */,
+				F0331F8A2363607F00A634D5 /* GeoMapTests.swift in Sources */,
 				F0167760233D083F0018DA77 /* DecisionEngineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -594,6 +637,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -647,6 +691,7 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -663,6 +708,10 @@
 				DEVELOPMENT_TEAM = XQ3Q86P7E4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -691,6 +740,10 @@
 				DEVELOPMENT_TEAM = XQ3Q86P7E4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = client/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -713,6 +766,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = XQ3Q86P7E4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = clientTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -734,6 +791,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = XQ3Q86P7E4;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				INFOPLIST_FILE = clientTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

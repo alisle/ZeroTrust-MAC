@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class Main {
     private let consumer : Consumer
     private let decisionEngine = DecisionEngine()
@@ -22,7 +21,7 @@ class Main {
     init() {
         self.consumer = Consumer(decisionEngine: decisionEngine, state: connectionState)
         connectionState.addListener(listener: viewState)
-        self.preferences = Preferences.load()!
+        self.preferences = Preferences.load()!        
     }
     
     func entryPoint() {

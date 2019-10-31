@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+
 struct ConnectionsVIew : View  {
     
     @EnvironmentObject var viewState : ViewState
@@ -23,24 +24,27 @@ struct ConnectionsVIew : View  {
     }
 
     var connectionsContainer : some View {
-        NavigationView {
-            ConnectionListView()
-                .frame(minWidth: 400, maxWidth: 600)
-            
-            if viewState.enabled {
-                Text("Such Empty!")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else {
-                Text("Not Enabled")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+        VStack(alignment: .leading) {
+            NavigationView {
+                ConnectionListView()
+                    .frame(minWidth: 400, maxWidth: 600, minHeight: 200)
+                
+                if viewState.enabled {
+                    Text("Such Empty!")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    Text("Not Enabled")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+                
             }
-            
         }
     }
     
     var body: some View {
         VStack(alignment: .leading) {
             header
+            ConnectionGraphView()
             connectionsContainer
         }.frame(minWidth: 800, maxWidth: .infinity)
     }
@@ -83,7 +87,8 @@ func generateTestConnection(direction: ConnectionDirection) -> Connection {
                                 parentBundle: nil,
                                 processTopLevelBundle: nil,
                                 parentTopLevelBundle: nil,
-                                displayName: displayName!)
+                                displayName: displayName!,
+                                country: "UK")
     
     return connection
 }

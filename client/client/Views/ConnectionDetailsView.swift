@@ -33,6 +33,13 @@ struct ConnectionDetailsView: View {
                 Text(connection.remoteDisplayAddress)
                     .font(.title)
                     .bold()
+                HStack {
+                    Text("\(connection.state.description) - \(connection.country ?? "")")
+                        .font(.caption)
+                        .opacity(0.75)
+
+                }
+                
             }
             
         }
@@ -47,18 +54,10 @@ struct ConnectionDetailsView: View {
             Spacer()
             createPair(prompt: "End Time", value: "\(getEndDate())")
         }
-        
-        let stateStack = HStack() {
-            createPair(prompt: "Direction", value: "\(connection.direction.description)")
-            Spacer()
-            createPair(prompt: "Current State", value: "\(connection.state.description)")
-            Spacer()
-            createPair(prompt: "Decision", value: "\(connection.outcome.description)")
-        }
+                
         
         let metadataStack = VStack {
             timeStack
-            stateStack
         }.padding(EdgeInsets(top: 5, leading: 0, bottom: 10, trailing: 0))
 
         return metadataStack
@@ -90,17 +89,19 @@ struct ConnectionDetailsView: View {
     }
     
     var processDetails: some View {
-        let pid = createPair(prompt: "Process ID", value: "\(connection.pid)")
-        let ppid = createPair(prompt: "Parent Process ID", value: "\(connection.ppid)")
+        let pid = createPair(prompt: "PID", value: "\(connection.pid)")
+        let ppid = createPair(prompt: "PPID", value: "\(connection.ppid)")
         
         let group = VStack(alignment: .leading, spacing: 5) {
             Text("Process Details").font(.headline).bold()
-            HStack {
-                userDetails
-                Spacer()
-                pid
-                Spacer()
-                ppid
+            VStack(alignment: .leading) {
+                HStack {
+                    userDetails
+                    Spacer()
+                    Spacer()
+                    pid
+                    ppid
+                }
             }
 
             if connection.process != nil {
