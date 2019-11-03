@@ -6,8 +6,8 @@
             53.258968798068
         ],
         "properties": {
-            "name": "Russia",
-            "iso": "RU"
+            "iso": "RU",
+            "name": "Russia"
         },
         "side": 120.16976613065907,
         "type": "Feature"
@@ -19,8 +19,8 @@
             65.73525507529104
         ],
         "properties": {
-            "name": "Canada",
-            "iso": "CA"
+            "iso": "CA",
+            "name": "Canada"
         },
         "side": 91.27858680435934,
         "type": "Feature"
@@ -32,8 +32,8 @@
             100.57032788756183
         ],
         "properties": {
-            "name": "United States of America",
-            "iso": "US"
+            "iso": "USA",
+            "name": "United States of America"
         },
         "side": 74.2112665989173,
         "type": "Feature"
@@ -45,8 +45,8 @@
             118.46183759771554
         ],
         "properties": {
-            "name": "China",
-            "iso": "CN"
+            "iso": "CN",
+            "name": "China"
         },
         "side": 68.5292380670883,
         "type": "Feature"
@@ -58,8 +58,8 @@
             223.6422604940304
         ],
         "properties": {
-            "name": "Brazil",
-            "iso": "BR"
+            "iso": "BR",
+            "name": "Brazil"
         },
         "side": 59.07488277794816,
         "type": "Feature"
@@ -71,8 +71,8 @@
             257.25218779057843
         ],
         "properties": {
-            "name": "Australia",
-            "iso": "AUS"
+            "iso": "AUS",
+            "name": "Australia"
         },
         "side": 58.62453886386226,
         "type": "Feature"
@@ -84,8 +84,8 @@
             37.5949923244915
         ],
         "properties": {
-            "name": "Greenland",
-            "iso": "GL"
+            "iso": "GL",
+            "name": "Greenland"
         },
         "side": 57.26457522842071,
         "type": "Feature"
@@ -97,8 +97,8 @@
             92.52977027180025
         ],
         "properties": {
-            "name": "Kazakhstan",
-            "iso": "KZ"
+            "iso": "KZ",
+            "name": "Kazakhstan"
         },
         "side": 40.328558747643484,
         "type": "Feature"
@@ -110,8 +110,8 @@
             277.0761808424967
         ],
         "properties": {
-            "name": "Argentina",
-            "iso": "AR"
+            "iso": "AR",
+            "name": "Argentina"
         },
         "side": 37.08797724424554,
         "type": "Feature"
@@ -123,8 +123,8 @@
             149.38343380020183
         ],
         "properties": {
-            "name": "India",
-            "iso": "IN"
+            "iso": "IN",
+            "name": "India"
         },
         "side": 37.074033683197285,
         "type": "Feature"
@@ -136,8 +136,8 @@
             137.65482620425666
         ],
         "properties": {
-            "name": "Algeria",
-            "iso": "DZ"
+            "iso": "DZ",
+            "name": "Algeria"
         },
         "side": 32.48380942072741,
         "type": "Feature"
@@ -149,8 +149,8 @@
             206.36823105826497
         ],
         "properties": {
-            "name": "Democratic Republic of the Congo",
-            "iso": "CD"
+            "iso": "CD",
+            "name": "Democratic Republic of the Congo"
         },
         "side": 30.60398736672821,
         "type": "Feature"
@@ -162,8 +162,8 @@
             95.65281337033815
         ],
         "properties": {
-            "name": "Mongolia",
-            "iso": "MN"
+            "iso": "MN",
+            "name": "Mongolia"
         },
         "side": 30.19193613670704,
         "type": "Feature"
@@ -175,8 +175,8 @@
             146.83609825390835
         ],
         "properties": {
-            "name": "Mexico",
-            "iso": "MX"
+            "iso": "MX",
+            "name": "Mexico"
         },
         "side": 29.328442895963313,
         "type": "Feature"
@@ -188,8 +188,8 @@
             146.47421314495534
         ],
         "properties": {
-            "name": "Saudi Arabia",
-            "iso": "SA"
+            "iso": "SA",
+            "name": "Saudi Arabia"
         },
         "side": 29.061153342274,
         "type": "Feature"
@@ -201,8 +201,8 @@
             164.51226625906685
         ],
         "properties": {
-            "name": "Sudan",
-            "iso": "SD"
+            "iso": "SD",
+            "name": "Sudan"
         },
         "side": 27.849770925402073,
         "type": "Feature"
@@ -214,8 +214,8 @@
             127.71557736695455
         ],
         "properties": {
-            "name": "Iran",
-            "iso": "IR"
+            "iso": "IR",
+            "name": "Iran"
         },
         "side": 27.757483912145922,
         "type": "Feature"
@@ -227,8 +227,8 @@
             205.0251480278659
         ],
         "properties": {
-            "name": "Indonesia",
-            "iso": "ID"
+            "iso": "ID",
+            "name": "Indonesia"
         },
         "side": 27.375220435232507,
         "type": "Feature"
@@ -240,8 +240,8 @@
             139.9578964010032
         ],
         "properties": {
-            "name": "Libya",
-            "iso": "LY"
+            "iso": "LY",
+            "name": "Libya"
         },
         "side": 27.019321659402692,
         "type": "Feature"
@@ -253,8 +253,8 @@
             264.3867352334154
         ],
         "properties": {
-            "name": "South Africa",
-            "iso": "SA"
+            "iso": "SA",
+            "name": "South Africa"
         },
         "side": 23.64674503469111,
         "type": "Feature"
@@ -266,8 +266,8 @@
             166.05581902063562
         ],
         "properties": {
-            "name": "Chad",
-            "iso": "TD"
+            "iso": "TD",
+            "name": "Chad"
         },
         "side": 22.974308971192535,
         "type": "Feature"
@@ -279,8 +279,8 @@
             161.52385571998028
         ],
         "properties": {
-            "name": "Mali",
-            "iso": "ML"
+            "iso": "ML",
+            "name": "Mali"
         },
         "side": 22.961339631997586,
         "type": "Feature"
@@ -292,8 +292,8 @@
             220.23808298108918
         ],
         "properties": {
-            "name": "Peru",
-            "iso": "PE"
+            "iso": "PE",
+            "name": "Peru"
         },
         "side": 22.937835041112816,
         "type": "Feature"
@@ -305,8 +305,8 @@
             227.27079463702373
         ],
         "properties": {
-            "name": "Angola",
-            "iso": "AO"
+            "iso": "AO",
+            "name": "Angola"
         },
         "side": 22.61565876840065,
         "type": "Feature"
@@ -318,8 +318,8 @@
             161.30608424508378
         ],
         "properties": {
-            "name": "Niger",
-            "iso": "NE"
+            "iso": "NE",
+            "name": "Niger"
         },
         "side": 22.284220730944874,
         "type": "Feature"
@@ -331,8 +331,8 @@
             180.85749211442626
         ],
         "properties": {
-            "name": "Ethiopia",
-            "iso": "ET"
+            "iso": "ET",
+            "name": "Ethiopia"
         },
         "side": 21.392742412793588,
         "type": "Feature"
@@ -344,8 +344,8 @@
             191.32108210516486
         ],
         "properties": {
-            "name": "Colombia",
-            "iso": "CO"
+            "iso": "CO",
+            "name": "Colombia"
         },
         "side": 21.37166531636191,
         "type": "Feature"
@@ -357,8 +357,8 @@
             237.07224047338084
         ],
         "properties": {
-            "name": "Bolivia",
-            "iso": "BO"
+            "iso": "BO",
+            "name": "Bolivia"
         },
         "side": 21.337876958065813,
         "type": "Feature"
@@ -370,8 +370,8 @@
             141.19609744841972
         ],
         "properties": {
-            "name": "Egypt",
-            "iso": "EG"
+            "iso": "EG",
+            "name": "Egypt"
         },
         "side": 21.181501287014797,
         "type": "Feature"
@@ -383,8 +383,8 @@
             155.06874674018707
         ],
         "properties": {
-            "name": "Mauritania",
-            "iso": "MR"
+            "iso": "MR",
+            "name": "Mauritania"
         },
         "side": 21.04227080040225,
         "type": "Feature"
@@ -396,8 +396,8 @@
             52.524983035726876
         ],
         "properties": {
-            "name": "Norway",
-            "iso": "NO"
+            "iso": "NO",
+            "name": "Norway"
         },
         "side": 20.67000109006705,
         "type": "Feature"
@@ -409,8 +409,8 @@
             133.592775780926
         ],
         "properties": {
-            "name": "Pakistan",
-            "iso": "PK"
+            "iso": "PK",
+            "name": "Pakistan"
         },
         "side": 20.089896803084756,
         "type": "Feature"
@@ -422,8 +422,8 @@
             113.03072493244177
         ],
         "properties": {
-            "name": "Turkey",
-            "iso": "TR"
+            "iso": "TR",
+            "name": "Turkey"
         },
         "side": 20.02945984155537,
         "type": "Feature"
@@ -435,8 +435,8 @@
             61.37435927132651
         ],
         "properties": {
-            "name": "Sweden",
-            "iso": "SE"
+            "iso": "SE",
+            "name": "Sweden"
         },
         "side": 19.683374313887082,
         "type": "Feature"
@@ -448,8 +448,8 @@
             213.9306702095882
         ],
         "properties": {
-            "name": "United Republic of Tanzania",
-            "iso": "TZ"
+            "iso": "TZ",
+            "name": "United Republic of Tanzania"
         },
         "side": 19.503736723139422,
         "type": "Feature"
@@ -461,8 +461,8 @@
             280.1739058130995
         ],
         "properties": {
-            "name": "Chile",
-            "iso": "CL"
+            "iso": "CL",
+            "name": "Chile"
         },
         "side": 19.470947726585024,
         "type": "Feature"
@@ -474,8 +474,8 @@
             178.68574560553822
         ],
         "properties": {
-            "name": "Nigeria",
-            "iso": "NG"
+            "iso": "NG",
+            "name": "Nigeria"
         },
         "side": 19.220316873619264,
         "type": "Feature"
@@ -487,8 +487,8 @@
             184.17459082009648
         ],
         "properties": {
-            "name": "Venezuela",
-            "iso": "VE"
+            "iso": "VE",
+            "name": "Venezuela"
         },
         "side": 19.19283435298434,
         "type": "Feature"
@@ -500,8 +500,8 @@
             91.0606463295244
         ],
         "properties": {
-            "name": "Ukraine",
-            "iso": "UA"
+            "iso": "UA",
+            "name": "Ukraine"
         },
         "side": 19.070493905756052,
         "type": "Feature"
@@ -513,8 +513,8 @@
             249.03728823242795
         ],
         "properties": {
-            "name": "Namibia",
-            "iso": "NA"
+            "iso": "NA",
+            "name": "Namibia"
         },
         "side": 18.850671020398075,
         "type": "Feature"
@@ -526,8 +526,8 @@
             104.55608234963545
         ],
         "properties": {
-            "name": "France",
-            "iso": "FR"
+            "iso": "FR",
+            "name": "France"
         },
         "side": 18.79084797080717,
         "type": "Feature"
@@ -539,8 +539,8 @@
             238.21346479950213
         ],
         "properties": {
-            "name": "Mozambique",
-            "iso": "MZ"
+            "iso": "MZ",
+            "name": "Mozambique"
         },
         "side": 18.20681940579443,
         "type": "Feature"
@@ -552,8 +552,8 @@
             229.89906687134234
         ],
         "properties": {
-            "name": "Zambia",
-            "iso": "ZM"
+            "iso": "ZM",
+            "name": "Zambia"
         },
         "side": 17.61955027731488,
         "type": "Feature"
@@ -565,8 +565,8 @@
             124.84549327155845
         ],
         "properties": {
-            "name": "Afghanistan",
-            "iso": "AF"
+            "iso": "AF",
+            "name": "Afghanistan"
         },
         "side": 17.573545979325104,
         "type": "Feature"
@@ -578,8 +578,8 @@
             57.208114849568744
         ],
         "properties": {
-            "name": "Finland",
-            "iso": "FI"
+            "iso": "FI",
+            "name": "Finland"
         },
         "side": 17.520463074155835,
         "type": "Feature"
@@ -591,8 +591,8 @@
             153.09495522306182
         ],
         "properties": {
-            "name": "Myanmar",
-            "iso": "MM"
+            "iso": "MM",
+            "name": "Myanmar"
         },
         "side": 16.86902715827618,
         "type": "Feature"
@@ -604,8 +604,8 @@
             133.8557584893543
         ],
         "properties": {
-            "name": "Morocco",
-            "iso": "MA"
+            "iso": "MA",
+            "name": "Morocco"
         },
         "side": 16.39417129725731,
         "type": "Feature"
@@ -617,8 +617,8 @@
             110.64699675068307
         ],
         "properties": {
-            "name": "Spain",
-            "iso": "ES"
+            "iso": "ES",
+            "name": "Spain"
         },
         "side": 16.276872351536163,
         "type": "Feature"
@@ -630,8 +630,8 @@
             242.92543267258557
         ],
         "properties": {
-            "name": "Madagascar",
-            "iso": "MG"
+            "iso": "MG",
+            "name": "Madagascar"
         },
         "side": 15.8801376978116,
         "type": "Feature"
@@ -643,8 +643,8 @@
             183.75927767690925
         ],
         "properties": {
-            "name": "South Sudan",
-            "iso": "SS"
+            "iso": "SS",
+            "name": "South Sudan"
         },
         "side": 15.853825729025074,
         "type": "Feature"
@@ -656,8 +656,8 @@
             249.25692286752286
         ],
         "properties": {
-            "name": "Botswana",
-            "iso": "BW"
+            "iso": "BW",
+            "name": "Botswana"
         },
         "side": 15.841652014776503,
         "type": "Feature"
@@ -669,8 +669,8 @@
             185.39649854830157
         ],
         "properties": {
-            "name": "Central African Republic",
-            "iso": "CF"
+            "iso": "CF",
+            "name": "Central African Republic"
         },
         "side": 15.80341443044415,
         "type": "Feature"
@@ -682,8 +682,8 @@
             113.05792665774787
         ],
         "properties": {
-            "name": "Turkmenistan",
-            "iso": "TM"
+            "iso": "TM",
+            "name": "Turkmenistan"
         },
         "side": 15.572661511993239,
         "type": "Feature"
@@ -695,8 +695,8 @@
             107.16712233341254
         ],
         "properties": {
-            "name": "Uzbekistan",
-            "iso": "UZ"
+            "iso": "UZ",
+            "name": "Uzbekistan"
         },
         "side": 15.48340492375454,
         "type": "Feature"
@@ -708,8 +708,8 @@
             198.66660312401834
         ],
         "properties": {
-            "name": "Kenya",
-            "iso": "KE"
+            "iso": "KE",
+            "name": "Kenya"
         },
         "side": 15.419727118821251,
         "type": "Feature"
@@ -721,8 +721,8 @@
             86.5516013131568
         ],
         "properties": {
-            "name": "Germany",
-            "iso": "DE"
+            "iso": "DE",
+            "name": "Germany"
         },
         "side": 15.054773174435779,
         "type": "Feature"
@@ -734,8 +734,8 @@
             166.48199722359615
         ],
         "properties": {
-            "name": "Thailand",
-            "iso": "TH"
+            "iso": "TH",
+            "name": "Thailand"
         },
         "side": 14.62291850590183,
         "type": "Feature"
@@ -747,9 +747,8 @@
             126.64541232288934
         ],
         "properties": {
-            "name": "Iraq",
-            "iso": "IQ"
-            
+            "iso": "IQ",
+            "name": "Iraq"
         },
         "side": 14.440824209971973,
         "type": "Feature"
@@ -761,8 +760,8 @@
             84.19516968169862
         ],
         "properties": {
-            "name": "Poland",
-            "iso": "PL"
+            "iso": "PL",
+            "name": "Poland"
         },
         "side": 14.261112806652767,
         "type": "Feature"
@@ -774,8 +773,8 @@
             189.48224355697923
         ],
         "properties": {
-            "name": "Somalia",
-            "iso": "SO"
+            "iso": "SO",
+            "name": "Somalia"
         },
         "side": 13.78929387422567,
         "type": "Feature"
@@ -787,8 +786,8 @@
             164.6302729509752
         ],
         "properties": {
-            "name": "Yemen",
-            "iso": "YE"
+            "iso": "YE",
+            "name": "Yemen"
         },
         "side": 13.739788840589387,
         "type": "Feature"
@@ -800,8 +799,8 @@
             187.37491345037702
         ],
         "properties": {
-            "name": "Cameroon",
-            "iso": "CM"
+            "iso": "CM",
+            "name": "Cameroon"
         },
         "side": 13.678262089880524,
         "type": "Feature"
@@ -813,8 +812,8 @@
             116.76068531248244
         ],
         "properties": {
-            "name": "Japan",
-            "iso": "JP"
+            "iso": "JP",
+            "name": "Japan"
         },
         "side": 13.676005174364246,
         "type": "Feature"
@@ -826,8 +825,8 @@
             214.37917809198018
         ],
         "properties": {
-            "name": "Papua New Guinea",
-            "iso": "PG"
+            "iso": "PG",
+            "name": "Papua New Guinea"
         },
         "side": 13.667877192761496,
         "type": "Feature"
@@ -839,8 +838,8 @@
             251.5745069682154
         ],
         "properties": {
-            "name": "Paraguay",
-            "iso": "PY"
+            "iso": "PY",
+            "name": "Paraguay"
         },
         "side": 13.199817752788993,
         "type": "Feature"
@@ -852,8 +851,8 @@
             242.211215517384
         ],
         "properties": {
-            "name": "Zimbabwe",
-            "iso": "ZW"
+            "iso": "ZW",
+            "name": "Zimbabwe"
         },
         "side": 12.84436977758035,
         "type": "Feature"
@@ -865,8 +864,8 @@
             105.07259726766956
         ],
         "properties": {
-            "name": "Italy",
-            "iso": "IT"
+            "iso": "IT",
+            "name": "Italy"
         },
         "side": 12.785354760901424,
         "type": "Feature"
@@ -878,8 +877,8 @@
             79.97719993261762
         ],
         "properties": {
-            "name": "United Kingdom",
-            "iso": "UK"
+            "iso": "UK",
+            "name": "United Kingdom"
         },
         "side": 12.780162885544572,
         "type": "Feature"
@@ -891,8 +890,8 @@
             292.67218463517935
         ],
         "properties": {
-            "name": "New Zealand",
-            "iso": "NZ"
+            "iso": "NZ",
+            "name": "New Zealand"
         },
         "side": 11.967667281531302,
         "type": "Feature"
@@ -904,8 +903,8 @@
             81.0665887541762
         ],
         "properties": {
-            "name": "Belarus",
-            "iso": "BY"
+            "iso": "BY",
+            "name": "Belarus"
         },
         "side": 11.785799279251913,
         "type": "Feature"
@@ -917,8 +916,8 @@
             201.8607377232685
         ],
         "properties": {
-            "name": "Republic of Congo",
-            "iso": "CG"
+            "iso": "CG",
+            "name": "Republic of Congo"
         },
         "side": 11.769352979455192,
         "type": "Feature"
@@ -930,8 +929,8 @@
             163.2194970561859
         ],
         "properties": {
-            "name": "Vietnam",
-            "iso": "VN"
+            "iso": "VN",
+            "name": "Vietnam"
         },
         "side": 11.728366627076038,
         "type": "Feature"
@@ -943,8 +942,8 @@
             98.11345875601813
         ],
         "properties": {
-            "name": "Romania",
-            "iso": "RO"
+            "iso": "RO",
+            "name": "Romania"
         },
         "side": 11.626131492774153,
         "type": "Feature"
@@ -956,8 +955,8 @@
             154.25186194584805
         ],
         "properties": {
-            "name": "Oman",
-            "iso": "OM"
+            "iso": "OM",
+            "name": "Oman"
         },
         "side": 11.54446693460349,
         "type": "Feature"
@@ -969,8 +968,8 @@
             191.52905897926846
         ],
         "properties": {
-            "name": "Malaysia",
-            "iso": "MY"
+            "iso": "MY",
+            "name": "Malaysia"
         },
         "side": 11.454542843385841,
         "type": "Feature"
@@ -982,8 +981,8 @@
             183.05417835367547
         ],
         "properties": {
-            "name": "Ivory Coast",
-            "iso": "CI"
+            "iso": "CI",
+            "name": "Ivory Coast"
         },
         "side": 11.397675344652614,
         "type": "Feature"
@@ -995,8 +994,8 @@
             173.94056693926274
         ],
         "properties": {
-            "name": "Philippines",
-            "iso": "PH"
+            "iso": "PH",
+            "name": "Philippines"
         },
         "side": 10.891071546628083,
         "type": "Feature"
@@ -1008,8 +1007,8 @@
             172.73024039184682
         ],
         "properties": {
-            "name": "Burkina Faso",
-            "iso": "BF"
+            "iso": "BF",
+            "name": "Burkina Faso"
         },
         "side": 10.578575058326885,
         "type": "Feature"
@@ -1021,8 +1020,8 @@
             107.83438140627979
         ],
         "properties": {
-            "name": "Kyrgyzstan",
-            "iso": "KG"
+            "iso": "KG",
+            "name": "Kyrgyzstan"
         },
         "side": 10.282636978903499,
         "type": "Feature"
@@ -1034,8 +1033,8 @@
             201.30232687053098
         ],
         "properties": {
-            "name": "Gabon",
-            "iso": "GA"
+            "iso": "GA",
+            "name": "Gabon"
         },
         "side": 10.202472173513973,
         "type": "Feature"
@@ -1047,8 +1046,8 @@
             203.16470606139544
         ],
         "properties": {
-            "name": "Ecuador",
-            "iso": "EC"
+            "iso": "EC",
+            "name": "Ecuador"
         },
         "side": 10.11015327492951,
         "type": "Feature"
@@ -1060,8 +1059,8 @@
             176.80322939049228
         ],
         "properties": {
-            "name": "Guinea",
-            "iso": "GQ"
+            "iso": "GQ",
+            "name": "Guinea"
         },
         "side": 9.977848105096145,
         "type": "Feature"
@@ -1073,8 +1072,8 @@
             197.1720681803864
         ],
         "properties": {
-            "name": "Uganda",
-            "iso": "UG"
+            "iso": "UG",
+            "name": "Uganda"
         },
         "side": 9.839844309559957,
         "type": "Feature"
@@ -1086,8 +1085,8 @@
             182.33704375243877
         ],
         "properties": {
-            "name": "Ghana",
-            "iso": "GH"
+            "iso": "GH",
+            "name": "Ghana"
         },
         "side": 9.830899636665116,
         "type": "Feature"
@@ -1099,8 +1098,8 @@
             158.9138683359312
         ],
         "properties": {
-            "name": "Laos",
-            "iso": "LAO"
+            "iso": "LAO",
+            "name": "Laos"
         },
         "side": 9.810547656290426,
         "type": "Feature"
@@ -1112,8 +1111,8 @@
             55.559353332375224
         ],
         "properties": {
-            "name": "Iceland",
-            "iso": "IS"
+            "iso": "IS",
+            "name": "Iceland"
         },
         "side": 9.77634935873948,
         "type": "Feature"
@@ -1125,8 +1124,8 @@
             122.18041891427978
         ],
         "properties": {
-            "name": "Syria",
-            "iso": "SY"
+            "iso": "SY",
+            "name": "Syria"
         },
         "side": 9.519999376602026,
         "type": "Feature"
@@ -1138,8 +1137,8 @@
             189.35950253560253
         ],
         "properties": {
-            "name": "Guyana",
-            "iso": "GY"
+            "iso": "GY",
+            "name": "Guyana"
         },
         "side": 9.212010295037494,
         "type": "Feature"
@@ -1151,8 +1150,8 @@
             272.87052416102114
         ],
         "properties": {
-            "name": "Uruguay",
-            "iso": "UY"
+            "iso": "UY",
+            "name": "Uruguay"
         },
         "side": 9.1912114979673,
         "type": "Feature"
@@ -1164,8 +1163,8 @@
             168.0787162495665
         ],
         "properties": {
-            "name": "Senegal",
-            "iso": "SN"
+            "iso": "SN",
+            "name": "Senegal"
         },
         "side": 9.018390234651344,
         "type": "Feature"
@@ -1177,8 +1176,8 @@
             124.2460412785516
         ],
         "properties": {
-            "name": "Tunisia",
-            "iso": "TN"
+            "iso": "TN",
+            "name": "Tunisia"
         },
         "side": 8.690427078160646,
         "type": "Feature"
@@ -1190,8 +1189,8 @@
             171.73509644723254
         ],
         "properties": {
-            "name": "Cambodia",
-            "iso": "KH"
+            "iso": "KH",
+            "name": "Cambodia"
         },
         "side": 8.619363527326424,
         "type": "Feature"
@@ -1203,8 +1202,8 @@
             114.36052957088907
         ],
         "properties": {
-            "name": "Tajikistan",
-            "iso": "TJ"
+            "iso": "TJ",
+            "name": "Tajikistan"
         },
         "side": 8.520581576667992,
         "type": "Feature"
@@ -1216,8 +1215,8 @@
             178.36840213927215
         ],
         "properties": {
-            "name": "Somaliland",
-            "iso": "SO"
+            "iso": "SO",
+            "name": "Somaliland"
         },
         "side": 8.273923293761282,
         "type": "Feature"
@@ -1229,8 +1228,8 @@
             113.21883056171421
         ],
         "properties": {
-            "name": "Greece",
-            "iso": "GR"
+            "iso": "GR",
+            "name": "Greece"
         },
         "side": 8.179367497601852,
         "type": "Feature"
@@ -1242,8 +1241,8 @@
             137.20248766110504
         ],
         "properties": {
-            "name": "Nepal",
-            "iso": "NP"
+            "iso": "NP",
+            "name": "Nepal"
         },
         "side": 8.161516328709833,
         "type": "Feature"
@@ -1255,8 +1254,8 @@
             110.7988797703713
         ],
         "properties": {
-            "name": "North Korea",
-            "iso": "KP"
+            "iso": "KP",
+            "name": "North Korea"
         },
         "side": 8.002824923431358,
         "type": "Feature"
@@ -1268,8 +1267,8 @@
             104.95133044013983
         ],
         "properties": {
-            "name": "Bulgaria",
-            "iso": "BG"
+            "iso": "BG",
+            "name": "Bulgaria"
         },
         "side": 7.822397602789053,
         "type": "Feature"
@@ -1281,8 +1280,8 @@
             146.98032188240705
         ],
         "properties": {
-            "name": "Bangladesh",
-            "iso": "BD"
+            "iso": "BD",
+            "name": "Bangladesh"
         },
         "side": 7.702102445502543,
         "type": "Feature"
@@ -1294,8 +1293,8 @@
             190.81996660720816
         ],
         "properties": {
-            "name": "Suriname",
-            "iso": "SR"
+            "iso": "SR",
+            "name": "Suriname"
         },
         "side": 7.635283884374064,
         "type": "Feature"
@@ -1307,8 +1306,8 @@
             95.18833228877615
         ],
         "properties": {
-            "name": "Hungary",
-            "iso": "HU"
+            "iso": "HU",
+            "name": "Hungary"
         },
         "side": 7.389360203741243,
         "type": "Feature"
@@ -1320,8 +1319,8 @@
             171.4563217243874
         ],
         "properties": {
-            "name": "Nicaragua",
-            "iso": "NI"
+            "iso": "NI",
+            "name": "Nicaragua"
         },
         "side": 7.266569475547336,
         "type": "Feature"
@@ -1333,8 +1332,8 @@
             165.86313880177246
         ],
         "properties": {
-            "name": "Eritrea",
-            "iso": "ER"
+            "iso": "ER",
+            "name": "Eritrea"
         },
         "side": 7.163354271794523,
         "type": "Feature"
@@ -1346,8 +1345,8 @@
             94.2410319660135
         ],
         "properties": {
-            "name": "Austria",
-            "iso": "AT"
+            "iso": "AT",
+            "name": "Austria"
         },
         "side": 7.058957934689797,
         "type": "Feature"
@@ -1359,8 +1358,8 @@
             229.34344858952053
         ],
         "properties": {
-            "name": "Malawi",
-            "iso": "MW"
+            "iso": "MW",
+            "name": "Malawi"
         },
         "side": 7.0117916553914155,
         "type": "Feature"
@@ -1372,8 +1371,8 @@
             89.47056797764948
         ],
         "properties": {
-            "name": "Czech Republic",
-            "iso": "CZ"
+            "iso": "CZ",
+            "name": "Czech Republic"
         },
         "side": 6.962532786660376,
         "type": "Feature"
@@ -1385,8 +1384,8 @@
             119.16926354015995
         ],
         "properties": {
-            "name": "South Korea",
-            "iso": "KR"
+            "iso": "KR",
+            "name": "South Korea"
         },
         "side": 6.947775882014532,
         "type": "Feature"
@@ -1398,8 +1397,8 @@
             178.5843693622141
         ],
         "properties": {
-            "name": "Benin",
-            "iso": "BJ"
+            "iso": "BJ",
+            "name": "Benin"
         },
         "side": 6.869136142947874,
         "type": "Feature"
@@ -1411,8 +1410,8 @@
             111.98697911709465
         ],
         "properties": {
-            "name": "Portugal",
-            "iso": "PT"
+            "iso": "PT",
+            "name": "Portugal"
         },
         "side": 6.857104842968625,
         "type": "Feature"
@@ -1424,8 +1423,8 @@
             167.04637542837054
         ],
         "properties": {
-            "name": "Honduras",
-            "iso": "HN"
+            "iso": "HN",
+            "name": "Honduras"
         },
         "side": 6.85350259438635,
         "type": "Feature"
@@ -1437,8 +1436,8 @@
             151.92190695880353
         ],
         "properties": {
-            "name": "Cuba",
-            "iso": "CU"
+            "iso": "CU",
+            "name": "Cuba"
         },
         "side": 6.851024949792596,
         "type": "Feature"
@@ -1450,8 +1449,8 @@
             73.64667200032073
         ],
         "properties": {
-            "name": "Latvia",
-            "iso": "LV"
+            "iso": "LV",
+            "name": "Latvia"
         },
         "side": 6.847644898790385,
         "type": "Feature"
@@ -1463,8 +1462,8 @@
             81.86130753389743
         ],
         "properties": {
-            "name": "Ireland",
-            "iso": "IE"
+            "iso": "IE",
+            "name": "Ireland"
         },
         "side": 6.764876475439099,
         "type": "Feature"
@@ -1476,8 +1475,8 @@
             77.05919019924082
         ],
         "properties": {
-            "name": "Lithuania",
-            "iso": "LT"
+            "iso": "LT",
+            "name": "Lithuania"
         },
         "side": 6.72861752414717,
         "type": "Feature"
@@ -1489,8 +1488,8 @@
             110.47151209200136
         ],
         "properties": {
-            "name": "Azerbaijan",
-            "iso": "AZ"
+            "iso": "AZ",
+            "name": "Azerbaijan"
         },
         "side": 6.7278146480805185,
         "type": "Feature"
@@ -1502,8 +1501,8 @@
             165.13169310190992
         ],
         "properties": {
-            "name": "Guatemala",
-            "iso": "GT"
+            "iso": "GT",
+            "name": "Guatemala"
         },
         "side": 6.710472078680116,
         "type": "Feature"
@@ -1515,8 +1514,8 @@
             101.7500063463743
         ],
         "properties": {
-            "name": "Republic of Serbia",
-            "iso": "RS"
+            "iso": "RS",
+            "name": "Republic of Serbia"
         },
         "side": 6.572784684792059,
         "type": "Feature"
@@ -1528,8 +1527,8 @@
             130.5838680780861
         ],
         "properties": {
-            "name": "Jordan",
-            "iso": "JO"
+            "iso": "JO",
+            "name": "Jordan"
         },
         "side": 6.4380267503033775,
         "type": "Feature"
@@ -1541,8 +1540,8 @@
             146.20641464945226
         ],
         "properties": {
-            "name": "Western Sahara",
-            "iso": "EH"
+            "iso": "EH",
+            "name": "Western Sahara"
         },
         "side": 6.3030812553224616,
         "type": "Feature"
@@ -1554,8 +1553,8 @@
             185.66825084609425
         ],
         "properties": {
-            "name": "Liberia",
-            "iso": "LR"
+            "iso": "LR",
+            "name": "Liberia"
         },
         "side": 6.199633735108392,
         "type": "Feature"
@@ -1567,8 +1566,8 @@
             106.28609326762034
         ],
         "properties": {
-            "name": "Georgia",
-            "iso": "GE"
+            "iso": "GE",
+            "name": "Georgia"
         },
         "side": 6.109606566596621,
         "type": "Feature"
@@ -1580,8 +1579,8 @@
             69.61612787538232
         ],
         "properties": {
-            "name": "Estonia",
-            "iso": "EE"
+            "iso": "EE",
+            "name": "Estonia"
         },
         "side": 5.90418368577967,
         "type": "Feature"
@@ -1593,8 +1592,8 @@
             146.88377215071574
         ],
         "properties": {
-            "name": "United Arab Emirates",
-            "iso": "AE"
+            "iso": "AE",
+            "name": "United Arab Emirates"
         },
         "side": 5.572968163821354,
         "type": "Feature"
@@ -1606,8 +1605,8 @@
             99.83674267385312
         ],
         "properties": {
-            "name": "Croatia",
-            "iso": "HR"
+            "iso": "HR",
+            "name": "Croatia"
         },
         "side": 5.551880431707022,
         "type": "Feature"
@@ -1619,8 +1618,8 @@
             75.61655710836834
         ],
         "properties": {
-            "name": "Denmark",
-            "iso": "DK"
+            "iso": "DK",
+            "name": "Denmark"
         },
         "side": 5.505539508976372,
         "type": "Feature"
@@ -1632,8 +1631,8 @@
             181.06242666721957
         ],
         "properties": {
-            "name": "Panama",
-            "iso": "PA"
+            "iso": "PA",
+            "name": "Panama"
         },
         "side": 5.471372537412194,
         "type": "Feature"
@@ -1645,8 +1644,8 @@
             91.75063711252535
         ],
         "properties": {
-            "name": "Slovakia",
-            "iso": "SK"
+            "iso": "SK",
+            "name": "Slovakia"
         },
         "side": 5.413378250215284,
         "type": "Feature"
@@ -1658,8 +1657,8 @@
             180.96793452628643
         ],
         "properties": {
-            "name": "Sierra Leone",
-            "iso": "SL"
+            "iso": "SL",
+            "name": "Sierra Leone"
         },
         "side": 5.39295437712313,
         "type": "Feature"
@@ -1671,8 +1670,8 @@
             101.84240550657108
         ],
         "properties": {
-            "name": "Bosnia and Herzegovina",
-            "iso": "BA"
+            "iso": "BA",
+            "name": "Bosnia and Herzegovina"
         },
         "side": 5.362964189859744,
         "type": "Feature"
@@ -1684,8 +1683,8 @@
             183.0934266949283
         ],
         "properties": {
-            "name": "Sri Lanka",
-            "iso": "LK"
+            "iso": "LK",
+            "name": "Sri Lanka"
         },
         "side": 5.1548844915663015,
         "type": "Feature"
@@ -1697,8 +1696,8 @@
             83.94643691409486
         ],
         "properties": {
-            "name": "Netherlands",
-            "iso": "NL"
+            "iso": "NL",
+            "name": "Netherlands"
         },
         "side": 4.919255485375732,
         "type": "Feature"
@@ -1710,8 +1709,8 @@
             96.0037099050968
         ],
         "properties": {
-            "name": "Switzerland",
-            "iso": "CH"
+            "iso": "CH",
+            "name": "Switzerland"
         },
         "side": 4.902126395142791,
         "type": "Feature"
@@ -1723,8 +1722,8 @@
             181.07916141473416
         ],
         "properties": {
-            "name": "Togo",
-            "iso": "TG"
+            "iso": "TG",
+            "name": "Togo"
         },
         "side": 4.814124619397947,
         "type": "Feature"
@@ -1736,8 +1735,8 @@
             177.82266248648773
         ],
         "properties": {
-            "name": "Costa Rica",
-            "iso": "CR"
+            "iso": "CR",
+            "name": "Costa Rica"
         },
         "side": 4.57359724579185,
         "type": "Feature"
@@ -1749,8 +1748,8 @@
             158.01209807846948
         ],
         "properties": {
-            "name": "Dominican Republic",
-            "iso": "DO"
+            "iso": "DO",
+            "name": "Dominican Republic"
         },
         "side": 4.529344610795441,
         "type": "Feature"
@@ -1762,8 +1761,8 @@
             95.13927271095622
         ],
         "properties": {
-            "name": "Moldova",
-            "iso": "MD"
+            "iso": "MD",
+            "name": "Moldova"
         },
         "side": 4.404613822501154,
         "type": "Feature"
@@ -1775,8 +1774,8 @@
             87.46732399246852
         ],
         "properties": {
-            "name": "Belgium",
-            "iso": "BE"
+            "iso": "BE",
+            "name": "Belgium"
         },
         "side": 4.394264662802127,
         "type": "Feature"
@@ -1788,8 +1787,8 @@
             139.08161393537898
         ],
         "properties": {
-            "name": "Bhutan",
-            "iso": "BT"
+            "iso": "BT",
+            "name": "Bhutan"
         },
         "side": 4.244002455789921,
         "type": "Feature"
@@ -1801,8 +1800,8 @@
             147.2258019613098
         ],
         "properties": {
-            "name": "Taiwan",
-            "iso": "TW"
+            "iso": "TW",
+            "name": "Taiwan"
         },
         "side": 3.960705274311056,
         "type": "Feature"
@@ -1814,8 +1813,8 @@
             110.46771679912636
         ],
         "properties": {
-            "name": "Armenia",
-            "iso": "AM"
+            "iso": "AM",
+            "name": "Armenia"
         },
         "side": 3.9284251494978135,
         "type": "Feature"
@@ -1827,8 +1826,8 @@
             108.58312739523195
         ],
         "properties": {
-            "name": "Albania",
-            "iso": "AL"
+            "iso": "AL",
+            "name": "Albania"
         },
         "side": 3.882384625586435,
         "type": "Feature"
@@ -1840,8 +1839,8 @@
             265.73048221668375
         ],
         "properties": {
-            "name": "Lesotho",
-            "iso": "LO"
+            "iso": "LO",
+            "name": "Lesotho"
         },
         "side": 3.7158198073789936,
         "type": "Feature"
@@ -1853,8 +1852,8 @@
             107.56610284489007
         ],
         "properties": {
-            "name": "Macedonia",
-            "iso": "MK"
+            "iso": "MK",
+            "name": "Macedonia"
         },
         "side": 3.6784571536906663,
         "type": "Feature"
@@ -1866,8 +1865,8 @@
             173.2242973714724
         ],
         "properties": {
-            "name": "Guinea Bissau",
-            "iso": "GW"
+            "iso": "GW",
+            "name": "Guinea Bissau"
         },
         "side": 3.614545364379471,
         "type": "Feature"
@@ -1879,8 +1878,8 @@
             97.51883683232359
         ],
         "properties": {
-            "name": "Slovenia",
-            "iso": "SI"
+            "iso": "SI",
+            "name": "Slovenia"
         },
         "side": 3.4086311124333095,
         "type": "Feature"
@@ -1892,8 +1891,8 @@
             157.9202877900645
         ],
         "properties": {
-            "name": "Haiti",
-            "iso": "HT"
+            "iso": "HT",
+            "name": "Haiti"
         },
         "side": 3.369465847664458,
         "type": "Feature"
@@ -1905,8 +1904,8 @@
             207.4566045971192
         ],
         "properties": {
-            "name": "Burundi",
-            "iso": "BI"
+            "iso": "BI",
+            "name": "Burundi"
         },
         "side": 3.297936841553703,
         "type": "Feature"
@@ -1918,8 +1917,8 @@
             196.19883651853317
         ],
         "properties": {
-            "name": "Equatorial Guinea",
-            "iso": "GQ"
+            "iso": "GQ",
+            "name": "Equatorial Guinea"
         },
         "side": 3.2638310972310087,
         "type": "Feature"
@@ -1931,8 +1930,8 @@
             130.1122588755456
         ],
         "properties": {
-            "name": "Israel",
-            "iso": "IL"
+            "iso": "IL",
+            "name": "Israel"
         },
         "side": 3.2303208940657884,
         "type": "Feature"
@@ -1944,8 +1943,8 @@
             219.84327281182343
         ],
         "properties": {
-            "name": "Solomon Islands",
-            "iso": "SB"
+            "iso": "SB",
+            "name": "Solomon Islands"
         },
         "side": 3.210671849416144,
         "type": "Feature"
@@ -1957,8 +1956,8 @@
             204.42582344337566
         ],
         "properties": {
-            "name": "Rwanda",
-            "iso": "RW"
+            "iso": "RW",
+            "name": "Rwanda"
         },
         "side": 3.1826684623049744,
         "type": "Feature"
@@ -1970,8 +1969,8 @@
             161.77286159918623
         ],
         "properties": {
-            "name": "Belize",
-            "iso": "BZ"
+            "iso": "BZ",
+            "name": "Belize"
         },
         "side": 3.093649187477081,
         "type": "Feature"
@@ -1983,8 +1982,8 @@
             173.8921193195406
         ],
         "properties": {
-            "name": "Djibouti",
-            "iso": "DJ"
+            "iso": "DJ",
+            "name": "Djibouti"
         },
         "side": 2.969424657766094,
         "type": "Feature"
@@ -1996,8 +1995,8 @@
             169.4663237112463
         ],
         "properties": {
-            "name": "El Salvador",
-            "iso": "SV"
+            "iso": "SV",
+            "name": "El Salvador"
         },
         "side": 2.8949436412733696,
         "type": "Feature"
@@ -2009,8 +2008,8 @@
             247.33170294314849
         ],
         "properties": {
-            "name": "New Caledonia",
-            "iso": "NC"
+            "iso": "NC",
+            "name": "New Caledonia"
         },
         "side": 2.8351476833164675,
         "type": "Feature"
@@ -2022,8 +2021,8 @@
             134.81826489007963
         ],
         "properties": {
-            "name": "Kuwait",
-            "iso": "KW"
+            "iso": "KW",
+            "name": "Kuwait"
         },
         "side": 2.812739417763893,
         "type": "Feature"
@@ -2035,8 +2034,8 @@
             238.74217138835044
         ],
         "properties": {
-            "name": "Fiji",
-            "iso": "FJ"
+            "iso": "FJ",
+            "name": "Fiji"
         },
         "side": 2.7690317298555116,
         "type": "Feature"
@@ -2048,8 +2047,8 @@
             259.01401406542595
         ],
         "properties": {
-            "name": "Swaziland",
-            "iso": "SZ"
+            "iso": "SZ",
+            "name": "Swaziland"
         },
         "side": 2.742729394174141,
         "type": "Feature"
@@ -2061,8 +2060,8 @@
             104.9137653866357
         ],
         "properties": {
-            "name": "Montenegro",
-            "iso": "ME"
+            "iso": "ME",
+            "name": "Montenegro"
         },
         "side": 2.719275964097691,
         "type": "Feature"
@@ -2074,8 +2073,8 @@
             314.9890145189904
         ],
         "properties": {
-            "name": "Falkland Islands",
-            "iso": "FK"
+            "iso": "FK",
+            "name": "Falkland Islands"
         },
         "side": 2.715584187817105,
         "type": "Feature"
@@ -2087,8 +2086,8 @@
             219.61951462233307
         ],
         "properties": {
-            "name": "East Timor",
-            "iso": "TL"
+            "iso": "TL",
+            "name": "East Timor"
         },
         "side": 2.468162568921506,
         "type": "Feature"
@@ -2100,8 +2099,8 @@
             105.39678867529595
         ],
         "properties": {
-            "name": "Kosovo",
-            "iso": "KO"
+            "iso": "KO",
+            "name": "Kosovo"
         },
         "side": 2.43511165191918,
         "type": "Feature"
@@ -2113,8 +2112,8 @@
             146.0742717103606
         ],
         "properties": {
-            "name": "The Bahamas",
-            "iso": "BS"
+            "iso": "BS",
+            "name": "The Bahamas"
         },
         "side": 2.3496310278276487,
         "type": "Feature"
@@ -2126,8 +2125,8 @@
             143.76176688670523
         ],
         "properties": {
-            "name": "Qatar",
-            "iso": "QA"
+            "iso": "QA",
+            "name": "Qatar"
         },
         "side": 2.2178452001852684,
         "type": "Feature"
@@ -2139,8 +2138,8 @@
             124.62603404200448
         ],
         "properties": {
-            "name": "Lebanon",
-            "iso": "LB"
+            "iso": "LB",
+            "name": "Lebanon"
         },
         "side": 2.180296495685724,
         "type": "Feature"
@@ -2152,8 +2151,8 @@
             235.99910552338775
         ],
         "properties": {
-            "name": "Vanuatu",
-            "iso": "VU"
+            "iso": "VU",
+            "name": "Vanuatu"
         },
         "side": 2.168584881011059,
         "type": "Feature"
@@ -2165,8 +2164,8 @@
             159.65162611129364
         ],
         "properties": {
-            "name": "Jamaica",
-            "iso": "JM"
+            "iso": "JM",
+            "name": "Jamaica"
         },
         "side": 2.138844927844453,
         "type": "Feature"
@@ -2178,8 +2177,8 @@
             309.4784043406134
         ],
         "properties": {
-            "name": "French Southern and Antarctic Lands",
-            "iso": "TF"
+            "iso": "TF",
+            "name": "French Southern and Antarctic Lands"
         },
         "side": 2.060935562552427,
         "type": "Feature"
@@ -2191,8 +2190,8 @@
             170.10889747095237
         ],
         "properties": {
-            "name": "Gambia",
-            "iso": "GM"
+            "iso": "GM",
+            "name": "Gambia"
         },
         "side": 2.0594372449810563,
         "type": "Feature"
@@ -2204,8 +2203,8 @@
             159.4851021093274
         ],
         "properties": {
-            "name": "Puerto Rico",
-            "iso": "PR"
+            "iso": "PR",
+            "name": "Puerto Rico"
         },
         "side": 1.9358180710095545,
         "type": "Feature"
@@ -2217,8 +2216,8 @@
             129.0785015396888
         ],
         "properties": {
-            "name": "Palestine",
-            "iso": "PS"
+            "iso": "PS",
+            "name": "Palestine"
         },
         "side": 1.725465627793322,
         "type": "Feature"
@@ -2230,8 +2229,8 @@
             122.40504569548939
         ],
         "properties": {
-            "name": "Cyprus",
-            "iso": "CY"
+            "iso": "CY",
+            "name": "Cyprus"
         },
         "side": 1.6755467434571683,
         "type": "Feature"
@@ -2243,8 +2242,8 @@
             321.01538623568223
         ],
         "properties": {
-            "name": "South Georgia and South Sandwich Islands",
-            "iso": "GS"
+            "iso": "GS",
+            "name": "South Georgia and South Sandwich Islands"
         },
         "side": 1.582215458939503,
         "type": "Feature"
@@ -2256,8 +2255,8 @@
             189.94957167308797
         ],
         "properties": {
-            "name": "Brunei",
-            "iso": "BN"
+            "iso": "BN",
+            "name": "Brunei"
         },
         "side": 1.4995811561119057,
         "type": "Feature"
@@ -2269,8 +2268,8 @@
             176.7595579944761
         ],
         "properties": {
-            "name": "Trinidad and Tobago",
-            "iso": "TT"
+            "iso": "TT",
+            "name": "Trinidad and Tobago"
         },
         "side": 1.4386481362937638,
         "type": "Feature"
@@ -2282,8 +2281,8 @@
             121.63518585016065
         ],
         "properties": {
-            "name": "Northern Cyprus",
-            "iso": "CY"
+            "iso": "CY",
+            "name": "Northern Cyprus"
         },
         "side": 1.2892823881602768,
         "type": "Feature"
@@ -2295,8 +2294,8 @@
             89.40726466469359
         ],
         "properties": {
-            "name": "Luxembourg",
-            "iso": "LU"
+            "iso": "LU",
+            "name": "Luxembourg"
         },
         "side": 1.2711989906114014,
         "type": "Feature"
@@ -2308,8 +2307,8 @@
             164.5669302448353
         ],
         "properties": {
-            "name": "Cape Verde",
-            "iso": "CV"
+            "iso": "CV",
+            "name": "Cape Verde"
         },
         "side": 1.2012848609073488,
         "type": "Feature"
@@ -2321,8 +2320,8 @@
             232.7709922484849
         ],
         "properties": {
-            "name": "French Polynesia",
-            "iso": "PF"
+            "iso": "PF",
+            "name": "French Polynesia"
         },
         "side": 1.0556228862420587,
         "type": "Feature"
@@ -2334,8 +2333,8 @@
             230.56440119260665
         ],
         "properties": {
-            "name": "Samoa",
-            "iso": "WS"
+            "iso": "WS",
+            "name": "Samoa"
         },
         "side": 1.0445997207684483,
         "type": "Feature"
@@ -2347,8 +2346,8 @@
             62.10545361180692
         ],
         "properties": {
-            "name": "Faroe Islands",
-            "iso": "FO"
+            "iso": "FO",
+            "name": "Faroe Islands"
         },
         "side": 0.9404105865531216,
         "type": "Feature"
@@ -2360,8 +2359,8 @@
             245.0588532716655
         ],
         "properties": {
-            "name": "Mauritius",
-            "iso": "MU"
+            "iso": "MU",
+            "name": "Mauritius"
         },
         "side": 0.8932755974297711,
         "type": "Feature"
@@ -2373,8 +2372,8 @@
             226.42109466273175
         ],
         "properties": {
-            "name": "Comoros",
-            "iso": "KM"
+            "iso": "KM",
+            "name": "Comoros"
         },
         "side": 0.8003210629689245,
         "type": "Feature"
@@ -2386,8 +2385,8 @@
             66.19525270915088
         ],
         "properties": {
-            "name": "Aland",
-            "iso": "AX"
+            "iso": "AX",
+            "name": "Aland"
         },
         "side": 0.7837575447594194,
         "type": "Feature"
@@ -2399,8 +2398,8 @@
             150.2200727792404
         ],
         "properties": {
-            "name": "Hong Kong S.A.R.",
-            "iso": "HK"
+            "iso": "HK",
+            "name": "Hong Kong S.A.R."
         },
         "side": 0.6690201486292575,
         "type": "Feature"
@@ -2412,8 +2411,8 @@
             79.49324659202551
         ],
         "properties": {
-            "name": "Isle of Man",
-            "iso": "IM"
+            "iso": "IM",
+            "name": "Isle of Man"
         },
         "side": 0.6211696137504078,
         "type": "Feature"
@@ -2425,8 +2424,8 @@
             199.00729142592925
         ],
         "properties": {
-            "name": "Sao Tome and Principe",
-            "iso": "ST"
+            "iso": "ST",
+            "name": "Sao Tome and Principe"
         },
         "side": 0.6098860780913459,
         "type": "Feature"
@@ -2438,8 +2437,8 @@
             198.4911298532568
         ],
         "properties": {
-            "name": "Kiribati",
-            "iso": "KI"
+            "iso": "KI",
+            "name": "Kiribati"
         },
         "side": 0.6022462848250293,
         "type": "Feature"
@@ -2451,8 +2450,8 @@
             317.9723846732235
         ],
         "properties": {
-            "name": "Heard Island and McDonald Islands",
-            "iso": "HM"
+            "iso": "HM",
+            "name": "Heard Island and McDonald Islands"
         },
         "side": 0.5343503063748402,
         "type": "Feature"
@@ -2464,8 +2463,8 @@
             165.67681266842453
         ],
         "properties": {
-            "name": "Dominica",
-            "iso": "DM"
+            "iso": "DM",
+            "name": "Dominica"
         },
         "side": 0.5167294928853255,
         "type": "Feature"
@@ -2477,8 +2476,8 @@
             105.45820388575872
         ],
         "properties": {
-            "name": "Andorra",
-            "iso": "AD"
+            "iso": "AD",
+            "name": "Andorra"
         },
         "side": 0.5015728274731756,
         "type": "Feature"
@@ -2490,8 +2489,8 @@
             142.11895874168937
         ],
         "properties": {
-            "name": "Bahrain",
-            "iso": "BH"
+            "iso": "BH",
+            "name": "Bahrain"
         },
         "side": 0.4906846787782258,
         "type": "Feature"
@@ -2503,8 +2502,8 @@
             169.11622902475784
         ],
         "properties": {
-            "name": "Saint Lucia",
-            "iso": "LC"
+            "iso": "LC",
+            "name": "Saint Lucia"
         },
         "side": 0.4681492917635531,
         "type": "Feature"
@@ -2516,8 +2515,8 @@
             183.35281982314063
         ],
         "properties": {
-            "name": "Federated States of Micronesia",
-            "iso": "FM"
+            "iso": "FM",
+            "name": "Federated States of Micronesia"
         },
         "side": 0.45646457925079903,
         "type": "Feature"
@@ -2529,8 +2528,8 @@
             170.1380328870167
         ],
         "properties": {
-            "name": "Guam",
-            "iso": "GU"
+            "iso": "GU",
+            "name": "Guam"
         },
         "side": 0.4564645792268893,
         "type": "Feature"
@@ -2542,8 +2541,8 @@
             196.98052542605848
         ],
         "properties": {
-            "name": "Singapore",
-            "iso": "SG"
+            "iso": "SG",
+            "name": "Singapore"
         },
         "side": 0.44273316798119816,
         "type": "Feature"
@@ -2555,8 +2554,8 @@
             172.90593114745243
         ],
         "properties": {
-            "name": "Cura\u00e7ao",
-            "iso": "CW"
+            "iso": "CW",
+            "name": "Cura\u00e7ao"
         },
         "side": 0.424945397056909,
         "type": "Feature"
@@ -2568,8 +2567,8 @@
             245.41857550555363
         ],
         "properties": {
-            "name": "Tonga",
-            "iso": "TO"
+            "iso": "TO",
+            "name": "Tonga"
         },
         "side": 0.42312549405406563,
         "type": "Feature"
@@ -2581,8 +2580,8 @@
             164.7975759210919
         ],
         "properties": {
-            "name": "Northern Mariana Islands",
-            "iso": "MP"
+            "iso": "MP",
+            "name": "Northern Mariana Islands"
         },
         "side": 0.41390596753139103,
         "type": "Feature"
@@ -2594,8 +2593,8 @@
             161.61943115077662
         ],
         "properties": {
-            "name": "Antigua and Barbuda",
-            "iso": "AG"
+            "iso": "AG",
+            "name": "Antigua and Barbuda"
         },
         "side": 0.41016013509572175,
         "type": "Feature"
@@ -2607,8 +2606,8 @@
             170.72098144135066
         ],
         "properties": {
-            "name": "Barbados",
-            "iso": "BB"
+            "iso": "BB",
+            "name": "Barbados"
         },
         "side": 0.392862158541185,
         "type": "Feature"
@@ -2620,8 +2619,8 @@
             183.7170451949882
         ],
         "properties": {
-            "name": "Palau",
-            "iso": "PW"
+            "iso": "PW",
+            "name": "Palau"
         },
         "side": 0.38291466655600714,
         "type": "Feature"
@@ -2633,8 +2632,8 @@
             120.1709177958014
         ],
         "properties": {
-            "name": "Malta",
-            "iso": "MT"
+            "iso": "MT",
+            "name": "Malta"
         },
         "side": 0.37682014486186344,
         "type": "Feature"
@@ -2646,8 +2645,8 @@
             160.08234279515796
         ],
         "properties": {
-            "name": "United States Virgin Islands",
-            "iso": "VI"
+            "iso": "VI",
+            "name": "United States Virgin Islands"
         },
         "side": 0.3747666138012958,
         "type": "Feature"
@@ -2659,8 +2658,8 @@
             151.48877285013958
         ],
         "properties": {
-            "name": "Turks and Caicos Islands",
-            "iso": "TC"
+            "iso": "TC",
+            "name": "Turks and Caicos Islands"
         },
         "side": 0.36853737195853986,
         "type": "Feature"
@@ -2672,8 +2671,8 @@
             156.79793987729548
         ],
         "properties": {
-            "name": "Cayman Islands",
-            "iso": "KY"
+            "iso": "KY",
+            "name": "Cayman Islands"
         },
         "side": 0.36006411584499837,
         "type": "Feature"
@@ -2685,8 +2684,8 @@
             173.0669611422222
         ],
         "properties": {
-            "name": "Grenada",
-            "iso": "GD"
+            "iso": "GD",
+            "name": "Grenada"
         },
         "side": 0.3535759426927769,
         "type": "Feature"
@@ -2698,8 +2697,8 @@
             161.6455673798645
         ],
         "properties": {
-            "name": "Saint Kitts and Nevis",
-            "iso": "KN"
+            "iso": "KN",
+            "name": "Saint Kitts and Nevis"
         },
         "side": 0.34022860948893885,
         "type": "Feature"
@@ -2711,8 +2710,8 @@
             95.7357019186136
         ],
         "properties": {
-            "name": "Saint Pierre and Miquelon",
-            "iso": "PM"
+            "iso": "PM",
+            "name": "Saint Pierre and Miquelon"
         },
         "side": 0.3310315388136879,
         "type": "Feature"
@@ -2724,8 +2723,8 @@
             170.58353062852612
         ],
         "properties": {
-            "name": "Saint Vincent and the Grenadines",
-            "iso": "VC"
+            "iso": "VC",
+            "name": "Saint Vincent and the Grenadines"
         },
         "side": 0.326335818105319,
         "type": "Feature"
@@ -2737,8 +2736,8 @@
             184.25719147529003
         ],
         "properties": {
-            "name": "Marshall Islands",
-            "iso": "MH"
+            "iso": "MH",
+            "name": "Marshall Islands"
         },
         "side": 0.3043097194686531,
         "type": "Feature"
@@ -2750,8 +2749,8 @@
             226.83279127326873
         ],
         "properties": {
-            "name": "Saint Helena",
-            "iso": "SH"
+            "iso": "SH",
+            "name": "Saint Helena"
         },
         "side": 0.28329693134987005,
         "type": "Feature"
@@ -2763,8 +2762,8 @@
             242.34378529160657
         ],
         "properties": {
-            "name": "Niue",
-            "iso": "NU"
+            "iso": "NU",
+            "name": "Niue"
         },
         "side": 0.2805596987541034,
         "type": "Feature"
@@ -2776,8 +2775,8 @@
             95.24108562812057
         ],
         "properties": {
-            "name": "Liechtenstein",
-            "iso": "LI"
+            "iso": "LI",
+            "name": "Liechtenstein"
         },
         "side": 0.27779549637278245,
         "type": "Feature"
@@ -2789,8 +2788,8 @@
             90.62906114692635
         ],
         "properties": {
-            "name": "Jersey",
-            "iso": "JE"
+            "iso": "JE",
+            "name": "Jersey"
         },
         "side": 0.27218288760505166,
         "type": "Feature"
@@ -2802,8 +2801,8 @@
             172.18112556543494
         ],
         "properties": {
-            "name": "Aruba",
-            "iso": "AW"
+            "iso": "AW",
+            "name": "Aruba"
         },
         "side": 0.26645207970586743,
         "type": "Feature"
@@ -2815,8 +2814,8 @@
             210.3649573173989
         ],
         "properties": {
-            "name": "Seychelles",
-            "iso": "SC"
+            "iso": "SC",
+            "name": "Seychelles"
         },
         "side": 0.2546037779509316,
         "type": "Feature"
@@ -2828,8 +2827,8 @@
             230.7669306401402
         ],
         "properties": {
-            "name": "Wallis and Futuna",
-            "iso": "WF"
+            "iso": "WF",
+            "name": "Wallis and Futuna"
         },
         "side": 0.25155452093720687,
         "type": "Feature"
@@ -2841,8 +2840,8 @@
             223.73423349719488
         ],
         "properties": {
-            "name": "Indian Ocean Territories",
-            "iso": "IOT"
+            "iso": "IOT",
+            "name": "Indian Ocean Territories"
         },
         "side": 0.24217649914815947,
         "type": "Feature"
@@ -2854,8 +2853,8 @@
             231.786589917865
         ],
         "properties": {
-            "name": "American Samoa",
-            "iso": "AS"
+            "iso": "AS",
+            "name": "American Samoa"
         },
         "side": 0.23896872175821743,
         "type": "Feature"
@@ -2867,8 +2866,8 @@
             216.26714827996597
         ],
         "properties": {
-            "name": "British Indian Ocean Territory",
-            "iso": "IO"
+            "iso": "IO",
+            "name": "British Indian Ocean Territory"
         },
         "side": 0.23242038735221154,
         "type": "Feature"
@@ -2880,8 +2879,8 @@
             158.78497384333906
         ],
         "properties": {
-            "name": "British Virgin Islands",
-            "iso": "VG"
+            "iso": "VG",
+            "name": "British Virgin Islands"
         },
         "side": 0.22223639710837528,
         "type": "Feature"
@@ -2893,8 +2892,7 @@
             159.51583655000883
         ],
         "properties": {
-            "name": "Anguilla",
-            "iso" : "AI"
+            "name": "AI"
         },
         "side": 0.2115627470401983,
         "type": "Feature"
@@ -2906,8 +2904,8 @@
             102.34708354838232
         ],
         "properties": {
-            "name": "San Marino",
-            "iso": "SM"
+            "iso": "SM",
+            "name": "San Marino"
         },
         "side": 0.19246236553901677,
         "type": "Feature"
@@ -2919,8 +2917,8 @@
             128.2051277224719
         ],
         "properties": {
-            "name": "Bermuda",
-            "iso": "BM"
+            "iso": "BM",
+            "name": "Bermuda"
         },
         "side": 0.18841007244541336,
         "type": "Feature"
@@ -2932,8 +2930,8 @@
             162.78238624503
         ],
         "properties": {
-            "name": "Montserrat",
-            "iso": "MS"
+            "iso": "MS",
+            "name": "Montserrat"
         },
         "side": 0.18841007242610452,
         "type": "Feature"
@@ -2945,8 +2943,8 @@
             90.07458018105449
         ],
         "properties": {
-            "name": "Guernsey",
-            "iso": "GG"
+            "iso": "GG",
+            "name": "Guernsey"
         },
         "side": 0.17124464479168172,
         "type": "Feature"
@@ -2958,8 +2956,8 @@
             247.15777614790366
         ],
         "properties": {
-            "name": "Cook Islands",
-            "iso": "CK"
+            "iso": "CK",
+            "name": "Cook Islands"
         },
         "side": 0.157144863416011,
         "type": "Feature"
@@ -2971,8 +2969,8 @@
             191.45648502667598
         ],
         "properties": {
-            "name": "Maldives",
-            "iso": "MV"
+            "iso": "MV",
+            "name": "Maldives"
         },
         "side": 0.15714486340443576,
         "type": "Feature"
@@ -2984,8 +2982,8 @@
             159.8734629369988
         ],
         "properties": {
-            "name": "Sint Maarten",
-            "iso": "SXM"
+            "iso": "SXM",
+            "name": "Sint Maarten"
         },
         "side": 0.14164846569419737,
         "type": "Feature"
@@ -2997,8 +2995,8 @@
             264.5643413266856
         ],
         "properties": {
-            "name": "Norfolk Island",
-            "iso": "NF"
+            "iso": "NF",
+            "name": "Norfolk Island"
         },
         "side": 0.13609144368223242,
         "type": "Feature"
@@ -3010,8 +3008,8 @@
             159.79552746171822
         ],
         "properties": {
-            "name": "Saint Martin",
-            "iso": "MF"
+            "iso": "MF",
+            "name": "Saint Martin"
         },
         "side": 0.12423392276413756,
         "type": "Feature"
@@ -3023,8 +3021,8 @@
             254.15024560506959
         ],
         "properties": {
-            "name": "Pitcairn Islands",
-            "iso": "PN"
+            "iso": "PN",
+            "name": "Pitcairn Islands"
         },
         "side": 0.11785864756683126,
         "type": "Feature"
@@ -3036,8 +3034,8 @@
             201.14956082585257
         ],
         "properties": {
-            "name": "Nauru",
-            "iso": "NR"
+            "iso": "NR",
+            "name": "Nauru"
         },
         "side": 0.11111819865649927,
         "type": "Feature"
@@ -3049,8 +3047,8 @@
             150.62454829895242
         ],
         "properties": {
-            "name": "Macao S.A.R",
-            "iso": "MO"
+            "iso": "MO",
+            "name": "Macao S.A.R"
         },
         "side": 0.10394155708827543,
         "type": "Feature"
@@ -3062,8 +3060,8 @@
             160.22760218406123
         ],
         "properties": {
-            "name": "Monaco",
-            "iso": "MC"
+            "iso": "MC",
+            "name": "Monaco"
         },
         "side": 0.07857243171379312,
         "type": "Feature"

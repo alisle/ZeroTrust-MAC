@@ -24,47 +24,57 @@ import Foundation
  */
 
 
-struct GeoCountry: Codable {
+struct GeoCountry: Codable, Identifiable {
     var area : CGFloat
     var centroid: [CGFloat]
     var properties: GeoCountryProperties
     var side: CGFloat
     var type: String
+    
+    var id: String {
+        get { self.properties.name }
+    }
 }
 
 struct GeoCountryProperties: Codable {
-    var admin: String
+    var name: String
+    var iso: String
 }
 
 struct GeoMap: Codable {
     var features : [GeoCountry]
-    var max : CGPoint
-    
+    var iso : [String: GeoCountry]
+
     static func load() -> GeoMap {
+        var iso : [String: GeoCountry] = [:]
         var features : [GeoCountry] = Helpers.loadJSON("area.json")
-        var (min, max) = findLimits(features: features)
+        let (min, max, side) = findLimits(features: features)
+        let stretch = CGSize(width: max.x - min.x, height: max.y - min.y)
+        let scale = CGSize(width: 1.0 / stretch.width, height: 1.0 / stretch.height)
+        let sideScale = 1.0 / side
         
         for feature in 0 ..< features.count {
-            features[feature].centroid[0] = features[feature].centroid[0] - min.x
-            features[feature].centroid[1] = features[feature].centroid[1] - min.y
+            features[feature].centroid[0] = (features[feature].centroid[0] - min.x) * scale.width
+            features[feature].centroid[1] = (features[feature].centroid[1] - min.y) * scale.height
+            features[feature].side = features[feature].side * sideScale
+            
+            iso[features[feature].properties.iso] = features[feature]
         }
         
-        max.x = max.x - min.x
-        max.y = max.y - min.y
-        
-        return GeoMap(features: features, max: max)
+        return GeoMap(features: features, iso: iso)
      }
     
-    private static func findLimits(features : [GeoCountry]) -> (CGPoint, CGPoint) {
+    private static func findLimits(features : [GeoCountry]) -> (CGPoint, CGPoint, CGFloat) {
         var min = CGPoint(x: 1000, y: 1000)
         var max = CGPoint(x: 0, y: 0)
+        var side = CGFloat.leastNormalMagnitude
         
         features.forEach {
-            let maxX = $0.centroid[0]
-            let maxY = $0.centroid[1]
+            let maxX = $0.centroid[0] + $0.side
+            let maxY = $0.centroid[1] + $0.side
 
-            let minX = $0.centroid[0]
-            let minY = $0.centroid[1]
+            let minX = $0.centroid[0]// - $0.side
+            let minY = $0.centroid[1]// - $0.side
         
             if minX < min.x {
                 min.x = minX
@@ -81,28 +91,14 @@ struct GeoMap: Codable {
             if minY < min.y {
                 min.y = minY
             }
+            
+            if $0.side > side {
+                side = $0.side
+            }
         }
         
-        return (min, max)
+        return (min, max, side)
     }
-    
-    
-    static func normalize(map: GeoMap, size: CGSize) -> GeoMap {
-        let scale = CGSize(width: size.width / map.max.x, height: size.height / map.max.y)
-        
-        var updated = map
-        for index in 0 ..< updated.features.count {
-            
-            let x = updated.features[index].centroid[0] * scale.width
-            let y = updated.features[index].centroid[1] * scale.height
-                        
-            updated.features[index].centroid[0] = x
-            updated.features[index].centroid[1] = y
-            
-            updated.features[index].side = updated.features[index].side * scale.height
-        }
-        
-        return updated
-    }
+
 }
 

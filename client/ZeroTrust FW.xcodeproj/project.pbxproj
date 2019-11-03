@@ -18,7 +18,7 @@
 		F028F81E233B04DF003EA345 /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028F81D233B04DF003EA345 /* Rules.swift */; };
 		F02EAC5423282928008186E7 /* DecisionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02EAC5323282928008186E7 /* DecisionEngine.swift */; };
 		F0331F822360B7F900A634D5 /* StateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0331F812360B7F900A634D5 /* StateListener.swift */; };
-		F0331F842360EDB100A634D5 /* ConnectionGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0331F832360EDB100A634D5 /* ConnectionGraphView.swift */; };
+		F0331F842360EDB100A634D5 /* ConnectionCombinedGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0331F832360EDB100A634D5 /* ConnectionCombinedGraphView.swift */; };
 		F0331F882360F44000A634D5 /* GeoMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0331F872360F44000A634D5 /* GeoMap.swift */; };
 		F0331F8A2363607F00A634D5 /* GeoMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0331F892363607F00A634D5 /* GeoMapTests.swift */; };
 		F042BDDA2343995700965781 /* preferences.plist in Resources */ = {isa = PBXBuildFile; fileRef = F042BDD92343995700965781 /* preferences.plist */; };
@@ -39,6 +39,8 @@
 		F08982982356A554003DB49B /* RulesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982972356A554003DB49B /* RulesListView.swift */; };
 		F089829A2356A633003DB49B /* RulesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982992356A633003DB49B /* RulesDetailView.swift */; };
 		F0925F33234B79BB00C01F72 /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0925F32234B79BB00C01F72 /* RulesView.swift */; };
+		F09D85A5236E73410086E2E9 /* ConnectionLineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09D85A4236E73410086E2E9 /* ConnectionLineGraphView.swift */; };
+		F09D85A7236E745E0086E2E9 /* ConnectionColouredGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09D85A6236E745E0086E2E9 /* ConnectionColouredGraphView.swift */; };
 		F0C157D0236A39570082F7E3 /* area.json in Resources */ = {isa = PBXBuildFile; fileRef = F0C157CF236A39570082F7E3 /* area.json */; };
 		F0D065E023064E300076A1AC /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065DF23064E300076A1AC /* Protocol.swift */; };
 		F0D065E3230652BD0076A1AC /* protocols.json in Resources */ = {isa = PBXBuildFile; fileRef = F0D065E2230652BD0076A1AC /* protocols.json */; };
@@ -90,7 +92,7 @@
 		F028F81D233B04DF003EA345 /* Rules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
 		F02EAC5323282928008186E7 /* DecisionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionEngine.swift; sourceTree = "<group>"; };
 		F0331F812360B7F900A634D5 /* StateListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateListener.swift; sourceTree = "<group>"; };
-		F0331F832360EDB100A634D5 /* ConnectionGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionGraphView.swift; sourceTree = "<group>"; };
+		F0331F832360EDB100A634D5 /* ConnectionCombinedGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCombinedGraphView.swift; sourceTree = "<group>"; };
 		F0331F872360F44000A634D5 /* GeoMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoMap.swift; sourceTree = "<group>"; };
 		F0331F892363607F00A634D5 /* GeoMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoMapTests.swift; sourceTree = "<group>"; };
 		F042BDD92343995700965781 /* preferences.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = preferences.plist; sourceTree = "<group>"; };
@@ -114,6 +116,8 @@
 		F08982972356A554003DB49B /* RulesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesListView.swift; sourceTree = "<group>"; };
 		F08982992356A633003DB49B /* RulesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesDetailView.swift; sourceTree = "<group>"; };
 		F0925F32234B79BB00C01F72 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
+		F09D85A4236E73410086E2E9 /* ConnectionLineGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionLineGraphView.swift; sourceTree = "<group>"; };
+		F09D85A6236E745E0086E2E9 /* ConnectionColouredGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionColouredGraphView.swift; sourceTree = "<group>"; };
 		F0C157CF236A39570082F7E3 /* area.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = area.json; sourceTree = "<group>"; };
 		F0D065DF23064E300076A1AC /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		F0D065E2230652BD0076A1AC /* protocols.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = protocols.json; sourceTree = "<group>"; };
@@ -190,7 +194,9 @@
 				F0925F32234B79BB00C01F72 /* RulesView.swift */,
 				F08982972356A554003DB49B /* RulesListView.swift */,
 				F08982992356A633003DB49B /* RulesDetailView.swift */,
-				F0331F832360EDB100A634D5 /* ConnectionGraphView.swift */,
+				F0331F832360EDB100A634D5 /* ConnectionCombinedGraphView.swift */,
+				F09D85A4236E73410086E2E9 /* ConnectionLineGraphView.swift */,
+				F09D85A6236E745E0086E2E9 /* ConnectionColouredGraphView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -502,12 +508,14 @@
 				F08982982356A554003DB49B /* RulesListView.swift in Sources */,
 				F01677652342496C0018DA77 /* RulesDispatcher.swift in Sources */,
 				F089829A2356A633003DB49B /* RulesDetailView.swift in Sources */,
+				F09D85A7236E745E0086E2E9 /* ConnectionColouredGraphView.swift in Sources */,
 				F0DA1BA52303206800D07905 /* ConnectionIconView.swift in Sources */,
-				F0331F842360EDB100A634D5 /* ConnectionGraphView.swift in Sources */,
+				F0331F842360EDB100A634D5 /* ConnectionCombinedGraphView.swift in Sources */,
 				F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */,
 				F028F81E233B04DF003EA345 /* Rules.swift in Sources */,
 				F02EAC5423282928008186E7 /* DecisionEngine.swift in Sources */,
 				F0269F3923201A7B0067D3BA /* ConnectionDirection.swift in Sources */,
+				F09D85A5236E73410086E2E9 /* ConnectionLineGraphView.swift in Sources */,
 				F0DA1B9F2301C50400D07905 /* Main.swift in Sources */,
 				F0FB570E23576E4300AAB5F6 /* URLExtension.swift in Sources */,
 				F0E4F82622BBE4E000A38601 /* ConnectionsVIew.swift in Sources */,

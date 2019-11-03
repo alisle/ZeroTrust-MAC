@@ -11,12 +11,13 @@ import Combine
 import SwiftUI
 
 class ViewState : ObservableObject, StateListener {
-    
+    let geomap : GeoMap = GeoMap.load()
     var objectWillChange = PassthroughSubject<Void, Never>()
     private var connections = Set<Connection>()
     
     private(set) var aliveConnections  : [Connection] = []
     private(set) var deadConnections : [Connection] = []
+    private(set) var counts : [String: Int] = [:]
     
     var enabled = true
     var rules : Rules
@@ -49,6 +50,13 @@ class ViewState : ObservableObject, StateListener {
         }
 
         self.connections.update(with: connection)
+        
+        self.counts = [:]
+        self.connections.forEach {
+            if let iso = $0.country {
+                counts[iso] = (counts[iso] ?? 0) + 1
+            }
+        }
         
         var dups = Set<Int>()
         let alive = self.connections.filter{ $0.state != .disconnected && $0.state != .disconnecting }.map{ $0.clone() }.filter {

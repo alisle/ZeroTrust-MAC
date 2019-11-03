@@ -44,7 +44,7 @@ struct ConnectionsVIew : View  {
     var body: some View {
         VStack(alignment: .leading) {
             header
-            ConnectionGraphView()
+            ConnectionCombinedGraphView()
             connectionsContainer
         }.frame(minWidth: 800, maxWidth: .infinity)
     }
@@ -88,7 +88,7 @@ func generateTestConnection(direction: ConnectionDirection) -> Connection {
                                 processTopLevelBundle: nil,
                                 parentTopLevelBundle: nil,
                                 displayName: displayName!,
-                                country: "UK")
+                                country: "US")
     
     return connection
 }

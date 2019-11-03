@@ -106,9 +106,7 @@ class Consumer {
                         remoteURL: remoteURL,
                         portProtocol: remoteProtocol)
                     
-                    print("updating state")
                     state.new(connection: connection)
-                    print("updated state")
 
                 case FirewallEventType.connectionUpdate:
                     let update = event as! FirewallConnectionUpdate
