@@ -97,7 +97,7 @@ struct ConnectionColouredGraphView: View {
                         )
                     ).fill(Color.white)
                 }
-            }
+            }.drawingGroup()
         }
         .frame(minWidth: 600, minHeight: 300)
         
