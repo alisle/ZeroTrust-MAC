@@ -27,8 +27,8 @@ struct ConnectionAmountShape: Shape {
                 CGRect(
                     x: step * CGFloat(x),
                     y: CGFloat(counts[x]) * scale,
-                    width: 3,
-                    height: 3
+                    width: step,
+                    height: step
                 )
             )
             
