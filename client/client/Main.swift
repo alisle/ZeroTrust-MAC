@@ -14,6 +14,7 @@ class Main {
     private let rulesDispatcher = RulesDispatcher()
     private let connectionState = ConnectionState()
     private let preferences : Preferences
+    private let notifications = NotficiationsManager()
     private let consumerQueue = DispatchQueue(label: "com.zeortrust.mac.consumerQueue", attributes: .concurrent)
     
     let viewState : ViewState = ViewState()
@@ -21,6 +22,7 @@ class Main {
     init() {
         self.consumer = Consumer(decisionEngine: decisionEngine, state: connectionState)
         connectionState.addListener(listener: viewState)
+        connectionState.addListener(listener: notifications)
         self.preferences = Preferences.load()!        
     }
     

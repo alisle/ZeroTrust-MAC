@@ -11,6 +11,7 @@ import Foundation
 struct Preferences: Codable {
     var rulesUpdateURL : String
     var rulesUpdateInterval : Int
+    var newConnectionNotifications : Bool
     
     static func load() -> Optional<Preferences> {
         if let path = Bundle.main.path(forResource: "preferences", ofType: "plist"),
