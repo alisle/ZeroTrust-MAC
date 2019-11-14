@@ -32,7 +32,7 @@ struct GeoCountry: Codable, Identifiable {
     var type: String
     
     var id: String {
-        get { self.properties.name }
+        get { self.properties.iso }
     }
 }
 

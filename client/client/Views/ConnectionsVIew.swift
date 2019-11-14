@@ -46,7 +46,7 @@ struct ConnectionsVIew : View  {
             header
             ConnectionCombinedGraphView()
             connectionsContainer
-        }.frame(minWidth: 800, maxWidth: .infinity)
+        }.frame(minWidth: 900, maxWidth: .infinity)
     }
 }
 

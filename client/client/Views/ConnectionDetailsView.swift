@@ -12,11 +12,15 @@ struct ConnectionDetailsView: View {
     let connection : Connection
     
     func getEndDate() -> String {
-        if let end = connection.endDateTimestamp {
-            return end.timeAgoSinceDate()
-        } else {
-            return "Ongoing"
+        if connection.state == .disconnected ||
+            connection.state == .disconnecting ||
+            connection.state == .closed {
+            if let end = connection.endDateTimestamp {
+                return end.timeAgoSinceDate()
+            }
         }
+        
+        return "Ongoing"
     }
     
     var title: some View {
@@ -25,7 +29,7 @@ struct ConnectionDetailsView: View {
                 .fill(connection.outcome.color)
                 .frame(width: 5)
             
-            ConnectionIconView(connection: connection)
+            ConnectionIconView(connection: connection, size: 64)
             VStack(alignment: .leading) {
                 Text(connection.displayName)
                     .font(.caption)

@@ -15,7 +15,7 @@ struct ConnectionRowView: View {
             Rectangle()
                 .fill(connection.outcome.color)
                 .frame(width: 5, height: 64)
-            ConnectionIconView(connection: connection)
+            ConnectionIconView(connection: connection, size: 64)
             VStack(alignment: .leading) {
                 Text(connection.displayName).bold()
                 HStack {
