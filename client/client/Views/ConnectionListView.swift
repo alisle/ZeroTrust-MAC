@@ -10,40 +10,40 @@ import SwiftUI
 
 struct ConnectionListView: View {
     @EnvironmentObject var viewState : ViewState
+    @State private var aliveOnly = false
     
+    let categories : [Category] = Array(Category.allCases)
+
+    func connectionList(_ category: Category) -> [Connection] {
+        if aliveOnly {
+            return self.viewState.connections[category]!.filter{ $0.alive }
+        }
+        
+        return self.viewState.connections[category]!
+    }
     
     var body: some View {
-        List {
-            Section(header: Text("Alive Connections")) {
-                if viewState.aliveConnections.count == 0 {
-                    Text("Empty.")
-                } else {
-                    ForEach(viewState.aliveConnections) { connection in
-                        NavigationLink(destination: ConnectionDetailsView(connection: connection)) {
-                            ConnectionRowView(connection: connection)
-                                .tag(connection.id)
-                                .foregroundColor(.white)
+        List(content: {
+            Toggle(isOn: $aliveOnly) {
+                Text("Show alive connections only")
+            }
+            ForEach(categories) { category in
+                Section(header: Text("Connections: \(category.description)")) {
+                    if self.connectionList(category).count == 0 {
+                        Text("Empty.")
+                    } else {
+                        ForEach(self.connectionList(category)) { connection in
+                            NavigationLink(destination: ConnectionDetailsView(connection: connection)) {
+                                ConnectionRowView(connection: connection)
+                                    .tag(connection.id)
+                                    .foregroundColor(connection.alive ? .white : .gray)
+                            }
+                            .frame(height: 64)
                         }
-                        .frame(height: 64)
                     }
                 }
             }
-
-            Section(header: Text("Dead Connections")) {
-                if viewState.deadConnections.count == 0 {
-                    Text("Empty.")
-                } else {
-                    ForEach(viewState.deadConnections) { connection in
-                        NavigationLink(destination: ConnectionDetailsView(connection: connection)) {
-                            ConnectionRowView(connection: connection)
-                                .tag(connection.id)
-                                .foregroundColor(.gray)
-                        }
-                    }.frame(height: 64)
-                }
-            }
-        }
-        .listStyle(SidebarListStyle())
+        }).listStyle(SidebarListStyle())
     }
 }
 

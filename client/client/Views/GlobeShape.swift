@@ -13,8 +13,6 @@ struct GlobeShape : Shape {
     
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        let sideMax = (rect.size.width > rect.size.height) ? rect.size.width / 6 : rect.size.height / 6
-        
         
         self.map.forEach { feature in
             let origin = CGPoint(
@@ -23,8 +21,8 @@ struct GlobeShape : Shape {
             )
             
             var size = CGSize(
-                width: feature.side * sideMax,
-                height: feature.side * sideMax
+                width: feature.side * (rect.size.width / 1.8),
+                height: feature.side * (rect.size.height / 1.8)
             )
             
             if size.width + origin.x > rect.width {
@@ -32,16 +30,16 @@ struct GlobeShape : Shape {
             }
             
             if size.height + origin.y > rect.height {
-                size.height = (rect.height - origin.y) - 10
+                size.height =  (rect.height - origin.y) - 10
             }
             
             if size.width != size.height {
                 size.width = size.height
             }
             
-            path.addRect(
-                .init(origin: origin, size: size)
-            )
+            let rect = CGRect(origin: origin, size: size)
+            path.addRect(rect)
+            //path.addEllipse(in: rect)
         }
         
         return path

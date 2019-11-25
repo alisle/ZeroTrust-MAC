@@ -71,7 +71,7 @@ struct ConnectionCombinedGraphView: View {
                 }
             }
              
-        }.drawingGroup()
+        }
     }
 }
 

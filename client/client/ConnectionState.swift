@@ -29,7 +29,7 @@ class ConnectionState {
     }
 
     func addListener(listener : StateListener) {
-        self.connectionQueue.async { [weak self] in
+        self.connectionQueue.sync { [weak self] in
             guard let self = self else {
                 return
             }

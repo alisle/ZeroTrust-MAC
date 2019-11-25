@@ -32,14 +32,6 @@ struct ConnectionAmountShape: Shape {
                 )
             )
             
-            /*
-            path.addLine(to:
-                CGPoint(
-                    x: step * CGFloat(x + 1),
-                    y: CGFloat(counts[x]) * scale
-                )
-            )
- */
         }
         
         return path

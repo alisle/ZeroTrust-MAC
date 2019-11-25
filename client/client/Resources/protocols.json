@@ -28,13 +28,24 @@
         "port" : 5228,
         "description": "Google Cloud Messaging (GCM) was a mobile notification service developed by Google that enables third-party application developers to send notification data or information from developer-run servers to applications that target the Google Android Operating System, as well as applications or extensions developed for the Google Chrome internet browser.",
         "url" : "https://en.wikipedia.org/wiki/Google_Cloud_Messaging"
-        
+    },
+    {
+        "name" : "Roku External Control",
+        "port" : 8060,
+        "description" : "The External Control Protocol (ECP) enables a Roku device to be controlled over a local area network by providing a number of external control services. The Roku devices offering these external control services are discoverable using SSDP (Simple Service Discovery Protocol). ECP is a simple RESTful API that can be accessed by programs in virtually any programming environment.",
+        "url" : "https://developer.roku.com/docs/developer-program/debugging/external-control-api.md#simple-service-discovery-protocol-ssdp"
     },
     {
         "name" : "Goole Chrome Cast",
         "port": 8009,
         "description" : "Commonly used by Google Chrome and ChromeCast",
         "url" : "https://en.wikipedia.org/wiki/Chromecast"
+    },
+    {
+        "name" : "Apple Push Notification Service",
+        "port": 5223,
+        "description" : "Apple Push Notification service is a platform notification service created by Apple Inc. that enables third party application developers to send notification data to applications installed on Apple devices.",
+        "url" : "https://en.wikipedia.org/wiki/Apple_Push_Notification_service"
     }
     
 ]

@@ -14,7 +14,7 @@ struct RulesListView: View {
     var body: some View {
         List {
             Section(header: Text("Rules")) {
-                ForEach(Array(viewState.rules.metadata.values)) { metadata in
+                ForEach(Array(viewState.rules.getSortedMetadata())) { metadata in
                     NavigationLink(destination: RulesDetailView(rule: metadata).environmentObject(self.viewState)) {
                         Text(metadata.name)
                     }

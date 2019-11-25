@@ -45,6 +45,16 @@ struct Rules  {
     func getDomains(metaId: String) -> [String] {
         return domains.filter { $0.meta_id == metaId }.map { $0.indicator }
     }
+    
+    func getSortedMetadata() -> [RulesMetaData] {
+        return self.metadata.values.sorted(by: { lhs, rhs in
+            switch lhs.name.compare(rhs.name) {
+            case .orderedAscending: return true
+            case .orderedDescending: return false
+            case .orderedSame: return false
+            }
+        })
+    }
 }
 
 
@@ -80,7 +90,8 @@ struct JSONRules : Codable {
             
             
             let description = $0.description
-            let name = $0.name
+            let name = $0.name.trimmingCharacters(in: .whitespacesAndNewlines)
+            
             var references : [URL] = []
             $0.references.forEach { ref in
                 if let url = URL(string: ref) {

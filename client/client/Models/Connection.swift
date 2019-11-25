@@ -14,6 +14,7 @@ struct Connection : Hashable, Identifiable {
     
     let id = UUID()
     
+    
     let tag : UUID
     let startTimestamp : Date
     let endDateTimestamp : Optional<Date>
@@ -50,6 +51,12 @@ struct Connection : Hashable, Identifiable {
     let state : ConnectionStateType
     
     let outcome : Outcome
+    
+    var alive : Bool {
+        get {
+            return (self.state == .bound || self.state == .connecting || self.state == .connected)
+        }
+    }
     
     var  dupeHash : Int {
         get {
