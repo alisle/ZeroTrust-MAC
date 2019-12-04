@@ -24,15 +24,15 @@ class ViewState : ObservableObject, StateListener {
             }
         }
     }
-
-    let geomap : GeoMap = GeoMap.load()
+    
+    let geomap : Graph = Graph.load()
     var objectWillChange = PassthroughSubject<Void, Never>()
     private var raw = Set<Connection>()
     var lastSecond : Int = 0
     
-    private(set) var connections: [Category: [Connection]] = [:]
+    private(set) var connections: [FilterCategory: [Connection]] = [:]
     private(set) var lastConnections : [Connection] = []
-    private(set) var counts : [GeoCountry] = []
+    private(set) var counts : [GraphCountry] = []
     private(set) var amountsOverHour : [Int]
     
     var enabled = true
@@ -44,15 +44,15 @@ class ViewState : ObservableObject, StateListener {
         self.amountsOverHour = (0..<60 * 10).map{ _ in 0 }
         self.lastSecond = Calendar.current.component(.second, from: Date())
         
-        Category.allCases.forEach { category in self.connections[category] = [] }
+        FilterCategory.allCases.forEach { category in self.connections[category] = [] }
     }
     
     convenience init(aliveConnections: [Connection], deadConnections: [Connection])
     {
         self.init()
         
-        self.connections[.latest] = aliveConnections
-        self.connections[.five] = deadConnections
+        self.connections.updateValue(aliveConnections, forKey: .latest)
+        self.connections.updateValue(deadConnections, forKey: .five)
         
         if aliveConnections.count > 5 {
             self.lastConnections = Array(aliveConnections[0...5])
@@ -61,8 +61,8 @@ class ViewState : ObservableObject, StateListener {
         }
     }
     
-    func updateCounts() -> [GeoCountry] {
-        var counts : [GeoCountry] = []
+    func updateCounts() -> [GraphCountry] {
+        var counts : [GraphCountry] = []
         self.raw.forEach {
             if let iso = $0.country {
                 if let country = geomap.iso[iso] {
@@ -94,10 +94,10 @@ class ViewState : ObservableObject, StateListener {
         return ticks
     }
     
-    func updateLast(_ categories : [Category: [Connection]]) -> [Connection] {
+    func updateLast(_ categories : [FilterCategory: [Connection]]) -> [Connection] {
         var last : [Connection] = []
         
-        Category.allCases.forEach { last.append(contentsOf: categories[$0]!) }
+        FilterCategory.allCases.forEach { last.append(contentsOf: categories[$0]!) }
         last.sort(by: sort)
         
         if last.count > 5 {
@@ -121,18 +121,18 @@ class ViewState : ObservableObject, StateListener {
         }
     }
     
-    func updateCategories() -> [Category:[Connection]] {
+    func updateCategories() -> [FilterCategory:[Connection]] {
         let now = Date()
-        var cats : [Category : [Connection]] = [:]
+        var cats : [FilterCategory : [Connection]] = [:]
         
-        Category.allCases.forEach { category in
+        FilterCategory.allCases.forEach { category in
             cats[category] = []
         }
         
         self.raw.forEach { connection in
             let mins =  now.minutes(from: connection.startTimestamp)
             
-            Category.allCases.forEach{ category in
+            FilterCategory.allCases.forEach{ category in
                 let (lower, upper) = category.bounds
                 
                 if lower <= mins && upper > mins {
@@ -141,7 +141,7 @@ class ViewState : ObservableObject, StateListener {
             }
         }
         
-        Category.allCases.forEach { cats[$0] = self.strip(cats[$0]!).sorted(by: sort) }
+        FilterCategory.allCases.forEach { cats[$0] = self.strip(cats[$0]!).sorted(by: sort) }
         return cats
     }
     

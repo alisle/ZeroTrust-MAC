@@ -46,7 +46,7 @@ struct ConnectionsVIew : View  {
             header
             ConnectionCombinedGraphView()
             connectionsContainer
-        }.frame(minWidth: 900, maxWidth: .infinity)
+        }.frame(minWidth: 1200, maxWidth: .infinity)
     }
 }
 
@@ -63,6 +63,8 @@ func generateTestRules() -> Rules {
 func generateTestConnection(direction: ConnectionDirection) -> Connection {
     let localPort = Int.random(in: 1025..<40000)
     let remotePort = [ 80, 443, 22, 21, 8100].randomElement()
+    let process = ["Chrome.app", "/usr/bin/ssh", "WhatsApp.app"].randomElement()
+    
     let protocolCache = ProtocolCache()
     let remoteProtocol = protocolCache.get(remotePort!)
     let displayName = [ "ssh", "Google Chrome", "Mozilla Firefox", "Brave" ].randomElement()
@@ -81,7 +83,7 @@ func generateTestConnection(direction: ConnectionDirection) -> Connection {
                                 localAddress: "0.0.0.0",
                                 localPort: localPort,
                                 remotePort: remotePort!,
-                                process: "Chrome.app",
+                                process: process,
                                 parentProcess: "Chrome.app",
                                 processBundle: nil,
                                 parentBundle: nil,

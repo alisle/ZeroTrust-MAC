@@ -12,9 +12,9 @@ struct ConnectionListView: View {
     @EnvironmentObject var viewState : ViewState
     @State private var aliveOnly = false
     
-    let categories : [Category] = Array(Category.allCases)
+    let categories : [FilterCategory] = Array(FilterCategory.allCases)
 
-    func connectionList(_ category: Category) -> [Connection] {
+    func connectionList(_ category: FilterCategory) -> [Connection] {
         if aliveOnly {
             return self.viewState.connections[category]!.filter{ $0.alive }
         }
@@ -50,19 +50,14 @@ struct ConnectionListView: View {
 #if DEBUG
 struct ConnectionListView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewState = ViewState(aliveConnections: [
-                generateTestConnection(direction: ConnectionDirection.outbound),
-                generateTestConnection(direction: ConnectionDirection.outbound),
-                generateTestConnection(direction: ConnectionDirection.outbound),
-                generateTestConnection(direction: ConnectionDirection.outbound)
-        ], deadConnections:  [
-                generateTestConnection(direction: ConnectionDirection.outbound),
-                generateTestConnection(direction: ConnectionDirection.outbound),
-                generateTestConnection(direction: ConnectionDirection.outbound),
-                generateTestConnection(direction: ConnectionDirection.outbound)
-        ])
-
-        return ConnectionListView().environmentObject(viewState)
+            let viewState = ViewState()
+            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
+            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
+            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
+            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
+            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
+            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
+            return ConnectionListView().environmentObject(viewState)
         }
 }
 #endif

@@ -141,7 +141,7 @@ class Helpers {
             let decoder = JSONDecoder()
             return try decoder.decode(T.self, from: data)
         } catch {
-            fatalError("Couldn't parse to json")
+            fatalError("Couldn't parse to json: \(error)")
         }
     }
 }

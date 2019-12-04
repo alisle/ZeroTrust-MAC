@@ -11,8 +11,8 @@ import SwiftUI
 struct ConnectionCombinedGraphView: View {
     @EnvironmentObject var viewState : ViewState
 
-    private func convert(_ counts: [String : Int]) -> [GeoCountry] {
-        var countries : [GeoCountry] = []
+    private func convert(_ counts: [String : Int]) -> [GraphCountry] {
+        var countries : [GraphCountry] = []
         counts.forEach { iso, count in
             if let feature = self.viewState.geomap.iso[iso] {
                 countries.append(feature)
@@ -25,10 +25,10 @@ struct ConnectionCombinedGraphView: View {
     var body: some View {
         VStack{
             ZStack {
-                GlobeShape(map: viewState.geomap.features)
+                GlobeGraph(countries: viewState.geomap.countries)
                     .fill(Color.black)
-                
-                GlobeShape(map: viewState.geomap.features)
+
+                GlobeGraph(countries: viewState.geomap.countries)
                     .stroke(
                         AngularGradient(
                             gradient: Gradient(
@@ -42,9 +42,9 @@ struct ConnectionCombinedGraphView: View {
                             ]),
                             center: .center
                         )
-                    )
-
-                GlobeShape(map: self.viewState.counts)
+                )
+                
+                GlobeGraph(countries: self.viewState.counts)
                     .fill(
                         AngularGradient(
                             gradient: Gradient(
@@ -59,17 +59,17 @@ struct ConnectionCombinedGraphView: View {
                             center: .center
                         )
                     )
-                
                 ConnectionAmountShape(counts: viewState.amountsOverHour)
                     .fill(Color.yellow)
             }
-            .frame( minWidth: 800, minHeight: 300)
+            .frame(minWidth: 1000, minHeight: 500)
+            .drawingGroup()
             
             HStack(alignment: .bottom) {
                 ForEach(viewState.lastConnections.reversed()) { connection in
                     GlobeCapsuleView(connection: connection)
                 }
-            }
+            }.frame(minHeight: 64)
              
         }
     }

@@ -8,53 +8,66 @@
 
 import SwiftUI
 
-struct GlobeShape : Shape {
-    let map : [GeoCountry]
+struct GlobeCentre : Shape {
+    let countries : [GraphCountry]
     
     func path(in rect: CGRect) -> Path {
-        var path = Path()
+        var world = Path()
         
-        self.map.forEach { feature in
-            let origin = CGPoint(
-                x: feature.centroid[0] * rect.maxX,
-                y: feature.centroid[1] * rect.maxY
+        countries.forEach { country in
+            let point = CGPoint(
+                x: country.centroid.x * rect.maxX,
+                y: country.centroid.y * rect.maxY
             )
             
-            var size = CGSize(
-                width: feature.side * (rect.size.width / 1.8),
-                height: feature.side * (rect.size.height / 1.8)
-            )
+            let size = CGSize(width: 10, height: 10)
+            let rect = CGRect(origin: point, size: size)
             
-            if size.width + origin.x > rect.width {
-                size.width = (rect.width - origin.x) - 10
-            }
-            
-            if size.height + origin.y > rect.height {
-                size.height =  (rect.height - origin.y) - 10
-            }
-            
-            if size.width != size.height {
-                size.width = size.height
-            }
-            
-            let rect = CGRect(origin: origin, size: size)
-            path.addRect(rect)
-            //path.addEllipse(in: rect)
+            world.addRect(rect)
         }
         
-        return path
+        return world
     }
+    
+}
+struct GlobeGraph : Shape {
+    let countries : [GraphCountry]
+    func path(in rect: CGRect) -> Path {
+        var world = Path()
+        
+        countries.forEach { country in
+            country.paths.forEach { paths in
+                let path = paths[0].map( { point in
+                    CGPoint(x: point.x * rect.maxX, y: point.y * rect.maxY)
+                })
+                
+                world.addLines(path)
+            }
+        }
 
+        return world
+    }
+    
+    
 }
 
 struct GlobeShape_Previews: PreviewProvider {
     static var previews: some View {
-        let map = GeoMap.load()
+        let graph = Graph.load()
+        
+        let view = ZStack {
+            GlobeGraph(countries: graph.countries)
+                .fill(Color.blue)
             
-        let view = VStack {
-            GlobeShape(map: map.features)
+            GlobeCentre(countries: graph.countries)
                 .fill(Color.red)
-        }.frame(width: 600, height: 300, alignment: .center)
+            
+            GlobeGraph(countries: graph.countries)
+                .stroke(Color.white)
+        }
+            
+        .drawingGroup()
+        .frame(width: 1200, height: 800, alignment: .center)
         
         
         return view
