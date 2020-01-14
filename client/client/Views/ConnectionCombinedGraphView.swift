@@ -27,7 +27,7 @@ struct ConnectionCombinedGraphView: View {
             ZStack {
                 GlobeGraph(countries: viewState.geomap.countries)
                     .fill(Color.black)
-
+                
                 GlobeGraph(countries: viewState.geomap.countries)
                     .stroke(
                         AngularGradient(
@@ -43,7 +43,6 @@ struct ConnectionCombinedGraphView: View {
                             center: .center
                         )
                 )
-                
                 GlobeGraph(countries: self.viewState.counts)
                     .fill(
                         AngularGradient(
@@ -59,12 +58,11 @@ struct ConnectionCombinedGraphView: View {
                             center: .center
                         )
                     )
+                
                 ConnectionAmountShape(counts: viewState.amountsOverHour)
                     .fill(Color.yellow)
-            }
+            }.drawingGroup()
             .frame(minWidth: 1000, minHeight: 500)
-            .drawingGroup()
-            
             HStack(alignment: .bottom) {
                 ForEach(viewState.lastConnections.reversed()) { connection in
                     GlobeCapsuleView(connection: connection)

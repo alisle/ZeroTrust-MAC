@@ -24,11 +24,11 @@ struct GlobeCapsuleView: View {
         let stack = ZStack {
             Capsule()
                 .fill(Color.black)
-                .frame(height: 40)
+                .frame(height: 36)
             
             Capsule()
-                .stroke(color, lineWidth: 5)
-                .frame(height: 40)
+                .stroke(color, lineWidth: 3)
+                .frame(height: 36)
 
             HStack(alignment: .center) {
                 ConnectionIconView(connection: connection, size: 32)
@@ -36,10 +36,10 @@ struct GlobeCapsuleView: View {
                     HStack {
                         Text(connection.remoteDisplayAddress)
                             .bold()
-                    }.frame(height: 40)
-                }.frame(height: 40)
-            }.padding(10)
-        }
+                    }.frame(height: 32)
+                }.frame(height: 32)
+            }.padding(8)
+        }.padding(2)
         
         
         return stack

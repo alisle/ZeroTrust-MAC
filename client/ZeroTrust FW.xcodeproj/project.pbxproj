@@ -45,6 +45,10 @@
 		F08982982356A554003DB49B /* RulesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982972356A554003DB49B /* RulesListView.swift */; };
 		F089829A2356A633003DB49B /* RulesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982992356A633003DB49B /* RulesDetailView.swift */; };
 		F0925F33234B79BB00C01F72 /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0925F32234B79BB00C01F72 /* RulesView.swift */; };
+		F0934A3C2399E9D700884447 /* ProcessChainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0934A3B2399E9D700884447 /* ProcessChainView.swift */; };
+		F0934A3E23A02F0B00884447 /* CGMutablePathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0934A3D23A02F0B00884447 /* CGMutablePathExtension.swift */; };
+		F0934A4023A032AF00884447 /* ArrowShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0934A3F23A032AF00884447 /* ArrowShape.swift */; };
+		F0934A4223A1503900884447 /* ProtocolChainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0934A4123A1503900884447 /* ProtocolChainView.swift */; };
 		F0C157D0236A39570082F7E3 /* area.json in Resources */ = {isa = PBXBuildFile; fileRef = F0C157CF236A39570082F7E3 /* area.json */; };
 		F0D065E023064E300076A1AC /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065DF23064E300076A1AC /* Protocol.swift */; };
 		F0D065E3230652BD0076A1AC /* protocols.json in Resources */ = {isa = PBXBuildFile; fileRef = F0D065E2230652BD0076A1AC /* protocols.json */; };
@@ -126,6 +130,10 @@
 		F08982972356A554003DB49B /* RulesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesListView.swift; sourceTree = "<group>"; };
 		F08982992356A633003DB49B /* RulesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesDetailView.swift; sourceTree = "<group>"; };
 		F0925F32234B79BB00C01F72 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
+		F0934A3B2399E9D700884447 /* ProcessChainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessChainView.swift; sourceTree = "<group>"; };
+		F0934A3D23A02F0B00884447 /* CGMutablePathExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGMutablePathExtension.swift; sourceTree = "<group>"; };
+		F0934A3F23A032AF00884447 /* ArrowShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowShape.swift; sourceTree = "<group>"; };
+		F0934A4123A1503900884447 /* ProtocolChainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolChainView.swift; sourceTree = "<group>"; };
 		F0C157CF236A39570082F7E3 /* area.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = area.json; sourceTree = "<group>"; };
 		F0D065DF23064E300076A1AC /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		F0D065E2230652BD0076A1AC /* protocols.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = protocols.json; sourceTree = "<group>"; };
@@ -206,6 +214,9 @@
 				F0260FD02379E01E002E2C5C /* GlobeShape.swift */,
 				F0260FD4237C6297002E2C5C /* GlobeCapsuleView.swift */,
 				F0260FD8237C9219002E2C5C /* ConnectionAmountShape.swift */,
+				F0934A3B2399E9D700884447 /* ProcessChainView.swift */,
+				F0934A3F23A032AF00884447 /* ArrowShape.swift */,
+				F0934A4123A1503900884447 /* ProtocolChainView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -226,6 +237,7 @@
 				F0269F3A23201EFB0067D3BA /* TimeIntervalExtension.swift */,
 				F0FB570D23576E4300AAB5F6 /* URLExtension.swift */,
 				F0FB570F2358AED900AAB5F6 /* OutcomeExtension.swift */,
+				F0934A3D23A02F0B00884447 /* CGMutablePathExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -514,6 +526,7 @@
 			files = (
 				F0331F882360F44000A634D5 /* Graph.swift in Sources */,
 				F0D065E7230656A00076A1AC /* ProtocolCache.swift in Sources */,
+				F0934A4223A1503900884447 /* ProtocolChainView.swift in Sources */,
 				F0269F35231F4D080067D3BA /* Outcome.swift in Sources */,
 				F043D4A1230DC35300746BED /* DateExtension.swift in Sources */,
 				F042BDDC23439A6D00965781 /* Preferences.swift in Sources */,
@@ -528,6 +541,7 @@
 				F028F81E233B04DF003EA345 /* Rules.swift in Sources */,
 				F02EAC5423282928008186E7 /* DecisionEngine.swift in Sources */,
 				F0269F3923201A7B0067D3BA /* ConnectionDirection.swift in Sources */,
+				F0934A3C2399E9D700884447 /* ProcessChainView.swift in Sources */,
 				F0DA1B9F2301C50400D07905 /* Main.swift in Sources */,
 				F0FB570E23576E4300AAB5F6 /* URLExtension.swift in Sources */,
 				F0E4F82622BBE4E000A38601 /* ConnectionsVIew.swift in Sources */,
@@ -542,8 +556,10 @@
 				F052C9F522C17531005DE1D7 /* kext-helpers.c in Sources */,
 				F0260FD5237C6297002E2C5C /* GlobeCapsuleView.swift in Sources */,
 				F052C9ED22C163A2005DE1D7 /* KextComm.swift in Sources */,
+				F0934A3E23A02F0B00884447 /* CGMutablePathExtension.swift in Sources */,
 				F043D4A3230DC51A00746BED /* ConnectionStateType.swift in Sources */,
 				F0DA1BA12301C6EA00D07905 /* ViewState.swift in Sources */,
+				F0934A4023A032AF00884447 /* ArrowShape.swift in Sources */,
 				F0DA1BA72303530700D07905 /* ConnectionListView.swift in Sources */,
 				F0331F822360B7F900A634D5 /* StateListener.swift in Sources */,
 				F0269F3B23201EFB0067D3BA /* TimeIntervalExtension.swift in Sources */,

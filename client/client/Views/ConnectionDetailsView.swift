@@ -156,8 +156,13 @@ struct ConnectionDetailsView: View {
             title
             VStack {
                 metadata
+                ProcessChainView(connection: connection)
+                    .frame(minWidth: 600)
                 processDetails
                 Spacer()
+                ProtocolChainView(connection: connection)
+                    .frame(minWidth: 600)
+
                 if connection.portProtocol != nil {
                     protocolDetails
                 } else {

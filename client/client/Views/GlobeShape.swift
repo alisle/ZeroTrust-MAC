@@ -65,8 +65,6 @@ struct GlobeShape_Previews: PreviewProvider {
             GlobeGraph(countries: graph.countries)
                 .stroke(Color.white)
         }
-            
-        .drawingGroup()
         .frame(width: 1200, height: 800, alignment: .center)
         
         

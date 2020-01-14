@@ -136,7 +136,7 @@ class ViewState : ObservableObject, StateListener {
                 let (lower, upper) = category.bounds
                 
                 if lower <= mins && upper > mins {
-                    cats[category]!.append(connection)
+                    cats[category]!.append(connection.clone())
                 }
             }
         }
@@ -148,12 +148,14 @@ class ViewState : ObservableObject, StateListener {
     func connectionChanged(_ connection: Connection) {
 
         self.raw.update(with: connection)
+        
         let counts = self.updateCounts()
         let time = self.updateLastSecond()
         let ticks = self.updateTicks(currentTime: time)
         let cats = self.updateCategories()
         let last = self.updateLast(cats)
         
+
         DispatchQueue.main.async() { [weak self] in
             guard let self = self else {
                 return
