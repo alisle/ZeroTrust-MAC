@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -34,14 +34,12 @@
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="7jt-YX-8A5"/>
-                        <menuItem title="Start Quarantine Mode..." id="OFk-fA-NKm">
-                            <modifierMask key="keyEquivalentModifierMask"/>
+                        <menuItem title="Start Quarantine Mode..." keyEquivalent="q" id="OFk-fA-NKm">
                             <connections>
                                 <action selector="quarantineClicked:" target="Voe-Tx-rLC" id="QAD-eB-PZR"/>
                             </connections>
                         </menuItem>
-                        <menuItem title="Start Isolation Mode..." id="7Mp-pH-Sy5">
-                            <modifierMask key="keyEquivalentModifierMask"/>
+                        <menuItem title="Start Isolation Mode..." keyEquivalent="i" id="7Mp-pH-Sy5">
                             <connections>
                                 <action selector="isolationClicked:" target="Voe-Tx-rLC" id="BpX-pf-r6I"/>
                             </connections>

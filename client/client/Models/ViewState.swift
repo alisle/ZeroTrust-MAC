@@ -11,7 +11,7 @@ import Combine
 import SwiftUI
 
 class ViewState : ObservableObject, StateListener {
-    let sort : (Connection, Connection) -> Bool = { (lhs, rhs) in
+    private let sort : (Connection, Connection) -> Bool = { (lhs, rhs) in
         switch lhs.startTimestamp.compare(rhs.startTimestamp) {
         case .orderedAscending: return false
         case .orderedDescending: return true
@@ -28,14 +28,17 @@ class ViewState : ObservableObject, StateListener {
     let geomap : Graph = Graph.load()
     var objectWillChange = PassthroughSubject<Void, Never>()
     private var raw = Set<Connection>()
-    var lastSecond : Int = 0
+    private var lastSecond : Int = 0
     
     private(set) var connections: [FilterCategory: [Connection]] = [:]
     private(set) var lastConnections : [Connection] = []
     private(set) var counts : [GraphCountry] = []
     private(set) var amountsOverHour : [Int]
     
-    var enabled = true
+    private(set) var enabled = true
+    private(set) var quarantine = false
+    private(set) var isolated = false
+    
     var rules : Rules
 
     init() {
@@ -59,6 +62,21 @@ class ViewState : ObservableObject, StateListener {
         } else {
             self.lastConnections = aliveConnections
         }
+    }
+    
+    func quarantined(_ enabled: Bool) {
+        self.quarantine = enabled
+        self.objectWillChange.send()
+    }
+    
+    func isolated(_ enabled: Bool) {
+        self.isolated = enabled
+        self.objectWillChange.send()
+    }
+    
+    func enabled(_ enabled: Bool) {
+        self.enabled = enabled
+        self.objectWillChange.send()
     }
     
     func updateCounts() -> [GraphCountry] {

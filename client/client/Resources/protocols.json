@@ -24,6 +24,12 @@
         "url" : "https://en.wikipedia.org/wiki/File_Transfer_Protocol"
     },
     {
+        "name": "FTP - Data",
+        "port" : 20,
+        "description" : "The File Transfer Protocol (FTP) is a standard network protocol used for the transfer of computer files between a client and server on a computer network.",
+        "url" : "https://en.wikipedia.org/wiki/File_Transfer_Protocol"
+    },
+    {
         "name" : "Google Cloud Messaging",
         "port" : 5228,
         "description": "Google Cloud Messaging (GCM) was a mobile notification service developed by Google that enables third-party application developers to send notification data or information from developer-run servers to applications that target the Google Android Operating System, as well as applications or extensions developed for the Google Chrome internet browser.",

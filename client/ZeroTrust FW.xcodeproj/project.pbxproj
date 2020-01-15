@@ -69,6 +69,7 @@
 		F0ECB7BF2368D37800D3662A /* MMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0ECB7BE2368D37800D3662A /* MMDB.framework */; };
 		F0FB570E23576E4300AAB5F6 /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FB570D23576E4300AAB5F6 /* URLExtension.swift */; };
 		F0FB57102358AED900AAB5F6 /* OutcomeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FB570F2358AED900AAB5F6 /* OutcomeExtension.swift */; };
+		F0FF0F5423CEA3F5001FFCB5 /* ConnectionsViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0FF0F5323CEA3F5001FFCB5 /* ConnectionsViewHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +162,7 @@
 		F0ECB7BE2368D37800D3662A /* MMDB.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MMDB.framework; path = Carthage/Build/Mac/MMDB.framework; sourceTree = "<group>"; };
 		F0FB570D23576E4300AAB5F6 /* URLExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtension.swift; sourceTree = "<group>"; };
 		F0FB570F2358AED900AAB5F6 /* OutcomeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutcomeExtension.swift; sourceTree = "<group>"; };
+		F0FF0F5323CEA3F5001FFCB5 /* ConnectionsViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionsViewHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +219,7 @@
 				F0934A3B2399E9D700884447 /* ProcessChainView.swift */,
 				F0934A3F23A032AF00884447 /* ArrowShape.swift */,
 				F0934A4123A1503900884447 /* ProtocolChainView.swift */,
+				F0FF0F5323CEA3F5001FFCB5 /* ConnectionsViewHeader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -537,6 +540,7 @@
 				F0DA1BA52303206800D07905 /* ConnectionIconView.swift in Sources */,
 				F0331F842360EDB100A634D5 /* ConnectionCombinedGraphView.swift in Sources */,
 				F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */,
+				F0FF0F5423CEA3F5001FFCB5 /* ConnectionsViewHeader.swift in Sources */,
 				F0260FD12379E01E002E2C5C /* GlobeShape.swift in Sources */,
 				F028F81E233B04DF003EA345 /* Rules.swift in Sources */,
 				F02EAC5423282928008186E7 /* DecisionEngine.swift in Sources */,

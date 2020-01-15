@@ -13,15 +13,6 @@ struct ConnectionsVIew : View  {
     
     @EnvironmentObject var viewState : ViewState
     
-    var header : some View {
-        VStack(alignment: .leading) {
-            HStack(alignment: .center) {
-                Text("Zero Trust - Connections")
-                    .bold()
-            }
-        }
-        .padding()
-    }
 
     var connectionsContainer : some View {
         VStack(alignment: .leading) {
@@ -43,7 +34,7 @@ struct ConnectionsVIew : View  {
     
     var body: some View {
         VStack(alignment: .leading) {
-            header
+            ConnectionsViewHeader()
             ConnectionCombinedGraphView()
             connectionsContainer
         }.frame(minWidth: 1200, maxWidth: .infinity)

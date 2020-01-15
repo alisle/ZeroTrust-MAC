@@ -44,21 +44,24 @@ class Main {
     
     func enable() {
         let _ = consumer.open()
-        viewState.enabled = true
+        viewState.enabled(true)
     }
     
     func disable() {
         consumer.close()
-        viewState.enabled = false
+        viewState.enabled(false)
     }
         
     func isolate(enable: Bool) {
         consumer.isolate(enable: enable)
+        viewState.isolated(enable)
     }
     
     func quanrantine(enable: Bool) {
         consumer.quarantine(enable: enable)
+        viewState.quarantined(enable)
     }
+    
     func getRules() {
         print("Getting Rules")
         self.rulesDispatcher.getRules { [weak self] results, errorMessage in

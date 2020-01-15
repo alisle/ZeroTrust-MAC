@@ -17,6 +17,11 @@ struct DNSHeader {
     var additionalCount : UInt16;
 }
 
+enum DNSAnswerError: Error {
+    case invalidQType
+}
+
+
 class KextComm {
     private var notificationPortOpen = false
     private var notificationMemory : mach_vm_address_t = 0
@@ -170,15 +175,13 @@ class KextComm {
             
             return FirewallConnectionUpdate(tag: uuid, timestamp: timestamp, update: update!)
         case dns_update:
-            
             print("dns update")
 
             var aRecords : [ARecord] = []
             var cNameRecords : [CNameRecord] = []
             var questions: [ String ] = []
-            
-            
             var message = buffer.data.dns_event.dns_message
+            
             let startPointer = UnsafeMutableRawPointer(&message)
             var (pointer, header) = processDNSHeader(startPointer: startPointer)
             
@@ -188,11 +191,18 @@ class KextComm {
                 questions.append(question)
             }
             
-            for _ in 0..<header.answerCount {
-                let (updatedPointer: updatedPointer, aRecord: aRecord, cNameRecord: cNameRecord) = processDNSAnswer(startPointer: startPointer, currentPointer: pointer)
-                pointer = updatedPointer
-                aRecord.map { aRecords.append($0) }
-                cNameRecord.map { cNameRecords.append($0) }
+            for x in 0..<header.answerCount {
+                print("Processing Answer count: \(x)")
+                do {
+                    let (updatedPointer: updatedPointer, aRecord: aRecord, cNameRecord: cNameRecord) = try processDNSAnswer(startPointer: startPointer, currentPointer: pointer)
+                    pointer = updatedPointer
+                    aRecord.map { aRecords.append($0) }
+                    cNameRecord.map { cNameRecords.append($0) }
+                } catch  {
+                    print("unable to process this dns update")
+                    return nil
+                }
+
             }
             
             return FirewallDNSUpdate(
@@ -289,28 +299,36 @@ class KextComm {
         )
     }
     
-    private func processDNSAnswer(startPointer: UnsafeMutableRawPointer, currentPointer: UnsafeMutableRawPointer) ->  (updatedPointer: UnsafeMutableRawPointer, cNameRecord: Optional<CNameRecord>, aRecord: Optional<ARecord>) {
-        do {
-            var pointer = currentPointer
-            let offsetResult = grabAnswerOffsetPosition(currentPointer: pointer)
-            
-            // Get the QType
-            let qtypeResult = grabUInt16(pointer: offsetResult.updatedPointer)
-            pointer = qtypeResult.updatedPointer
-            let qtype = qtypeResult.value
+    private func processDNSAnswer(startPointer: UnsafeMutableRawPointer, currentPointer: UnsafeMutableRawPointer) throws ->  (updatedPointer: UnsafeMutableRawPointer, cNameRecord: Optional<CNameRecord>, aRecord: Optional<ARecord>)  {
+        var pointer = currentPointer
+        let offsetResult = grabAnswerOffsetPosition(currentPointer: pointer)
 
-            // Skip over the QClass and TTL.
-            pointer = pointer.advanced(by: 6)
+            
+        // Get the QType
+        let qtypeResult = grabUInt16(pointer: offsetResult.updatedPointer)
+        pointer = qtypeResult.updatedPointer
+        let qtype = qtypeResult.value
 
-            // Grab the Length
-            let lengthResult = grabUInt16(pointer: pointer)
-            pointer = lengthResult.updatedPointer
-            let length = lengthResult.value
+        if qtype != 01 && qtype != 0x5 {
+            throw DNSAnswerError.invalidQType
+        }
+        
+        // Skip over the QClass and TTL.
+        pointer = pointer.advanced(by: 6)
+        
+
+        // Grab the Length
+        let lengthResult = grabUInt16(pointer: pointer)
+        pointer = lengthResult.updatedPointer
+        let length = lengthResult.value
+        if(length > 100) {
+            print("This length can not be correct")
+        }
+        
+        var cNameRecord : Optional<CNameRecord> = nil
+        var aRecord : Optional<ARecord> = nil
             
-            var cNameRecord : Optional<CNameRecord> = nil
-            var aRecord : Optional<ARecord> = nil
-            
-            switch(qtype) {
+        switch(qtype) {
             case 0x1:
                 if length == 4 {
                     let (updatedPointer: _, url: url)  = grabURL(startPointer: startPointer, offsetPointer: startPointer.advanced(by: Int(offsetResult.offsetPosition)))
@@ -324,13 +342,9 @@ class KextComm {
                 let (_, url) = grabURL(startPointer: startPointer, offsetPointer: pointer)
                 cNameRecord = CNameRecord(url: url, cName: cname)
             default: ()
-            }
-            
-            return (updatedPointer: pointer.advanced(by: Int(length)), cNameRecord: cNameRecord, aRecord: aRecord)
-        } catch {
-            print("unable to process answer")
         }
-        
+            
+        return (updatedPointer: pointer.advanced(by: Int(length)), cNameRecord: cNameRecord, aRecord: aRecord)
     }
     
     private func processDNSHeader(startPointer: UnsafeMutableRawPointer) -> (UnsafeMutableRawPointer, DNSHeader) {
@@ -361,15 +375,17 @@ class KextComm {
         return (pointer, addressString!)
     }
     
-    private func grabAnswerOffsetPosition(currentPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, offsetPosition: UInt16) {
+    private func grabAnswerOffsetPosition(currentPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, offsetPosition: UInt16, isCompressed: Bool) {
         var (pointer, offset) = grabUInt16(pointer: currentPointer)
-        
+        var isCompressed = false
         if( offset & 0xC000 == 0xC000 ) {
             // we have a compressed query.
             offset = UInt16(offset & (0xFFFF - 0xC000))
+            print("we have a compressed query")
+            isCompressed.toggle()
         }
 
-        return (pointer, offset)
+        return (pointer, offset, isCompressed)
     }
     
     private func grabURL(startPointer : UnsafeMutableRawPointer, offsetPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, url: String) {
@@ -392,6 +408,7 @@ class KextComm {
                 let offsetPointer = UInt16(offset & (0xFFFF - 0xC000))
                 currentPointer = startPointer.advanced(by: Int(offsetPointer))
                 size = currentPointer.load(as: UInt8.self).bigEndian
+                print("we are going to a new jump point")
             }
         }
         
@@ -410,11 +427,12 @@ class KextComm {
     }
     
     private func grabUInt16(pointer : UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, value: UInt16) {
-                        
-        let first = UInt16(pointer.load(as: UInt8.self)) << 8
+        let first8Bits = pointer.load(as: UInt8.self)
+        let first = UInt16(first8Bits) << 8
         var updatedPointer = pointer.advanced(by: 1)
         
-        let second = UInt16(updatedPointer.load(as: UInt8.self))
+        let second8Bits = updatedPointer.load(as: UInt8.self)
+        let second = UInt16(second8Bits)
         updatedPointer = updatedPointer.advanced(by: 1)
         
         return (updatedPointer, first | second)
