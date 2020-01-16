@@ -16,8 +16,8 @@ extension Outcome {
             case .unknown : return Color.gray
             case .allowed : return Color.green
             case .blocked : return Color.red
-            case .quarantined : return Color.red
-            case .isolated: return Color.red
+            case .inspectModeBlocked : return Color.red
+            case .denyModeBlocked: return Color.red
             }
         }
     }

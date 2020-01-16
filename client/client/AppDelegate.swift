@@ -10,7 +10,7 @@ import Cocoa
 import SwiftUI
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, ServiceStateListener {
 
     var connectionsWindow: NSWindow!
     var rulesWindow: NSWindow!
@@ -19,26 +19,53 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     let disabledIcon = NSImage(named: "DisabledEthernet")
     let enabledIcon = NSImage(named: "EnabledEthernet")
-    let quarantineIcon = NSImage(named: "Quarantine")
+    let inspectModeIcon = NSImage(named: "InspectMode")
     let connectionsIcon = NSImage(named: "Connections")
     let statusBarIcon = NSImage(named: "StatusBarIcon")
-    let isolateIcon = NSImage(named: "Isolate")
+    let denyModeIcon = NSImage(named: "DenyMode")
     
-    
-    var enabled = true
-    var isolation = false
-    var quarantine = false
     
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var enabledMenuItem: NSMenuItem!
-    @IBOutlet weak var quarantineMenuItem: NSMenuItem!
+    @IBOutlet weak var inspectModeMenuItem: NSMenuItem!
     @IBOutlet weak var showConnectionsMenuItem: NSMenuItem!
     @IBOutlet weak var quitMenuItem: NSMenuItem!
-    @IBOutlet weak var isolationMenuItem: NSMenuItem!
+    @IBOutlet weak var denyModeMenuItem: NSMenuItem!
     @IBOutlet weak var showRulesMenuItem: NSMenuItem!
     
 
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    
+    func serviceStateChanged(type: ServiceStateType, serviceEnabled: Bool) {
+        switch type {
+        case .enabled:
+            switch serviceEnabled {
+            case true:
+                enabledMenuItem.title = "Disable Service..."
+                enabledMenuItem.image = disabledIcon
+            case false:
+                enabledMenuItem.title = "Enable Service..."
+                enabledMenuItem.image = enabledIcon
+            }
+            
+        case .inspectMode:
+            switch serviceEnabled {
+            case true:
+                inspectModeMenuItem.title = "Stop Inspect Mode..."
+            case false:
+                inspectModeMenuItem.title = "Start Inspect Mode..."
+            }
+            
+        case .denyMode:
+            switch serviceEnabled {
+                case true:
+                    denyModeMenuItem.title = "Stop Deny Mode..."
+                case false:
+                    denyModeMenuItem.title = "Start Deny Mode..."
+            }
+            
+        }
+    }
     
     @IBAction func quitClicked(_ sender: Any) {
         cleanup()        
@@ -46,42 +73,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func enabledClicked(_ sender: Any) {
-        enabled.toggle()
-        
-        switch enabled {
-        case true:
-            enabledMenuItem.title = "Disable Service..."
-            enabledMenuItem.image = disabledIcon
-            main.enable()
-        case false:
-            enabledMenuItem.title = "Enable Service..."
-            enabledMenuItem.image = enabledIcon
-            main.disable()
-        }
+        main.serviceState.enabled.toggle()
     }
     
-    @IBAction func isolationClicked(_ sender: Any) {
-        isolation.toggle()
-        switch isolation {
-        case true:
-            isolationMenuItem.title = "Stop Isolation Mode..."
-            main.isolate(enable: true)
-        case false:
-            isolationMenuItem.title = "Start Isolation Mode..."
-            main.isolate(enable: false)
-        }
+    @IBAction func denyModeClicked(_ sender: Any) {
+        main.serviceState.denyMode.toggle()
     }
     
-    @IBAction func quarantineClicked(_ sender: Any) {
-        quarantine.toggle()
-        switch quarantine {
-        case true:
-            quarantineMenuItem.title = "Stop Quarantine Mode..."
-            main.quanrantine(enable: true)
-        case false:
-            quarantineMenuItem.title = "Start Quarantine Mode..."
-            main.quanrantine(enable: false)
-        }
+    @IBAction func inspectModeClicked(_ sender: Any) {
+        main.serviceState.inspectMode.toggle()
     }
     
     @IBAction func showRulesClicked(_ sender: Any) {
@@ -108,7 +108,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         connectionsWindow.isReleasedWhenClosed = false
         connectionsWindow.center()
         connectionsWindow.setFrameAutosaveName("Connections Window")
-        connectionsWindow.contentView = NSHostingView(rootView: ConnectionsVIew().environmentObject(main.viewState))
+        connectionsWindow.contentView = NSHostingView(rootView: ConnectionsView().environmentObject(main.viewState).environmentObject(main.serviceState))
     }
 
     func createRulesWindow() {
@@ -127,7 +127,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         createConnectionsWindow()
         createRulesWindow()
         main.entryPoint()
-        main.enable()
+        
+        main.serviceState.addListener(type: .enabled, listener: self)
+        main.serviceState.addListener(type: .inspectMode, listener: self)
+        main.serviceState.addListener(type: .denyMode, listener: self)
                 
         setupStatusBar()
     }
@@ -136,10 +139,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         disabledIcon?.isTemplate = true
         enabledIcon?.isTemplate = true
-        quarantineIcon?.isTemplate = true
+        inspectModeIcon?.isTemplate = true
         connectionsIcon?.isTemplate = true
         statusBarIcon?.isTemplate = true
-        isolateIcon?.isTemplate = true
+        denyModeIcon?.isTemplate = true
 
         statusItem.menu = statusMenu
         statusItem.button?.image = statusBarIcon
@@ -147,17 +150,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         enabledMenuItem.title = "Disable Service..."
         enabledMenuItem.image = disabledIcon
-        main.enable()
 
         
-        isolationMenuItem.image = isolateIcon
-        quarantineMenuItem.image = quarantineIcon
+        denyModeMenuItem.image = denyModeIcon
+        inspectModeMenuItem.image = inspectModeIcon
         showConnectionsMenuItem.image = connectionsIcon
         
     }
     
     func cleanup() {
-        main.disable()
+        main.serviceState.enabled = false
         main.exitPoint()
     }
     

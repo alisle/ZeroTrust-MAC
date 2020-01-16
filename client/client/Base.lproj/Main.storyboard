@@ -15,9 +15,9 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="ZeroTrust_FW" customModuleProvider="target">
                     <connections>
+                        <outlet property="denyModeMenuItem" destination="7Mp-pH-Sy5" id="BXC-7r-WcZ"/>
                         <outlet property="enabledMenuItem" destination="ZJ0-zg-Dh0" id="LZc-tV-rRS"/>
-                        <outlet property="isolationMenuItem" destination="7Mp-pH-Sy5" id="BXC-7r-WcZ"/>
-                        <outlet property="quarantineMenuItem" destination="OFk-fA-NKm" id="a7Y-hz-TNo"/>
+                        <outlet property="inspectModeMenuItem" destination="OFk-fA-NKm" id="a7Y-hz-TNo"/>
                         <outlet property="quitMenuItem" destination="oUL-kx-HNY" id="kVy-5f-O1Y"/>
                         <outlet property="showConnectionsMenuItem" destination="iDD-rE-Dd4" id="u45-Io-g69"/>
                         <outlet property="showRulesMenuItem" destination="gTb-es-ywI" id="47S-s0-p6Q"/>
@@ -34,14 +34,14 @@
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="7jt-YX-8A5"/>
-                        <menuItem title="Start Quarantine Mode..." keyEquivalent="q" id="OFk-fA-NKm">
+                        <menuItem title="Start Inspect Mode" keyEquivalent="i" id="OFk-fA-NKm">
                             <connections>
-                                <action selector="quarantineClicked:" target="Voe-Tx-rLC" id="QAD-eB-PZR"/>
+                                <action selector="inspectModeClicked:" target="Voe-Tx-rLC" id="QAD-eB-PZR"/>
                             </connections>
                         </menuItem>
-                        <menuItem title="Start Isolation Mode..." keyEquivalent="i" id="7Mp-pH-Sy5">
+                        <menuItem title="Start Deny Mode" keyEquivalent="d" id="7Mp-pH-Sy5">
                             <connections>
-                                <action selector="isolationClicked:" target="Voe-Tx-rLC" id="BpX-pf-r6I"/>
+                                <action selector="denyModeClicked:" target="Voe-Tx-rLC" id="BpX-pf-r6I"/>
                             </connections>
                         </menuItem>
                         <menuItem isSeparatorItem="YES" id="QgK-bs-Mwz"/>

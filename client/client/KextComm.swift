@@ -278,8 +278,8 @@ class KextComm {
             switch(event.data.tcp_connection.result) {
             case ALLOWED: return Outcome.allowed
             case BLOCKED: return Outcome.blocked
-            case QUARANTINED: return Outcome.quarantined
-            case ISOLATED: return Outcome.isolated
+            case QUARANTINED: return Outcome.inspectModeBlocked
+            case ISOLATED: return Outcome.denyModeBlocked
             default: return Outcome.unknown
             }
         }()
@@ -479,17 +479,17 @@ class KextComm {
         }
     }
     
-    func isolate(enable: Bool) {
+    func denyMode(enable: Bool) {
         var output : UInt64 = 0
         var outputCount : UInt32 = 1
         
         let methodNum : UInt32 = {
             switch enable {
             case true:
-                print("starting isolation")
+                print("starting deny mode")
                 return 4
             case false:
-                print("stopping isolation")
+                print("stopping deny mode")
                 return 5
             }
         }()
@@ -500,17 +500,17 @@ class KextComm {
     }
     
     
-    func quarantine(enable: Bool) {
+    func inspectMode(enable: Bool) {
         var output : UInt64 = 0
         var outputCount : UInt32 = 1
         
         let methodNum : UInt32 = {
             switch enable {
             case true:
-                print("starting quarantine")
+                print("starting inspect mode")
                 return 2
             case false:
-                print("stopping quarantine")
+                print("stopping inspect mode")
                 return 3
             }
         }()

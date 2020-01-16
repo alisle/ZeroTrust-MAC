@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol StateListener {
+protocol ConnectionStateListener {
     func connectionChanged(_ connection: Connection)
 }

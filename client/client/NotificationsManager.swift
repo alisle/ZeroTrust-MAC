@@ -9,7 +9,7 @@
 import Foundation
 
 
-class NotficiationsManager : StateListener {
+class NotficiationsManager : ConnectionStateListener {
     let showNewConnections : Bool
     
     init() {
@@ -37,22 +37,22 @@ class NotficiationsManager : StateListener {
         NSUserNotificationCenter.default.deliver(notification)
     }
     
-    private func newQuarantined(_ connection: Connection) {
+    private func newInspectModeNotification(_ connection: Connection) {
         let notification = NSUserNotification()
-        notification.identifier = "com.zerotrust.mac.notification.connection.quaranted.\(connection.id)"
-        notification.title = "Quarantined"
+        notification.identifier = "com.zerotrust.mac.notification.connection.inspectmode.\(connection.id)"
+        notification.title = "Inspect Mode"
         notification.subtitle = connection.remoteURL ?? connection.remoteAddress
-        notification.informativeText = "\(connection.displayName) to \(connection.remoteURL ?? connection.remoteAddress) was quarantined"
+        notification.informativeText = "\(connection.displayName) to \(connection.remoteURL ?? connection.remoteAddress) has been attempted"
         notification.soundName = NSUserNotificationDefaultSoundName
         NSUserNotificationCenter.default.deliver(notification)
     }
     
-    private func newIsolated(_ connection: Connection) {
+    private func newDenyModeNotification(_ connection: Connection) {
         let notification = NSUserNotification()
-        notification.identifier = "com.zerotrust.mac.notification.connection.isolated.\(connection.id)"
-        notification.title = "In Isolation"
+        notification.identifier = "com.zerotrust.mac.notification.connection.denymode.\(connection.id)"
+        notification.title = "Deny Mode - Blocked"
         notification.subtitle = connection.remoteURL ?? connection.remoteAddress
-        notification.informativeText = "\(connection.displayName) to \(connection.remoteURL ?? connection.remoteAddress) was blocked, as we are isolated"
+        notification.informativeText = "\(connection.displayName) to \(connection.remoteURL ?? connection.remoteAddress) was blocked, as we are in deny mode"
         notification.soundName = NSUserNotificationDefaultSoundName
         NSUserNotificationCenter.default.deliver(notification)
     }
@@ -65,8 +65,8 @@ class NotficiationsManager : StateListener {
                 newConnection(connection)
             }
         case .blocked: newBlocked(connection)
-        case .isolated: newIsolated(connection)
-        case .quarantined: newQuarantined(connection)
+        case .denyModeBlocked: newDenyModeNotification(connection)
+        case .inspectModeBlocked: newInspectModeNotification(connection)
         case .unknown: break
         }
     }

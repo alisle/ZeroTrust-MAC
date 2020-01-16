@@ -10,9 +10,9 @@ import Foundation
 import SwiftUI
 import MMDB
 
-class Consumer {
+class Consumer : ServiceStateListener {
     private let decisionEngine : DecisionEngine
-    private let state : ConnectionState
+    private let connectionState : ConnectionState
     private let dnsCache = DNSCache()
     private let protocolCache = ProtocolCache()
     
@@ -21,13 +21,26 @@ class Consumer {
     
     private let mmdb : Optional<MMDB> = MMDB()
     
-    init(decisionEngine : DecisionEngine, state: ConnectionState) {
+    init(decisionEngine : DecisionEngine, connectionState: ConnectionState) {
         self.decisionEngine = decisionEngine
-        self.state = state
+        self.connectionState = connectionState
     }
     
     
-    func open() -> Bool {
+    func serviceStateChanged(type: ServiceStateType, serviceEnabled: Bool) {
+        switch type {
+        case .enabled:
+            if serviceEnabled {
+               let _ = self.open()
+            } else {
+                self.close()
+            }
+        case .denyMode: comm.denyMode(enable: serviceEnabled)
+        case .inspectMode: comm.inspectMode(enable: serviceEnabled)
+        }
+    }
+    
+    private func open() -> Bool {
         if isOpen {
             return true
         }
@@ -49,7 +62,7 @@ class Consumer {
         return true
     }
     
-    func close() {
+    private func close() {
         if !isOpen {
             return
         }
@@ -60,14 +73,6 @@ class Consumer {
         comm.disable()
         comm.close()
         
-    }
-    
-    func quarantine(enable: Bool) {
-        comm.quarantine(enable: enable)
-    }
-    
-    func isolate(enable: Bool) {
-        comm.isolate(enable: enable)
     }
     
     func loop() {
@@ -106,11 +111,11 @@ class Consumer {
                         remoteURL: remoteURL,
                         portProtocol: remoteProtocol)
                     
-                    state.new(connection: connection)
+                    connectionState.new(connection: connection)
 
                 case FirewallEventType.connectionUpdate:
                     let update = event as! FirewallConnectionUpdate
-                    state.update(tag: update.tag!, timestamp: update.timestamp, update: update.update)
+                    connectionState.update(tag: update.tag!, timestamp: update.timestamp, update: update.update)
                     
                 case FirewallEventType.dnsUpdate:
                     let update = event as! FirewallDNSUpdate

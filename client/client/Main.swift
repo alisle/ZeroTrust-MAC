@@ -17,16 +17,23 @@ class Main {
     private let notifications = NotficiationsManager()
     private let consumerQueue = DispatchQueue(label: "com.zeortrust.mac.consumerQueue", attributes: .concurrent)
     
+    let serviceState : ServiceState = ServiceState()
     let viewState : ViewState = ViewState()
-
+    
     init() {
-        self.consumer = Consumer(decisionEngine: decisionEngine, state: connectionState)
+        self.consumer = Consumer(decisionEngine: decisionEngine, connectionState: connectionState)
         connectionState.addListener(listener: viewState)
         connectionState.addListener(listener: notifications)
-        self.preferences = Preferences.load()!        
+        
+        serviceState.addListener(type: .enabled, listener: consumer)
+        serviceState.addListener(type: .denyMode, listener: consumer)
+        serviceState.addListener(type: .inspectMode, listener: consumer)
+        
+        self.preferences = Preferences.load()!
     }
     
     func entryPoint() {
+        serviceState.enabled = true
         consumerQueue.async { [weak self] in
             guard let self = self else {
                 return
@@ -40,26 +47,6 @@ class Main {
     
     private func startTimers() {
         rulesUpdate()
-    }
-    
-    func enable() {
-        let _ = consumer.open()
-        viewState.enabled(true)
-    }
-    
-    func disable() {
-        consumer.close()
-        viewState.enabled(false)
-    }
-        
-    func isolate(enable: Bool) {
-        consumer.isolate(enable: enable)
-        viewState.isolated(enable)
-    }
-    
-    func quanrantine(enable: Bool) {
-        consumer.quarantine(enable: enable)
-        viewState.quarantined(enable)
     }
     
     func getRules() {
@@ -87,7 +74,6 @@ class Main {
     func exitPoint() {
         
     }
-    
-    
+
 
 }

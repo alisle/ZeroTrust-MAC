@@ -9,10 +9,10 @@
 import SwiftUI
 
 
-struct ConnectionsVIew : View  {
+struct ConnectionsView : View  {
     
     @EnvironmentObject var viewState : ViewState
-    
+    @EnvironmentObject var serviceState : ServiceState
 
     var connectionsContainer : some View {
         VStack(alignment: .leading) {
@@ -20,7 +20,7 @@ struct ConnectionsVIew : View  {
                 ConnectionListView()
                     .frame(minWidth: 400, maxWidth: 600, minHeight: 200)
                 
-                if viewState.enabled {
+                if serviceState.enabled {
                     Text("Such Empty!")
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
@@ -100,7 +100,7 @@ struct ContentView_Previews : PreviewProvider {
             generateTestConnection(direction: ConnectionDirection.outbound)
         ])
 
-        return ConnectionsVIew().environmentObject(viewState)
+        return ConnectionsView().environmentObject(viewState)
     }
 }
 #endif

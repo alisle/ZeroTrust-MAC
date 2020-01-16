@@ -11,8 +11,8 @@ import Foundation
 enum Outcome : Int {
     case allowed = 0,
     blocked,
-    quarantined,
-    isolated,
+    inspectModeBlocked,
+    denyModeBlocked,
     unknown
     
     var description : String {
@@ -20,8 +20,8 @@ enum Outcome : Int {
         case .unknown : return "Unknown"
         case .allowed : return "Allowed"
         case .blocked : return "Blocked"
-        case .quarantined : return "Quarantined"
-        case .isolated: return "Isolated"
+        case .inspectModeBlocked : return "Inspect Mode - Blocked"
+        case .denyModeBlocked: return "Deny Mode - Blocked"
         }
     }
 }

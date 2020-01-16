@@ -12,7 +12,7 @@ import Foundation
 class ConnectionState {
     private var state = [UUID: Connection]()
     private let connectionQueue = DispatchQueue(label: "com.zerotrust.mac.connectionQueue", attributes: .concurrent)
-    private var listeners : [StateListener] = []
+    private var listeners : [ConnectionStateListener] = []
     
     init() {
         trim()
@@ -28,7 +28,7 @@ class ConnectionState {
         }
     }
 
-    func addListener(listener : StateListener) {
+    func addListener(listener : ConnectionStateListener) {
         self.connectionQueue.sync { [weak self] in
             guard let self = self else {
                 return

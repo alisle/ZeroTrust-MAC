@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class ViewState : ObservableObject, StateListener {
+class ViewState : ObservableObject, ConnectionStateListener {
     private let sort : (Connection, Connection) -> Bool = { (lhs, rhs) in
         switch lhs.startTimestamp.compare(rhs.startTimestamp) {
         case .orderedAscending: return false
@@ -35,10 +35,6 @@ class ViewState : ObservableObject, StateListener {
     private(set) var counts : [GraphCountry] = []
     private(set) var amountsOverHour : [Int]
     
-    private(set) var enabled = true
-    private(set) var quarantine = false
-    private(set) var isolated = false
-    
     var rules : Rules
 
     init() {
@@ -62,21 +58,6 @@ class ViewState : ObservableObject, StateListener {
         } else {
             self.lastConnections = aliveConnections
         }
-    }
-    
-    func quarantined(_ enabled: Bool) {
-        self.quarantine = enabled
-        self.objectWillChange.send()
-    }
-    
-    func isolated(_ enabled: Bool) {
-        self.isolated = enabled
-        self.objectWillChange.send()
-    }
-    
-    func enabled(_ enabled: Bool) {
-        self.enabled = enabled
-        self.objectWillChange.send()
     }
     
     func updateCounts() -> [GraphCountry] {
