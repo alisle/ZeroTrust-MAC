@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftUI
-import MMDB
+import IP2Location
 
 class Consumer : ServiceStateListener {
     private let decisionEngine : DecisionEngine
@@ -19,11 +19,24 @@ class Consumer : ServiceStateListener {
     private var isOpen = false
     private var comm = KextComm()
     
-    private let mmdb : Optional<MMDB> = MMDB()
+    private let ipdb : Optional<IP2DBLocate>
     
     init(decisionEngine : DecisionEngine, connectionState: ConnectionState) {
         self.decisionEngine = decisionEngine
         self.connectionState = connectionState
+        if let filepath = Bundle.main.url(forResource: "IP2LOCATION-LITE-DB11", withExtension: "BIN") {
+            do {
+                print("processing the CSV fucking mess")
+                self.ipdb = try IP2DBLocate(file: filepath)
+                print("finished processing the fucking mess")
+            } catch  {
+                print("Unable to load IP2Location database")
+                self.ipdb = nil
+            }
+        } else {
+            self.ipdb = nil
+        }
+        
     }
     
     
@@ -103,7 +116,7 @@ class Consumer : ServiceStateListener {
                     let remoteURL = dnsCache.get(firewallEvent.remoteAddress)
                     let remoteProtocol = protocolCache.get(firewallEvent.remotePort)
                     let tcpConnection = event as! TCPConnection
-                    let country = mmdb?.lookup(tcpConnection.remoteAddress)?.isoCode
+                    let country = self.ipdb?.find(tcpConnection.remoteAddress)?.iso
                     
                     let connection = Connection(
                         connection: tcpConnection,
