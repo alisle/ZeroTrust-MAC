@@ -9,7 +9,7 @@
 import Foundation
 
 
-class ConnectionState {
+class ConnectionState  {
     private var state = [UUID: Connection]()
     private let connectionQueue = DispatchQueue(label: "com.zerotrust.mac.connectionQueue", attributes: .concurrent)
     private var listeners : [ConnectionStateListener] = []

@@ -15,7 +15,7 @@ class DNSCache {
         QuestionAnsweredRecord = 2
     }
     
-    struct Record : Hashable {
+    struct Record : Hashable, CustomStringConvertible {
         let type: RecordType
         let url: String
         let ip : String
@@ -26,8 +26,8 @@ class DNSCache {
             self.ip = ip
         }
         
-        func dump() {
-            print("Type:\(type) URL: \(url) IP: \(ip)")
+        public var description: String {
+            return String("Type:\(type) URL: \(url) IP: \(ip)")
         }
     }
     

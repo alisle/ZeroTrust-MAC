@@ -7,10 +7,13 @@
 //
 
 import Foundation
+import Logging
 
 typealias QueryResult = (Rules?, String) -> Void
 
 class RulesDispatcher {
+    let logger = Logger(label: "com.zerotrust.client.RulesDispatcher")
+
     let url : Optional<URL>
     let session = URLSession(configuration: .default)
     
@@ -34,9 +37,9 @@ class RulesDispatcher {
             if let error = error {
                 self?.errorMessage = error.localizedDescription
             } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                print("rules downloaded..converting from json..")
+                self?.logger.debug("rules downloaded..converting from json..")
                 let rules = self?.processData(data)
-                print("rules have been converted")
+                self?.logger.debug("rules have been converted")
                 
                 DispatchQueue.main.async {
                     callback(rules, self?.errorMessage ?? "")
@@ -44,7 +47,7 @@ class RulesDispatcher {
             }
         }
         
-        print("starting to download rules..")
+        logger.debug("starting to download rules..")
         task?.resume()
     }
     

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Logging
 
 struct DNSHeader {
     var id : UInt16;
@@ -23,6 +24,8 @@ enum DNSAnswerError: Error {
 
 
 class KextComm {
+    let logger = Logger(label: "com.zerotrust.client.KextComm")
+
     private var notificationPortOpen = false
     private var notificationMemory : mach_vm_address_t = 0
     private var notificationMemorySize : mach_vm_size_t = 0
@@ -42,12 +45,12 @@ class KextComm {
         service = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("com_notrust_firewall_driver"))
         
         if service == 0 {
-            print("unable to find service")
+            logger.error("unable to find service")
             return false
         }
         
         if kIOReturnSuccess != IOServiceOpen(service, mach_task_self_, 0, &connection) {
-            print("unable to open service")
+            logger.error("unable to open service")
             IOObjectRelease(service)
             service = 0
             isOpen = false
@@ -55,7 +58,7 @@ class KextComm {
             isOpen = true
         }
         
-        print("successfully opened service")
+        logger.debug("successfully opened service")
         return isOpen
     }
     
@@ -78,12 +81,12 @@ class KextComm {
         
         notificationPort = IODataQueueAllocateNotificationPort()
         if notificationPort == 0 {
-            print("unable to create notification port!")
+            logger.error("unable to create notification port!")
             return false
         }
         
         if kIOReturnSuccess != IOConnectSetNotificationPort(connection, 0x1, notificationPort, 0x0)  {
-            print("unable to set notication port!")
+            logger.error("unable to set notication port!")
             return false
         }
         
@@ -94,7 +97,7 @@ class KextComm {
                                                   &notificationMemory,
                                                   &notificationMemorySize,
                                                   IOOptionBits(kIOMapAnywhere)) {
-            print("unable to map memory")
+            logger.error("unable to map memory")
             return false
         }
         
@@ -110,7 +113,7 @@ class KextComm {
         }
         
         if kIOReturnSuccess != IOConnectUnmapMemory(connection, UInt32(kIODefaultMemoryType), mach_task_self_, notificationMemory) {
-            print("Unable to unmap memory, this isn't good")
+            logger.error("Unable to unmap memory, this isn't good")
         }
         
         notificationPortOpen = false
@@ -128,24 +131,24 @@ class KextComm {
         var size : UInt32 = UInt32(MemoryLayout<firewall_event>.size)
         var buffer = firewall_event()
         
-        print("trying to dequeue")
+        logger.info("trying to dequeue")
         if kIOReturnSuccess != IODataQueueDequeue(queue, &buffer, &size) {
-            print("Unable to dequeue data")
+            logger.error("Unable to dequeue data")
             return Optional.none
         }
         
         
-        print("checking buffer type")
+        logger.info("checking buffer type")
         switch buffer.type {
         case outbound_connection:
-            print("outbound connection")
+            logger.info("outbound connection")
             return processTCPConnection(event: &buffer, inbound: false)
         case inbound_connection:
-            print("inbound connection")
+            logger.info("inbound connection")
             return processTCPConnection(event: &buffer, inbound: true)
             
         case connection_update:
-            print("connection update")
+            logger.info("connection update")
 
             let uuid = UUID.init(uuid:buffer.tag)
             let timestamp = Double(buffer.timestamp);
@@ -169,13 +172,13 @@ class KextComm {
             }
             
             if( update == nil) {                
-                print("have an update type we don't care about skipping")
+                logger.debug("have an update type we don't care about skipping")
                 return Optional.none
             }
             
             return FirewallConnectionUpdate(tag: uuid, timestamp: timestamp, update: update!)
         case dns_update:
-            print("dns update")
+            logger.info("dns update")
 
             var aRecords : [ARecord] = []
             var cNameRecords : [CNameRecord] = []
@@ -192,14 +195,14 @@ class KextComm {
             }
             
             for x in 0..<header.answerCount {
-                print("Processing Answer count: \(x)")
+                logger.info("Processing Answer count: \(x)")
                 do {
                     let (updatedPointer: updatedPointer, aRecord: aRecord, cNameRecord: cNameRecord) = try processDNSAnswer(startPointer: startPointer, currentPointer: pointer)
                     pointer = updatedPointer
                     aRecord.map { aRecords.append($0) }
                     cNameRecord.map { cNameRecords.append($0) }
                 } catch  {
-                    print("unable to process this dns update")
+                    logger.error("unable to process this dns update")
                     return nil
                 }
 
@@ -212,7 +215,7 @@ class KextComm {
             )
             
         case query:
-            print("query")
+            logger.info("query")
             var message = buffer.data.query_event
             
             let tag = UUID.init(uuid: buffer.tag)
@@ -248,10 +251,9 @@ class KextComm {
             )
             
         default:
-            print("Unknown firewall type")
+            logger.error("Unknown firewall type")
         }
         
-        print("nothing..")
         return Optional.none
     }
     
@@ -321,10 +323,6 @@ class KextComm {
         let lengthResult = grabUInt16(pointer: pointer)
         pointer = lengthResult.updatedPointer
         let length = lengthResult.value
-        if(length > 100) {
-            print("This length can not be correct")
-        }
-        
         var cNameRecord : Optional<CNameRecord> = nil
         var aRecord : Optional<ARecord> = nil
             
@@ -335,7 +333,7 @@ class KextComm {
                     let (updatedPointer: _, ip: ip) = grabIPv4String(currentPointer: pointer)
                     aRecord = ARecord(url: url, ip: ip)
                 } else {
-                    print("We have an A record which is larger than 4 Bytes. This is weird?")
+                    logger.error("We have an A record which is larger than 4 Bytes. This is weird?")
                 }
             case 0x5:
                 let (updatedPointer: _, url: cname)  = grabURL(startPointer: startPointer, offsetPointer: startPointer.advanced(by: Int(offsetResult.offsetPosition)))
@@ -381,7 +379,7 @@ class KextComm {
         if( offset & 0xC000 == 0xC000 ) {
             // we have a compressed query.
             offset = UInt16(offset & (0xFFFF - 0xC000))
-            print("we have a compressed query")
+            logger.info("we have a compressed query")
             isCompressed.toggle()
         }
 
@@ -408,7 +406,7 @@ class KextComm {
                 let offsetPointer = UInt16(offset & (0xFFFF - 0xC000))
                 currentPointer = startPointer.advanced(by: Int(offsetPointer))
                 size = currentPointer.load(as: UInt8.self).bigEndian
-                print("we are going to a new jump point")
+                logger.info("we are going to a new jump point")
             }
         }
         
@@ -461,7 +459,7 @@ class KextComm {
         var outputCount : UInt32 = 1;
         
         if kIOReturnSuccess != IOConnectCallScalarMethod(connection, 0, nil, 0, &output, &outputCount) {
-            print("unable to communicate with driver!")
+            logger.error("unable to communicate with driver!")
             return false
         }
         
@@ -475,7 +473,7 @@ class KextComm {
     func disable() {
         var outputCount : UInt32 = 0;
         if kIOReturnSuccess != IOConnectCallScalarMethod(connection, 1, nil, 0, nil, &outputCount) {
-            print("unable to communicate with driver!")
+            logger.error("unable to communicate with driver!")
         }
     }
     
@@ -486,16 +484,16 @@ class KextComm {
         let methodNum : UInt32 = {
             switch enable {
             case true:
-                print("starting deny mode")
+                logger.debug("starting deny mode")
                 return 4
             case false:
-                print("stopping deny mode")
+                logger.debug("stopping deny mode")
                 return 5
             }
         }()
 
         if kIOReturnSuccess != IOConnectCallScalarMethod(connection, methodNum, nil, 0, &output, &outputCount) {
-            print("unable to communicate with driver!")
+            logger.error("unable to communicate with driver!")
         }
     }
     
@@ -507,16 +505,16 @@ class KextComm {
         let methodNum : UInt32 = {
             switch enable {
             case true:
-                print("starting inspect mode")
+                logger.debug("starting inspect mode")
                 return 2
             case false:
-                print("stopping inspect mode")
+                logger.debug("stopping inspect mode")
                 return 3
             }
         }()
 
         if kIOReturnSuccess != IOConnectCallScalarMethod(connection, methodNum, nil, 0, &output, &outputCount) {
-            print("unable to communicate with driver!")
+            logger.error("unable to communicate with driver!")
         }
     }
     
@@ -524,7 +522,7 @@ class KextComm {
         var inputs = [ UInt64(id), UInt64(allowed) ];
         
         if kIOReturnSuccess != IOConnectCallScalarMethod(connection, 6, &inputs, 2, nil, nil) {
-            print("unable to write to driver!")
+            logger.error("unable to write to driver!")
         }
     }
         

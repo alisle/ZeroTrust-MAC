@@ -7,8 +7,11 @@
 //
 
 import Foundation
+import Logging
 
 class Main {
+    let logger = Logger(label: "com.zerotrust.client.Main")
+
     private let consumer : Consumer
     private let decisionEngine = DecisionEngine()
     private let rulesDispatcher = RulesDispatcher()
@@ -50,13 +53,13 @@ class Main {
     }
     
     func getRules() {
-        print("Getting Rules")
+        logger.info("Getting Rules")
         self.rulesDispatcher.getRules { [weak self] results, errorMessage in
             if let results = results {
                 self?.decisionEngine.set(rules: results)
                 self?.viewState.rules = results
             } else {
-                print(errorMessage)
+                self?.logger.error("\(errorMessage)")
             }
         }
     }

@@ -9,8 +9,11 @@
 import Foundation
 import SwiftUI
 import IP2Location
+import Logging
 
 class Consumer : ServiceStateListener {
+    let logger = Logger(label: "com.zerotrust.client.Consumer")
+
     private let decisionEngine : DecisionEngine
     private let connectionState : ConnectionState
     private let dnsCache = DNSCache()
@@ -26,11 +29,10 @@ class Consumer : ServiceStateListener {
         self.connectionState = connectionState
         if let filepath = Bundle.main.url(forResource: "IP2LOCATION-LITE-DB11", withExtension: "BIN") {
             do {
-                print("processing the CSV fucking mess")
+                logger.info("loading IP2Location DB")
                 self.ipdb = try IP2DBLocate(file: filepath)
-                print("finished processing the fucking mess")
             } catch  {
-                print("Unable to load IP2Location database")
+                logger.error("Unable to load IP2Location database")
                 self.ipdb = nil
             }
         } else {
@@ -91,25 +93,23 @@ class Consumer : ServiceStateListener {
     func loop() {
         while true {
             while isOpen {
-                print("checking for data")
+                logger.debug("checking for data")
                 if !comm.hasData() {
-                    print("waiting on data")
+                    logger.debug("waiting on data")
 
                     if !comm.waitForData() {
-                        print("wait for data failed....")
+                        logger.error("wait for data failed.")
                         return
                     }
-                    
-                    print("got data")
                 }
 
-                print("dequeuing data")
+                logger.info("dequeuing data")
                 guard let event = comm.dequeue() else {
-                    print("event is null skipping")
+                    logger.debug("event is null skipping")
                     continue
                 }
                 
-                print("processing event")
+                logger.info("processing event")
                 switch(event.eventType) {
                 case FirewallEventType.outboundConnection:
                     let firewallEvent = event as! TCPConnection
@@ -159,9 +159,9 @@ class Consumer : ServiceStateListener {
                     continue
                 }
                 
-                print("finished processing event")
+                logger.info("finished processing event")
             }
-            print("sleeping because we aren't open")
+            logger.debug("sleeping because we aren't open")
             sleep(10)
         }
     }

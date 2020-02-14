@@ -8,9 +8,11 @@
 
 import Cocoa
 import SwiftUI
+import Logging
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, ServiceStateListener {
+    let logger = Logger(label: "com.zerotrust.client.AppDeletegate")
 
     var connectionsWindow: NSWindow!
     var rulesWindow: NSWindow!
@@ -23,7 +25,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceStateListener {
     let connectionsIcon = NSImage(named: "Connections")
     let statusBarIcon = NSImage(named: "StatusBarIcon")
     let denyModeIcon = NSImage(named: "DenyMode")
-    
     
     @IBOutlet weak var statusMenu: NSMenu!
     @IBOutlet weak var enabledMenuItem: NSMenuItem!
@@ -85,12 +86,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceStateListener {
     }
     
     @IBAction func showRulesClicked(_ sender: Any) {
-        print("opening rules window")
+        logger.info("opening rules window")
         rulesWindow.makeKeyAndOrderFront(nil)
     }
     
     @IBAction func showConnectionsClicked(_ sender: Any) {
-        print("opening connections window")
+        logger.info("opening connections window")
+        
         connectionsWindow.makeKeyAndOrderFront(nil)
     }
     

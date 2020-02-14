@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Logging
 
 enum Decision : CaseIterable {
     case Allow
@@ -24,6 +25,8 @@ enum Decision : CaseIterable {
 
 
 class DecisionEngine {
+    let logger = Logger(label: "com.zerotrust.client.DecisionEngine")
+
     private var rules : Optional<Rules> = nil
     private let rulesLock = NSLock()
     private var lastUpdate = NSDate().timeIntervalSince1970
@@ -91,17 +94,17 @@ class DecisionEngine {
     func decide(_ query: FirewallQuery) -> Decision {
         
         if checkDomain(query.remoteURL) == Decision.Deny {
-            print("Denying connection based on domain rule");
+            logger.info("Denying connection based on domain rule");
             return Decision.Deny
         }
         
         if checkHostname(query.remoteURL) == Decision.Deny {
-            print("Denying connection based on hostname rule");
+            logger.info("Denying connection based on hostname rule");
             return Decision.Deny
         }
         
         if checkHostname(query.remoteAddress) == Decision.Deny {
-            print("Denying connection based on hostname rule for IP");
+            logger.info("Denying connection based on hostname rule for IP");
             return Decision.Deny
         }
         

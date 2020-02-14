@@ -17,7 +17,7 @@ enum FirewallEventType : Int {
 }
 
 
-class FirewallEvent {
+class FirewallEvent : CustomStringConvertible {
     let eventType : FirewallEventType
     let tag : Optional<UUID>
     
@@ -26,9 +26,8 @@ class FirewallEvent {
         self.tag = tag
     }
     
-    func dump() {
-        print("-------------- \(eventType) --------------")
-        print("Tag: \(String(describing: tag))")
+    public var description: String {
+        return "EventType: \(String(describing: tag)) "
     }
 }
 
@@ -44,22 +43,18 @@ class FirewallDNSUpdate : FirewallEvent {
         super.init(type: FirewallEventType.dnsUpdate, tag: nil)
     }
     
-    override func dump() {
-        super.dump()
-        print("A Records:")
-        self.aRecords.forEach {
-            print("  \($0.url) -> \($0.ip)")
-        }
+    public override var description: String {
+        var description = super.description
+        description.append("\nA Records:\n")
+        self.aRecords.forEach { description.append("\t\($0.url) -> \($0.ip)\n") }
         
-        print("CName Records:")
-        self.cNameRecords.forEach {
-            print("  \($0.url) -> \($0.cName)")
-        }
+        description.append("\nCName Records:\n")
+        self.cNameRecords.forEach { description.append("\t\($0.url) -> \($0.cName)\n") }
         
-        print("Questions:")
-        self.questions.forEach {
-            print("  \($0)")
-        }
+        description.append("\nQuestions:\n")
+        self.questions.forEach { description.append("\t\($0)\n") }
+        
+        return description
     }
 }
 
@@ -74,9 +69,11 @@ class FirewallConnectionUpdate : FirewallEvent {
         super.init(type: FirewallEventType.connectionUpdate, tag: tag)
     }
     
-    override func dump() {
-        super.dump()
-        print("Update Type: \(update)")
+    public override var description: String {
+        var description = super.description
+        description.append("\nUpdate Type: \(update)")
+        
+        return description
     }
 }
 
@@ -212,51 +209,51 @@ class TCPConnection : FirewallEvent {
         return procName
     }
     
-    override func dump() {
-        super.dump()
-        print("PID: \(pid)")
-        print("PPID: \(ppid)")
-        print("App Name: \(displayName)")
-        print("Local Address: \(localAddress)")
-        print("Local Port: \(localPort)")
+    public override var description : String {
+        var description = super.description
+        
+        description.append("\n\tPID: \(pid)")
+        description.append("\n\tPPID: \(ppid)")
+        description.append("\n\tApp Name: \(displayName)")
+        description.append("\n\tLocal Address: \(localAddress)")
+        description.append("\n\tLocal Port: \(localPort)")
         
         if(self.uid != nil) {
-            print("UID: \(self.uid!)")
+            description.append("\n\tUID: \(self.uid!)")
         }
         
         if(self.user != nil) {
-            print("Username: \(self.user!)")
+            description.append("\n\tUsername: \(self.user!)")
         }
         
         if(self.process != nil) {
-            print("Local Process: \(self.process!)")
+            description.append("\n\tLocal Process: \(self.process!)")
         }
         
         if self.parentProcess != nil {
-            print("Local Parent Process: \(self.parentProcess!)")
+            description.append("\n\tLocal Parent Process: \(self.parentProcess!)")
         }
         
         if self.processBundle != nil {
-            print("Local Bundle Name: \(self.processBundle!.displayName ?? "null" )")
+            description.append("\n\tLocal Bundle Name: \(self.processBundle!.displayName ?? "null" )")
         }
         
         if self.parentBundle != nil {
-            print("Local Parent Bundle Name: \(self.parentBundle!.displayName!)")
+            description.append("\n\tLocal Parent Bundle Name: \(self.parentBundle!.displayName!)")
         }
         
         if self.processTopLevelBundle != nil {
-            print("Local Top Level Bundle Name: \(self.processTopLevelBundle!.displayName ?? "null" )")
+            description.append("\n\tLocal Top Level Bundle Name: \(self.processTopLevelBundle!.displayName ?? "null" )")
         }
         
         if self.parentTopLevelBundle != nil {
-            print("Local Top Level Parent Bundle Name: \(self.parentTopLevelBundle!.displayName ?? "null")")
+            description.append("\n\tLocal Top Level Parent Bundle Name: \(self.parentTopLevelBundle!.displayName ?? "null")")
         }
         
         
-        print("Remote Address: \(remoteAddress)")
-        print("Remote port: \(remotePort)")
-        //print("--------------------------------------------")
-        print("")
+        description.append("\n\tRemote Address: \(remoteAddress)")
+        description.append("\n\tRemote port: \(remotePort)\n")
         
+        return description
     }
 }
