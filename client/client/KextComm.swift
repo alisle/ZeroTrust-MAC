@@ -366,11 +366,10 @@ class KextComm {
         return (currentPointer, url)
     }
     
-    private func grabIPv4String(currentPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, ip: String) {
+    private func grabIPv4String(currentPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, ip: IPAddress) {
         var (updatedPointer: pointer, value: address) = grabUInt32(pointer: currentPointer)
         address = address.bigEndian
-        let addressString = Helpers.getIPString(address: &address)
-        return (pointer, addressString!)
+        return (pointer, IPAddress(UInt32NetworkByeOrder: address))
     }
     
     private func grabAnswerOffsetPosition(currentPointer: UnsafeMutableRawPointer) -> (updatedPointer: UnsafeMutableRawPointer, offsetPosition: UInt16, isCompressed: Bool) {

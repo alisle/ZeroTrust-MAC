@@ -27,11 +27,11 @@ struct Connection : Hashable, Identifiable {
     
     let country : Optional<String>
     
-    let remoteAddress : String
+    let remoteAddress : IPAddress
     let remoteURL: Optional<String>
     let portProtocol : Optional<Protocol>
     
-    let localAddress : String
+    let localAddress : IPAddress
     
     let localPort : Int
     let remotePort : Int
@@ -72,7 +72,7 @@ struct Connection : Hashable, Identifiable {
     }
     
     var remoteDisplayAddress : String {
-        return remoteURL ?? remoteAddress
+        return remoteURL ?? remoteAddress.description
     }
 
     var remoteProtocol : String {
@@ -96,10 +96,10 @@ struct Connection : Hashable, Identifiable {
          ppid : pid_t,
          uid : Optional<uid_t>,
          user : Optional<String>,
-         remoteAddress : String,
+         remoteAddress : IPAddress,
          remoteURL: Optional<String>,
          portProtocol : Optional<Protocol>,
-         localAddress : String,
+         localAddress : IPAddress,
          localPort : Int,
          remotePort : Int,
          process : Optional<String>,
@@ -206,10 +206,10 @@ struct Connection : Hashable, Identifiable {
         ppid : pid_t,
         uid : Optional<uid_t>,
         user : Optional<String>,
-        remoteAddress : String,
+        remoteAddress : IPAddress,
         remoteURL: Optional<String>,
         portProtocol : Optional<Protocol>,
-        localAddress : String,
+        localAddress : IPAddress,
         localPort : Int,
         remotePort : Int,
         process : Optional<String>,

@@ -51,7 +51,7 @@ class ConnectionState  {
     }
     
     func new(connection: Connection) {
-        if connection.remoteAddress != "127.0.0.1" {
+        if !connection.remoteAddress.localhost {
             self.connectionQueue.async(flags: .barrier) { [weak self] in
                 guard let self = self else {
                     return

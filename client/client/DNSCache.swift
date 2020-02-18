@@ -18,9 +18,9 @@ class DNSCache {
     struct Record : Hashable, CustomStringConvertible {
         let type: RecordType
         let url: String
-        let ip : String
+        let ip : IPAddress
         
-        init(type: RecordType, url: String, ip: String) {
+        init(type: RecordType, url: String, ip: IPAddress) {
             self.type = type
             self.url = url
             self.ip = ip
@@ -32,10 +32,10 @@ class DNSCache {
     }
     
     
-    private var ARecord2IPs = [String: Set<String>]()
+    private var ARecord2IPs = [String: Set<IPAddress>]()
     private let ARecord2IPsLock = NSLock()
     
-    private var Cache = [String: Record]()
+    private var Cache = [IPAddress: Record]()
     private let cacheLock = NSLock()
     
     private var ARecord2CNames = [String: Set<String>]()
@@ -89,7 +89,7 @@ class DNSCache {
         CName2ARecordLock.unlock()
     }
     
-    func update(url: String, ip: String) {
+    func update(url: String, ip: IPAddress) {
         
         // If it doesn't exist, add it.
         cacheLock.lock()
@@ -104,7 +104,7 @@ class DNSCache {
         cacheLock.unlock()
         
         // Update our list of IPS known for this A Record
-        var records : Set<String> = []
+        var records : Set<IPAddress> = []
         
         ARecord2IPsLock.lock()
         if let ips = ARecord2IPs[url] {
@@ -119,7 +119,7 @@ class DNSCache {
         checkCName(url: url, ip: ip)
     }
     
-    func get(_ ip: String) -> Optional<String> {
+    func get(_ ip: IPAddress) -> Optional<String> {
         guard let record = Cache[ip] else {
             return nil
         }
@@ -127,7 +127,7 @@ class DNSCache {
         return record.url
     }
     
-    private func checkCName(url: String, ip: String) {
+    private func checkCName(url: String, ip: IPAddress) {
         ARecord2CNamesLock.lock()
         
         if let cNames = ARecord2CNames[url] {

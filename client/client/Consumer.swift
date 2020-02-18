@@ -116,7 +116,7 @@ class Consumer : ServiceStateListener {
                     let remoteURL = dnsCache.get(firewallEvent.remoteAddress)
                     let remoteProtocol = protocolCache.get(firewallEvent.remotePort)
                     let tcpConnection = event as! TCPConnection
-                    let country = self.ipdb?.find(tcpConnection.remoteAddress)?.iso
+                    let country = self.ipdb?.find(tcpConnection.remoteAddress.representation)?.iso
                     
                     let connection = Connection(
                         connection: tcpConnection,

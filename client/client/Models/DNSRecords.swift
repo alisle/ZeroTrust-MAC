@@ -10,9 +10,9 @@ import Foundation
 
 public struct ARecord {
     let url : String
-    let ip: String
+    let ip: IPAddress
     
-    init(url: String, ip: String) {
+    init(url: String, ip: IPAddress) {
         self.url = url
         self.ip = ip
     }

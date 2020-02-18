@@ -85,12 +85,12 @@ class FirewallQuery : FirewallEvent {
     let pid: pid_t
     let ppid: pid_t
     
-    let remoteAddress : String
+    let remoteAddress : IPAddress
     let remotePort : Int
     var remoteURL : Optional<String> = nil
     var remoteProtocol: Optional<Protocol> = nil
     
-    let localAddress : String
+    let localAddress : IPAddress
     let localPort : Int
     var localURL: Optional<String> = nil
     var localProtocol: Optional<Protocol> = nil
@@ -100,8 +100,8 @@ class FirewallQuery : FirewallEvent {
          timestamp : TimeInterval,
          pid: pid_t,
          ppid: pid_t,
-         remoteAddress : String,
-         localAddress : String,
+         remoteAddress : IPAddress,
+         localAddress : IPAddress,
          remotePort: Int,
          localPort: Int,
          procName : String
@@ -126,8 +126,8 @@ class TCPConnection : FirewallEvent {
     let ppid : pid_t
     let uid : Optional<uid_t>
     let user : Optional<String>
-    let remoteAddress : String
-    let localAddress : String
+    let remoteAddress : IPAddress
+    let localAddress : IPAddress
     let localPort : Int
     let remotePort : Int
     let process : Optional<String>
@@ -146,8 +146,8 @@ class TCPConnection : FirewallEvent {
          inbound : Bool,
          pid: pid_t,
          ppid: pid_t,
-         remoteAddress : String,
-         localAddress : String,
+         remoteAddress : IPAddress,
+         localAddress : IPAddress,
          remotePort: Int,
          localPort: Int,
          procName : String,
