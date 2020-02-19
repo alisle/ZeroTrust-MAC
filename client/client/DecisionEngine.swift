@@ -103,7 +103,7 @@ class DecisionEngine {
             return Decision.Deny
         }
         
-        if checkHostname(query.remoteAddress.description) == Decision.Deny {
+        if checkHostname(query.remoteSocket.address.description) == Decision.Deny {
             logger.info("Denying connection based on hostname rule for IP");
             return Decision.Deny
         }

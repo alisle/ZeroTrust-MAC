@@ -48,6 +48,9 @@
 		F0701C9123F4894E0002DD82 /* IP2LOCATION-LITE-DB11.BIN in Resources */ = {isa = PBXBuildFile; fileRef = F0701C9023F4894E0002DD82 /* IP2LOCATION-LITE-DB11.BIN */; };
 		F0701C9423F48ED10002DD82 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = F0701C9323F48ED10002DD82 /* Logging */; };
 		F0701C9623FC595B0002DD82 /* IPAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9523FC595B0002DD82 /* IPAddress.swift */; };
+		F0701C9823FC7C2B0002DD82 /* SocketAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9723FC7C2B0002DD82 /* SocketAddress.swift */; };
+		F0701C9A23FC83A30002DD82 /* IPAddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9923FC83A30002DD82 /* IPAddressTests.swift */; };
+		F0701C9C23FDA2110002DD82 /* SocketAddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9B23FDA2110002DD82 /* SocketAddressTests.swift */; };
 		F08982982356A554003DB49B /* RulesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982972356A554003DB49B /* RulesListView.swift */; };
 		F089829A2356A633003DB49B /* RulesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982992356A633003DB49B /* RulesDetailView.swift */; };
 		F091271923E34D7B00D23BD4 /* DNSCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00A491322EF8AFA006932A0 /* DNSCache.swift */; };
@@ -139,6 +142,9 @@
 		F06CF75C239219AB00C7130B /* transformed_countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transformed_countries.json; sourceTree = "<group>"; };
 		F0701C9023F4894E0002DD82 /* IP2LOCATION-LITE-DB11.BIN */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "IP2LOCATION-LITE-DB11.BIN"; sourceTree = "<group>"; };
 		F0701C9523FC595B0002DD82 /* IPAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddress.swift; sourceTree = "<group>"; };
+		F0701C9723FC7C2B0002DD82 /* SocketAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddress.swift; sourceTree = "<group>"; };
+		F0701C9923FC83A30002DD82 /* IPAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressTests.swift; sourceTree = "<group>"; };
+		F0701C9B23FDA2110002DD82 /* SocketAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddressTests.swift; sourceTree = "<group>"; };
 		F08982972356A554003DB49B /* RulesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesListView.swift; sourceTree = "<group>"; };
 		F08982992356A633003DB49B /* RulesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesDetailView.swift; sourceTree = "<group>"; };
 		F0925F32234B79BB00C01F72 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
@@ -281,6 +287,7 @@
 				F058177D238C2D35007F2D85 /* FilterCategory.swift */,
 				F054A6CD23D0E1F800B67460 /* ServiceState.swift */,
 				F0701C9523FC595B0002DD82 /* IPAddress.swift */,
+				F0701C9723FC7C2B0002DD82 /* SocketAddress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -369,6 +376,8 @@
 				F042BDE02343A02C00965781 /* ProtocolCacheTests.swift */,
 				F0331F892363607F00A634D5 /* GraphTests.swift */,
 				F054A6D123D0E97C00B67460 /* ServiceStateTests.swift */,
+				F0701C9923FC83A30002DD82 /* IPAddressTests.swift */,
+				F0701C9B23FDA2110002DD82 /* SocketAddressTests.swift */,
 			);
 			path = clientTests;
 			sourceTree = "<group>";
@@ -575,6 +584,7 @@
 				F054A6D023D0E41100B67460 /* ServiceStateListener.swift in Sources */,
 				F0260FD9237C9219002E2C5C /* ConnectionAmountShape.swift in Sources */,
 				F0E4F82422BBE4E000A38601 /* AppDelegate.swift in Sources */,
+				F0701C9823FC7C2B0002DD82 /* SocketAddress.swift in Sources */,
 				F0FB57102358AED900AAB5F6 /* OutcomeExtension.swift in Sources */,
 				F052C9EB22C1278D005DE1D7 /* Consumer.swift in Sources */,
 				F058177E238C2D35007F2D85 /* FilterCategory.swift in Sources */,
@@ -590,7 +600,9 @@
 				F0E4F83A22BBE4E200A38601 /* clientTests.swift in Sources */,
 				F054A6D223D0E97C00B67460 /* ServiceStateTests.swift in Sources */,
 				F0331F8A2363607F00A634D5 /* GraphTests.swift in Sources */,
+				F0701C9C23FDA2110002DD82 /* SocketAddressTests.swift in Sources */,
 				F0167760233D083F0018DA77 /* DecisionEngineTests.swift in Sources */,
+				F0701C9A23FC83A30002DD82 /* IPAddressTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -18,10 +18,8 @@ class DecisionEngineTests : XCTestCase {
             timestamp: 2.0,
             pid: 1,
             ppid: 0,
-            remoteAddress: "192.168.1.23",
-            localAddress: "127.0.0.1",
-            remotePort: 99,
-            localPort: 102,
+            remoteSocket: SocketAddress(address: IPAddress("192.168.1.23")!, port: 99),
+            localSocket: SocketAddress(address: IPAddress("127.0.0.1")!,  port: 102),
             procName: "phony_mc_lonely"
         )
         

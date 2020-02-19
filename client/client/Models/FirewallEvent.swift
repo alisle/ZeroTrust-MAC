@@ -85,13 +85,12 @@ class FirewallQuery : FirewallEvent {
     let pid: pid_t
     let ppid: pid_t
     
-    let remoteAddress : IPAddress
-    let remotePort : Int
+    let remoteSocket : SocketAddress
+    let localSocket : SocketAddress
+    
     var remoteURL : Optional<String> = nil
     var remoteProtocol: Optional<Protocol> = nil
     
-    let localAddress : IPAddress
-    let localPort : Int
     var localURL: Optional<String> = nil
     var localProtocol: Optional<Protocol> = nil
     
@@ -100,20 +99,16 @@ class FirewallQuery : FirewallEvent {
          timestamp : TimeInterval,
          pid: pid_t,
          ppid: pid_t,
-         remoteAddress : IPAddress,
-         localAddress : IPAddress,
-         remotePort: Int,
-         localPort: Int,
+         remoteSocket : SocketAddress,
+         localSocket : SocketAddress,
          procName : String
         )  {
         self.id = id
         self.timestamp = Date(timeIntervalSince1970: timestamp)
         self.pid = pid
         self.ppid = pid
-        self.localPort = localPort
-        self.localAddress = localAddress
-        self.remotePort = remotePort
-        self.remoteAddress = remoteAddress
+        self.localSocket = localSocket
+        self.remoteSocket = remoteSocket
         self.procName = procName
         super.init(type: FirewallEventType.query, tag: tag)
     }
@@ -126,10 +121,8 @@ class TCPConnection : FirewallEvent {
     let ppid : pid_t
     let uid : Optional<uid_t>
     let user : Optional<String>
-    let remoteAddress : IPAddress
-    let localAddress : IPAddress
-    let localPort : Int
-    let remotePort : Int
+    let remoteSocket : SocketAddress
+    let localSocket : SocketAddress
     let process : Optional<String>
     let parentProcess : Optional<String>
     let parentBundle : Optional<Bundle>
@@ -146,10 +139,8 @@ class TCPConnection : FirewallEvent {
          inbound : Bool,
          pid: pid_t,
          ppid: pid_t,
-         remoteAddress : IPAddress,
-         localAddress : IPAddress,
-         remotePort: Int,
-         localPort: Int,
+         remoteSocket : SocketAddress,
+         localSocket : SocketAddress,
          procName : String,
          outcome : Outcome
         ) {
@@ -158,10 +149,8 @@ class TCPConnection : FirewallEvent {
         self.inbound = inbound
         self.pid = pid
         self.ppid = ppid
-        self.localPort = localPort
-        self.localAddress = localAddress
-        self.remotePort = remotePort
-        self.remoteAddress = remoteAddress
+        self.localSocket = localSocket
+        self.remoteSocket = remoteSocket
         self.process = Helpers.getPidPath(pid: pid)
         self.procName = procName
         self.parentProcess = Helpers.getPidPath(pid: ppid)
@@ -215,8 +204,7 @@ class TCPConnection : FirewallEvent {
         description.append("\n\tPID: \(pid)")
         description.append("\n\tPPID: \(ppid)")
         description.append("\n\tApp Name: \(displayName)")
-        description.append("\n\tLocal Address: \(localAddress)")
-        description.append("\n\tLocal Port: \(localPort)")
+        description.append("\n\tLocal Socket: \(localSocket)")
         
         if(self.uid != nil) {
             description.append("\n\tUID: \(self.uid!)")
@@ -251,8 +239,7 @@ class TCPConnection : FirewallEvent {
         }
         
         
-        description.append("\n\tRemote Address: \(remoteAddress)")
-        description.append("\n\tRemote port: \(remotePort)\n")
+        description.append("\n\tRemote Socket: \(remoteSocket)")
         
         return description
     }

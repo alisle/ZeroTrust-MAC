@@ -49,7 +49,7 @@ public class IPAddress {
     public lazy var localhost : Bool = {
         switch(self.address) {
         case (let .IPv4(addr)):
-            if addr.s_addr == 2130706433 {
+            if addr.s_addr.bigEndian == 2130706433 {
                 return true
             }
             
@@ -69,7 +69,7 @@ public class IPAddress {
             return String.init(cString: hostCString!)
             
         case .IPv6(var addr):
-            let length = Int(INET_ADDRSTRLEN) + 2
+            let length = Int(INET6_ADDRSTRLEN) + 2
             var buffer : Array<CChar> = Array(repeating: 0, count: length)
             let hostCString = inet_ntop(AF_INET6, &addr, &buffer, socklen_t(length))
             return String.init(cString: hostCString!)
@@ -92,7 +92,7 @@ public class IPAddress {
         self.init(addr)
     }
 
-    public convenience init?(address:  String) {
+    public convenience init?(_ address:  String) {
         var addr = in_addr()
         if inet_pton(AF_INET, address, &addr) == 1 {
             self.init(addr)

@@ -27,15 +27,12 @@ struct Connection : Hashable, Identifiable {
     
     let country : Optional<String>
     
-    let remoteAddress : IPAddress
     let remoteURL: Optional<String>
     let portProtocol : Optional<Protocol>
-    
-    let localAddress : IPAddress
-    
-    let localPort : Int
-    let remotePort : Int
-    
+
+    let localSocket : SocketAddress
+    let remoteSocket : SocketAddress
+        
     let process : Optional<String>
     let parentProcess : Optional<String>
     
@@ -64,7 +61,7 @@ struct Connection : Hashable, Identifiable {
             
             hasher.combine(self.direction)
             hasher.combine(self.remoteURL)
-            hasher.combine(self.remoteAddress)
+            hasher.combine(self.remoteSocket)
             hasher.combine(self.pid)
             
             return hasher.finalize()
@@ -72,12 +69,12 @@ struct Connection : Hashable, Identifiable {
     }
     
     var remoteDisplayAddress : String {
-        return remoteURL ?? remoteAddress.description
+        return remoteURL ?? remoteSocket.address.description
     }
 
     var remoteProtocol : String {
         guard let port = self.portProtocol else {
-            return "\(self.remotePort)"
+            return "\(self.remoteSocket.port)"
         }
         
         return port.name
@@ -96,12 +93,10 @@ struct Connection : Hashable, Identifiable {
          ppid : pid_t,
          uid : Optional<uid_t>,
          user : Optional<String>,
-         remoteAddress : IPAddress,
-         remoteURL: Optional<String>,
          portProtocol : Optional<Protocol>,
-         localAddress : IPAddress,
-         localPort : Int,
-         remotePort : Int,
+         remoteURL: Optional<String>,
+         remoteSocket : SocketAddress,
+         localSocket : SocketAddress,
          process : Optional<String>,
          parentProcess : Optional<String>,
          processBundle : Optional<Bundle>,
@@ -119,12 +114,10 @@ struct Connection : Hashable, Identifiable {
         self.ppid = ppid
         self.uid = uid
         self.user = user
-        self.remoteAddress = remoteAddress
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
-        self.localAddress = localAddress
-        self.localPort = localPort
-        self.remotePort = remotePort
+        self.remoteSocket = remoteSocket
+        self.localSocket = localSocket
         self.process = process
         self.parentProcess = parentProcess
         self.processBundle = processBundle
@@ -146,6 +139,7 @@ struct Connection : Hashable, Identifiable {
          country: Optional<String>,
          remoteURL : Optional<String>,
          portProtocol : Optional<Protocol> ) {
+        
         self.direction = {
             switch(connection.inbound) {
             case true: return ConnectionDirection.inbound
@@ -163,14 +157,11 @@ struct Connection : Hashable, Identifiable {
         self.uid = connection.uid
         self.user = connection.user
         
-        self.remoteAddress = connection.remoteAddress
+        self.remoteSocket = connection.remoteSocket
+        self.localSocket = connection.localSocket
+        
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
-        
-        self.localAddress = connection.localAddress
-        
-        self.localPort = connection.localPort
-        self.remotePort = connection.remotePort
         
         self.process = connection.process
         self.parentProcess = connection.parentProcess
@@ -206,12 +197,10 @@ struct Connection : Hashable, Identifiable {
         ppid : pid_t,
         uid : Optional<uid_t>,
         user : Optional<String>,
-        remoteAddress : IPAddress,
-        remoteURL: Optional<String>,
         portProtocol : Optional<Protocol>,
-        localAddress : IPAddress,
-        localPort : Int,
-        remotePort : Int,
+        remoteURL: Optional<String>,
+        remoteSocket : SocketAddress,
+        localSocket : SocketAddress,
         process : Optional<String>,
         parentProcess : Optional<String>,
         processBundle : Optional<Bundle>,
@@ -228,12 +217,10 @@ struct Connection : Hashable, Identifiable {
         self.ppid = ppid
         self.uid = uid
         self.user = user
-        self.remoteAddress = remoteAddress
+        self.remoteSocket = remoteSocket
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
-        self.localAddress = localAddress
-        self.localPort = localPort
-        self.remotePort = remotePort
+        self.localSocket = localSocket
         self.process = process
         self.parentProcess = parentProcess
         self.processBundle = processBundle
@@ -263,12 +250,10 @@ struct Connection : Hashable, Identifiable {
             ppid : self.ppid,
             uid : self.uid,
             user : self.user,
-            remoteAddress : self.remoteAddress,
-            remoteURL: self.remoteURL,
             portProtocol : self.portProtocol,
-            localAddress : self.localAddress,
-            localPort : self.localPort,
-            remotePort : self.remotePort,
+            remoteURL: self.remoteURL,
+            remoteSocket: self.remoteSocket,
+            localSocket: self.localSocket,
             process : self.process,
             parentProcess : self.parentProcess,
             processBundle : self.processBundle,
@@ -292,12 +277,10 @@ struct Connection : Hashable, Identifiable {
             ppid : self.ppid,
             uid : self.uid,
             user : self.user,
-            remoteAddress : self.remoteAddress,
-            remoteURL: self.remoteURL,
             portProtocol : self.portProtocol,
-            localAddress : self.localAddress,
-            localPort : self.localPort,
-            remotePort : self.remotePort,
+            remoteURL: self.remoteURL,
+            remoteSocket: self.remoteSocket,
+            localSocket: self.localSocket,
             process : self.process,
             parentProcess : self.parentProcess,
             processBundle : self.processBundle,

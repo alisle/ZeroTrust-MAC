@@ -9,23 +9,7 @@
 import Foundation
 
 class Helpers {
-    static private var maxArgumentSize = Helpers.getSysCtlMaxArgumentSize()
-    /*
-    static func getIPString(address: inout UInt32) -> String? {
-        let length = Int(INET_ADDRSTRLEN) + 2
-        var buffer : Array<CChar> = Array(repeating: 0, count: length)
-        let hostCString = inet_ntop(AF_INET, &address, &buffer, socklen_t(length))
-        return String.init(cString: hostCString!)
-    }
-    
-    */
-    
-    
-    static func getHostInformation(sockaddr : inout sockaddr_in) -> (host: IPAddress, port: Int)? {
-        let address = IPAddress(sockaddr.sin_addr)
-        let port = Int(UInt16(sockaddr.sin_port).byteSwapped)
-        return (address, port)
-    }
+    static private var maxArgumentSize = Helpers.getSysCtlMaxArgumentSize()    
     
     static private func getSysCtlMaxArgumentSize() -> size_t {
         var mib = [ CTL_KERN, KERN_ARGMAX, 0 ]

@@ -51,7 +51,7 @@ class ConnectionState  {
     }
     
     func new(connection: Connection) {
-        if !connection.remoteAddress.localhost {
+        if !connection.remoteSocket.address.localhost {
             self.connectionQueue.async(flags: .barrier) { [weak self] in
                 guard let self = self else {
                     return
@@ -86,7 +86,7 @@ class ConnectionState  {
             
             for pair  in self.state {
                 let value = pair.value
-                print("\(value.displayName)->\(value.remoteDisplayAddress):\(value.remotePort) -- \(value.state) -- DupeHash: \(value.dupeHash)")
+                print("\(value.displayName)->\(value.remoteSocket)  -- \(value.state) -- DupeHash: \(value.dupeHash)")
             }
         }
     }

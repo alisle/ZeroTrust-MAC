@@ -166,7 +166,7 @@ struct ConnectionDetailsView: View {
                 if connection.portProtocol != nil {
                     protocolDetails
                 } else {
-                    createPair(prompt: "Remote Port", value: "\(connection.remotePort)")
+                    createPair(prompt: "Remote Port", value: "\(connection.remoteSocket.port)")
                 }
             }            
         }

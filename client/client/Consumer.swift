@@ -113,10 +113,10 @@ class Consumer : ServiceStateListener {
                 switch(event.eventType) {
                 case FirewallEventType.outboundConnection:
                     let firewallEvent = event as! TCPConnection
-                    let remoteURL = dnsCache.get(firewallEvent.remoteAddress)
-                    let remoteProtocol = protocolCache.get(firewallEvent.remotePort)
+                    let remoteURL = dnsCache.get(firewallEvent.remoteSocket.address)
+                    let remoteProtocol = protocolCache.get(firewallEvent.remoteSocket.port)
                     let tcpConnection = event as! TCPConnection
-                    let country = self.ipdb?.find(tcpConnection.remoteAddress.representation)?.iso
+                    let country = self.ipdb?.find(tcpConnection.remoteSocket.address.representation)?.iso
                     
                     let connection = Connection(
                         connection: tcpConnection,
@@ -139,11 +139,11 @@ class Consumer : ServiceStateListener {
                 case FirewallEventType.query:
                     let query = event as! FirewallQuery
                                         
-                    let remoteURL = dnsCache.get(query.remoteAddress)
-                    let remoteProtocol = protocolCache.get(query.remotePort)
+                    let remoteURL = dnsCache.get(query.remoteSocket.address)
+                    let remoteProtocol = protocolCache.get(query.remoteSocket.port)
                     
-                    let localURL = dnsCache.get(query.localAddress)
-                    let localProtocol = protocolCache.get(query.localPort)
+                    let localURL = dnsCache.get(query.localSocket.address)
+                    let localProtocol = protocolCache.get(query.localSocket.port)
                     
                     query.remoteURL = remoteURL
                     query.remoteProtocol = remoteProtocol

@@ -229,13 +229,8 @@ class KextComm {
                 return String(cString: ptr)
             }
             
-            guard let remote =  Helpers.getHostInformation(sockaddr: &message.remote) else {
-                return nil
-            }
-                
-            guard let local = Helpers.getHostInformation(sockaddr: &message.local) else {
-                return nil
-            }
+            let remote = SocketAddress(message.remote)
+            let local = SocketAddress(message.local)
             
             return FirewallQuery(
                 tag: tag,
@@ -243,10 +238,8 @@ class KextComm {
                 timestamp: timestamp,
                 pid: pid,
                 ppid: ppid,
-                remoteAddress: remote.host,
-                localAddress: local.host,
-                remotePort: remote.port,
-                localPort: local.port,
+                remoteSocket: remote,
+                localSocket:  local,
                 procName: procName
             )
             
@@ -268,13 +261,8 @@ class KextComm {
             return String(cString: ptr)
         }
         
-        guard let remote =  Helpers.getHostInformation(sockaddr: &event.data.tcp_connection.remote) else {
-            return nil
-        }
-        
-        guard let local = Helpers.getHostInformation(sockaddr: &event.data.tcp_connection.local) else {
-            return nil
-        }
+        let remote = SocketAddress(event.data.tcp_connection.remote)
+        let local = SocketAddress(event.data.tcp_connection.local)
         
         let outcome : Outcome = {
             switch(event.data.tcp_connection.result) {
@@ -292,10 +280,8 @@ class KextComm {
             inbound:  inbound,
             pid: pid,
             ppid: ppid,
-            remoteAddress: remote.0,
-            localAddress: local.0,
-            remotePort: remote.1,
-            localPort: local.1,
+            remoteSocket: remote,
+            localSocket: local,
             procName: procName,
             outcome: outcome
         )
