@@ -51,6 +51,22 @@ func generateTestRules() -> Rules {
     return json.convert()
 }
 
+func generateProcessInfo() -> ProcessInfo {
+    let process = ["Chrome.app", "/usr/bin/ssh", "WhatsApp.app"].randomElement()
+
+    return ProcessInfo(
+        pid: 1021,
+        ppid: 1020,
+        uid: 1000,
+        username: "alisle",
+        command: process,
+        path: "/usr/bin/ssh",
+        parent: nil,
+        bundle: nil,
+        appBundle: nil,
+        sha256: "012012",
+        md5: "1231")
+}
 func generateTestConnection(direction: ConnectionDirection) -> Connection {
     let localPort = Int.random(in: 1025..<40000)
     let remotePort = [ 80, 443, 22, 21, 8100].randomElement()
@@ -64,10 +80,7 @@ func generateTestConnection(direction: ConnectionDirection) -> Connection {
                                 outcome: Outcome.allowed,
                                 tag: UUID(),
                                 start: Date(),
-                                pid: 1021,
-                                ppid: 1020,
-                                uid: 1000,
-                                user: "alisle",
+                                processInfo: generateProcessInfo(),
                                 portProtocol: remoteProtocol,
                                 remoteURL: "www.google.com",
                                 remoteSocket: SocketAddress(address: IPAddress("192.168.2.3")!, port: remotePort!),

@@ -117,129 +117,65 @@ class FirewallQuery : FirewallEvent {
 
 class TCPConnection : FirewallEvent {
     let timestamp : Date
-    let pid : pid_t
-    let ppid : pid_t
-    let uid : Optional<uid_t>
-    let user : Optional<String>
     let remoteSocket : SocketAddress
     let localSocket : SocketAddress
-    let process : Optional<String>
-    let parentProcess : Optional<String>
-    let parentBundle : Optional<Bundle>
-    let processBundle : Optional<Bundle>
-    let parentTopLevelBundle : Optional<Bundle>
-    let processTopLevelBundle: Optional<Bundle>
     let outcome : Outcome
     let inbound : Bool
-    let procName : String
+    let process : ProcessInfo
+    
     var displayName : String = ""
     
     init(tag: UUID,
          timestamp : TimeInterval,
          inbound : Bool,
-         pid: pid_t,
-         ppid: pid_t,
+         process: ProcessInfo,
          remoteSocket : SocketAddress,
          localSocket : SocketAddress,
-         procName : String,
          outcome : Outcome
         ) {
+        
+        self.process = process
         self.timestamp = Date(timeIntervalSince1970: timestamp)
         self.outcome = outcome
         self.inbound = inbound
-        self.pid = pid
-        self.ppid = ppid
         self.localSocket = localSocket
         self.remoteSocket = remoteSocket
-        self.process = Helpers.getPidPath(pid: pid)
-        self.procName = procName
-        self.parentProcess = Helpers.getPidPath(pid: ppid)
-        
-        self.parentBundle = Helpers.getBinaryAppBundle(fullBinaryPath: parentProcess)
-        self.processBundle = Helpers.getBinaryAppBundle(fullBinaryPath: process)
-        
-        self.parentTopLevelBundle = Helpers.getTopLevelAppBundle(fullBinaryPath: parentProcess)
-        
-        self.processTopLevelBundle = Helpers.getTopLevelAppBundle(fullBinaryPath: process)
-        self.uid = Helpers.getUIDForPID(pid: pid)
-        self.user = Helpers.getUsernameFromUID(uid: uid)
         
         super.init(type: FirewallEventType.outboundConnection, tag: tag)
         displayName = createDisplayName()        
     }
     
     private func createDisplayName()  -> String {
-        if processBundle?.displayName != nil {
-            return processBundle!.displayName!
+        if let name = process.bundle?.displayName  {
+            return name
         }
         
-        if parentBundle?.displayName != nil {
-            return parentBundle!.displayName!
+        if let name = process.parent?.bundle?.displayName {
+            return name
         }
         
-        if processTopLevelBundle?.displayName != nil {
-            return processTopLevelBundle!.displayName!
+        if let name = process.appBundle?.displayName  {
+            return name
         }
         
-        if parentTopLevelBundle?.displayName != nil {
-            return parentTopLevelBundle!.displayName!
+        if let name = process.parent?.appBundle?.displayName {
+            return name
         }
         
-        if  let proc = process,
-            let lastIndex = proc.lastIndex(of: "/") {
-            
-            let start = proc.index(after: lastIndex)
-            let end = proc.endIndex
-            let substring = proc[start..<end]
-            
-            return String(substring)
+        if let name = process.command {
+            return name
         }
         
-        return procName
+        return "Unknown"
     }
     
     public override var description : String {
         var description = super.description
         
-        description.append("\n\tPID: \(pid)")
-        description.append("\n\tPPID: \(ppid)")
         description.append("\n\tApp Name: \(displayName)")
         description.append("\n\tLocal Socket: \(localSocket)")
-        
-        if(self.uid != nil) {
-            description.append("\n\tUID: \(self.uid!)")
-        }
-        
-        if(self.user != nil) {
-            description.append("\n\tUsername: \(self.user!)")
-        }
-        
-        if(self.process != nil) {
-            description.append("\n\tLocal Process: \(self.process!)")
-        }
-        
-        if self.parentProcess != nil {
-            description.append("\n\tLocal Parent Process: \(self.parentProcess!)")
-        }
-        
-        if self.processBundle != nil {
-            description.append("\n\tLocal Bundle Name: \(self.processBundle!.displayName ?? "null" )")
-        }
-        
-        if self.parentBundle != nil {
-            description.append("\n\tLocal Parent Bundle Name: \(self.parentBundle!.displayName!)")
-        }
-        
-        if self.processTopLevelBundle != nil {
-            description.append("\n\tLocal Top Level Bundle Name: \(self.processTopLevelBundle!.displayName ?? "null" )")
-        }
-        
-        if self.parentTopLevelBundle != nil {
-            description.append("\n\tLocal Top Level Parent Bundle Name: \(self.parentTopLevelBundle!.displayName ?? "null")")
-        }
-        
-        
         description.append("\n\tRemote Socket: \(remoteSocket)")
+        description.append("\n\t\(process.description)")
         
         return description
     }

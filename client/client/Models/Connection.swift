@@ -13,38 +13,33 @@ struct Connection : Hashable, Identifiable {
     let direction : ConnectionDirection
     
     let id = UUID()
-    
-    
+        
     let tag : UUID
     let startTimestamp : Date
-    let endDateTimestamp : Optional<Date>
+    let endDateTimestamp : Date?
     
-    let pid : pid_t
-    let ppid : pid_t
+    let processInfo : ProcessInfo
+        
+    let country : String?
     
-    let uid : Optional<uid_t>
-    let user : Optional<String>
-    
-    let country : Optional<String>
-    
-    let remoteURL: Optional<String>
-    let portProtocol : Optional<Protocol>
+    let remoteURL: String?
+    let portProtocol : Protocol?
 
     let localSocket : SocketAddress
     let remoteSocket : SocketAddress
         
-    let process : Optional<String>
-    let parentProcess : Optional<String>
+    let process : String?
+    let parentProcess : String?
     
-    let processBundle : Optional<Bundle>
-    let parentBundle: Optional<Bundle>
+    let processBundle : Bundle?
+    let parentBundle: Bundle?
     
-    let processTopLevelBundle: Optional<Bundle>
-    let parentTopLevelBundle : Optional<Bundle>
+    let processTopLevelBundle: Bundle?
+    let parentTopLevelBundle : Bundle?
     
     let displayName : String
     
-    let image : Optional<NSImage>
+    let image : NSImage?
     let state : ConnectionStateType
     
     let outcome : Outcome
@@ -62,7 +57,7 @@ struct Connection : Hashable, Identifiable {
             hasher.combine(self.direction)
             hasher.combine(self.remoteURL)
             hasher.combine(self.remoteSocket)
-            hasher.combine(self.pid)
+            hasher.combine(self.processInfo)
             
             return hasher.finalize()
         }
@@ -89,31 +84,25 @@ struct Connection : Hashable, Identifiable {
          outcome : Outcome,
          tag : UUID,
          start: Date,
-         pid : pid_t,
-         ppid : pid_t,
-         uid : Optional<uid_t>,
-         user : Optional<String>,
-         portProtocol : Optional<Protocol>,
-         remoteURL: Optional<String>,
+         processInfo: ProcessInfo,
+         portProtocol : Protocol?,
+         remoteURL: String?,
          remoteSocket : SocketAddress,
          localSocket : SocketAddress,
-         process : Optional<String>,
-         parentProcess : Optional<String>,
-         processBundle : Optional<Bundle>,
-         parentBundle: Optional<Bundle>,
-         processTopLevelBundle: Optional<Bundle>,
-         parentTopLevelBundle : Optional<Bundle>,
+         process : String?,
+         parentProcess : String?,
+         processBundle : Bundle?,
+         parentBundle: Bundle?,
+         processTopLevelBundle: Bundle?,
+         parentTopLevelBundle : Bundle?,
          displayName : String,
-         country: Optional<String>) {
+         country: String?) {
         
         self.outcome = outcome
         self.direction = direction
         self.startTimestamp = start
         self.tag = tag
-        self.pid = pid
-        self.ppid = ppid
-        self.uid = uid
-        self.user = user
+        self.processInfo = processInfo
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
         self.remoteSocket = remoteSocket
@@ -136,9 +125,9 @@ struct Connection : Hashable, Identifiable {
     }
     
     init(connection: TCPConnection,
-         country: Optional<String>,
-         remoteURL : Optional<String>,
-         portProtocol : Optional<Protocol> ) {
+         country: String?,
+         remoteURL : String?,
+         portProtocol : Protocol? ) {
         
         self.direction = {
             switch(connection.inbound) {
@@ -150,40 +139,35 @@ struct Connection : Hashable, Identifiable {
         self.outcome = connection.outcome
         self.startTimestamp = connection.timestamp
         self.tag = connection.tag!
-        
-        self.pid = connection.pid
-        self.ppid = connection.ppid
-        
-        self.uid = connection.uid
-        self.user = connection.user
-        
+                
         self.remoteSocket = connection.remoteSocket
         self.localSocket = connection.localSocket
         
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
         
-        self.process = connection.process
-        self.parentProcess = connection.parentProcess
+        self.process = connection.process.command
+        self.parentProcess = connection.process.parent?.command
         
-        self.processBundle = connection.processBundle
-        self.parentBundle = connection.parentBundle
+        self.processBundle = connection.process.bundle
+        self.parentBundle = connection.process.parent?.bundle
         
-        self.processTopLevelBundle = connection.processTopLevelBundle
-        self.parentTopLevelBundle = connection.parentTopLevelBundle
+        self.processTopLevelBundle = connection.process.appBundle
+        self.parentTopLevelBundle = connection.process.parent?.appBundle
         
         self.displayName = connection.displayName
         
         self.state = ConnectionStateType.unknown
         
         self.image = Connection.getImage(
-            processBundle: connection.processBundle,
-            processTopLevelBundle: connection.processTopLevelBundle,
-            parentBundle: connection.parentBundle,
-            parentTopLevelBundle: connection.parentTopLevelBundle)
+            processBundle: connection.process.bundle,
+            processTopLevelBundle: connection.process.appBundle,
+            parentBundle: connection.process.parent?.bundle,
+            parentTopLevelBundle: connection.process.parent?.appBundle)
         
         self.endDateTimestamp = nil
-        self.country = country        
+        self.country = country
+        self.processInfo =  connection.process
     }
     
     private init(
@@ -192,31 +176,25 @@ struct Connection : Hashable, Identifiable {
         state: ConnectionStateType,
         tag : UUID,
         start: Date,
-        end: Optional<Date>,
-        pid : pid_t,
-        ppid : pid_t,
-        uid : Optional<uid_t>,
-        user : Optional<String>,
-        portProtocol : Optional<Protocol>,
-        remoteURL: Optional<String>,
+        end: Date?,
+        portProtocol : Protocol?,
+        remoteURL: String?,
         remoteSocket : SocketAddress,
         localSocket : SocketAddress,
-        process : Optional<String>,
-        parentProcess : Optional<String>,
-        processBundle : Optional<Bundle>,
-        parentBundle: Optional<Bundle>,
-        processTopLevelBundle: Optional<Bundle>,
-        parentTopLevelBundle : Optional<Bundle>,
+        process : String?,
+        processInfo: ProcessInfo,
+        parentProcess : String?,
+        processBundle : Bundle?,
+        parentBundle: Bundle?,
+        processTopLevelBundle: Bundle?,
+        parentTopLevelBundle : Bundle?,
         displayName : String,
-        country: Optional<String>) {
+        country: String?) {
+        
         self.outcome = outcome
         self.direction = direction
         self.startTimestamp = start
         self.tag = tag
-        self.pid = pid
-        self.ppid = ppid
-        self.uid = uid
-        self.user = user
         self.remoteSocket = remoteSocket
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
@@ -236,6 +214,7 @@ struct Connection : Hashable, Identifiable {
             parentTopLevelBundle: parentTopLevelBundle)
         self.endDateTimestamp = end
         self.country = country
+        self.processInfo = processInfo
     }
     
     func clone() -> Connection {
@@ -246,15 +225,12 @@ struct Connection : Hashable, Identifiable {
             tag : self.tag,
             start: self.startTimestamp,
             end: self.endDateTimestamp,
-            pid : self.pid,
-            ppid : self.ppid,
-            uid : self.uid,
-            user : self.user,
             portProtocol : self.portProtocol,
             remoteURL: self.remoteURL,
             remoteSocket: self.remoteSocket,
             localSocket: self.localSocket,
             process : self.process,
+            processInfo:  self.processInfo,
             parentProcess : self.parentProcess,
             processBundle : self.processBundle,
             parentBundle: self.parentBundle,
@@ -273,15 +249,12 @@ struct Connection : Hashable, Identifiable {
             tag : self.tag,
             start: self.startTimestamp,
             end: timestamp,
-            pid : self.pid,
-            ppid : self.ppid,
-            uid : self.uid,
-            user : self.user,
             portProtocol : self.portProtocol,
             remoteURL: self.remoteURL,
             remoteSocket: self.remoteSocket,
             localSocket: self.localSocket,
             process : self.process,
+            processInfo: self.processInfo,
             parentProcess : self.parentProcess,
             processBundle : self.processBundle,
             parentBundle: self.parentBundle,

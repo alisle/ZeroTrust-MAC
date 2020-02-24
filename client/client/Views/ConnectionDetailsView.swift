@@ -80,11 +80,11 @@ struct ConnectionDetailsView: View {
     
     var userDetails: some View {
         let group = HStack {
-            if connection.user != nil {
-                if connection.uid != nil {
-                    createPair(prompt: "Process Owner", value: "\(connection.user!)(\(connection.uid!))")
+            if connection.processInfo.username != nil {
+                if connection.processInfo.uid != nil {
+                    createPair(prompt: "Process Owner", value: "\(connection.processInfo.username!)(\(connection.processInfo.uid!))")
                 } else {
-                    createPair(prompt: "Process Owner", value: connection.user!)
+                    createPair(prompt: "Process Owner", value: connection.processInfo.username ?? "\(connection.processInfo.uid ?? 0)")
                 }
             }
         }
@@ -93,8 +93,8 @@ struct ConnectionDetailsView: View {
     }
     
     var processDetails: some View {
-        let pid = createPair(prompt: "PID", value: "\(connection.pid)")
-        let ppid = createPair(prompt: "PPID", value: "\(connection.ppid)")
+        let pid = createPair(prompt: "PID", value: "\(connection.processInfo.pid)")
+        let ppid = createPair(prompt: "PPID", value: "\(connection.processInfo.ppid)")
         
         let group = VStack(alignment: .leading, spacing: 5) {
             Text("Process Details").font(.headline).bold()

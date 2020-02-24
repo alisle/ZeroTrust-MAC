@@ -261,6 +261,7 @@ class KextComm {
             return String(cString: ptr)
         }
         
+        let info = Processes.shared.process(pid: pid, ppid: ppid,command: procName)        
         let remote = SocketAddress(event.data.tcp_connection.remote)
         let local = SocketAddress(event.data.tcp_connection.local)
         
@@ -278,11 +279,9 @@ class KextComm {
             tag: uuid,
             timestamp: timestamp,
             inbound:  inbound,
-            pid: pid,
-            ppid: ppid,
+            process: info,
             remoteSocket: remote,
             localSocket: local,
-            procName: procName,
             outcome: outcome
         )
     }

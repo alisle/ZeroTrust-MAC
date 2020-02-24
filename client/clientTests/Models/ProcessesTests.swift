@@ -43,7 +43,7 @@ class ProcessesTests : XCTestCase {
     func testSHA256() {
         let file = getExampleFile()
         
-        let digest = Processes.generateSHA256(path: file.path)
+        let digest = Processes.shared.generateSHA256(path: file.path)
         print("got hash: \(digest!)")
         
         XCTAssertNotNil(digest)
@@ -52,7 +52,7 @@ class ProcessesTests : XCTestCase {
     
     func testMD5() {
         let file = getExampleFile()
-        let digest = Processes.generateMD5(path: file.path)
+        let digest = Processes.shared.generateMD5(path: file.path)
         print("got hash: \(digest!)")
         
         XCTAssertNotNil(digest)

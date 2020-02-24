@@ -13,8 +13,7 @@ import Logging
 class ProcessInfo {
     public let pid : Int
     public let ppid: Int
-    public let pgid : Int
-    public let uid : Int
+    public let uid : Int?
     public let username : String?
     public let command : String?
     public let path : String?
@@ -26,8 +25,7 @@ class ProcessInfo {
     
     public init(pid : Int,
                 ppid: Int,
-                pgid : Int,
-                uid : Int,
+                uid : Int?,
                 username : String?,
                 command : String?,
                 path : String?,
@@ -39,7 +37,6 @@ class ProcessInfo {
                 ) {
         self.pid = pid
         self.ppid = ppid
-        self.pgid = pgid
         self.uid = uid
         self.username = username
         self.command = command
@@ -57,7 +54,7 @@ class ProcessInfo {
 
 extension ProcessInfo : CustomStringConvertible {
     public var description: String  {
-        return "PID:\(self.pid), PPID:\(self.ppid), PGID:\(self.pgid), USER: \(self.username ?? "unknown")(\(self.uid)) - COMMAND: \(self.command ?? "unknown") - FP: \(self.path ?? "unknown")"
+        return "PID:\(self.pid), PPID:\(self.ppid), USER: \(self.username ?? "unknown")(\(self.uid)) - COMMAND: \(self.command ?? "unknown") - FP: \(self.path ?? "unknown")"
     }
 
 }
@@ -66,7 +63,6 @@ extension ProcessInfo : Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(pid)
         hasher.combine(ppid)
-        hasher.combine(pgid)
         hasher.combine(uid)
         hasher.combine(path)
     }
@@ -80,8 +76,9 @@ extension ProcessInfo : Equatable {
 }
 
 class Processes {
+    static public let shared = Processes()
+
     let logger = Logger(label: "com.zerotrust.client.Models.Processes")
-    
     static private var maxArgumentSize : size_t = {
         var mib = [ CTL_KERN, KERN_ARGMAX, 0 ]
         var size : size_t = 0
@@ -92,13 +89,38 @@ class Processes {
         return size
     }()
     
+    func process(pid: pid_t, ppid: pid_t, command: String) -> ProcessInfo {
+        guard let info = process(pid) else {
+            let path = getProcessPath(pid: pid)
+            let bundle = self.getBundle(path: path)
+            let appbundle = self.getAppBundle(path: path)
+            let sha256 = generateSHA256(path: path)
+            let md5 = generateMD5(path: path)
+
+            return ProcessInfo(
+                pid: Int(pid),
+                ppid: Int(ppid),
+                uid: nil,
+                username: nil,
+                command: command,
+                path: path,
+                parent: process(ppid),
+                bundle: bundle,
+                appBundle: appbundle,
+                sha256: sha256,
+                md5: md5
+            )
+        }
+        
+        return info
+    }
+    
     func process(_ pid: pid_t) -> ProcessInfo? {
         guard var kinfo =  getKinfo(pid: pid) else {
             return nil
         }
 
         let ppid = Int(kinfo.kp_eproc.e_ppid)
-        let pgid = Int(kinfo.kp_eproc.e_pgid)
         let uid = Int(kinfo.kp_eproc.e_ucred.cr_uid)
         let username = getUsername(uid: kinfo.kp_eproc.e_ucred.cr_uid)
         
@@ -115,13 +137,11 @@ class Processes {
         let bundle = self.getBundle(path: path)
         let appbundle = self.getAppBundle(path: path)
         
-        logger.info("generating hashes for path: \(path ?? "None")")
-        let sha256 = Processes.generateSHA256(path: path)
-        let md5 = Processes.generateMD5(path: path)
+        let sha256 = generateSHA256(path: path)
+        let md5 = generateMD5(path: path)
 
         return ProcessInfo(pid: pid,
                            ppid: ppid,
-                           pgid: pgid,
                            uid: uid,
                            username: username,
                            command: command,
@@ -212,7 +232,8 @@ class Processes {
         return getBundle(path: path)
     }
 
-    public static func generateSHA256(path: String?) -> String? {
+    public func generateSHA256(path: String?) -> String? {
+        logger.info("generating SHA256 for \(path ?? "None")")
         guard let path = path else {
             return nil
         }
@@ -248,7 +269,9 @@ class Processes {
         return digest.map { String(format: "%02hhx", $0) }.joined()
     }
     
-    public static func generateMD5(path: String?) -> String? {
+    public func generateMD5(path: String?) -> String? {
+        logger.info("generating MD5 for \(path ?? "None")")
+
         guard let path = path else {
             return nil
         }

@@ -44,7 +44,7 @@ struct ProcessChainView: View {
                     Image("Glasses")
                        .resizable()
                        .frame(width: 64, height: 64, alignment: .leading)
-                    Text(connection.user!)
+                    Text(connection.processInfo.username ?? "Unknown")
                 }
             }
             
@@ -65,10 +65,10 @@ struct ProcessChainView: View {
 
             VStack {
                 HStack {
-                    getImage(bundle: connection.processBundle)
+                    getImage(bundle: connection.processInfo.appBundle)
                         .resizable()
                         .frame(width: 64, height: 64, alignment: .leading)
-                    Text(chopString(connection.process))
+                    Text(chopString(connection.processInfo.path))
                 }
             }
         }
