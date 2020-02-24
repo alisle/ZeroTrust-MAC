@@ -5,4 +5,5 @@
 #include "include/payload.h"
 
 char* get_process_name(pid_t pid);
+char* get_proc_path(pid_t pid);
 

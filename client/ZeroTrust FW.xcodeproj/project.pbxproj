@@ -51,9 +51,12 @@
 		F0701C9823FC7C2B0002DD82 /* SocketAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9723FC7C2B0002DD82 /* SocketAddress.swift */; };
 		F0701C9A23FC83A30002DD82 /* IPAddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9923FC83A30002DD82 /* IPAddressTests.swift */; };
 		F0701C9C23FDA2110002DD82 /* SocketAddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9B23FDA2110002DD82 /* SocketAddressTests.swift */; };
+		F0701CA023FDB5AF0002DD82 /* ProcessesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9F23FDB5AF0002DD82 /* ProcessesTests.swift */; };
+		F0701CA123FDEA530002DD82 /* Processes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9D23FDB23C0002DD82 /* Processes.swift */; };
+		F0701CA524022AE70002DD82 /* DNSCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CA424022AE70002DD82 /* DNSCache.swift */; };
+		F0701CAC240231DB0002DD82 /* HashTestFile.txt in Resources */ = {isa = PBXBuildFile; fileRef = F0701CAB240231DB0002DD82 /* HashTestFile.txt */; };
 		F08982982356A554003DB49B /* RulesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982972356A554003DB49B /* RulesListView.swift */; };
 		F089829A2356A633003DB49B /* RulesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982992356A633003DB49B /* RulesDetailView.swift */; };
-		F091271923E34D7B00D23BD4 /* DNSCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00A491322EF8AFA006932A0 /* DNSCache.swift */; };
 		F0925F33234B79BB00C01F72 /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0925F32234B79BB00C01F72 /* RulesView.swift */; };
 		F0934A3C2399E9D700884447 /* ProcessChainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0934A3B2399E9D700884447 /* ProcessChainView.swift */; };
 		F0934A3E23A02F0B00884447 /* CGMutablePathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0934A3D23A02F0B00884447 /* CGMutablePathExtension.swift */; };
@@ -100,7 +103,6 @@
 
 /* Begin PBXFileReference section */
 		F008CBB722E8B32800791486 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		F00A491322EF8AFA006932A0 /* DNSCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DNSCache.swift; path = "../../../../../../../../System/Volumes/Data/Users/alisle/Documents/code/personal/ZeroTrust-MAC/client/client/DNSCache.swift"; sourceTree = "<group>"; };
 		F016775E233D02D50018DA77 /* DecisionEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionEngineTests.swift; sourceTree = "<group>"; };
 		F01677642342496C0018DA77 /* RulesDispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesDispatcher.swift; sourceTree = "<group>"; };
 		F0260FD02379E01E002E2C5C /* GlobeShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobeShape.swift; sourceTree = "<group>"; };
@@ -145,6 +147,10 @@
 		F0701C9723FC7C2B0002DD82 /* SocketAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddress.swift; sourceTree = "<group>"; };
 		F0701C9923FC83A30002DD82 /* IPAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressTests.swift; sourceTree = "<group>"; };
 		F0701C9B23FDA2110002DD82 /* SocketAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddressTests.swift; sourceTree = "<group>"; };
+		F0701C9D23FDB23C0002DD82 /* Processes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Processes.swift; sourceTree = "<group>"; };
+		F0701C9F23FDB5AF0002DD82 /* ProcessesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessesTests.swift; sourceTree = "<group>"; };
+		F0701CA424022AE70002DD82 /* DNSCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSCache.swift; sourceTree = "<group>"; };
+		F0701CAB240231DB0002DD82 /* HashTestFile.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = HashTestFile.txt; sourceTree = "<group>"; };
 		F08982972356A554003DB49B /* RulesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesListView.swift; sourceTree = "<group>"; };
 		F08982992356A633003DB49B /* RulesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesDetailView.swift; sourceTree = "<group>"; };
 		F0925F32234B79BB00C01F72 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
@@ -288,6 +294,37 @@
 				F054A6CD23D0E1F800B67460 /* ServiceState.swift */,
 				F0701C9523FC595B0002DD82 /* IPAddress.swift */,
 				F0701C9723FC7C2B0002DD82 /* SocketAddress.swift */,
+				F0701C9D23FDB23C0002DD82 /* Processes.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F0701CA224022A810002DD82 /* Caches */ = {
+			isa = PBXGroup;
+			children = (
+				F0D065E6230656A00076A1AC /* ProtocolCache.swift */,
+				F0701CA424022AE70002DD82 /* DNSCache.swift */,
+			);
+			path = Caches;
+			sourceTree = "<group>";
+		};
+		F0701CA8240231590002DD82 /* Caches */ = {
+			isa = PBXGroup;
+			children = (
+				F042BDE02343A02C00965781 /* ProtocolCacheTests.swift */,
+			);
+			path = Caches;
+			sourceTree = "<group>";
+		};
+		F0701CAE2404394C0002DD82 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F0701C9923FC83A30002DD82 /* IPAddressTests.swift */,
+				F0701C9B23FDA2110002DD82 /* SocketAddressTests.swift */,
+				F0701C9F23FDB5AF0002DD82 /* ProcessesTests.swift */,
+				F0701CAB240231DB0002DD82 /* HashTestFile.txt */,
+				F054A6D123D0E97C00B67460 /* ServiceStateTests.swift */,
+				F0331F892363607F00A634D5 /* GraphTests.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -328,6 +365,7 @@
 		F0E4F82222BBE4E000A38601 /* client */ = {
 			isa = PBXGroup;
 			children = (
+				F0701CA224022A810002DD82 /* Caches */,
 				F0331F802360B7DE00A634D5 /* Protocols */,
 				F043D49F230DC32E00746BED /* Extensions */,
 				F0D065E1230652830076A1AC /* Resources */,
@@ -346,9 +384,7 @@
 				F052C9F422C17531005DE1D7 /* kext-helpers.c */,
 				F052C9F222C17531005DE1D7 /* client-Bridging-Header.h */,
 				F052CA0022C3C77F005DE1D7 /* ConnectionState.swift */,
-				F00A491322EF8AFA006932A0 /* DNSCache.swift */,
 				F0DA1B9E2301C50400D07905 /* Main.swift */,
-				F0D065E6230656A00076A1AC /* ProtocolCache.swift */,
 				F02EAC5323282928008186E7 /* DecisionEngine.swift */,
 				F01677642342496C0018DA77 /* RulesDispatcher.swift */,
 				F042BDD92343995700965781 /* preferences.plist */,
@@ -369,15 +405,12 @@
 		F0E4F83822BBE4E200A38601 /* clientTests */ = {
 			isa = PBXGroup;
 			children = (
+				F0701CAE2404394C0002DD82 /* Models */,
+				F0701CA8240231590002DD82 /* Caches */,
 				F0E4F83922BBE4E200A38601 /* clientTests.swift */,
 				F0E4F83B22BBE4E200A38601 /* Info.plist */,
 				F016775E233D02D50018DA77 /* DecisionEngineTests.swift */,
 				F042BDDD23439C6000965781 /* PreferencesTests.swift */,
-				F042BDE02343A02C00965781 /* ProtocolCacheTests.swift */,
-				F0331F892363607F00A634D5 /* GraphTests.swift */,
-				F054A6D123D0E97C00B67460 /* ServiceStateTests.swift */,
-				F0701C9923FC83A30002DD82 /* IPAddressTests.swift */,
-				F0701C9B23FDA2110002DD82 /* SocketAddressTests.swift */,
 			);
 			path = clientTests;
 			sourceTree = "<group>";
@@ -520,6 +553,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0701CAC240231DB0002DD82 /* HashTestFile.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,7 +571,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F091271923E34D7B00D23BD4 /* DNSCache.swift in Sources */,
 				F0331F882360F44000A634D5 /* Graph.swift in Sources */,
 				F0D065E7230656A00076A1AC /* ProtocolCache.swift in Sources */,
 				F0934A4223A1503900884447 /* ProtocolChainView.swift in Sources */,
@@ -584,9 +617,11 @@
 				F054A6D023D0E41100B67460 /* ServiceStateListener.swift in Sources */,
 				F0260FD9237C9219002E2C5C /* ConnectionAmountShape.swift in Sources */,
 				F0E4F82422BBE4E000A38601 /* AppDelegate.swift in Sources */,
+				F0701CA123FDEA530002DD82 /* Processes.swift in Sources */,
 				F0701C9823FC7C2B0002DD82 /* SocketAddress.swift in Sources */,
 				F0FB57102358AED900AAB5F6 /* OutcomeExtension.swift in Sources */,
 				F052C9EB22C1278D005DE1D7 /* Consumer.swift in Sources */,
+				F0701CA524022AE70002DD82 /* DNSCache.swift in Sources */,
 				F058177E238C2D35007F2D85 /* FilterCategory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -598,6 +633,7 @@
 				F042BDE22343A04B00965781 /* ProtocolCacheTests.swift in Sources */,
 				F042BDDF23439C7400965781 /* PreferencesTests.swift in Sources */,
 				F0E4F83A22BBE4E200A38601 /* clientTests.swift in Sources */,
+				F0701CA023FDB5AF0002DD82 /* ProcessesTests.swift in Sources */,
 				F054A6D223D0E97C00B67460 /* ServiceStateTests.swift in Sources */,
 				F0331F8A2363607F00A634D5 /* GraphTests.swift in Sources */,
 				F0701C9C23FDA2110002DD82 /* SocketAddressTests.swift in Sources */,

@@ -7,9 +7,14 @@
 //
 
 import Foundation
+import Logging
+import CommonCrypto
 
 extension URL : Identifiable {
+        
     public var id : String {
         get { self.absoluteString }
     }
+    
 }
+

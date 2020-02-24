@@ -23,6 +23,7 @@ extension Bundle {
     }
     
     
+    
     var icon: Optional<NSImage> {
         guard let dictionary = self.infoDictionary else {
             return Optional.none
