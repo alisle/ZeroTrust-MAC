@@ -67,25 +67,34 @@ func generateProcessInfo() -> ProcessInfo {
         sha256: "012012",
         md5: "1231")
 }
-func generateTestConnection(direction: ConnectionDirection) -> Connection {
+
+func generateTCPConnection() -> TCPConnection {
     let localPort = Int.random(in: 1025..<40000)
     let remotePort = [ 80, 443, 22, 21, 8100].randomElement()
-    
+
+    return TCPConnection(
+        tag: UUID(),
+        timestamp: Date().timeIntervalSince1970,
+        inbound: false,
+        process: generateProcessInfo(),
+        remoteSocket: SocketAddress(address: IPAddress("192.168.2.3")!, port: remotePort!),
+        localSocket: SocketAddress(address: IPAddress("0.0.0.0")!, port: localPort),
+        outcome: Outcome.allowed
+    )
+}
+
+func generateTestConnection(direction: ConnectionDirection) -> Connection {
+    let tcpConnection = generateTCPConnection()
     let protocolCache = ProtocolCache()
-    let remoteProtocol = protocolCache.get(remotePort!)
+    let remoteProtocol = protocolCache.get(tcpConnection.remoteSocket.port)
     let displayName = [ "ssh", "Google Chrome", "Mozilla Firefox", "Brave" ].randomElement()
     
-    let connection = Connection(direction: direction,
-                                outcome: Outcome.allowed,
-                                tag: UUID(),
-                                start: Date(),
-                                process: generateProcessInfo(),
-                                portProtocol: remoteProtocol,
-                                remoteURL: "www.google.com",
-                                remoteSocket: SocketAddress(address: IPAddress("192.168.2.3")!, port: remotePort!),
-                                localSocket : SocketAddress(address: IPAddress("0.0.0.0")!, port: localPort),
-                                displayName: displayName!,
-                                country: "US")
+    let connection = Connection(
+        connection: generateTCPConnection(),
+        country: "US",
+        remoteURL: "www.google.com",
+        portProtocol: remoteProtocol
+    )
     
     return connection
 }

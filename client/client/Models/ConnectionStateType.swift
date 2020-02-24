@@ -28,4 +28,13 @@ enum ConnectionStateType: Int {
         case .unknown: return "Unknown"
         }
     }
+    
+    var alive : Bool {
+        switch self {
+        case .bound: return true
+        case .connected: return true
+        case .connecting: return true
+        default: return false
+        }
+    }
 }

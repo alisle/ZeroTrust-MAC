@@ -22,7 +22,8 @@ class ConnectionState  {
         get {
             var set: Set<Connection>!
             self.connectionQueue.sync {
-                set = Set(state.values.map{ $0.clone() })
+                //set = Set(state.values.map{ $0.clone() })
+                set = Set(state.values)
             }
             return set
         }
@@ -58,7 +59,8 @@ class ConnectionState  {
                 }
                 
                 self.state[connection.tag] = connection
-                self.listeners.forEach{ $0.connectionChanged( connection.clone() )}
+                //self.listeners.forEach{ $0.connectionChanged( connection.clone() )}
+                self.listeners.forEach{ $0.connectionChanged( connection )}
             }
         }
     }

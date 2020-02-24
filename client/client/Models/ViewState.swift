@@ -135,7 +135,7 @@ class ViewState : ObservableObject, ConnectionStateListener {
                 let (lower, upper) = category.bounds
                 
                 if lower <= mins && upper > mins {
-                    cats[category]!.append(connection.clone())
+                    cats[category]!.append(connection)
                 }
             }
         }

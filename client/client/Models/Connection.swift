@@ -24,14 +24,8 @@ struct Connection : Identifiable {
     let displayName : String
     let image : NSImage?
     let state : ConnectionStateType
-    
     let outcome : Outcome
-    
-    var alive : Bool {
-        get {
-            return (self.state == .bound || self.state == .connecting || self.state == .connected)
-        }
-    }
+    let alive : Bool
     
     var dupeHash : Int {
         get {
@@ -62,34 +56,6 @@ struct Connection : Identifiable {
         let date = self.endDateTimestamp ?? Date()
         return date.timeIntervalSince(startTimestamp)
     }
-        
-    init(direction : ConnectionDirection,
-         outcome : Outcome,
-         tag : UUID,
-         start: Date,
-         process: ProcessInfo,
-         portProtocol : Protocol?,
-         remoteURL: String?,
-         remoteSocket : SocketAddress,
-         localSocket : SocketAddress,
-         displayName : String,
-         country: String?) {
-        
-        self.outcome = outcome
-        self.direction = direction
-        self.startTimestamp = start
-        self.tag = tag
-        self.process = process
-        self.remoteURL = remoteURL
-        self.portProtocol = portProtocol
-        self.remoteSocket = remoteSocket
-        self.localSocket = localSocket
-        self.displayName = displayName
-        self.state = ConnectionStateType.unknown
-        self.image = Connection.getImage(info: self.process)
-        self.endDateTimestamp = nil
-        self.country = country
-    }
     
     init(connection: TCPConnection,
          country: String?,
@@ -112,16 +78,13 @@ struct Connection : Identifiable {
         
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
-                
         self.displayName = connection.displayName
-        
         self.state = ConnectionStateType.unknown
-        
         self.image = Connection.getImage(info: connection.process)
-        
         self.endDateTimestamp = nil
         self.country = country
         self.process =  connection.process
+        self.alive = self.state.alive
     }
     
     private init(
@@ -130,7 +93,7 @@ struct Connection : Identifiable {
         state: ConnectionStateType,
         tag : UUID,
         start: Date,
-        end: Date?,
+        updateDate: Date?,
         portProtocol : Protocol?,
         remoteURL: String?,
         remoteSocket : SocketAddress,
@@ -150,27 +113,10 @@ struct Connection : Identifiable {
         self.displayName = displayName
         self.state = state
         self.image = Connection.getImage(info: processInfo)
-        self.endDateTimestamp = end
+        self.endDateTimestamp = updateDate
         self.country = country
         self.process = processInfo
-    }
-    
-    func clone() -> Connection {
-        return Connection(
-            direction : self.direction,
-            outcome : self.outcome,
-            state: self.state,
-            tag : self.tag,
-            start: self.startTimestamp,
-            end: self.endDateTimestamp,
-            portProtocol : self.portProtocol,
-            remoteURL: self.remoteURL,
-            remoteSocket: self.remoteSocket,
-            localSocket: self.localSocket,
-            processInfo: self.process,
-            displayName : self.displayName,
-            country: self.country
-            )
+        self.alive = self.state.alive
     }
     
     func changeState(state: ConnectionStateType, timestamp: Date) -> Connection {
@@ -180,7 +126,7 @@ struct Connection : Identifiable {
             state: state,
             tag : self.tag,
             start: self.startTimestamp,
-            end: timestamp,
+            updateDate: timestamp,
             portProtocol : self.portProtocol,
             remoteURL: self.remoteURL,
             remoteSocket: self.remoteSocket,
@@ -212,7 +158,7 @@ struct Connection : Identifiable {
         
         return nil
     }
-        
+    
 }
 
 extension Connection : Hashable {
