@@ -31,19 +31,9 @@ class ProcessesTests : XCTestCase {
             print("Bundle: \(process?.bundle?.displayName ?? "None")")
             print("App Bundle: \(process?.appBundle?.displayName ?? "None")")
             print("From Helper: \(bundle?.displayName ?? "None")")
-            
-            if let _ = bundle?.icon {
-                print("Helper has icon")
-            } else {
-                print("no icon has been found")
-            }
-            
-            if let _ = process?.bundle?.icon {
-                print(" ProcessInfo has icon")
-            } else {
-                print("no icon has been found")
-            }
-            
+            print("SHA256: \(process?.sha256 ?? "None")")
+            print("MD5: \(process?.md5 ?? "None")")
+                        
             process = process?.parent
         }
         

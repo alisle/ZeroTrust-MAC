@@ -8,6 +8,7 @@
 
 import Foundation
 import CommonCrypto
+import Logging
 
 class ProcessInfo {
     public let pid : Int
@@ -79,6 +80,8 @@ extension ProcessInfo : Equatable {
 }
 
 class Processes {
+    let logger = Logger(label: "com.zerotrust.client.Models.Processes")
+    
     static private var maxArgumentSize : size_t = {
         var mib = [ CTL_KERN, KERN_ARGMAX, 0 ]
         var size : size_t = 0
@@ -107,8 +110,7 @@ class Processes {
         }
         
         
-        let sha256 = Processes.generateSHA256(path: command)
-        let md5 = Processes.generateMD5(path: command)
+        
         
         
         let path = getProcessPath(pid: pid)
@@ -119,6 +121,10 @@ class Processes {
         let bundle = self.getBundle(path: path)
         let appbundle = self.getAppBundle(path: path)
         
+        logger.info("generating hashes for path: \(path ?? "None")")
+        let sha256 = Processes.generateSHA256(path: path)
+        let md5 = Processes.generateMD5(path: path)
+
         return ProcessInfo(pid: pid,
                            ppid: ppid,
                            pgid: pgid,
@@ -184,7 +190,7 @@ class Processes {
             return nil
         }
         
-        print("starting with \(path)")
+        logger.info("starting with \(path)")
         var bundle = Bundle(path: path)
         while !path.isEqual("/") && !path.isEqual("") && bundle == nil {
             let index = path.lastIndex(of: "/") ?? path.startIndex
@@ -193,7 +199,7 @@ class Processes {
             bundle = Bundle(path: path)
         }
         
-        print("found bundle with \(path)")
+        logger.info("found bundle with \(path)")
         
         return bundle
     }
@@ -208,7 +214,7 @@ class Processes {
         }
         
         path = String(path[..<range.upperBound])
-        print("This is my path \(path)")
+        logger.info("resolved path for app bundle: \(path)")
         return getBundle(path: path)
     }
 
