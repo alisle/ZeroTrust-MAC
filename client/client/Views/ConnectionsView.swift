@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import IP2Location
 
 struct ConnectionsView : View  {
     
@@ -87,11 +87,10 @@ func generateTestConnection(direction: ConnectionDirection) -> Connection {
     let tcpConnection = generateTCPConnection()
     let protocolCache = ProtocolCache()
     let remoteProtocol = protocolCache.get(tcpConnection.remoteSocket.port)
-    let displayName = [ "ssh", "Google Chrome", "Mozilla Firefox", "Brave" ].randomElement()
     
     let connection = Connection(
         connection: generateTCPConnection(),
-        country: "US",
+        location: nil,
         remoteURL: "www.google.com",
         portProtocol: remoteProtocol
     )

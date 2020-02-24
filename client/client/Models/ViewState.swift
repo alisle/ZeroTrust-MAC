@@ -63,7 +63,7 @@ class ViewState : ObservableObject, ConnectionStateListener {
     func updateCounts() -> [GraphCountry] {
         var counts : [GraphCountry] = []
         self.raw.forEach {
-            if let iso = $0.country {
+            if let iso = $0.location?.iso {
                 if let country = geomap.iso[iso] {
                     counts.append(country)
                 }

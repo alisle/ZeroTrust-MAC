@@ -38,7 +38,7 @@ struct ConnectionDetailsView: View {
                     .font(.title)
                     .bold()
                 HStack {
-                    Text("\(connection.state.description) - \(connection.country ?? "")")
+                    Text("\(connection.state.description) - \(connection.location?.iso ?? "")")
                         .font(.caption)
                         .opacity(0.75)
 

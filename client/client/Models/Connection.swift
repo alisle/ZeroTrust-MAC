@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import IP2Location
 
 struct Connection : Identifiable {
     let direction : ConnectionDirection
@@ -16,7 +17,7 @@ struct Connection : Identifiable {
     let startTimestamp : Date
     let endDateTimestamp : Date?
     let process : ProcessInfo
-    let country : String?
+    let location : IP2LocationRecord?
     let remoteURL: String?
     let portProtocol : Protocol?
     let localSocket : SocketAddress
@@ -58,7 +59,7 @@ struct Connection : Identifiable {
     }
     
     init(connection: TCPConnection,
-         country: String?,
+         location: IP2LocationRecord?,
          remoteURL : String?,
          portProtocol : Protocol? ) {
         
@@ -82,7 +83,7 @@ struct Connection : Identifiable {
         self.state = ConnectionStateType.unknown
         self.image = Connection.getImage(info: connection.process)
         self.endDateTimestamp = nil
-        self.country = country
+        self.location = location
         self.process =  connection.process
         self.alive = self.state.alive
     }
@@ -100,7 +101,7 @@ struct Connection : Identifiable {
         localSocket : SocketAddress,
         processInfo: ProcessInfo,
         displayName : String,
-        country: String?) {
+        location: IP2LocationRecord?) {
         
         self.outcome = outcome
         self.direction = direction
@@ -114,7 +115,7 @@ struct Connection : Identifiable {
         self.state = state
         self.image = Connection.getImage(info: processInfo)
         self.endDateTimestamp = updateDate
-        self.country = country
+        self.location = location
         self.process = processInfo
         self.alive = self.state.alive
     }
@@ -133,7 +134,7 @@ struct Connection : Identifiable {
             localSocket: self.localSocket,
             processInfo: self.process,
             displayName : self.displayName,
-            country: self.country
+            location: self.location
         )
     }
     
