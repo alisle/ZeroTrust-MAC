@@ -80,11 +80,11 @@ struct ConnectionDetailsView: View {
     
     var userDetails: some View {
         let group = HStack {
-            if connection.processInfo.username != nil {
-                if connection.processInfo.uid != nil {
-                    createPair(prompt: "Process Owner", value: "\(connection.processInfo.username!)(\(connection.processInfo.uid!))")
+            if connection.process.username != nil {
+                if connection.process.uid != nil {
+                    createPair(prompt: "Process Owner", value: "\(connection.process.username!)(\(connection.process.uid!))")
                 } else {
-                    createPair(prompt: "Process Owner", value: connection.processInfo.username ?? "\(connection.processInfo.uid ?? 0)")
+                    createPair(prompt: "Process Owner", value: connection.process.username ?? "\(connection.process.uid ?? 0)")
                 }
             }
         }
@@ -93,8 +93,8 @@ struct ConnectionDetailsView: View {
     }
     
     var processDetails: some View {
-        let pid = createPair(prompt: "PID", value: "\(connection.processInfo.pid)")
-        let ppid = createPair(prompt: "PPID", value: "\(connection.processInfo.ppid)")
+        let pid = createPair(prompt: "PID", value: "\(connection.process.pid)")
+        let ppid = createPair(prompt: "PPID", value: "\(connection.process.ppid)")
         
         let group = VStack(alignment: .leading, spacing: 5) {
             Text("Process Details").font(.headline).bold()
@@ -108,25 +108,25 @@ struct ConnectionDetailsView: View {
                 }
             }
 
-            if connection.process != nil {
-                createPair(prompt: "Process", value: connection.process!)
+            if connection.process.command != nil {
+                createPair(prompt: "Process", value: connection.process.command!)
             }
             
             
-            if connection.processBundle != nil {
-                createPair(prompt:"Process App", value: connection.processBundle!.bundlePath)
+            if connection.process.bundle != nil {
+                createPair(prompt:"Process App", value: connection.process.bundle!.bundlePath)
             }
             
-            if connection.processTopLevelBundle != nil {
-                createPair(prompt:"Top Level Process App", value: connection.processTopLevelBundle!.bundlePath)
+            if connection.process.appBundle  != nil {
+                createPair(prompt:"Top Level Process App", value: connection.process.appBundle!.bundlePath)
             }
             
-            if connection.parentBundle != nil {
-                createPair(prompt: "Parent Process App", value : connection.parentBundle!.bundlePath)
+            if connection.process.parent?.bundle != nil {
+                createPair(prompt: "Parent Process App", value : connection.process.parent!.bundle!.bundlePath)
             }
             
-            if connection.parentTopLevelBundle != nil {
-                createPair(prompt: "Top Level Parent Procc App", value: connection.parentTopLevelBundle!.bundlePath)
+            if connection.process.parent?.appBundle != nil {
+                createPair(prompt: "Top Level Parent Procc App", value: connection.process.parent!.appBundle!.bundlePath)
             }
         }
         

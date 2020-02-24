@@ -32,10 +32,10 @@ struct ProtocolChainView: View {
         HStack() {
             VStack {
                 HStack {
-                    getImage(bundle: connection.processBundle)
+                    getImage(bundle: connection.process.bundle)
                         .resizable()
                         .frame(width: 64, height: 64, alignment: .leading)
-                    Text(chopString(connection.process))
+                    Text(chopString(connection.process.command))
                 }
             }
 

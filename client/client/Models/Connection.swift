@@ -9,36 +9,19 @@
 import Foundation
 import SwiftUI
 
-struct Connection : Hashable, Identifiable {
+struct Connection : Identifiable {
     let direction : ConnectionDirection
-    
     let id = UUID()
-        
     let tag : UUID
     let startTimestamp : Date
     let endDateTimestamp : Date?
-    
-    let processInfo : ProcessInfo
-        
+    let process : ProcessInfo
     let country : String?
-    
     let remoteURL: String?
     let portProtocol : Protocol?
-
     let localSocket : SocketAddress
     let remoteSocket : SocketAddress
-        
-    let process : String?
-    let parentProcess : String?
-    
-    let processBundle : Bundle?
-    let parentBundle: Bundle?
-    
-    let processTopLevelBundle: Bundle?
-    let parentTopLevelBundle : Bundle?
-    
     let displayName : String
-    
     let image : NSImage?
     let state : ConnectionStateType
     
@@ -50,14 +33,14 @@ struct Connection : Hashable, Identifiable {
         }
     }
     
-    var  dupeHash : Int {
+    var dupeHash : Int {
         get {
             var hasher = Hasher()
             
             hasher.combine(self.direction)
             hasher.combine(self.remoteURL)
             hasher.combine(self.remoteSocket)
-            hasher.combine(self.processInfo)
+            hasher.combine(self.process)
             
             return hasher.finalize()
         }
@@ -84,17 +67,11 @@ struct Connection : Hashable, Identifiable {
          outcome : Outcome,
          tag : UUID,
          start: Date,
-         processInfo: ProcessInfo,
+         process: ProcessInfo,
          portProtocol : Protocol?,
          remoteURL: String?,
          remoteSocket : SocketAddress,
          localSocket : SocketAddress,
-         process : String?,
-         parentProcess : String?,
-         processBundle : Bundle?,
-         parentBundle: Bundle?,
-         processTopLevelBundle: Bundle?,
-         parentTopLevelBundle : Bundle?,
          displayName : String,
          country: String?) {
         
@@ -102,24 +79,14 @@ struct Connection : Hashable, Identifiable {
         self.direction = direction
         self.startTimestamp = start
         self.tag = tag
-        self.processInfo = processInfo
+        self.process = process
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
         self.remoteSocket = remoteSocket
         self.localSocket = localSocket
-        self.process = process
-        self.parentProcess = parentProcess
-        self.processBundle = processBundle
-        self.parentBundle = parentBundle
-        self.processTopLevelBundle = processTopLevelBundle
-        self.parentTopLevelBundle = parentTopLevelBundle
         self.displayName = displayName
         self.state = ConnectionStateType.unknown
-        self.image = Connection.getImage(
-            processBundle: processBundle,
-            processTopLevelBundle: processTopLevelBundle,
-            parentBundle: parentBundle,
-            parentTopLevelBundle: parentTopLevelBundle)
+        self.image = Connection.getImage(info: self.process)
         self.endDateTimestamp = nil
         self.country = country
     }
@@ -145,29 +112,16 @@ struct Connection : Hashable, Identifiable {
         
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
-        
-        self.process = connection.process.command
-        self.parentProcess = connection.process.parent?.command
-        
-        self.processBundle = connection.process.bundle
-        self.parentBundle = connection.process.parent?.bundle
-        
-        self.processTopLevelBundle = connection.process.appBundle
-        self.parentTopLevelBundle = connection.process.parent?.appBundle
-        
+                
         self.displayName = connection.displayName
         
         self.state = ConnectionStateType.unknown
         
-        self.image = Connection.getImage(
-            processBundle: connection.process.bundle,
-            processTopLevelBundle: connection.process.appBundle,
-            parentBundle: connection.process.parent?.bundle,
-            parentTopLevelBundle: connection.process.parent?.appBundle)
+        self.image = Connection.getImage(info: connection.process)
         
         self.endDateTimestamp = nil
         self.country = country
-        self.processInfo =  connection.process
+        self.process =  connection.process
     }
     
     private init(
@@ -181,13 +135,7 @@ struct Connection : Hashable, Identifiable {
         remoteURL: String?,
         remoteSocket : SocketAddress,
         localSocket : SocketAddress,
-        process : String?,
         processInfo: ProcessInfo,
-        parentProcess : String?,
-        processBundle : Bundle?,
-        parentBundle: Bundle?,
-        processTopLevelBundle: Bundle?,
-        parentTopLevelBundle : Bundle?,
         displayName : String,
         country: String?) {
         
@@ -199,22 +147,12 @@ struct Connection : Hashable, Identifiable {
         self.remoteURL = remoteURL
         self.portProtocol = portProtocol
         self.localSocket = localSocket
-        self.process = process
-        self.parentProcess = parentProcess
-        self.processBundle = processBundle
-        self.parentBundle = parentBundle
-        self.processTopLevelBundle = processTopLevelBundle
-        self.parentTopLevelBundle = parentTopLevelBundle
         self.displayName = displayName
         self.state = state
-        self.image = Connection.getImage(
-            processBundle: processBundle,
-            processTopLevelBundle: processTopLevelBundle,
-            parentBundle: parentBundle,
-            parentTopLevelBundle: parentTopLevelBundle)
+        self.image = Connection.getImage(info: processInfo)
         self.endDateTimestamp = end
         self.country = country
-        self.processInfo = processInfo
+        self.process = processInfo
     }
     
     func clone() -> Connection {
@@ -229,13 +167,7 @@ struct Connection : Hashable, Identifiable {
             remoteURL: self.remoteURL,
             remoteSocket: self.remoteSocket,
             localSocket: self.localSocket,
-            process : self.process,
-            processInfo:  self.processInfo,
-            parentProcess : self.parentProcess,
-            processBundle : self.processBundle,
-            parentBundle: self.parentBundle,
-            processTopLevelBundle: self.processTopLevelBundle,
-            parentTopLevelBundle : self.parentTopLevelBundle,
+            processInfo: self.process,
             displayName : self.displayName,
             country: self.country
             )
@@ -253,13 +185,7 @@ struct Connection : Hashable, Identifiable {
             remoteURL: self.remoteURL,
             remoteSocket: self.remoteSocket,
             localSocket: self.localSocket,
-            process : self.process,
-            processInfo: self.processInfo,
-            parentProcess : self.parentProcess,
-            processBundle : self.processBundle,
-            parentBundle: self.parentBundle,
-            processTopLevelBundle: self.processTopLevelBundle,
-            parentTopLevelBundle : self.parentTopLevelBundle,
+            processInfo: self.process,
             displayName : self.displayName,
             country: self.country
         )
@@ -267,38 +193,37 @@ struct Connection : Hashable, Identifiable {
     
     
     
-    private static func getImage(
-        processBundle : Optional<Bundle>,
-        processTopLevelBundle: Optional<Bundle>,
-        parentBundle: Optional<Bundle>,
-        parentTopLevelBundle: Optional<Bundle>
-        ) -> Optional<NSImage> {
-        if let nsimage = processBundle?.icon {
+    private static func getImage(info: ProcessInfo) -> Optional<NSImage> {
+        if let nsimage = info.bundle?.icon {
             return nsimage
         }
         
-        if let nsimage = processTopLevelBundle?.icon {
+        if let nsimage = info.appBundle?.icon {
             return nsimage
         }
         
-        if let nsimage = parentBundle?.icon {
+        if let nsimage = info.parent?.bundle?.icon {
             return nsimage
         }
         
-        if let nsimage = parentTopLevelBundle?.icon {
+        if let nsimage = info.parent?.appBundle?.icon {
             return nsimage
         }
         
         return nil
     }
-    
+        
+}
+
+extension Connection : Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(tag)
         
     }
-    
 }
 
-func ==(lhs: Connection, rhs: Connection) -> Bool {
-    return lhs.tag == rhs.tag
+extension Connection : Equatable {
+     public static func ==(lhs: Connection, rhs: Connection) -> Bool {
+         return lhs.tag == rhs.tag
+     }
 }

@@ -70,7 +70,6 @@ func generateProcessInfo() -> ProcessInfo {
 func generateTestConnection(direction: ConnectionDirection) -> Connection {
     let localPort = Int.random(in: 1025..<40000)
     let remotePort = [ 80, 443, 22, 21, 8100].randomElement()
-    let process = ["Chrome.app", "/usr/bin/ssh", "WhatsApp.app"].randomElement()
     
     let protocolCache = ProtocolCache()
     let remoteProtocol = protocolCache.get(remotePort!)
@@ -80,17 +79,11 @@ func generateTestConnection(direction: ConnectionDirection) -> Connection {
                                 outcome: Outcome.allowed,
                                 tag: UUID(),
                                 start: Date(),
-                                processInfo: generateProcessInfo(),
+                                process: generateProcessInfo(),
                                 portProtocol: remoteProtocol,
                                 remoteURL: "www.google.com",
                                 remoteSocket: SocketAddress(address: IPAddress("192.168.2.3")!, port: remotePort!),
                                 localSocket : SocketAddress(address: IPAddress("0.0.0.0")!, port: localPort),
-                                process: process,
-                                parentProcess: "Chrome.app",
-                                processBundle: nil,
-                                parentBundle: nil,
-                                processTopLevelBundle: nil,
-                                parentTopLevelBundle: nil,
                                 displayName: displayName!,
                                 country: "US")
     
