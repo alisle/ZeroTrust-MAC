@@ -109,14 +109,8 @@ class Processes {
                    }
         }
         
-        
-        
-        
-        
         let path = getProcessPath(pid: pid)
         let pid = Int(pid)
-        
-        
         let parent = (ppid != 0) ? self.process(kinfo.kp_eproc.e_ppid) : nil
         let bundle = self.getBundle(path: path)
         let appbundle = self.getAppBundle(path: path)
