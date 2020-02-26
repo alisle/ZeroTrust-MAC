@@ -11,7 +11,7 @@ import SwiftUI
 import IP2Location
 import Logging
 
-class Consumer : ServiceStateListener {
+class Consumer : EventListener {
     let logger = Logger(label: "com.zerotrust.client.Consumer")
 
     private let decisionEngine : DecisionEngine
@@ -25,6 +25,7 @@ class Consumer : ServiceStateListener {
     private let ipdb : Optional<IP2DBLocate>
     
     init(decisionEngine : DecisionEngine, connectionState: ConnectionState) {
+        
         self.decisionEngine = decisionEngine
         self.connectionState = connectionState
         if let filepath = Bundle.main.url(forResource: "IP2LOCATION-LITE-DB11", withExtension: "BIN") {
@@ -39,21 +40,30 @@ class Consumer : ServiceStateListener {
             self.ipdb = nil
         }
         
+        
+        EventManager.shared.addListener(type: .FirewallEnabled, listener: self)
+        EventManager.shared.addListener(type: .FirewallDisabled, listener: self)
+        
+        EventManager.shared.addListener(type: .StartInspectMode, listener: self)
+        EventManager.shared.addListener(type: .StopInspectMode, listener: self)
+        
+        EventManager.shared.addListener(type: .StartDenyMode, listener: self)
+        EventManager.shared.addListener(type: .StopDenyMode, listener: self)
+
     }
     
-    
-    func serviceStateChanged(type: ServiceStateType, serviceEnabled: Bool) {
-        switch type {
-        case .enabled:
-            if serviceEnabled {
-               let _ = self.open()
-            } else {
-                self.close()
-            }
-        case .denyMode: comm.denyMode(enable: serviceEnabled)
-        case .inspectMode: comm.inspectMode(enable: serviceEnabled)
+    func eventTriggered(event: BaseEvent) {        
+        switch event.type {
+        case .FirewallEnabled: let _ = self.open()
+        case .FirewallDisabled: self.close()
+        case .StartInspectMode: comm.inspectMode(enable: true)
+        case .StopInspectMode: comm.inspectMode(enable: false)
+        case .StartDenyMode: comm.denyMode(enable: true)
+        case .StopDenyMode: comm.denyMode(enable: false)
+        default: ()
         }
     }
+    
     
     private func open() -> Bool {
         if isOpen {

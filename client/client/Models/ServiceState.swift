@@ -19,7 +19,6 @@ class ServiceState: ObservableObject {
     
     
     private let stateQueue = DispatchQueue(label: "com.zerotrust.mac.service.state.queue", attributes: .concurrent)
-    private var listeners : [ ServiceStateType:[ServiceStateListener]] = [:]
     
     private var _enabled : Bool = true
     private var _inspectMode : Bool = false
@@ -30,7 +29,11 @@ class ServiceState: ObservableObject {
     var enabled : Bool {
         set {
             _enabled = newValue
-            triggerListener(type: .enabled, value: newValue)
+            switch(newValue) {
+            case true: EventManager.shared.triggerEvent(event: BaseEvent(.FirewallEnabled))
+            case false: EventManager.shared.triggerEvent(event: BaseEvent(.FirewallDisabled))
+            }
+            
             self.objectWillChange.send()
         }
         
@@ -40,7 +43,10 @@ class ServiceState: ObservableObject {
     var inspectMode : Bool {
         set {
             _inspectMode = newValue
-            triggerListener(type: .inspectMode, value: newValue)
+            switch(newValue) {
+            case true: EventManager.shared.triggerEvent(event: BaseEvent(.StartInspectMode))
+            case false: EventManager.shared.triggerEvent(event: BaseEvent(.StopInspectMode))
+            }
             self.objectWillChange.send()
 
         }
@@ -50,35 +56,17 @@ class ServiceState: ObservableObject {
     var denyMode : Bool {
         set {
             _denyMode = newValue
-            triggerListener(type: .denyMode, value: newValue)
+            
+            switch(newValue) {
+            case true: EventManager.shared.triggerEvent(event: BaseEvent(.StartDenyMode))
+            case false: EventManager.shared.triggerEvent(event: BaseEvent(.StopDenyMode))
+            }
+
             self.objectWillChange.send()
         }
         
         get { return _denyMode }
     }
 
-    
-    
-    init() {
-        ServiceStateType.allCases.forEach {  listeners[$0] = [] }
-    }
-    
-    private func triggerListener(type: ServiceStateType, value: Bool) {
-        self.stateQueue.sync { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.listeners[type]?.forEach { $0.serviceStateChanged(type: type, serviceEnabled: value) }
-        }
-    }
-    
-    func addListener(type : ServiceStateType, listener: ServiceStateListener) {
-        self.stateQueue.sync { [weak self] in
-            guard let self = self else {
-                return
-            }
-                        
-            self.listeners[type]!.append(listener)
-        }
-    }
+        
 }

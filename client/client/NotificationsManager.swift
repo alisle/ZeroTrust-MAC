@@ -9,12 +9,13 @@
 import Foundation
 
 
-class NotficiationsManager : ConnectionStateListener {
+class NotficiationsManager : EventListener {
     let showNewConnections : Bool
     
     init() {
         let preferences = Preferences.load()
         self.showNewConnections = preferences!.newConnectionNotifications
+        EventManager.shared.addListener(type: .ConnectionChanged, listener: self)
     }
     
     private func newConnection(_ connection: Connection) {
@@ -57,7 +58,9 @@ class NotficiationsManager : ConnectionStateListener {
         NSUserNotificationCenter.default.deliver(notification)
     }
     
-    func connectionChanged(_ connection: Connection) {
+    func eventTriggered(event: BaseEvent) {
+        let event = event as! ConnectionChangedEvent
+        let connection = event.connection
         
         switch connection.outcome {
         case .allowed:

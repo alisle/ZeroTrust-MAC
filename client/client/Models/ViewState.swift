@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import SwiftUI
 
-class ViewState : ObservableObject, ConnectionStateListener {
+class ViewState : ObservableObject, EventListener {
     private let sort : (Connection, Connection) -> Bool = { (lhs, rhs) in
         switch lhs.startTimestamp.compare(rhs.startTimestamp) {
         case .orderedAscending: return false
@@ -42,8 +42,10 @@ class ViewState : ObservableObject, ConnectionStateListener {
         self.rules = jsonRules.convert()
         self.amountsOverHour = (0..<60 * 10).map{ _ in 0 }
         self.lastSecond = Calendar.current.component(.second, from: Date())
-        
+                
         FilterCategory.allCases.forEach { category in self.connections[category] = [] }
+        
+        EventManager.shared.addListener(type: .ConnectionChanged, listener: self)
     }
     
     convenience init(aliveConnections: [Connection], deadConnections: [Connection])
@@ -144,9 +146,10 @@ class ViewState : ObservableObject, ConnectionStateListener {
         return cats
     }
     
-    func connectionChanged(_ connection: Connection) {
-
-        self.raw.update(with: connection)
+    func eventTriggered(event: BaseEvent) {
+        let event = event as! ConnectionChangedEvent
+        
+        self.raw.update(with: event.connection)
         
         let counts = self.updateCounts()
         let time = self.updateLastSecond()
@@ -168,7 +171,6 @@ class ViewState : ObservableObject, ConnectionStateListener {
             
             self.objectWillChange.send()
         }
-
     }
     
 }

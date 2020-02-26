@@ -12,7 +12,6 @@ import Foundation
 class ConnectionState  {
     private var state = [UUID: Connection]()
     private let connectionQueue = DispatchQueue(label: "com.zerotrust.mac.connectionQueue", attributes: .concurrent)
-    private var listeners : [ConnectionStateListener] = []
     
     init() {
         trim()
@@ -29,16 +28,6 @@ class ConnectionState  {
         }
     }
 
-    func addListener(listener : ConnectionStateListener) {
-        self.connectionQueue.sync { [weak self] in
-            guard let self = self else {
-                return
-            }
-            
-            self.listeners.append(listener)
-        }
-    }
-        
         
     func trim() {
         self.connectionQueue.asyncAfter(deadline: .now() + 60, flags: .barrier) { [weak self] in
@@ -59,8 +48,7 @@ class ConnectionState  {
                 }
                 
                 self.state[connection.tag] = connection
-                //self.listeners.forEach{ $0.connectionChanged( connection.clone() )}
-                self.listeners.forEach{ $0.connectionChanged( connection )}
+                EventManager.shared.triggerEvent(event: ConnectionChangedEvent(connection: connection))
             }
         }
     }
@@ -74,7 +62,7 @@ class ConnectionState  {
             if let conn = self.state[tag] {
                 let updated = conn.changeState(state: update, timestamp: timestamp)
                 self.state[tag] = updated
-                self.listeners.forEach { $0.connectionChanged( updated ) }
+                EventManager.shared.triggerEvent(event: ConnectionChangedEvent(connection: updated))
             }
         }
         

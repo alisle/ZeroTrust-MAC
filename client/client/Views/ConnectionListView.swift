@@ -50,14 +50,20 @@ struct ConnectionListView: View {
 #if DEBUG
 struct ConnectionListView_Previews: PreviewProvider {
     static var previews: some View {
-            let viewState = ViewState()
-            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
-            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
-            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
-            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
-            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
-            viewState.connectionChanged(generateTestConnection(direction: ConnectionDirection.outbound))
-            return ConnectionListView().environmentObject(viewState)
-        }
+        let viewState = ViewState()
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+
+        return ConnectionListView().environmentObject(viewState)
+    }
 }
 #endif

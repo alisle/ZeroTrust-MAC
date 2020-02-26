@@ -25,13 +25,6 @@ class Main {
     
     init() {
         self.consumer = Consumer(decisionEngine: decisionEngine, connectionState: connectionState)
-        connectionState.addListener(listener: viewState)
-        connectionState.addListener(listener: notifications)
-        
-        serviceState.addListener(type: .enabled, listener: consumer)
-        serviceState.addListener(type: .denyMode, listener: consumer)
-        serviceState.addListener(type: .inspectMode, listener: consumer)
-        
         self.preferences = Preferences.load()!
     }
     

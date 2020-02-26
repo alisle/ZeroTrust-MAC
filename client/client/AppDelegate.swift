@@ -11,7 +11,7 @@ import SwiftUI
 import Logging
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, ServiceStateListener {
+class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
     let logger = Logger(label: "com.zerotrust.client.AppDeletegate")
 
     var connectionsWindow: NSWindow!
@@ -37,34 +37,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceStateListener {
 
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     
-    func serviceStateChanged(type: ServiceStateType, serviceEnabled: Bool) {
-        switch type {
-        case .enabled:
-            switch serviceEnabled {
-            case true:
-                enabledMenuItem.title = "Disable Service..."
-                enabledMenuItem.image = disabledIcon
-            case false:
-                enabledMenuItem.title = "Enable Service..."
-                enabledMenuItem.image = enabledIcon
-            }
-            
-        case .inspectMode:
-            switch serviceEnabled {
-            case true:
-                inspectModeMenuItem.title = "Stop Inspect Mode..."
-            case false:
-                inspectModeMenuItem.title = "Start Inspect Mode..."
-            }
-            
-        case .denyMode:
-            switch serviceEnabled {
-                case true:
-                    denyModeMenuItem.title = "Stop Deny Mode..."
-                case false:
-                    denyModeMenuItem.title = "Start Deny Mode..."
-            }
-            
+    func eventTriggered(event: BaseEvent) {
+        switch event.type {
+        case .FirewallEnabled:
+            enabledMenuItem.title = "Disable Service..."
+            enabledMenuItem.image = disabledIcon
+        case .FirewallDisabled:
+            enabledMenuItem.title = "Enable Service..."
+            enabledMenuItem.image = enabledIcon
+        case .StartInspectMode:
+            inspectModeMenuItem.title = "Stop Inspect Mode..."
+        case .StopInspectMode:
+            inspectModeMenuItem.title = "Start Inspect Mode..."
+        case .StartDenyMode:
+            denyModeMenuItem.title = "Stop Deny Mode..."
+        case .StopDenyMode:
+            denyModeMenuItem.title = "Start Deny Mode..."
+        default: ()
         }
     }
     
@@ -130,10 +119,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, ServiceStateListener {
         createRulesWindow()
         main.entryPoint()
         
-        main.serviceState.addListener(type: .enabled, listener: self)
-        main.serviceState.addListener(type: .inspectMode, listener: self)
-        main.serviceState.addListener(type: .denyMode, listener: self)
-                
+        EventManager.shared.addListener(type: .FirewallEnabled, listener: self)
+        EventManager.shared.addListener(type: .FirewallDisabled, listener: self)
+
+        EventManager.shared.addListener(type: .StartInspectMode, listener: self)
+        EventManager.shared.addListener(type: .StopInspectMode, listener: self)
+
+        EventManager.shared.addListener(type: .StartDenyMode, listener: self)
+        EventManager.shared.addListener(type: .StopDenyMode, listener: self)
+        
         setupStatusBar()
     }
     

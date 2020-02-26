@@ -77,17 +77,13 @@ struct ConnectionGraphView_Previews: PreviewProvider {
     static var previews: some View {
         let viewState = ViewState()
         
-        viewState.connectionChanged( generateTestConnection(direction: ConnectionDirection.outbound))
-        
-        viewState.connectionChanged( generateTestConnection(direction: ConnectionDirection.outbound))
-        
-        viewState.connectionChanged( generateTestConnection(direction: ConnectionDirection.outbound))
-        
-        viewState.connectionChanged( generateTestConnection(direction: ConnectionDirection.outbound))
-        
-        viewState.connectionChanged( generateTestConnection(direction: ConnectionDirection.outbound))
-        
-        
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+        viewState.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
+                
         return ConnectionCombinedGraphView().environmentObject(viewState)
     }
 }
