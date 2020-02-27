@@ -58,6 +58,7 @@
 		F0701CBA2405976B0002DD82 /* ConnectionChangedEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CB92405976B0002DD82 /* ConnectionChangedEvent.swift */; };
 		F0701CBC24059D760002DD82 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CBB24059D760002DD82 /* EventManager.swift */; };
 		F0701CBE24059E3C0002DD82 /* EventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CBD24059E3C0002DD82 /* EventListener.swift */; };
+		F0701CC0240704480002DD82 /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CBF240704470002DD82 /* Pipeline.swift */; };
 		F08982982356A554003DB49B /* RulesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982972356A554003DB49B /* RulesListView.swift */; };
 		F089829A2356A633003DB49B /* RulesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982992356A633003DB49B /* RulesDetailView.swift */; };
 		F0925F33234B79BB00C01F72 /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0925F32234B79BB00C01F72 /* RulesView.swift */; };
@@ -157,6 +158,7 @@
 		F0701CB92405976B0002DD82 /* ConnectionChangedEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionChangedEvent.swift; sourceTree = "<group>"; };
 		F0701CBB24059D760002DD82 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		F0701CBD24059E3C0002DD82 /* EventListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListener.swift; sourceTree = "<group>"; };
+		F0701CBF240704470002DD82 /* Pipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipeline.swift; sourceTree = "<group>"; };
 		F08982972356A554003DB49B /* RulesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesListView.swift; sourceTree = "<group>"; };
 		F08982992356A633003DB49B /* RulesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesDetailView.swift; sourceTree = "<group>"; };
 		F0925F32234B79BB00C01F72 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 				F042BDD92343995700965781 /* preferences.plist */,
 				F042BDDB23439A6D00965781 /* Preferences.swift */,
 				F0260FDC237DE533002E2C5C /* NotificationsManager.swift */,
+				F0701CBF240704470002DD82 /* Pipeline.swift */,
 			);
 			path = client;
 			sourceTree = "<group>";
@@ -603,6 +606,7 @@
 				F0331F842360EDB100A634D5 /* ConnectionCombinedGraphView.swift in Sources */,
 				F0701C9623FC595B0002DD82 /* IPAddress.swift in Sources */,
 				F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */,
+				F0701CC0240704480002DD82 /* Pipeline.swift in Sources */,
 				F0FF0F5423CEA3F5001FFCB5 /* ConnectionsViewHeader.swift in Sources */,
 				F0260FD12379E01E002E2C5C /* GlobeShape.swift in Sources */,
 				F028F81E233B04DF003EA345 /* Rules.swift in Sources */,

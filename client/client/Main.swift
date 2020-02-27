@@ -8,23 +8,57 @@
 
 import Foundation
 import Logging
+import IP2Location
 
 class Main {
-    let logger = Logger(label: "com.zerotrust.client.Main")
+    private let logger = Logger(label: "com.zerotrust.client.Main")
+    private let consumerQueue = DispatchQueue(label: "com.zeortrust.mac.consumerQueue", attributes: .concurrent)
 
     private let consumer : Consumer
     private let decisionEngine = DecisionEngine()
     private let rulesDispatcher = RulesDispatcher()
     private let connectionState = ConnectionState()
-    private let preferences : Preferences
     private let notifications = NotficiationsManager()
-    private let consumerQueue = DispatchQueue(label: "com.zeortrust.mac.consumerQueue", attributes: .concurrent)
     
-    let serviceState : ServiceState = ServiceState()
-    let viewState : ViewState = ViewState()
+    private let dnsCache = DNSCache()
+    private let protocolCache = ProtocolCache()
+    private let kextComm = KextComm()
     
-    init() {
-        self.consumer = Consumer(decisionEngine: decisionEngine, connectionState: connectionState)
+    private let ipdb : IP2DBLocate?
+    private let preferences : Preferences
+    private let pipline : Pipeline
+
+    let serviceState = ServiceState()
+    let viewState = ViewState()
+    
+    
+    init() {                
+        if let filepath = Bundle.main.url(forResource: "IP2LOCATION-LITE-DB11", withExtension: "BIN") {
+            do {
+                logger.info("loading IP2Location DB")
+                self.ipdb = try IP2DBLocate(file: filepath)
+            } catch  {
+                logger.error("Unable to load IP2Location database")
+                self.ipdb = nil
+            }
+        } else {
+            self.ipdb = nil
+        }
+        
+        self.pipline = Pipeline(
+            decisionEngine: decisionEngine,
+            connectionState: connectionState,
+            dnsCache: dnsCache,
+            protocolCache: protocolCache,
+            ipdb: ipdb,
+            kextComm: kextComm
+        )
+        
+        self.consumer = Consumer(
+            pipeline: pipline,
+            kextComm: kextComm
+        )
+        
         self.preferences = Preferences.load()!
     }
     

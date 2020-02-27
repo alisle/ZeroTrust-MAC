@@ -14,33 +14,20 @@ import Logging
 class Consumer : EventListener {
     let logger = Logger(label: "com.zerotrust.client.Consumer")
 
-    private let decisionEngine : DecisionEngine
-    private let connectionState : ConnectionState
-    private let dnsCache = DNSCache()
-    private let protocolCache = ProtocolCache()
-    
+    private let pipeline : Pipeline
+    private let comm : KextComm
+
     private var isOpen = false
-    private var comm = KextComm()
     
-    private let ipdb : Optional<IP2DBLocate>
     
-    init(decisionEngine : DecisionEngine, connectionState: ConnectionState) {
-        
-        self.decisionEngine = decisionEngine
-        self.connectionState = connectionState
-        if let filepath = Bundle.main.url(forResource: "IP2LOCATION-LITE-DB11", withExtension: "BIN") {
-            do {
-                logger.info("loading IP2Location DB")
-                self.ipdb = try IP2DBLocate(file: filepath)
-            } catch  {
-                logger.error("Unable to load IP2Location database")
-                self.ipdb = nil
-            }
-        } else {
-            self.ipdb = nil
-        }
-        
-        
+    init( pipeline: Pipeline, kextComm : KextComm) {
+        self.pipeline = pipeline
+        self.comm = kextComm
+                        
+        registerEventHandlers()
+    }
+    
+    private func registerEventHandlers() {
         EventManager.shared.addListener(type: .FirewallEnabled, listener: self)
         EventManager.shared.addListener(type: .FirewallDisabled, listener: self)
         
@@ -49,7 +36,6 @@ class Consumer : EventListener {
         
         EventManager.shared.addListener(type: .StartDenyMode, listener: self)
         EventManager.shared.addListener(type: .StopDenyMode, listener: self)
-
     }
     
     func eventTriggered(event: BaseEvent) {        
@@ -119,58 +105,11 @@ class Consumer : EventListener {
                     continue
                 }
                 
-                logger.info("processing event")
-                switch(event.eventType) {
-                case FirewallEventType.outboundConnection:
-                    let firewallEvent = event as! TCPConnection
-                    let remoteURL = dnsCache.get(firewallEvent.remoteSocket.address)
-                    let remoteProtocol = protocolCache.get(firewallEvent.remoteSocket.port)
-                    let tcpConnection = event as! TCPConnection
-                    let location = self.ipdb?.find(tcpConnection.remoteSocket.address.representation)
-                    
-                    let connection = Connection(
-                        connection: tcpConnection,
-                        location: location,
-                        remoteURL: remoteURL,
-                        portProtocol: remoteProtocol)
-                    
-                    connectionState.new(connection: connection)
-
-                case FirewallEventType.connectionUpdate:
-                    let update = event as! FirewallConnectionUpdate
-                    connectionState.update(tag: update.tag!, timestamp: update.timestamp, update: update.update)
-                    
-                case FirewallEventType.dnsUpdate:
-                    let update = event as! FirewallDNSUpdate
-                    update.aRecords.forEach { dnsCache.update(url: $0.url, ip: $0.ip) }
-                    update.cNameRecords.forEach { dnsCache.update(url: $0.url, cName: $0.cName)}
-                    update.questions.forEach{ dnsCache.update(question: $0) }
-                    
-                case FirewallEventType.query:
-                    let query = event as! FirewallQuery
-                                        
-                    let remoteURL = dnsCache.get(query.remoteSocket.address)
-                    let remoteProtocol = protocolCache.get(query.remoteSocket.port)
-                    
-                    let localURL = dnsCache.get(query.localSocket.address)
-                    let localProtocol = protocolCache.get(query.localSocket.port)
-                    
-                    query.remoteURL = remoteURL
-                    query.remoteProtocol = remoteProtocol
-                    
-                    query.localURL = localURL
-                    query.localProtocol = localProtocol
-                    
-                                                            
-                    let decision = decisionEngine.decide(query)
-                    comm.postDecision(id: query.id, allowed: decision.toInt())
-                    
-                default:
-                    continue
-                }
+                pipeline.process(event: event)
                 
                 logger.info("finished processing event")
             }
+            
             logger.debug("sleeping because we aren't open")
             sleep(10)
         }
