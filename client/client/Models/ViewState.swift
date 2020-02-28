@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import Logging
 
 class ViewState : ObservableObject, EventListener {
     private let sort : (Connection, Connection) -> Bool = { (lhs, rhs) in
@@ -27,6 +28,8 @@ class ViewState : ObservableObject, EventListener {
     
     let geomap : Graph = Graph.load()
     var objectWillChange = PassthroughSubject<Void, Never>()
+    
+    
     private var raw = Set<Connection>()
     private var lastSecond : Int = 0
     
@@ -35,6 +38,9 @@ class ViewState : ObservableObject, EventListener {
     private(set) var counts : [GraphCountry] = []
     private(set) var amountsOverHour : [Int]
     
+    
+    private let logger = Logger(label: "com.zerotrust.client.Models.ViewState")
+
     var rules : Rules
 
     init() {
@@ -147,6 +153,7 @@ class ViewState : ObservableObject, EventListener {
     }
     
     func eventTriggered(event: BaseEvent) {
+        logger.info("recieved conneciton changed event, updating view state")
         let event = event as! ConnectionChangedEvent
         
         self.raw.update(with: event.connection)
@@ -159,10 +166,9 @@ class ViewState : ObservableObject, EventListener {
         
 
         DispatchQueue.main.async() { [weak self] in
-            guard let self = self else {
-                return
-            }
-
+            guard let self = self else { return }
+            
+            self.logger.info("async update of view")
             self.counts = counts
             self.amountsOverHour = ticks
             self.lastSecond = time

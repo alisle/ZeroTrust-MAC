@@ -76,13 +76,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
     
     @IBAction func showRulesClicked(_ sender: Any) {
         logger.info("opening rules window")
-        rulesWindow.makeKeyAndOrderFront(nil)
+        rulesWindow.makeKeyAndOrderFront(self)
     }
     
     @IBAction func showConnectionsClicked(_ sender: Any) {
         logger.info("opening connections window")
-        
-        connectionsWindow.makeKeyAndOrderFront(nil)
+        connectionsWindow.makeKeyAndOrderFront(self)
     }
     
     
