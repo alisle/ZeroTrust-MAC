@@ -50,7 +50,7 @@ class Pipeline {
         case FirewallEventType.query:
             let query = event as! FirewallQuery
             self.process(query: query)
-                                
+                                 
         default: ()
         }
     }
@@ -85,6 +85,8 @@ class Pipeline {
         
         let localURL = dnsCache.get(query.localSocket.address)
         let localProtocol = protocolCache.get(query.localSocket.port)
+        
+        
         
         query.remoteURL = remoteURL
         query.remoteProtocol = remoteProtocol

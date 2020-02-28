@@ -10,75 +10,21 @@ import Foundation
 import CommonCrypto
 import Logging
 
-class ProcessInfo {
-    public let pid : Int
-    public let ppid: Int
-    public let uid : Int?
-    public let username : String?
-    public let command : String?
-    public let path : String?
-    public let parent : ProcessInfo?
-    public let bundle : Bundle?
-    public let appBundle: Bundle?
-    public let sha256 : String?
-    public let md5 : String?
+struct ProcessWrapper {
+    let process : ProcessInfo
+    let timestamp = Date()
     
-    public init(pid : Int,
-                ppid: Int,
-                uid : Int?,
-                username : String?,
-                command : String?,
-                path : String?,
-                parent : ProcessInfo?,
-                bundle: Bundle?,
-                appBundle: Bundle?,
-                sha256: String?,
-                md5: String?
-                ) {
-        self.pid = pid
-        self.ppid = ppid
-        self.uid = uid
-        self.username = username
-        self.command = command
-        self.path = path
-        self.parent = parent
-        self.bundle = bundle
-        self.appBundle = appBundle
-        self.sha256 = sha256
-        self.md5 = md5
-    }
-
-    
-        
-}
-
-extension ProcessInfo : CustomStringConvertible {
-    public var description: String  {
-        return "PID:\(self.pid), PPID:\(self.ppid), USER: \(self.username ?? "unknown")(\(self.uid)) - COMMAND: \(self.command ?? "unknown") - FP: \(self.path ?? "unknown")"
-    }
-
-}
-
-extension ProcessInfo : Hashable {
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(pid)
-        hasher.combine(ppid)
-        hasher.combine(uid)
-        hasher.combine(path)
+    var pid : Int {
+        get {
+            return self.process.pid
+        }
     }
 }
 
-
-extension ProcessInfo : Equatable {
-    public static func ==(lhs:ProcessInfo, rhs: ProcessInfo) -> Bool {
-        return lhs.hashValue == rhs.hashValue
-    }
-}
-
-class Processes {
-    static public let shared = Processes()
-
+class ProcessManager {
     let logger = Logger(label: "com.zerotrust.client.Models.Processes")
+    var cache : [Int : ProcessWrapper] = [:]
+        
     static private var maxArgumentSize : size_t = {
         var mib = [ CTL_KERN, KERN_ARGMAX, 0 ]
         var size : size_t = 0
@@ -89,7 +35,27 @@ class Processes {
         return size
     }()
     
-    func process(pid: pid_t, ppid: pid_t, command: String) -> ProcessInfo {
+    func get(pid: pid_t) -> ProcessInfo? {
+        let id = Int(pid)
+        
+        if let info = cache[id] {
+            if info.timestamp.timeIntervalSinceNow < 5 * 60 {
+                return info.process
+            }
+        }
+        
+        return process(pid)
+    }
+    
+    func get(pid: pid_t, ppid: pid_t, command: String) -> ProcessInfo {
+        guard let info = get(pid: pid) else {
+            return self.process(pid: pid, ppid: ppid, command: command)
+        }
+        
+        return info
+    }
+    
+    private func process(pid: pid_t, ppid: pid_t, command: String) -> ProcessInfo {
         guard let info = process(pid) else {
             let path = getProcessPath(pid: pid)
             let bundle = self.getBundle(path: path)
@@ -115,7 +81,7 @@ class Processes {
         return info
     }
     
-    func process(_ pid: pid_t) -> ProcessInfo? {
+    private func process(_ pid: pid_t) -> ProcessInfo? {
         guard var kinfo =  getKinfo(pid: pid) else {
             return nil
         }
@@ -140,7 +106,7 @@ class Processes {
         let sha256 = generateSHA256(path: path)
         let md5 = generateMD5(path: path)
 
-        return ProcessInfo(pid: pid,
+        let info = ProcessInfo(pid: pid,
                            ppid: ppid,
                            uid: uid,
                            username: username,
@@ -152,6 +118,9 @@ class Processes {
                            sha256: sha256,
                            md5: md5
         )
+        
+        self.cache[pid] = ProcessWrapper(process: info)
+        return info
     }
     
     private func getKinfo(pid: pid_t) -> kinfo_proc? {

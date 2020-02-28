@@ -50,7 +50,7 @@
 		F0701C9A23FC83A30002DD82 /* IPAddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9923FC83A30002DD82 /* IPAddressTests.swift */; };
 		F0701C9C23FDA2110002DD82 /* SocketAddressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9B23FDA2110002DD82 /* SocketAddressTests.swift */; };
 		F0701CA023FDB5AF0002DD82 /* ProcessesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9F23FDB5AF0002DD82 /* ProcessesTests.swift */; };
-		F0701CA123FDEA530002DD82 /* Processes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9D23FDB23C0002DD82 /* Processes.swift */; };
+		F0701CA123FDEA530002DD82 /* ProcessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701C9D23FDB23C0002DD82 /* ProcessManager.swift */; };
 		F0701CA524022AE70002DD82 /* DNSCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CA424022AE70002DD82 /* DNSCache.swift */; };
 		F0701CAC240231DB0002DD82 /* HashTestFile.txt in Resources */ = {isa = PBXBuildFile; fileRef = F0701CAB240231DB0002DD82 /* HashTestFile.txt */; };
 		F0701CB6240596170002DD82 /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CB5240596170002DD82 /* EventType.swift */; };
@@ -59,6 +59,7 @@
 		F0701CBC24059D760002DD82 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CBB24059D760002DD82 /* EventManager.swift */; };
 		F0701CBE24059E3C0002DD82 /* EventListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CBD24059E3C0002DD82 /* EventListener.swift */; };
 		F0701CC0240704480002DD82 /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CBF240704470002DD82 /* Pipeline.swift */; };
+		F0701CC224096E0D0002DD82 /* ProcessInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0701CC124096E0D0002DD82 /* ProcessInfo.swift */; };
 		F08982982356A554003DB49B /* RulesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982972356A554003DB49B /* RulesListView.swift */; };
 		F089829A2356A633003DB49B /* RulesDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08982992356A633003DB49B /* RulesDetailView.swift */; };
 		F0925F33234B79BB00C01F72 /* RulesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0925F32234B79BB00C01F72 /* RulesView.swift */; };
@@ -149,7 +150,7 @@
 		F0701C9723FC7C2B0002DD82 /* SocketAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddress.swift; sourceTree = "<group>"; };
 		F0701C9923FC83A30002DD82 /* IPAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPAddressTests.swift; sourceTree = "<group>"; };
 		F0701C9B23FDA2110002DD82 /* SocketAddressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketAddressTests.swift; sourceTree = "<group>"; };
-		F0701C9D23FDB23C0002DD82 /* Processes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Processes.swift; sourceTree = "<group>"; };
+		F0701C9D23FDB23C0002DD82 /* ProcessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessManager.swift; sourceTree = "<group>"; };
 		F0701C9F23FDB5AF0002DD82 /* ProcessesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessesTests.swift; sourceTree = "<group>"; };
 		F0701CA424022AE70002DD82 /* DNSCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSCache.swift; sourceTree = "<group>"; };
 		F0701CAB240231DB0002DD82 /* HashTestFile.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = HashTestFile.txt; sourceTree = "<group>"; };
@@ -159,6 +160,7 @@
 		F0701CBB24059D760002DD82 /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		F0701CBD24059E3C0002DD82 /* EventListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListener.swift; sourceTree = "<group>"; };
 		F0701CBF240704470002DD82 /* Pipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipeline.swift; sourceTree = "<group>"; };
+		F0701CC124096E0D0002DD82 /* ProcessInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessInfo.swift; sourceTree = "<group>"; };
 		F08982972356A554003DB49B /* RulesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesListView.swift; sourceTree = "<group>"; };
 		F08982992356A633003DB49B /* RulesDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesDetailView.swift; sourceTree = "<group>"; };
 		F0925F32234B79BB00C01F72 /* RulesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesView.swift; sourceTree = "<group>"; };
@@ -300,7 +302,7 @@
 				F054A6CD23D0E1F800B67460 /* ServiceState.swift */,
 				F0701C9523FC595B0002DD82 /* IPAddress.swift */,
 				F0701C9723FC7C2B0002DD82 /* SocketAddress.swift */,
-				F0701C9D23FDB23C0002DD82 /* Processes.swift */,
+				F0701CC124096E0D0002DD82 /* ProcessInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -398,6 +400,7 @@
 				F0E4F83022BBE4E200A38601 /* client.entitlements */,
 				F0E4F82922BBE4E200A38601 /* Preview Content */,
 				F052C9EA22C1278D005DE1D7 /* Consumer.swift */,
+				F0701C9D23FDB23C0002DD82 /* ProcessManager.swift */,
 				F052C9EC22C163A2005DE1D7 /* KextComm.swift */,
 				F052C9EE22C1740A005DE1D7 /* Helpers.swift */,
 				F052C9F422C17531005DE1D7 /* kext-helpers.c */,
@@ -607,6 +610,7 @@
 				F0701C9623FC595B0002DD82 /* IPAddress.swift in Sources */,
 				F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */,
 				F0701CC0240704480002DD82 /* Pipeline.swift in Sources */,
+				F0701CC224096E0D0002DD82 /* ProcessInfo.swift in Sources */,
 				F0FF0F5423CEA3F5001FFCB5 /* ConnectionsViewHeader.swift in Sources */,
 				F0260FD12379E01E002E2C5C /* GlobeShape.swift in Sources */,
 				F028F81E233B04DF003EA345 /* Rules.swift in Sources */,
@@ -641,7 +645,7 @@
 				F052C9FD22C17699005DE1D7 /* Connection.swift in Sources */,
 				F0260FD9237C9219002E2C5C /* ConnectionAmountShape.swift in Sources */,
 				F0E4F82422BBE4E000A38601 /* AppDelegate.swift in Sources */,
-				F0701CA123FDEA530002DD82 /* Processes.swift in Sources */,
+				F0701CA123FDEA530002DD82 /* ProcessManager.swift in Sources */,
 				F0701C9823FC7C2B0002DD82 /* SocketAddress.swift in Sources */,
 				F0FB57102358AED900AAB5F6 /* OutcomeExtension.swift in Sources */,
 				F052C9EB22C1278D005DE1D7 /* Consumer.swift in Sources */,

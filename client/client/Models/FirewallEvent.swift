@@ -81,10 +81,7 @@ class FirewallQuery : FirewallEvent {
     let id : UInt32
     let timestamp : Date
     
-    let procName : String
-    let pid: pid_t
-    let ppid: pid_t
-    
+    let processInfo : ProcessInfo
     let remoteSocket : SocketAddress
     let localSocket : SocketAddress
     
@@ -97,19 +94,15 @@ class FirewallQuery : FirewallEvent {
     init(tag: UUID,
          id: UInt32,
          timestamp : TimeInterval,
-         pid: pid_t,
-         ppid: pid_t,
          remoteSocket : SocketAddress,
          localSocket : SocketAddress,
-         procName : String
+         processInfo : ProcessInfo
         )  {
         self.id = id
         self.timestamp = Date(timeIntervalSince1970: timestamp)
-        self.pid = pid
-        self.ppid = pid
         self.localSocket = localSocket
         self.remoteSocket = remoteSocket
-        self.procName = procName
+        self.processInfo = processInfo
         super.init(type: FirewallEventType.query, tag: tag)
     }
 }

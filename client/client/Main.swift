@@ -22,8 +22,9 @@ class Main {
     
     private let dnsCache = DNSCache()
     private let protocolCache = ProtocolCache()
-    private let kextComm = KextComm()
+    private let processManager = ProcessManager()
     
+    private let kextComm : KextComm
     private let ipdb : IP2DBLocate?
     private let preferences : Preferences
     private let pipline : Pipeline
@@ -44,6 +45,8 @@ class Main {
         } else {
             self.ipdb = nil
         }
+        
+        self.kextComm = KextComm(processManager: self.processManager)
         
         self.pipline = Pipeline(
             decisionEngine: decisionEngine,

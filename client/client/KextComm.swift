@@ -25,6 +25,8 @@ enum DNSAnswerError: Error {
 
 class KextComm {
     let logger = Logger(label: "com.zerotrust.client.KextComm")
+    
+    private let processManager : ProcessManager
 
     private var notificationPortOpen = false
     private var notificationMemory : mach_vm_address_t = 0
@@ -36,6 +38,10 @@ class KextComm {
     private var service : io_service_t = 0
     
     private var queue : UnsafeMutablePointer<IODataQueueMemory>? = nil;
+    
+    init(processManager : ProcessManager) {
+        self.processManager = processManager
+    }
     
     func open() -> Bool {
         if isOpen {
@@ -220,27 +226,26 @@ class KextComm {
             
             let tag = UUID.init(uuid: buffer.tag)
             let timestamp = Double(buffer.timestamp)
-            let pid = message.pid
-            let ppid = message.ppid
             let id = message.query_id
             
+            let remote = SocketAddress(message.remote)
+            let local = SocketAddress(message.local)
+
             let procName = withUnsafeBytes(of: &message.proc_name) { (rawPtr) -> String in
                 let ptr = rawPtr.baseAddress!.assumingMemoryBound(to: CChar.self)
                 return String(cString: ptr)
             }
             
-            let remote = SocketAddress(message.remote)
-            let local = SocketAddress(message.local)
+            let process = processManager.get(pid: message.pid, ppid: message.ppid, command: procName)
+
             
             return FirewallQuery(
                 tag: tag,
                 id: id,
                 timestamp: timestamp,
-                pid: pid,
-                ppid: ppid,
                 remoteSocket: remote,
                 localSocket:  local,
-                procName: procName
+                processInfo:  process
             )
             
         default:
@@ -261,7 +266,7 @@ class KextComm {
             return String(cString: ptr)
         }
         
-        let info = Processes.shared.process(pid: pid, ppid: ppid,command: procName)        
+        let info = processManager.get(pid: pid, ppid: ppid,command: procName)
         let remote = SocketAddress(event.data.tcp_connection.remote)
         let local = SocketAddress(event.data.tcp_connection.local)
         
