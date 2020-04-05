@@ -24,10 +24,8 @@ enum DNSAnswerError: Error {
 
 
 class KextComm {
-    let logger = Logger(label: "com.zerotrust.client.KextComm")
-    
+    private let logger = Logger(label: "com.zerotrust.client.KextComm")
     private let processManager : ProcessManager
-
     private var notificationPortOpen = false
     private var notificationMemory : mach_vm_address_t = 0
     private var notificationMemorySize : mach_vm_size_t = 0
@@ -137,24 +135,24 @@ class KextComm {
         var size : UInt32 = UInt32(MemoryLayout<firewall_event>.size)
         var buffer = firewall_event()
         
-        logger.info("trying to dequeue")
+        logger.debug("trying to dequeue")
         if kIOReturnSuccess != IODataQueueDequeue(queue, &buffer, &size) {
             logger.error("Unable to dequeue data")
             return Optional.none
         }
         
         
-        logger.info("checking buffer type")
+        logger.debug("checking buffer type")
         switch buffer.type {
         case outbound_connection:
-            logger.info("outbound connection")
+            logger.debug("outbound connection")
             return processTCPConnection(event: &buffer, inbound: false)
         case inbound_connection:
-            logger.info("inbound connection")
+            logger.debug("inbound connection")
             return processTCPConnection(event: &buffer, inbound: true)
             
         case connection_update:
-            logger.info("connection update")
+            logger.debug("connection update")
 
             let uuid = UUID.init(uuid:buffer.tag)
             let timestamp = Double(buffer.timestamp);
@@ -184,7 +182,7 @@ class KextComm {
             
             return FirewallConnectionUpdate(tag: uuid, timestamp: timestamp, update: update!)
         case dns_update:
-            logger.info("dns update")
+            logger.debug("dns update")
 
             var aRecords : [ARecord] = []
             var cNameRecords : [CNameRecord] = []
@@ -201,7 +199,7 @@ class KextComm {
             }
             
             for x in 0..<header.answerCount {
-                logger.info("Processing Answer count: \(x)")
+                logger.debug("Processing Answer count: \(x)")
                 do {
                     let (updatedPointer: updatedPointer, aRecord: aRecord, cNameRecord: cNameRecord) = try processDNSAnswer(startPointer: startPointer, currentPointer: pointer)
                     pointer = updatedPointer
@@ -221,7 +219,7 @@ class KextComm {
             )
             
         case query:
-            logger.info("query")
+            logger.debug("query")
             var message = buffer.data.query_event
             
             let tag = UUID.init(uuid: buffer.tag)
@@ -368,7 +366,7 @@ class KextComm {
         if( offset & 0xC000 == 0xC000 ) {
             // we have a compressed query.
             offset = UInt16(offset & (0xFFFF - 0xC000))
-            logger.info("we have a compressed query")
+            logger.debug("we have a compressed query")
             isCompressed.toggle()
         }
 
@@ -395,7 +393,7 @@ class KextComm {
                 let offsetPointer = UInt16(offset & (0xFFFF - 0xC000))
                 currentPointer = startPointer.advanced(by: Int(offsetPointer))
                 size = currentPointer.load(as: UInt8.self).bigEndian
-                logger.info("we are going to a new jump point")
+                logger.debug("we are going to a new jump point")
             }
         }
         

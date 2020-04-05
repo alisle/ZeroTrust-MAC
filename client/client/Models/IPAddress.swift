@@ -7,13 +7,17 @@
 //
 
 import Foundation
+import Logging
 
 public class IPAddress {
+    private let logger = Logger(label: "com.zerotrust.client.Models.IPAddress")
+
     public enum Family {
         case IPv4, IPv6
     }
     
     public enum Address : Hashable, Equatable {
+        
         case IPv4(in_addr), IPv6(in6_addr)
         
         public static func ==(lhs: IPAddress.Address, rhs: IPAddress.Address) -> Bool {
@@ -63,16 +67,29 @@ public class IPAddress {
     public lazy var representation : String = { [unowned self] in
         switch address {
         case .IPv4(var addr):
+            self.logger.debug("getting IPv4 representation")
+            
             let length = Int(INET_ADDRSTRLEN) + 2
             var buffer : Array<CChar> = Array(repeating: 0, count: length)
-            let hostCString = inet_ntop(AF_INET, &addr, &buffer, socklen_t(length))
-            return String.init(cString: hostCString!)
+            guard let hostCString = inet_ntop(AF_INET, &addr, &buffer, socklen_t(length)) else {
+                self.logger.warning("unable to get address!")
+                return "Unknown"
+            }
+            
+            return String.init(cString: hostCString)
             
         case .IPv6(var addr):
+            self.logger.debug("getting IPv6 representation")
+
             let length = Int(INET6_ADDRSTRLEN) + 2
             var buffer : Array<CChar> = Array(repeating: 0, count: length)
-            let hostCString = inet_ntop(AF_INET6, &addr, &buffer, socklen_t(length))
-            return String.init(cString: hostCString!)
+            
+            guard let hostCString = inet_ntop(AF_INET6, &addr, &buffer, socklen_t(length)) else {
+                self.logger.warning("unable to get address!")
+                return "Unknown"
+            }
+
+            return String.init(cString: hostCString)
         }
     }()
     

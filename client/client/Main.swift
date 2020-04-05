@@ -24,6 +24,7 @@ class Main {
     private let protocolCache = ProtocolCache()
     private let processManager = ProcessManager()
     
+    
     private let kextComm : KextComm
     private let ipdb : IP2DBLocate?
     private let preferences : Preferences
@@ -32,6 +33,10 @@ class Main {
     let serviceState = ServiceState()
     let viewState = ViewState()
     
+    // States
+    let connectionCounts = ConnectionCounts()
+    let locations = Locations()
+    let allConnections = AllConnections()
     
     init() {                
         if let filepath = Bundle.main.url(forResource: "IP2LOCATION-LITE-DB11", withExtension: "BIN") {
@@ -63,6 +68,9 @@ class Main {
         )
         
         self.preferences = Preferences.load()!
+        
+        ProcessHistoryCache.shared.registerListeners()
+        RemoteHistoryCache.shared.registerListeners()
     }
     
     func entryPoint() {
@@ -102,7 +110,7 @@ class Main {
             self.rulesUpdate()
         }
     }
-    
+        
     
     func exitPoint() {
         

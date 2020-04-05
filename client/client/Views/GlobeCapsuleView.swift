@@ -31,7 +31,7 @@ struct GlobeCapsuleView: View {
                 .frame(height: 36)
 
             HStack(alignment: .center) {
-                ConnectionIconView(connection: connection, size: 32)
+                ConnectionIcon(connection: connection, size: 32)
                 VStack(alignment: .center) {
                     HStack {
                         Text(connection.remoteDisplayAddress)

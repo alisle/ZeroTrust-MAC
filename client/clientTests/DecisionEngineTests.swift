@@ -10,19 +10,30 @@ import XCTest
 @testable import ZeroTrust_FW
 
 class DecisionEngineTests : XCTestCase {
-    private func generateQuery() -> FirewallQuery {
-        
+    func generateQuery() -> FirewallQuery {
+        let info = ProcessDetails(
+            pid : 1,
+            ppid: 0,
+            uid : nil,
+            username : nil,
+            command : nil,
+            path : nil,
+            parent : nil,
+            bundle: nil,
+            appBundle: nil,
+            sha256: nil,
+            md5: nil,
+            peers: []
+        )
+
         return FirewallQuery(
             tag: UUID(),
             id: 1,
             timestamp: 2.0,
-            pid: 1,
-            ppid: 0,
             remoteSocket: SocketAddress(address: IPAddress("192.168.1.23")!, port: 99),
             localSocket: SocketAddress(address: IPAddress("127.0.0.1")!,  port: 102),
-            procName: "phony_mc_lonely"
-        )
-        
+            processInfo : info
+            )
     }
     
     private func generateRulesEntry(indicator: String)  -> RulesEntry {
@@ -30,7 +41,7 @@ class DecisionEngineTests : XCTestCase {
     }
     
     func testDomainDeny() {
-        let rules = Rules(domains: [ generateRulesEntry(indicator: "newgay.badguy.com") ], hostnames: [], metadata: [:])
+        let rules = Rules(domains: [ generateRulesEntry(indicator: "newguy.badguy.com") ], hostnames: [], metadata: [:])
         let engine = DecisionEngine()
         engine.set(rules: rules)
         

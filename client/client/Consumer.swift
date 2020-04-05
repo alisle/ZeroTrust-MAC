@@ -99,7 +99,7 @@ class Consumer : EventListener {
                     }
                 }
 
-                logger.info("dequeuing data")
+                logger.debug("dequeuing data")
                 guard let event = comm.dequeue() else {
                     logger.debug("event is null skipping")
                     continue
@@ -107,7 +107,7 @@ class Consumer : EventListener {
                 
                 pipeline.process(event: event)
                 
-                logger.info("finished processing event")
+                logger.debug("finished processing event")
             }
             
             logger.debug("sleeping because we aren't open")

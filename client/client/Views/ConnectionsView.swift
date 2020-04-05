@@ -17,7 +17,7 @@ struct ConnectionsView : View  {
     var connectionsContainer : some View {
         VStack(alignment: .leading) {
             NavigationView {
-                ConnectionListView()
+                ConnectionList()
                     .frame(minWidth: 400, maxWidth: 600, minHeight: 200)
                 
                 if serviceState.enabled {
@@ -33,11 +33,14 @@ struct ConnectionsView : View  {
     }
     
     var body: some View {
+        /*
         VStack(alignment: .leading) {
             ConnectionsViewHeader()
             ConnectionCombinedGraphView()
             connectionsContainer
         }.frame(minWidth: 1200, maxWidth: .infinity)
+ */
+        Overview()
     }
 }
 
@@ -51,21 +54,27 @@ func generateTestRules() -> Rules {
     return json.convert()
 }
 
-func generateProcessInfo() -> ProcessInfo {
+func generateProcessInfo(_ generatePeers : Bool = true, _ numberOfPeers : Int = 4) -> ProcessDetails {
     let process = ["Chrome.app", "/usr/bin/ssh", "WhatsApp.app"].randomElement()
 
-    return ProcessInfo(
-        pid: 1021,
+    let parent = (generatePeers) ? generateProcessInfo(false) : nil
+    let peers = (generatePeers) ? (0..<numberOfPeers).map{ _ in generateProcessInfo(false) } : []
+    
+    print("Theses are peers \(peers)")
+    return ProcessDetails(
+        pid: Int.random(in: 1000...4000),
         ppid: 1020,
         uid: 1000,
         username: "alisle",
         command: process,
         path: "/usr/bin/ssh",
-        parent: nil,
+        parent: parent,
         bundle: nil,
         appBundle: nil,
         sha256: "012012",
-        md5: "1231")
+        md5: "1231",
+        peers: peers
+    )
 }
 
 func generateTCPConnection() -> TCPConnection {
@@ -83,14 +92,27 @@ func generateTCPConnection() -> TCPConnection {
     )
 }
 
-func generateTestConnection(direction: ConnectionDirection) -> Connection {
+
+func generateIP2LocationRecord() -> IP2LocationRecord? {
+    if let filepath = Bundle.main.url(forResource: "IP2LOCATION-LITE-DB11", withExtension: "BIN") {
+        do {
+            let db = try IP2DBLocate(file: filepath)
+            return db.find("8.8.8.8")
+        } catch  {
+            return nil
+        }
+    }
+    
+    return nil
+}
+
+func generateTestConnection(direction: ConnectionDirection, includeLocation : Bool = false) -> Connection {
     let tcpConnection = generateTCPConnection()
     let protocolCache = ProtocolCache()
     let remoteProtocol = protocolCache.get(tcpConnection.remoteSocket.port)
-    
     let connection = Connection(
         connection: generateTCPConnection(),
-        location: nil,
+        location: includeLocation ? generateIP2LocationRecord() : nil,
         remoteURL: "www.google.com",
         portProtocol: remoteProtocol
     )
@@ -112,7 +134,13 @@ struct ContentView_Previews : PreviewProvider {
             generateTestConnection(direction: ConnectionDirection.outbound)
         ])
 
-        return ConnectionsView().environmentObject(viewState)
+        let serviceState = ServiceState()
+        
+        let view = ConnectionsView()
+            .environmentObject(viewState)
+            .environmentObject(serviceState)
+        
+        return view
     }
 }
 #endif

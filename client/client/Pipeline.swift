@@ -8,8 +8,12 @@
 
 import Foundation
 import IP2Location
+import Logging
+
 
 class Pipeline {
+    let logger = Logger(label: "com.zerotrust.client.Pipeline")
+
     private let decisionEngine : DecisionEngine
     private let connectionState : ConnectionState
     private let dnsCache : DNSCache
@@ -34,6 +38,8 @@ class Pipeline {
     }
     
     public func process(event: FirewallEvent) {
+        logger.debug("processing \(event.eventType)")
+        
         switch(event.eventType) {
         case FirewallEventType.outboundConnection:
             let firewallEvent = event as! TCPConnection

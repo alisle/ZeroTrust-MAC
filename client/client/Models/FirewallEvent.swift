@@ -81,7 +81,7 @@ class FirewallQuery : FirewallEvent {
     let id : UInt32
     let timestamp : Date
     
-    let processInfo : ProcessInfo
+    let processInfo : ProcessDetails
     let remoteSocket : SocketAddress
     let localSocket : SocketAddress
     
@@ -96,7 +96,7 @@ class FirewallQuery : FirewallEvent {
          timestamp : TimeInterval,
          remoteSocket : SocketAddress,
          localSocket : SocketAddress,
-         processInfo : ProcessInfo
+         processInfo : ProcessDetails
         )  {
         self.id = id
         self.timestamp = Date(timeIntervalSince1970: timestamp)
@@ -114,14 +114,14 @@ class TCPConnection : FirewallEvent {
     let localSocket : SocketAddress
     let outcome : Outcome
     let inbound : Bool
-    let process : ProcessInfo
+    let process : ProcessDetails
     
     var displayName : String = ""
     
     init(tag: UUID,
          timestamp : TimeInterval,
          inbound : Bool,
-         process: ProcessInfo,
+         process: ProcessDetails,
          remoteSocket : SocketAddress,
          localSocket : SocketAddress,
          outcome : Outcome

@@ -29,7 +29,7 @@ struct ConnectionDetailsView: View {
                 .fill(connection.outcome.color)
                 .frame(width: 5)
             
-            ConnectionIconView(connection: connection, size: 64)
+            ConnectionIcon(connection: connection, size: 64)
             VStack(alignment: .leading) {
                 Text(connection.displayName)
                     .font(.caption)

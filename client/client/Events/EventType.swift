@@ -19,6 +19,9 @@ public enum EventType : CaseIterable {
     StartDenyMode,
     StopDenyMode,
     
+    OpenedOutboundConnection,
+    ClosedOutboundConnection,
+    
     ConnectionChanged,
     DecisionMade
 }

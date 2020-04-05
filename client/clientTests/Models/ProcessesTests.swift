@@ -11,7 +11,7 @@ import XCTest
 @testable import ZeroTrust_FW
 
 class ProcessesTests : XCTestCase {
-    var processes  = Processes()
+    let processManager = ProcessManager()
     
     private func getExampleFile() -> URL {
         let thisSourceFile = URL(fileURLWithPath: #file)
@@ -20,17 +20,14 @@ class ProcessesTests : XCTestCase {
     }
     
     func testInit() {  
-        let info = processes.process(1128)
+        let info = processManager.get(pid: 1128)
         XCTAssertNotNil(info)
         var process = info
         
         while process != nil {
-            let bundle  = Helpers.getBinaryAppBundle(fullBinaryPath: process?.path)
-            
             print("Process: \(process?.description ?? "None")")
             print("Bundle: \(process?.bundle?.displayName ?? "None")")
             print("App Bundle: \(process?.appBundle?.displayName ?? "None")")
-            print("From Helper: \(bundle?.displayName ?? "None")")
             print("SHA256: \(process?.sha256 ?? "None")")
             print("MD5: \(process?.md5 ?? "None")")
                         
@@ -39,11 +36,24 @@ class ProcessesTests : XCTestCase {
         
     }
 
+    func testGetChildren() {
+        let children = processManager.getChildren(pid: 1)
+        XCTAssertFalse(children.isEmpty)
+        
+        print("I have children! \(children)")
+    }
+    
+    func testListChildren() {
+        let children = processManager.listChildren(pid: 1)
+        XCTAssertFalse(children.isEmpty)
+        
+        print("I have children! \(children)")
+    }
     
     func testSHA256() {
         let file = getExampleFile()
         
-        let digest = Processes.shared.generateSHA256(path: file.path)
+        let digest = processManager.generateSHA256(path: file.path)
         print("got hash: \(digest!)")
         
         XCTAssertNotNil(digest)
@@ -52,7 +62,7 @@ class ProcessesTests : XCTestCase {
     
     func testMD5() {
         let file = getExampleFile()
-        let digest = Processes.shared.generateMD5(path: file.path)
+        let digest = processManager.generateMD5(path: file.path)
         print("got hash: \(digest!)")
         
         XCTAssertNotNil(digest)

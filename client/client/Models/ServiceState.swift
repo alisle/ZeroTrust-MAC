@@ -17,7 +17,6 @@ public enum ServiceStateType : CaseIterable {
 
 class ServiceState: ObservableObject {
     
-    
     private let stateQueue = DispatchQueue(label: "com.zerotrust.mac.service.state.queue", attributes: .concurrent)
     
     private var _enabled : Bool = true

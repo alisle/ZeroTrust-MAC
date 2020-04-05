@@ -27,6 +27,15 @@
           "revision": "b581e5c364f5ea0f48d3073321b373afcf078bf8",
           "version": "0.5.5"
         }
+      },
+      {
+        "package": "Topojson",
+        "repositoryURL": "https://github.com/alisle/Topojson-Swift",
+        "state": {
+          "branch": null,
+          "revision": "4b3879b03b239da6a3eb8a334de4951705a0dbd4",
+          "version": "1.0.0"
+        }
       }
     ]
   },

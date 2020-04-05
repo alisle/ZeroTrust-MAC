@@ -10,9 +10,9 @@ import SwiftUI
 
 struct ConnectionCombinedGraphView: View {
     @EnvironmentObject var viewState : ViewState
-
-    private func convert(_ counts: [String : Int]) -> [GraphCountry] {
-        var countries : [GraphCountry] = []
+/*
+    private func convert(_ counts: [String : Int]) -> [GlobeMapCountry] {
+        var countries : [GlobeMapCountry] = []
         counts.forEach { iso, count in
             if let feature = self.viewState.geomap.iso[iso] {
                 countries.append(feature)
@@ -21,14 +21,16 @@ struct ConnectionCombinedGraphView: View {
         
         return countries
     }
-
+*/
+    
     var body: some View {
         VStack{
             ZStack {
-                GlobeGraph(countries: viewState.geomap.countries)
+                /*
+                GlobeShape(countries: )
                     .fill(Color.black)
                 
-                GlobeGraph(countries: viewState.geomap.countries)
+                GlobeShape()
                     .stroke(
                         AngularGradient(
                             gradient: Gradient(
@@ -43,7 +45,7 @@ struct ConnectionCombinedGraphView: View {
                             center: .center
                         )
                 )
-                GlobeGraph(countries: self.viewState.counts)
+                GlobeShape() // countries: self.viewState.counts)
                     .fill(
                         AngularGradient(
                             gradient: Gradient(
@@ -61,6 +63,9 @@ struct ConnectionCombinedGraphView: View {
                 
                 ConnectionAmountShape(counts: viewState.amountsOverHour)
                     .fill(Color.yellow)
+                 */
+                
+                Text("Testing")
             }.drawingGroup()
             .frame(minWidth: 1000, minHeight: 500)
             HStack(alignment: .bottom) {

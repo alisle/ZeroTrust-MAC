@@ -12,11 +12,11 @@ import Logging
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
-    let logger = Logger(label: "com.zerotrust.client.AppDeletegate")
+    var logger = Logger(label: "com.zerotrust.client.AppDeletegate")
 
     var connectionsWindow: NSWindow!
     var rulesWindow: NSWindow!
-    
+        
     let main = Main()
     
     let disabledIcon = NSImage(named: "DisabledEthernet")
@@ -98,9 +98,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
         connectionsWindow.isReleasedWhenClosed = false
         connectionsWindow.center()
         connectionsWindow.setFrameAutosaveName("Connections Window")
-        connectionsWindow.contentView = NSHostingView(rootView: ConnectionsView().environmentObject(main.viewState).environmentObject(main.serviceState))
+        connectionsWindow.contentView = NSHostingView(rootView: ConnectionsView()
+            .environmentObject(main.viewState)
+            .environmentObject(main.serviceState)
+            .environmentObject(main.connectionCounts)
+            .environmentObject(main.locations)
+            .environmentObject(main.allConnections)
+        )        
     }
 
+    
     func createRulesWindow() {
         rulesWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
@@ -114,6 +121,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        
+        
         createConnectionsWindow()
         createRulesWindow()
         main.entryPoint()

@@ -32,7 +32,7 @@ class EventManager {
     }
     
     public func triggerEvent(event: BaseEvent) {
-        logger.info("triggering event for: \(event.type)")
+        logger.debug("triggering event for: \(event.type)")
 
         self.listenerQueue.sync { [weak self] in
             guard let self = self else {

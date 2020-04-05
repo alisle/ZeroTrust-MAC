@@ -48,6 +48,7 @@ class ConnectionState  {
                 }
                 
                 self.state[connection.tag] = connection
+                EventManager.shared.triggerEvent(event: OpenedOutboundConnectionEvent(connection: connection))
                 EventManager.shared.triggerEvent(event: ConnectionChangedEvent(connection: connection))
             }
         }
@@ -63,6 +64,10 @@ class ConnectionState  {
                 let updated = conn.changeState(state: update, timestamp: timestamp)
                 self.state[tag] = updated
                 EventManager.shared.triggerEvent(event: ConnectionChangedEvent(connection: updated))
+                
+                if updated.state == .disconnected || updated.state == .disconnecting {
+                    EventManager.shared.triggerEvent(event: ClosedOutboundConnectionEvent(connection: updated))
+                }
             }
         }
         

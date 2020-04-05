@@ -16,7 +16,7 @@ struct Connection : Identifiable {
     let tag : UUID
     let startTimestamp : Date
     let endDateTimestamp : Date?
-    let process : ProcessInfo
+    let process : ProcessDetails
     let location : IP2LocationRecord?
     let remoteURL: String?
     let portProtocol : Protocol?
@@ -99,7 +99,7 @@ struct Connection : Identifiable {
         remoteURL: String?,
         remoteSocket : SocketAddress,
         localSocket : SocketAddress,
-        processInfo: ProcessInfo,
+        processInfo: ProcessDetails,
         displayName : String,
         location: IP2LocationRecord?) {
         
@@ -138,9 +138,13 @@ struct Connection : Identifiable {
         )
     }
     
+    func clone() -> Connection {
+        return changeState(state: self.state, timestamp: self.endDateTimestamp ?? Date())
+    }
     
     
-    private static func getImage(info: ProcessInfo) -> Optional<NSImage> {
+    
+    private static func getImage(info: ProcessDetails) -> Optional<NSImage> {
         if let nsimage = info.bundle?.icon {
             return nsimage
         }

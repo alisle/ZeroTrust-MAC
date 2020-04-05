@@ -62,7 +62,6 @@ struct ProtocolChainView: View {
                     Text(connection.remoteDisplayAddress)
                 }
             }
-
         }
     }
 }

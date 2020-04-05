@@ -6,12 +6,14 @@
 //  Copyright © 2020 Alex Lisle. All rights reserved.
 //
 
+// This code is based off https://github.com/beltex/SystemKit
+
 import Foundation
 import CommonCrypto
 import Logging
 
 struct ProcessWrapper {
-    let process : ProcessInfo
+    let process : ProcessDetails
     let timestamp = Date()
     
     var pid : Int {
@@ -22,7 +24,7 @@ struct ProcessWrapper {
 }
 
 class ProcessManager {
-    let logger = Logger(label: "com.zerotrust.client.Models.Processes")
+    private let logger = Logger(label: "com.zerotrust.client.Models.Processes")
     var cache : [Int : ProcessWrapper] = [:]
         
     static private var maxArgumentSize : size_t = {
@@ -35,35 +37,38 @@ class ProcessManager {
         return size
     }()
     
-    func get(pid: pid_t) -> ProcessInfo? {
+    func get(pid: pid_t) -> ProcessDetails? {
         let id = Int(pid)
         
         if let info = cache[id] {
             if info.timestamp.timeIntervalSinceNow < 5 * 60 {
-                return info.process
+                return info.process.clone()
             }
         }
         
         return process(pid)
     }
     
-    func get(pid: pid_t, ppid: pid_t, command: String) -> ProcessInfo {
-        guard let info = get(pid: pid) else {
-            return self.process(pid: pid, ppid: ppid, command: command)
-        }
-        
-        return info
+    
+    func get(pid: pid_t, ppid: pid_t, command: String) -> ProcessDetails {
+        let info = get(pid: pid) ?? self.process(pid: pid, ppid: ppid, command: command)
+        return info.updatedPeers(peers: self.getChildren(pid: Int32(info.ppid)))
     }
     
-    private func process(pid: pid_t, ppid: pid_t, command: String) -> ProcessInfo {
+    func getChildren(pid: pid_t) -> [ProcessDetails] {
+        return self.listChildren(pid: pid).map{ self.get(pid: pid_t($0)) }.filter { $0 != nil }.map { $0! }
+    }
+    
+
+    private func process(pid: pid_t, ppid: pid_t, command: String) -> ProcessDetails {
         guard let info = process(pid) else {
             let path = getProcessPath(pid: pid)
             let bundle = self.getBundle(path: path)
             let appbundle = self.getAppBundle(path: path)
             let sha256 = generateSHA256(path: path)
             let md5 = generateMD5(path: path)
-
-            return ProcessInfo(
+            
+            return ProcessDetails(
                 pid: Int(pid),
                 ppid: Int(ppid),
                 uid: nil,
@@ -74,14 +79,36 @@ class ProcessManager {
                 bundle: bundle,
                 appBundle: appbundle,
                 sha256: sha256,
-                md5: md5
+                md5: md5,
+                peers: []
             )
         }
         
         return info
     }
     
-    private func process(_ pid: pid_t) -> ProcessInfo? {
+    public func listChildren(pid: Int32) -> [Int32] {
+        let task = Process()
+        task.launchPath = "/bin/sh"
+        task.arguments = ["-c", "pgrep -P \(pid)"]
+
+        let pipe = Pipe()
+        task.standardOutput = pipe
+        task.launch()
+
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        if let output = String(data: data, encoding: String.Encoding.utf8) {
+            let ppids = output.split(separator: "\n").map{ Int($0) }.filter{ $0 != nil }.map{ Int32($0!) }
+            task.waitUntilExit()
+            return ppids
+        }
+        
+        task.waitUntilExit()
+        return []
+    }
+    
+    
+    private func process(_ pid: pid_t) -> ProcessDetails? {
         guard var kinfo =  getKinfo(pid: pid) else {
             return nil
         }
@@ -106,7 +133,9 @@ class ProcessManager {
         let sha256 = generateSHA256(path: path)
         let md5 = generateMD5(path: path)
 
-        let info = ProcessInfo(pid: pid,
+        //let children = getChildren(pid: Int32(pid))
+
+        let info = ProcessDetails(pid: pid,
                            ppid: ppid,
                            uid: uid,
                            username: username,
@@ -116,7 +145,9 @@ class ProcessManager {
                            bundle: bundle,
                            appBundle: appbundle,
                            sha256: sha256,
-                           md5: md5
+                           md5: md5,
+                           peers: []
+            
         )
         
         self.cache[pid] = ProcessWrapper(process: info)
@@ -187,7 +218,7 @@ class ProcessManager {
         return bundle
     }
     
-    private func getAppBundle(path: String?) -> Bundle? {
+    func getAppBundle(path: String?) -> Bundle? {
         guard var path = path else {
             return nil
         }
