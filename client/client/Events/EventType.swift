@@ -23,5 +23,7 @@ public enum EventType : CaseIterable {
     ClosedOutboundConnection,
     
     ConnectionChanged,
-    DecisionMade
+    DecisionMade,
+    
+    RulesChanged
 }

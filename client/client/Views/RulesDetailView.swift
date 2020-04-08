@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct RulesDetailView: View {
-    @EnvironmentObject var viewState : ViewState
+    @EnvironmentObject var allRules : AllRules
     let rule: RulesMetaData
     
     var title: some View {
@@ -76,12 +76,12 @@ struct RulesDetailView: View {
             
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    ForEach(viewState.rules.getHostnames(metaId: rule.id), id: \.self) { hostname in
+                    ForEach(allRules.rules.getHostnames(metaId: rule.id), id: \.self) { hostname in
                         Text("Hostname - \(hostname)")
                     }
                 }
                 VStack(alignment: .leading) {
-                    ForEach(viewState.rules.getDomains(metaId: rule.id), id: \.self) { domain in
+                    ForEach(allRules.rules.getDomains(metaId: rule.id), id: \.self) { domain in
                         Text("Domain - \(domain)")
                     }
 
@@ -102,9 +102,7 @@ struct RulesDetailView: View {
 
 struct RulesDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewState = ViewState()
-        viewState.rules = generateTestRules()
-        
-        return RulesDetailView(rule: viewState.rules.metadata.first!.value).environmentObject(viewState)
+        let allRules = AllRules(rules: Rules.load())
+        return RulesDetailView(rule: allRules.rules.metadata.first!.value).environmentObject(allRules)
     }
 }

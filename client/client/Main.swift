@@ -31,12 +31,13 @@ class Main {
     private let pipline : Pipeline
 
     let serviceState = ServiceState()
-    let viewState = ViewState()
+    //let viewState = ViewState()
     
     // States
     let connectionCounts = ConnectionCounts()
     let locations = Locations()
     let allConnections = AllConnections()
+    let allRules : AllRules
     
     init() {                
         if let filepath = Bundle.main.url(forResource: "IP2LOCATION-LITE-DB11", withExtension: "BIN") {
@@ -51,6 +52,7 @@ class Main {
             self.ipdb = nil
         }
         
+        self.allRules = AllRules(rules: Rules.load())
         self.kextComm = KextComm(processManager: self.processManager)
         
         self.pipline = Pipeline(
@@ -94,8 +96,7 @@ class Main {
         logger.info("Getting Rules")
         self.rulesDispatcher.getRules { [weak self] results, errorMessage in
             if let results = results {
-                self?.decisionEngine.set(rules: results)
-                self?.viewState.rules = results
+                EventManager.shared.triggerEvent(event: RulesChangedEvent(rules:results))
             } else {
                 self?.logger.error("\(errorMessage)")
             }

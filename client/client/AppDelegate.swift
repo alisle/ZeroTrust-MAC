@@ -99,7 +99,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
         connectionsWindow.center()
         connectionsWindow.setFrameAutosaveName("Connections Window")
         connectionsWindow.contentView = NSHostingView(rootView: ConnectionRootView()
-            .environmentObject(main.viewState)
+            .environmentObject(main.allRules)
             .environmentObject(main.serviceState)
             .environmentObject(main.connectionCounts)
             .environmentObject(main.locations)
@@ -116,8 +116,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
         rulesWindow.isReleasedWhenClosed = false
         rulesWindow.center()
         rulesWindow.setFrameAutosaveName("Rules Window")
-        rulesWindow.contentView = NSHostingView(rootView: RulesView().environmentObject(main.viewState))
-        
+        rulesWindow.contentView = NSHostingView(rootView: RulesView().environmentObject(main.allRules))        
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {

@@ -18,6 +18,8 @@
 		F02761C02436C4DB008290A7 /* ProtocolDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02761BF2436C4DB008290A7 /* ProtocolDetailsView.swift */; };
 		F02761C22436CBEB008290A7 /* LocationDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02761C12436CBEB008290A7 /* LocationDetails.swift */; };
 		F02761C4243E15AD008290A7 /* ConnectionUserChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02761C3243E15AD008290A7 /* ConnectionUserChain.swift */; };
+		F02761C6243E1F74008290A7 /* AllRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02761C5243E1F74008290A7 /* AllRules.swift */; };
+		F02761C8243E2010008290A7 /* RulesChangedEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02761C7243E2010008290A7 /* RulesChangedEvent.swift */; };
 		F028F8182339210D003EA345 /* rules.json in Resources */ = {isa = PBXBuildFile; fileRef = F028F8172339210D003EA345 /* rules.json */; };
 		F028F81E233B04DF003EA345 /* Rules.swift in Sources */ = {isa = PBXBuildFile; fileRef = F028F81D233B04DF003EA345 /* Rules.swift */; };
 		F02EAC5423282928008186E7 /* DecisionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02EAC5323282928008186E7 /* DecisionEngine.swift */; };
@@ -87,7 +89,6 @@
 		F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065E4230654120076A1AC /* DNSRecords.swift */; };
 		F0D065E7230656A00076A1AC /* ProtocolCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065E6230656A00076A1AC /* ProtocolCache.swift */; };
 		F0DA1B9F2301C50400D07905 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DA1B9E2301C50400D07905 /* Main.swift */; };
-		F0DA1BA12301C6EA00D07905 /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DA1BA02301C6EA00D07905 /* ViewState.swift */; };
 		F0DA25B024102E04006AB8DA /* ConnectionRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DA25AF24102E04006AB8DA /* ConnectionRootView.swift */; };
 		F0DA25B32416CB82006AB8DA /* LineGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DA25B22416CB82006AB8DA /* LineGraph.swift */; };
 		F0DA25B52416F27C006AB8DA /* CubicCurveAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DA25B42416F27C006AB8DA /* CubicCurveAlgorithm.swift */; };
@@ -136,6 +137,8 @@
 		F02761BF2436C4DB008290A7 /* ProtocolDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolDetailsView.swift; sourceTree = "<group>"; };
 		F02761C12436CBEB008290A7 /* LocationDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetails.swift; sourceTree = "<group>"; };
 		F02761C3243E15AD008290A7 /* ConnectionUserChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionUserChain.swift; sourceTree = "<group>"; };
+		F02761C5243E1F74008290A7 /* AllRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllRules.swift; sourceTree = "<group>"; };
+		F02761C7243E2010008290A7 /* RulesChangedEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesChangedEvent.swift; sourceTree = "<group>"; };
 		F028F8172339210D003EA345 /* rules.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rules.json; sourceTree = "<group>"; };
 		F028F81D233B04DF003EA345 /* Rules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rules.swift; sourceTree = "<group>"; };
 		F02EAC5323282928008186E7 /* DecisionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionEngine.swift; sourceTree = "<group>"; };
@@ -205,7 +208,6 @@
 		F0D065E4230654120076A1AC /* DNSRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSRecords.swift; sourceTree = "<group>"; };
 		F0D065E6230656A00076A1AC /* ProtocolCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolCache.swift; sourceTree = "<group>"; };
 		F0DA1B9E2301C50400D07905 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
-		F0DA1BA02301C6EA00D07905 /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		F0DA25AF24102E04006AB8DA /* ConnectionRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionRootView.swift; sourceTree = "<group>"; };
 		F0DA25B22416CB82006AB8DA /* LineGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineGraph.swift; sourceTree = "<group>"; };
 		F0DA25B42416F27C006AB8DA /* CubicCurveAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubicCurveAlgorithm.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				F0701CBD24059E3C0002DD82 /* EventListener.swift */,
 				F0AAA4FC2423066F003A8F17 /* ClosedOutboundConnectionEvent.swift */,
 				F0AAA4FE24230751003A8F17 /* OpenedOutboundConnectionEvent.swift */,
+				F02761C7243E2010008290A7 /* RulesChangedEvent.swift */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -437,9 +440,9 @@
 			isa = PBXGroup;
 			children = (
 				F0DA25B72419650B006AB8DA /* ConnectionCount.swift */,
-				F0DA1BA02301C6EA00D07905 /* ViewState.swift */,
 				F0AAA50324231358003A8F17 /* Locations.swift */,
 				F0AAA50524271D13003A8F17 /* AllConnections.swift */,
+				F02761C5243E1F74008290A7 /* AllRules.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -708,11 +711,13 @@
 				F0260FD12379E01E002E2C5C /* MapGraph.swift in Sources */,
 				F03F286A2432569A0046AB80 /* ConnectionDetailsTimeBanner.swift in Sources */,
 				F028F81E233B04DF003EA345 /* Rules.swift in Sources */,
+				F02761C6243E1F74008290A7 /* AllRules.swift in Sources */,
 				F0DB20F7243584BA00EAE2A0 /* ProcessDetailsViews.swift in Sources */,
 				F02EAC5423282928008186E7 /* DecisionEngine.swift in Sources */,
 				F0269F3923201A7B0067D3BA /* ConnectionDirection.swift in Sources */,
 				F02761C22436CBEB008290A7 /* LocationDetails.swift in Sources */,
 				F0BD02FD2419CCBB0032CAA4 /* ConnectionCountView.swift in Sources */,
+				F02761C8243E2010008290A7 /* RulesChangedEvent.swift in Sources */,
 				F0DA1B9F2301C50400D07905 /* Main.swift in Sources */,
 				F0DA25B32416CB82006AB8DA /* LineGraph.swift in Sources */,
 				F0FB570E23576E4300AAB5F6 /* URLExtension.swift in Sources */,
@@ -739,7 +744,6 @@
 				F0934A3E23A02F0B00884447 /* CGMutablePathExtension.swift in Sources */,
 				F0AAA50624271D13003A8F17 /* AllConnections.swift in Sources */,
 				F043D4A3230DC51A00746BED /* ConnectionStateType.swift in Sources */,
-				F0DA1BA12301C6EA00D07905 /* ViewState.swift in Sources */,
 				F0701CBA2405976B0002DD82 /* ConnectionChangedEvent.swift in Sources */,
 				F0AAA50B2427AABD003A8F17 /* ConnectionIcon.swift in Sources */,
 				F0DA25B024102E04006AB8DA /* ConnectionRootView.swift in Sources */,

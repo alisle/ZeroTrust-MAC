@@ -55,6 +55,11 @@ struct Rules  {
             }
         })
     }
+    
+    public static func load() -> Rules {
+        let jsonRules : JSONRules = Helpers.loadJSON("rules.json")
+        return jsonRules.convert()
+    }
 }
 
 

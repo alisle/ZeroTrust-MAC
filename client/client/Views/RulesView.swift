@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct RulesView: View {
-    @EnvironmentObject var viewState : ViewState
+    @EnvironmentObject var rules : AllRules
 
     var header : some View {
         VStack(alignment: .leading) {
@@ -17,7 +17,7 @@ struct RulesView: View {
                 Text("Zero Trust - Rules")
                     .bold()
             }
-            Text("Last updated: \(viewState.rules.updated.toString())")
+            Text("Last updated: \(rules.rules.updated.toString())")
                 .font(.caption)
         }
         .padding()
@@ -43,8 +43,7 @@ struct RulesView: View {
 
 struct RulesView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewState = ViewState()
-        viewState.rules = generateTestRules()
-        return RulesView().environmentObject(viewState)
+        let allRules = AllRules(rules: Rules.load())
+        return RulesView().environmentObject(allRules)
     }
 }

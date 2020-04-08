@@ -24,12 +24,21 @@ enum Decision : CaseIterable {
 }
 
 
-class DecisionEngine {
+class DecisionEngine : EventListener {
     let logger = Logger(label: "com.zerotrust.client.DecisionEngine")
 
     private var rules : Optional<Rules> = nil
     private let rulesLock = NSLock()
     private var lastUpdate = NSDate().timeIntervalSince1970
+    
+    init() {
+        EventManager.shared.addListener(type: .RulesChanged, listener: self)
+    }
+    
+    func eventTriggered(event: BaseEvent) {
+        let event = event as! RulesChangedEvent
+        self.set(rules: event.rules)
+    }
     
     func getRules() -> Optional<Rules> {
         rulesLock.lock()

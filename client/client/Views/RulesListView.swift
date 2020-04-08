@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct RulesListView: View {
-    @EnvironmentObject var viewState : ViewState
+    @EnvironmentObject var allRules : AllRules
     
     var body: some View {
         List {
             Section(header: Text("Rules")) {
-                ForEach(Array(viewState.rules.getSortedMetadata())) { metadata in
-                    NavigationLink(destination: RulesDetailView(rule: metadata).environmentObject(self.viewState)) {
+                ForEach(Array(allRules.rules.getSortedMetadata())) { metadata in
+                    NavigationLink(destination: RulesDetailView(rule: metadata)) {
                         Text(metadata.name)
                     }
                 }
@@ -26,8 +26,7 @@ struct RulesListView: View {
 
 struct RulesListView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewState = ViewState()
-        viewState.rules = generateTestRules()
-        return RulesListView().environmentObject(viewState)
+        let allRules = AllRules(rules: Rules.load())
+        return RulesListView().environmentObject(allRules)
     }
 }
