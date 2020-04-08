@@ -9,7 +9,7 @@
 import SwiftUI
 
 
-struct Overview: View {
+struct ConnectionRootView: View {
     @EnvironmentObject var connectionCounts : ConnectionCounts
     @EnvironmentObject var locations : Locations
     
@@ -114,9 +114,11 @@ struct Overview_Previews: PreviewProvider {
              allConnections.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
              allConnections.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
 
-        return Overview()
+        return ConnectionRootView()
             .environmentObject(values)
             .environmentObject(Locations())
             .environmentObject(allConnections)
     }
+    
 }
+

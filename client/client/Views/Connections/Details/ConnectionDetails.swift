@@ -35,6 +35,16 @@ struct ConnectionDetails: View {
                 .padding()
                 
                 VStack(alignment: .leading, spacing: 1.0) {
+                    Text("Connection Overview")
+                        .font(.subheadline)
+                        .bold()
+                    
+                    ConnectionUserChain(connection: connection)
+                    .padding()
+                }
+                .padding(.init(top: 20, leading: 5, bottom: 5, trailing: 1))
+                
+                VStack(alignment: .leading, spacing: 1.0) {
                     Text("Process Making Connection")
                         .font(.subheadline)
                         .bold()

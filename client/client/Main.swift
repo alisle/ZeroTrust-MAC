@@ -118,3 +118,81 @@ class Main {
 
 
 }
+
+
+#if DEBUG
+func generateTestRules() -> Rules {
+    var json : JSONRules  = Helpers.loadJSON("rules.json")
+    json.hostnames.sort()
+    json.domains.sort()
+    
+    return json.convert()
+}
+
+func generateProcessInfo(_ generatePeers : Bool = true, _ numberOfPeers : Int = 4) -> ProcessDetails {
+    let process = ["Chrome.app", "/usr/bin/ssh", "WhatsApp.app"].randomElement()
+
+    let parent = (generatePeers) ? generateProcessInfo(false) : nil
+    let peers = (generatePeers) ? (0..<numberOfPeers).map{ _ in generateProcessInfo(false) } : []
+    
+    print("Theses are peers \(peers)")
+    return ProcessDetails(
+        pid: Int.random(in: 1000...4000),
+        ppid: 1020,
+        uid: 1000,
+        username: "alisle",
+        command: process,
+        path: "/usr/bin/ssh",
+        parent: parent,
+        bundle: nil,
+        appBundle: nil,
+        sha256: "012012",
+        md5: "1231",
+        peers: peers
+    )
+}
+
+func generateTCPConnection() -> TCPConnection {
+    let localPort = Int.random(in: 1025..<40000)
+    let remotePort = [ 80, 443, 22, 21, 8100].randomElement()
+
+    return TCPConnection(
+        tag: UUID(),
+        timestamp: Date().timeIntervalSince1970,
+        inbound: false,
+        process: generateProcessInfo(),
+        remoteSocket: SocketAddress(address: IPAddress("192.168.2.3")!, port: remotePort!),
+        localSocket: SocketAddress(address: IPAddress("0.0.0.0")!, port: localPort),
+        outcome: Outcome.allowed
+    )
+}
+
+
+func generateIP2LocationRecord() -> IP2LocationRecord? {
+    if let filepath = Bundle.main.url(forResource: "IP2LOCATION-LITE-DB11", withExtension: "BIN") {
+        do {
+            let db = try IP2DBLocate(file: filepath)
+            return db.find("8.8.8.8")
+        } catch  {
+            return nil
+        }
+    }
+    
+    return nil
+}
+
+func generateTestConnection(direction: ConnectionDirection, includeLocation : Bool = false) -> Connection {
+    let tcpConnection = generateTCPConnection()
+    let protocolCache = ProtocolCache()
+    let remoteProtocol = protocolCache.get(tcpConnection.remoteSocket.port)
+    let connection = Connection(
+        connection: generateTCPConnection(),
+        location: includeLocation ? generateIP2LocationRecord() : nil,
+        remoteURL: "www.google.com",
+        portProtocol: remoteProtocol
+    )
+    
+    return connection
+}
+
+#endif

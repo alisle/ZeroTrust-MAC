@@ -98,7 +98,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
         connectionsWindow.isReleasedWhenClosed = false
         connectionsWindow.center()
         connectionsWindow.setFrameAutosaveName("Connections Window")
-        connectionsWindow.contentView = NSHostingView(rootView: ConnectionsView()
+        connectionsWindow.contentView = NSHostingView(rootView: ConnectionRootView()
             .environmentObject(main.viewState)
             .environmentObject(main.serviceState)
             .environmentObject(main.connectionCounts)

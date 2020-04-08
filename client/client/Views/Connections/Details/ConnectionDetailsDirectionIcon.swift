@@ -10,6 +10,12 @@ import SwiftUI
 
 struct ConnectionDetailsDirectionIcon: View {
     let direction : ConnectionDirection
+    let size : CGFloat
+    
+    init(direction: ConnectionDirection, size: CGFloat = 64)  {
+        self.direction = direction
+        self.size = size
+    }
     
     var text : String {
         get {
@@ -25,7 +31,7 @@ struct ConnectionDetailsDirectionIcon: View {
     var body: some View {
         Image(self.text)
             .resizable()
-            .frame(width: 64, height: 64, alignment: .trailing)
+            .frame(width: size, height: size, alignment: .trailing)
     }
 }
 
@@ -35,6 +41,10 @@ struct ConnectionDetailsDirectionBanner_Previews: PreviewProvider {
             ConnectionDetailsDirectionIcon(direction: .inbound)
             Spacer()
             ConnectionDetailsDirectionIcon(direction: .outbound)
+            Spacer()
+            ConnectionDetailsDirectionIcon(direction: .inbound, size: 32)
+            Spacer()
+            ConnectionDetailsDirectionIcon(direction: .outbound, size: 16)
         }
     }
 }
