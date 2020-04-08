@@ -316,18 +316,21 @@ firewall_outcome_type determineDecision(cookie_header* header, socket_t local_so
     
     
     while(header->outcome == UNKNOWN) {
-        os_log(OS_LOG_DEFAULT, "IOFirewall: getting state");
+        os_log(OS_LOG_DEFAULT, "IOFirewall: getting state %u", header->query_id);
         header->outcome = state_get(header->query_id);
         
         if(header->outcome == UNKNOWN) {
-            os_log(OS_LOG_DEFAULT, "IOFirewall: going to sleep");
+            os_log(OS_LOG_DEFAULT, "IOFirewall: going to sleep %u", header->query_id);
+
             IOLockLock(state_query_lock);
+            //IOLockSleepDeadline is probably better as we don't want to wait forever
             int sleep_return = IOLockSleep(state_query_lock, &state_query_lock, THREAD_ABORTSAFE);
             IOLockUnlock(state_query_lock);
             
-            os_log(OS_LOG_DEFAULT, "IOFirewall: woken up");
+            os_log(OS_LOG_DEFAULT, "IOFirewall: woken up %u", header->query_id);
             if(sleep_return != THREAD_AWAKENED) {
-                header->outcome = BLOCKED;
+                os_log(OS_LOG_DEFAULT, "IOFirewall: sleep return was not THREAD_AWAKENED %u, got: %d", header->query_id, sleep_return);
+                header->outcome = UNKNOWN;
             }
             
             if(!filters_registered) {
@@ -341,6 +344,7 @@ firewall_outcome_type determineDecision(cookie_header* header, socket_t local_so
     state_rm(header->query_id);
     return header->outcome;
 }
+
 
 bool send_firewall_query(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, protocol_type protocol) {
     firewall_event event = {0};
