@@ -84,10 +84,13 @@ struct ProcessDetailsCallTree: View {
                                 }
                                 Text("\(proc.command!)").bold()
                                 Spacer()
-                            }.frame(width: 240, alignment: .leading)
+                            }
                         }
                     }
-                }).listStyle(SidebarListStyle())
+                })
+                .listStyle(SidebarListStyle())
+                .frame(minWidth: 150, idealWidth: 180, maxWidth: .infinity, alignment: .leading)
+
                 EmptyView()
             }
             .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
@@ -200,10 +203,13 @@ struct ProcessDetailsPeersView: View {
                                 }
                                 Text("\(proc.command!)").bold()
                                 Spacer()
-                            }.frame(width: 240, alignment: .leading)
+                            }
                         }
                     }
-                }).listStyle(SidebarListStyle())
+                })
+                .listStyle(SidebarListStyle())
+                .frame(minWidth: 150, idealWidth: 180, maxWidth: .infinity, alignment: .leading)
+                
                 EmptyView()
             }
             .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)

@@ -9,18 +9,20 @@
 import SwiftUI
 
 struct RemoteURLHistoryGraph: View {
-    let values : [Int]
-    
+    let items : [ChartItem]
+        
     init(remoteURL: String) {
-        self.values = RemoteHistoryCache.shared.get(key: remoteURL, step: 60 * 5, duration: 60 * 60) ?? []
+        self.items = (RemoteHistoryCache.shared.get(key: remoteURL, step: 60 * 5, duration: 60 * 60) ?? []).enumerated().map{ ChartItem(label: "-\((12 - $0.offset) * 5)", value: $0.element) }
     }
     
     var body: some View {
         VStack() {
-            BarChart(values: self.values)
+            BarChart( items: self.items )
+            
             Text("# of Connections made to remote host")
                 .font(.caption)
-        }.padding(.init(top: 10, leading: 10, bottom: 10, trailing: 10))
+                .padding(.init(top: 5, leading: 1, bottom: 1, trailing: 1))
+        }
     }
 }
 

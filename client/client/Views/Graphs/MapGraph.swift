@@ -61,8 +61,7 @@ struct MapGraph: View {
                 .opacity(0.6)
             }.animation(.easeInOut(duration: 0.5))
 
-
-        }
+        }.aspectRatio(2.0, contentMode: .fit)
     }
 }
 

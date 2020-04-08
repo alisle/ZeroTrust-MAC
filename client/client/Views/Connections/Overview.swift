@@ -58,7 +58,7 @@ struct Overview: View {
         Section {
             MapGraph(points: self.locations.points )
         }
-        .frame(minWidth: 740, idealWidth: .infinity, maxWidth: .infinity, minHeight: 400, idealHeight: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+        .frame(minWidth: 800, idealWidth: .infinity, maxWidth: .infinity, minHeight: 400, idealHeight: .infinity, maxHeight: .infinity, alignment: .topTrailing)
     }
     
     var list : some View {

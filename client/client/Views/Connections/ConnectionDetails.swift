@@ -27,14 +27,8 @@ struct ConnectionDetails: View {
                                 .frame(width: geometry.size.width / 2, height: 200)
                         }
 
-                        if self.connection.remoteURL != nil {
-                            RemoteURLHistoryGraph(remoteURL: self.connection.remoteDisplayAddress)
-                                .frame(width: geometry.size.width / 2, height: 200)
-                        } else {
-                            Text("Unknown Remote Host")
-                                .frame(width: geometry.size.width / 2, height: 200)
-                        }
-
+                        RemoteURLHistoryGraph(remoteURL: self.connection.remoteDisplayAddress)
+                            .frame(width: geometry.size.width / 2, height: 200)
                     }
                 }
                 .frame(height: 200, alignment: .center)
@@ -119,6 +113,14 @@ struct ConnectionDetails: View {
 
 struct ConnectionDetails_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionDetails(connection: generateTestConnection(direction: .outbound))
+        (0...1000).forEach { _ in
+            let outbound = OpenedOutboundConnectionEvent.init(connection: generateTestConnection(direction: .outbound))
+            
+            RemoteHistoryCache.shared.eventTriggered(event: outbound)
+            ProcessHistoryCache.shared.eventTriggered(event: outbound)
+        }
+        
+        return ConnectionDetails(connection: generateTestConnection(direction: .outbound))
+                .frame(width: 800, height: 600)
     }
 }
