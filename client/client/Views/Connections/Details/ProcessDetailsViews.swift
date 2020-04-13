@@ -117,7 +117,7 @@ struct ProcessDetailsView: View {
                     .background(Color.white)
 
                     HStack(alignment: .top, spacing: 2) {
-                        HStack {
+                        HStack {                            
                             if process.appBundle != nil {
                                 BundleView(bundle: process.appBundle!)
                             } else {

@@ -13,13 +13,13 @@ class ProcessHistoryCache  : HistoryCache, EventListener  {
     public static let shared = ProcessHistoryCache()
     
     public func registerListeners() {
-        EventManager.shared.addListener(type: .OpenedOutboundConnection, listener: self)
+        EventManager.shared.addListener(type: .OpenedConnection, listener: self)
         self.trim()
     }
     
     
     func eventTriggered(event: BaseEvent) {
-        let event = event as! OpenedOutboundConnectionEvent
+        let event = event as! OpenedConnectionEvent
         guard let sha = event.connection.process.sha256 else {
             return
         }

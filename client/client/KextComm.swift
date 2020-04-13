@@ -147,7 +147,7 @@ class KextComm {
         case outbound_connection:
             logger.debug("outbound connection")
             return processTCPConnection(event: &buffer, inbound: false)
-        case inbound_connection:
+        case accepted_connection:
             logger.debug("inbound connection")
             return processTCPConnection(event: &buffer, inbound: true)
             
@@ -220,40 +220,76 @@ class KextComm {
             
         case query:
             logger.debug("query")
-            var message = buffer.data.query_event
+            return processFirewallQuery(event: &buffer)
             
-            let tag = UUID.init(uuid: buffer.tag)
-            let timestamp = Double(buffer.timestamp)
-            let id = message.query_id
-            
-            let remote = SocketAddress(message.remote)
-            let local = SocketAddress(message.local)
-
-            let procName = withUnsafeBytes(of: &message.proc_name) { (rawPtr) -> String in
-                let ptr = rawPtr.baseAddress!.assumingMemoryBound(to: CChar.self)
-                return String(cString: ptr)
-            }
-            
-            let process = processManager.get(pid: message.pid, ppid: message.ppid, command: procName)
-
-            
-            return FirewallQuery(
-                tag: tag,
-                id: id,
-                timestamp: timestamp,
-                remoteSocket: remote,
-                localSocket:  local,
-                processInfo:  process
-            )
+        case socket_listen:
+            logger.debug("new listen")
+            return processSocketListen(event: &buffer)
             
         default:
             logger.error("Unknown firewall type")
         }
         
-        return Optional.none
+        return nil
     }
     
-    private func processTCPConnection(event : inout firewall_event, inbound: Bool) -> Optional<TCPConnection> {
+    private func processFirewallQuery(event: inout firewall_event) -> FirewallQuery? {
+        var message = event.data.query_event
+                    
+        let tag = UUID.init(uuid: event.tag)
+        let timestamp = Double(event.timestamp)
+        let id = message.query_id
+        
+        let remote = SocketAddress(message.remote)
+        let local = SocketAddress(message.local)
+        
+        guard let version = FirewallEventQueryProtocolType.from(message.type) else {
+            return nil
+        }
+        
+        let procName = withUnsafeBytes(of: &message.proc_name) { (rawPtr) -> String in
+            let ptr = rawPtr.baseAddress!.assumingMemoryBound(to: CChar.self)
+            return String(cString: ptr)
+        }
+        
+        let process = processManager.get(pid: message.pid, ppid: message.ppid, command: procName)
+
+        
+        return FirewallQuery(
+            tag: tag,
+            id: id,
+            timestamp: timestamp,
+            version: version,
+            remoteSocket: remote,
+            localSocket:  local,
+            process:  process
+        )
+
+    }
+    
+    private func processSocketListen(event: inout firewall_event) -> SocketListen? {
+        let uuid = UUID.init(uuid: event.tag)
+        let timestamp = Double(event.timestamp);
+        
+        let pid = event.data.listen.pid;
+        let ppid = event.data.listen.ppid;
+        let local = SocketAddress(event.data.listen.local)
+        let procName = withUnsafeBytes(of: &event.data.listen.proc_name) { (rawPtr) -> String in
+            let ptr = rawPtr.baseAddress!.assumingMemoryBound(to: CChar.self)
+            return String(cString: ptr)
+        }
+        
+        let info = processManager.get(pid: pid, ppid: ppid,command: procName)
+
+        return SocketListen(
+            tag: uuid,
+            timestamp: timestamp,
+            localSocket: local,
+            process: info
+        )
+    }
+    
+    private func processTCPConnection(event : inout firewall_event, inbound: Bool) -> TCPConnection? {
         let uuid = UUID.init(uuid: event.tag)
         let pid = event.data.tcp_connection.pid;
         let ppid = event.data.tcp_connection.ppid;

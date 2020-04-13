@@ -46,13 +46,17 @@ static errno_t attach_socket(void **cookie, socket_t so);
 // Call back when uregistering filter.
 static void unregistered(sflt_handle handle);
 
-// New inbound connection.
-static errno_t connection_in(void *cookie, socket_t so, const struct sockaddr *from);
-
 // New outbound connection.
-static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to);
+static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *from);
+
+// Accepting new inbound connection
+static errno_t accept(void *cookie, socket_t so_listen, socket_t so,const struct sockaddr *local, const struct sockaddr *remote);
+
+// New listen
+static errno_t new_socket_listen(void *cookie, socket_t so);
 
 static errno_t udp_data_in(void *cookie, socket_t so, const struct sockaddr *from, mbuf_t* data, mbuf_t* control, sflt_data_flag_t flags);
+
 static errno_t udp_data_out(void *cookie, socket_t so, const struct sockaddr *to, mbuf_t* data, mbuf_t* control, sflt_data_flag_t flags);
 
 // When an event happens
@@ -70,47 +74,50 @@ kern_return_t start_isolation();
 kern_return_t stop_isolation();
 
 //socket filter, TCP IPV4
-static struct sflt_filter tcpFilterIPV4 = {
-    TCPIPV4_HANDLE,
-    SFLT_GLOBAL,
-    (char*)BASE_ID,
-    unregistered,
-    attach_socket,
-    detach_socket,
-    filter_event,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    connection_in,
-    connection_out,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL
+static struct sflt_filter tcpFilterIPV4  = (struct sflt_filter) {
+    .sf_handle =        TCPIPV4_HANDLE,
+    .sf_flags =         SFLT_GLOBAL | SFLT_EXTENDED,
+    .sf_name =          (char*)BASE_ID,
+    .sf_unregistered =  unregistered,
+    .sf_attach =        attach_socket,
+    .sf_detach =        detach_socket,
+    .sf_notify =        filter_event,
+    .sf_getpeername =   NULL,
+    .sf_getsockname =   NULL,
+    .sf_data_in =       NULL,
+    .sf_data_out =      NULL,
+    .sf_connect_in =    NULL,
+    .sf_connect_out =   connection_out,
+    .sf_bind =          NULL,
+    .sf_setoption =     NULL,
+    .sf_getoption =     NULL,
+    .sf_listen =        new_socket_listen,
+    .sf_ioctl =         NULL,
+    .sf_len =           sizeof((((sflt_filter*)0)->sf_ext)),
+    .sf_accept =        accept,
 };
 
-// socket filer for UDP IPV4
-static struct sflt_filter udpFilterIPV4 = {
-    UDPIPV4_HANDLE,
-    SFLT_GLOBAL,
-    (char*)BASE_ID,
-    unregistered,
-    attach_socket,
-    detach_socket,
-    NULL,
-    NULL,
-    NULL,
-    udp_data_in,
-    udp_data_out,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL
+
+static struct sflt_filter udpFilterIPV4  = (struct sflt_filter) {
+    .sf_handle =        UDPIPV4_HANDLE,
+    .sf_flags =         SFLT_GLOBAL,
+    .sf_name =          (char*)BASE_ID,
+    .sf_unregistered =  unregistered,
+    .sf_attach =        attach_socket,
+    .sf_detach =        detach_socket,
+    .sf_notify =        filter_event,
+    .sf_getpeername =   NULL,
+    .sf_getsockname =   NULL,
+    .sf_data_in =       udp_data_in,
+    .sf_data_out =      udp_data_out,
+    .sf_connect_in =    NULL,
+    .sf_connect_out =   connection_out,
+    .sf_bind =          NULL,
+    .sf_setoption =     NULL,
+    .sf_getoption =     NULL,
+    .sf_listen =        new_socket_listen,
+    .sf_ioctl =         NULL,
+    .sf_ext = {0}
 };
 
 
@@ -128,6 +135,8 @@ bool send_update_event(cookie_header* header, sflt_event_t change);
 
 // Used to send a query about allowing the connection.
 bool send_firewall_query(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, protocol_type protocol);
+
+bool send_listen_event(cookie_header* header, socket_t so);
 
 // Processes each connection, stating if the connection was allowed or not.
 firewall_outcome_type determineDecision(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, protocol_type protocol);

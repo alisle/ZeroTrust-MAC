@@ -150,10 +150,17 @@ static kern_return_t attach_socket(void **cookie, socket_t so) {
     header->outcome = UNKNOWN;
     
     *cookie = header;
+    
+    pid_t pid = proc_selfpid();
+    os_log(OS_LOG_DEFAULT, "IOFirewall: attached socket for pid: %u", pid);
+    
     return kIOReturnSuccess;
 }
 
 static void detach_socket(void *cookie, socket_t so) {
+    pid_t pid = proc_selfpid();
+    os_log(OS_LOG_DEFAULT, "IOFirewall: detached socket for pid: %u", pid);
+
     if( NULL != cookie) {
         cookie_header* header = (cookie_header*)cookie;
         OSFree(header->tag, sizeof(uuid_t), mallocTag);
@@ -162,22 +169,36 @@ static void detach_socket(void *cookie, socket_t so) {
     
     return;
 }
-
-static errno_t connection_in(void *cookie, socket_t so, const struct sockaddr *from) {
-    firewall_outcome_type outcome = determineDecision((cookie_header*)cookie, so, from, inbound_tcp_v4);
-    
-    send_tcpconnection_event((cookie_header*)cookie, so, from, outcome, inbound_connection);
-
-    if (outcome != ALLOWED) {
-        return kIOReturnError;
-    }
+static errno_t new_socket_listen(void *cookie, socket_t so) {
+    pid_t pid = proc_selfpid();
+    os_log(OS_LOG_DEFAULT, "IOFirewall: new listen for pid: %u", pid);
+    send_listen_event((cookie_header*)cookie, so);
     
     return kIOReturnSuccess;
 }
 
-static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to) {
-    firewall_outcome_type outcome = determineDecision((cookie_header*)cookie, so, to, outbound_tcp_v4);
+static errno_t accept(void *cookie, socket_t so_listen, socket_t so, const struct sockaddr *local, const struct sockaddr *remote) {
+    pid_t pid = proc_selfpid();
+    os_log(OS_LOG_DEFAULT, "IOFirewall: accept connection for pid: %u", pid);
     
+    firewall_outcome_type outcome = determineDecision((cookie_header*)cookie, so_listen, remote, inbound_tcp_v4);
+    
+    send_tcpconnection_event((cookie_header*)cookie, so_listen, remote, outcome, accepted_connection);
+
+    if (outcome != ALLOWED) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: rejecting connection");
+        return kIOReturnError;
+    }
+    
+
+    return kIOReturnSuccess;
+}
+
+
+static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *to) {
+    os_log(OS_LOG_DEFAULT, "IOFirewall: connection out event");
+
+    firewall_outcome_type outcome = determineDecision((cookie_header*)cookie, so, to, outbound_tcp_v4);
     send_tcpconnection_event((cookie_header*)cookie, so, to, outcome, outbound_connection);
     
     if (outcome != ALLOWED) {
@@ -268,9 +289,15 @@ static void unregistered(sflt_handle handle) {
 }
 
 static void filter_event(void *cookie, socket_t so, sflt_event_t event, void* param) {
+    pid_t pid = proc_selfpid();
+    os_log(OS_LOG_DEFAULT, "IOFirewall: filter event %u for pid: %u", event, pid);
+
     send_update_event((cookie_header*)cookie, event);
     return;
 }
+
+
+//End of call backs
 
 bool send_update_event(cookie_header* header, sflt_event_t change) {
     firewall_event event = {0};
@@ -290,6 +317,9 @@ bool send_update_event(cookie_header* header, sflt_event_t change) {
     
     return true;
 }
+
+
+
 
 long current_time() {
     clock_sec_t seconds;
@@ -390,6 +420,34 @@ bool send_firewall_query(cookie_header* header, socket_t local_socket, const str
     return true;
 }
 
+bool send_listen_event(cookie_header* header, socket_t so) {
+    firewall_event event = {0};
+    struct sockaddr_in local = {0};
+    
+    bzero(&local, sizeof(local));
+    bzero(&event, sizeof(firewall_event));
+
+    if(kIOReturnSuccess != sock_getsockname(so, (struct sockaddr *)&local, sizeof(local))) {
+        return false;
+    }
+    
+    uuid_copy(event.tag, *header->tag);
+    event.type = socket_listen;
+    event.timestamp = current_time();
+    event.data.listen.local = local;
+    event.data.listen.pid = proc_selfpid();
+    event.data.listen.ppid = proc_selfppid();
+    proc_selfname(event.data.listen.proc_name, PATH_MAX);
+        
+    if(!sharedDataQueue->enqueue(&event, sizeof(event))) {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: unable to post event into the queue");
+    } else {
+        os_log(OS_LOG_DEFAULT, "IOFirewall: posted connect event");
+    }
+    
+    return true;
+}
+
 bool send_tcpconnection_event(cookie_header* header, socket_t local_socket, const struct sockaddr* remote_socket, firewall_outcome_type result, firewall_event_type type) {
     
     firewall_event event = {0};
@@ -413,7 +471,7 @@ bool send_tcpconnection_event(cookie_header* header, socket_t local_socket, cons
     } else {
         memcpy(&remote, remote_socket, sizeof(remote));
     }
-    
+        
     uuid_copy(event.tag, *header->tag);
     event.type = type;
     event.timestamp = current_time();

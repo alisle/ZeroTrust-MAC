@@ -104,6 +104,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
             .environmentObject(main.connectionCounts)
             .environmentObject(main.locations)
             .environmentObject(main.allConnections)
+            .environmentObject(main.queries)
+            .environmentObject(main.allListens)
         )        
     }
 

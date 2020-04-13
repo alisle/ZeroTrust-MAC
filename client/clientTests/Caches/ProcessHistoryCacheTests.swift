@@ -17,7 +17,7 @@ class ProcessHistoryCacheTests : XCTestCase {
             let timeInterval = Date().timeIntervalSince1970 - TimeInterval.random(in: 0...(60 * 60))
             print("\(Date(timeIntervalSince1970: timeInterval))")
             
-            let event = OpenedOutboundConnectionEvent(connection:
+            let event = OpenedConnectionEvent(connection:
                 Connection(
                     connection: TCPConnection(
                         tag: UUID(),

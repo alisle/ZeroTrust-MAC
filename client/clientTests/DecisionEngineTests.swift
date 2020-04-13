@@ -30,9 +30,10 @@ class DecisionEngineTests : XCTestCase {
             tag: UUID(),
             id: 1,
             timestamp: 2.0,
+            version: .InboundTCPV4,
             remoteSocket: SocketAddress(address: IPAddress("192.168.1.23")!, port: 99),
             localSocket: SocketAddress(address: IPAddress("127.0.0.1")!,  port: 102),
-            processInfo : info
+            process : info
             )
     }
     

@@ -29,7 +29,7 @@ struct RemoteURLHistoryGraph: View {
 struct RemoteURLHistoryGraph_Previews: PreviewProvider {
     static var previews: some View {
         let connection = generateTestConnection(direction: .outbound)
-        ProcessHistoryCache.shared.eventTriggered(event: OpenedOutboundConnectionEvent(connection: connection))
+        ProcessHistoryCache.shared.eventTriggered(event: OpenedConnectionEvent(connection: connection))
         
         return RemoteURLHistoryGraph(remoteURL: connection.remoteURL!)
     }

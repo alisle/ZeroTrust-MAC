@@ -11,8 +11,11 @@ import SwiftUI
 struct ConnectionList: View {
     @EnvironmentObject var allConnections  : AllConnections
     @State private var aliveOnly = true
+    let direction : ConnectionDirection
 
     func filter(_ connections: [Connection]) -> [Connection] {
+        let connections = connections.filter{ $0.direction == self.direction }
+        
         if aliveOnly {
             return connections.filter { $0.alive }
         }
@@ -23,6 +26,9 @@ struct ConnectionList: View {
     
     var body: some View {
         List(content: {
+            Text("\(self.direction.description) Connections")
+                .font(.subheadline)
+
             Toggle(isOn: $aliveOnly) {
                  Text("Show alive connections only")
              }
@@ -60,6 +66,18 @@ struct ConnectionList_Previews: PreviewProvider {
         allConnections.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
         allConnections.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))
 
-        return ConnectionList().environmentObject(allConnections)        
+        allConnections.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.inbound)))
+        allConnections.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.inbound)))
+        allConnections.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.inbound)))
+
+        return VStack {
+            Text("Outbound")
+            ConnectionList(direction: .outbound).environmentObject(allConnections)
+
+            Spacer()
+            Text("Inbound")
+            ConnectionList(direction: .inbound).environmentObject(allConnections)
+
+        }
     }
 }

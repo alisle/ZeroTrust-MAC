@@ -124,7 +124,7 @@ struct ConnectionDetails: View {
 struct ConnectionDetails_Previews: PreviewProvider {
     static var previews: some View {
         (0...1000).forEach { _ in
-            let outbound = OpenedOutboundConnectionEvent.init(connection: generateTestConnection(direction: .outbound))
+            let outbound = OpenedConnectionEvent.init(connection: generateTestConnection(direction: .outbound))
             
             RemoteHistoryCache.shared.eventTriggered(event: outbound)
             ProcessHistoryCache.shared.eventTriggered(event: outbound)

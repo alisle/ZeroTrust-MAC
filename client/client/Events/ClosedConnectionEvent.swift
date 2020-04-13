@@ -1,5 +1,5 @@
 //
-//  OpenedOutboundConnectionEvent.swift
+//  ClosedOutboundConnectionEvent.swift
 //  ZeroTrust FW
 //
 //  Created by Alex Lisle on 3/18/20.
@@ -7,12 +7,11 @@
 //
 
 import Foundation
-
-public class OpenedOutboundConnectionEvent : BaseEvent {
+public class ClosedConnectionEvent : BaseEvent {
     let connection : Connection
     
     init(connection : Connection) {
         self.connection = connection
-        super.init(.OpenedOutboundConnection)
+        super.init(.ClosedConnection)
     }
 }

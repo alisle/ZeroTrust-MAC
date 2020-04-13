@@ -17,7 +17,7 @@ struct ConnectionDetailsHeader: View {
                 .fill(connection.outcome.color)
                 .frame(width: 5)
             
-            ConnectionIcon(connection: connection, size: 64)
+            ProcessDetailsIcon(processInfo: connection.process, size: 64)
             VStack(alignment: .leading) {
                 Text(connection.displayName)
                     .font(.caption)

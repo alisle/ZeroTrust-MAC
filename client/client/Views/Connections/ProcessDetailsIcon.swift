@@ -9,17 +9,17 @@
 import SwiftUI
 
 
-struct ConnectionIcon: View {
-    let connection : Connection
+struct ProcessDetailsIcon: View {
+    let processInfo : ProcessDetails
     let size : CGFloat
      var body: some View {
          Group() {
-             if connection.image == nil {
+             if processInfo.image == nil {
                  Image("Console")
                     .resizable()
                     .frame(width: size, height: size, alignment: .leading)
              } else {
-                 Image(nsImage: connection.image!)
+                 Image(nsImage: processInfo.image!)
                     .resizable()
                     .frame(width: size, height: size, alignment: .leading)
              }
@@ -31,7 +31,7 @@ struct ConnectionIcon: View {
 #if DEBUG
 struct ConnectionIcon_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionIcon(connection: generateTestConnection(direction: ConnectionDirection.outbound), size: 64)
+        ProcessDetailsIcon(processInfo: generateProcessInfo(), size: 64)
     }
 }
 #endif

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public class ProcessDetails {
     public let pid : Int
@@ -21,6 +22,8 @@ public class ProcessDetails {
     public let sha256 : String?
     public let md5 : String?
     public let peers : [ProcessDetails]?
+    public lazy var image : NSImage? = ProcessDetails.getImage(info: self)
+    
     
     public var hasPeers : Bool {
         get {
@@ -32,6 +35,26 @@ public class ProcessDetails {
         }
     }
     
+    private static func getImage(info: ProcessDetails) -> NSImage? {
+        if let nsimage = info.bundle?.icon {
+            return nsimage
+        }
+        
+        if let nsimage = info.appBundle?.icon {
+            return nsimage
+        }
+        
+        if let nsimage = info.parent?.bundle?.icon {
+            return nsimage
+        }
+        
+        if let nsimage = info.parent?.appBundle?.icon {
+            return nsimage
+        }
+        
+        return nil
+    }
+
     public init(pid : Int,
                 ppid: Int,
                 uid : Int?,
@@ -84,6 +107,10 @@ public class ProcessDetails {
 extension ProcessDetails : CustomStringConvertible {
     public var description: String  {
         return "PID:\(self.pid), PPID:\(self.ppid), USER: \(self.username ?? "unknown")(\(String(describing: self.uid))) - COMMAND: \(self.command ?? "unknown") - FP: \(self.path ?? "unknown")"
+    }
+    
+    public var shortDescription : String {
+        return "PID:\(self.pid) - UID:\(self.uid ?? 0) - \(self.command ?? "unknown")"
     }
 
 }

@@ -13,13 +13,13 @@ class RemoteHistoryCache : HistoryCache, EventListener {
     public static let shared = RemoteHistoryCache()
     
     public func registerListeners() {
-        EventManager.shared.addListener(type: .OpenedOutboundConnection, listener: self)
+        EventManager.shared.addListener(type: .OpenedConnection, listener: self)
         self.trim()
     }
 
  
     func eventTriggered(event: BaseEvent) {
-        let event = event as! OpenedOutboundConnectionEvent
+        let event = event as! OpenedConnectionEvent
         let url = event.connection.remoteDisplayAddress 
         process(key: url, timestamp: event.connection.startTimestamp)
     }

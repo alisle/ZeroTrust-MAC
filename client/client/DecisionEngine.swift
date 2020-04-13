@@ -21,6 +21,16 @@ enum Decision : CaseIterable {
         case .Unknown: return 2
         }
     }
+    
+    var description : String {
+        get {
+            switch(self) {
+            case .Allow: return   "ALLOW"
+            case .Deny: return    "DENY"
+            case .Unknown: return "UNKNOWN"
+            }
+        }
+    }
 }
 
 
@@ -101,7 +111,6 @@ class DecisionEngine : EventListener {
     }
     
     func decide(_ query: FirewallQuery) -> Decision {
-        
         if checkDomain(query.remoteURL) == Decision.Deny {
             logger.info("Denying connection based on domain rule");
             return Decision.Deny

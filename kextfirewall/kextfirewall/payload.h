@@ -29,10 +29,11 @@ typedef enum protocol {
 
 typedef enum {
     outbound_connection = 0,
-    inbound_connection = 1,
+    accepted_connection = 1,
     connection_update = 2,
     dns_update = 3,
-    query = 4
+    query = 4,
+    socket_listen = 5
 } firewall_event_type;
 
 typedef enum {
@@ -76,6 +77,13 @@ typedef struct  {
 } firewall_connection;
 
 typedef struct {
+    struct sockaddr_in local;
+    int pid;
+    int ppid;
+    char proc_name[MAX_PATH_SIZE];
+} firewall_listen;
+
+typedef struct {
     char dns_message[MAX_DNS_SIZE];
 } firewall_dns_update;
 
@@ -84,6 +92,7 @@ typedef union  {
     firewall_event_update_type update_event;
     firewall_dns_update dns_event;
     firewall_query query_event;
+    firewall_listen listen;
 } firewall_event_data;
 
 typedef struct {

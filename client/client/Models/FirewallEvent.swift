@@ -13,9 +13,54 @@ enum FirewallEventType : Int {
     inboundConnection,
     connectionUpdate,
     dnsUpdate,
-    query
+    query,
+    socketListener
 }
 
+
+enum FirewallEventQueryProtocolType : Int {
+    case InboundUDPV4 = 0,
+    OutboundUDPV4,
+    
+    InboundTCPV4,
+    OutboundTCPV4,
+    
+    InboundUDPV6,
+    OutboundUDPv6,
+    
+    InboundTCPV6,
+    OutboundTCPV6
+    
+
+    static public func from(_ type: protocol_type) -> FirewallEventQueryProtocolType? {
+        switch type {
+        case inbound_udp_v4:  return InboundUDPV4
+        case outbound_udp_v4: return OutboundUDPV4
+        case inbound_tcp_v4:  return InboundTCPV4
+        case outbound_tcp_v4: return OutboundTCPV4
+        case inbound_udp_v6:  return InboundUDPV6
+        case outbound_udp_v6: return OutboundUDPv6
+        case inbound_tcp_v6:  return InboundTCPV6
+        case outbound_tcp_v6: return OutboundTCPV6
+        default: return nil
+        }
+    }
+    
+    var description : String {
+        get {
+            switch self {
+            case .InboundUDPV4:  return "UDP:V4:\u{2190}"
+            case .OutboundUDPV4: return "UDP:V4:\u{2192}"
+            case .InboundTCPV4:  return "TCP:V4:\u{2190} "
+            case .OutboundTCPV4: return "TCP:V4:\u{2192}"
+            case .InboundUDPV6:  return "UDP:V6:\u{2190}"
+            case .OutboundUDPv6: return "UDP:V6:\u{2192}"
+            case .InboundTCPV6:  return "TCP:V6:\u{2190}"
+            case .OutboundTCPV6: return "TCP:V6:\u{2192}"
+            }
+        }
+    }
+}
 
 class FirewallEvent : CustomStringConvertible {
     let eventType : FirewallEventType
@@ -40,7 +85,7 @@ class FirewallDNSUpdate : FirewallEvent {
         self.aRecords = aRecords
         self.cNameRecords = cNameRecords
         self.questions = questions
-        super.init(type: FirewallEventType.dnsUpdate, tag: nil)
+        super.init(type: .dnsUpdate, tag: nil)
     }
     
     public override var description: String {
@@ -66,7 +111,7 @@ class FirewallConnectionUpdate : FirewallEvent {
     init(tag: UUID, timestamp: TimeInterval, update: ConnectionStateType) {
         self.update = update;
         self.timestamp = Date(timeIntervalSince1970: timestamp)
-        super.init(type: FirewallEventType.connectionUpdate, tag: tag)
+        super.init(type: .connectionUpdate, tag: tag)
     }
     
     public override var description: String {
@@ -77,11 +122,13 @@ class FirewallConnectionUpdate : FirewallEvent {
     }
 }
 
-class FirewallQuery : FirewallEvent {
+
+
+class FirewallQuery : FirewallEvent, Identifiable {
     let id : UInt32
     let timestamp : Date
-    
-    let processInfo : ProcessDetails
+    let protocolVersion : FirewallEventQueryProtocolType
+    let process : ProcessDetails
     let remoteSocket : SocketAddress
     let localSocket : SocketAddress
     
@@ -94,19 +141,38 @@ class FirewallQuery : FirewallEvent {
     init(tag: UUID,
          id: UInt32,
          timestamp : TimeInterval,
+         version : FirewallEventQueryProtocolType,
          remoteSocket : SocketAddress,
          localSocket : SocketAddress,
-         processInfo : ProcessDetails
+         process : ProcessDetails
         )  {
         self.id = id
         self.timestamp = Date(timeIntervalSince1970: timestamp)
         self.localSocket = localSocket
         self.remoteSocket = remoteSocket
-        self.processInfo = processInfo
-        super.init(type: FirewallEventType.query, tag: tag)
+        self.process = process
+        self.protocolVersion = version
+        super.init(type: .query, tag: tag)
+    }
+    
+    override var description: String {
+        return "\(self.timestamp.description): \(id):\(self.protocolVersion.description):\(self.localSocket)\u{2192}\(self.remoteSocket):\(self.process.shortDescription)"
+    }
+
+}
+
+        
+extension FirewallQuery : Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.tag)
     }
 }
 
+extension FirewallQuery : Equatable {
+    public static func ==(lhs: FirewallQuery, rhs: FirewallQuery) -> Bool {
+        return lhs.tag == rhs.tag
+    }
+}
 
 class TCPConnection : FirewallEvent {
     let timestamp : Date
@@ -134,7 +200,7 @@ class TCPConnection : FirewallEvent {
         self.localSocket = localSocket
         self.remoteSocket = remoteSocket
         
-        super.init(type: FirewallEventType.outboundConnection, tag: tag)
+        super.init(type: .outboundConnection, tag: tag)
         displayName = createDisplayName()        
     }
     

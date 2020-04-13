@@ -18,8 +18,8 @@ class Locations : ObservableObject, EventListener {
 
     
     init() {
-        EventManager.shared.addListener(type: .OpenedOutboundConnection, listener: self)
-        EventManager.shared.addListener(type: .ClosedOutboundConnection, listener: self)
+        EventManager.shared.addListener(type: .OpenedConnection, listener: self)
+        EventManager.shared.addListener(type: .ClosedConnection, listener: self)
         self.updatePublishedValues()
     }
     
@@ -57,8 +57,8 @@ class Locations : ObservableObject, EventListener {
 
     func eventTriggered(event: BaseEvent) {
         switch event.type {
-        case .OpenedOutboundConnection:
-            let event = event as! OpenedOutboundConnectionEvent
+        case .OpenedConnection:
+            let event = event as! OpenedConnectionEvent
             if let location = event.connection.location {
                 guard let latitude = location.latitude else {
                     return
@@ -71,8 +71,8 @@ class Locations : ObservableObject, EventListener {
                 let point = map.createPoint(latitude: Double(latitude), longitude: Double(longitude))
                 self.shadowPoints.updateValue(point, forKey: event.connection.tag)
             }
-        case .ClosedOutboundConnection:
-            let event = event as! ClosedOutboundConnectionEvent
+        case .ClosedConnection:
+            let event = event as! ClosedConnectionEvent
             self.shadowPoints.removeValue(forKey: event.connection.tag)
 
         default:

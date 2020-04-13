@@ -10,12 +10,9 @@ import Foundation
 
 
 class ConnectionState  {
+    private var listenState = [UUID : SocketListen]()
     private var state = [UUID: Connection]()
     private let connectionQueue = DispatchQueue(label: "com.zerotrust.mac.connectionQueue", attributes: .concurrent)
-    
-    init() {
-        trim()
-    }
     
     var connections :  Set<Connection> {        
         get {
@@ -46,9 +43,10 @@ class ConnectionState  {
                 guard let self = self else {
                     return
                 }
-                
                 self.state[connection.tag] = connection
-                EventManager.shared.triggerEvent(event: OpenedOutboundConnectionEvent(connection: connection))
+                
+                EventManager.shared.triggerEvent(event: OpenedConnectionEvent(connection: connection))
+                
                 EventManager.shared.triggerEvent(event: ConnectionChangedEvent(connection: connection))
             }
         }
@@ -66,25 +64,27 @@ class ConnectionState  {
                 EventManager.shared.triggerEvent(event: ConnectionChangedEvent(connection: updated))
                 
                 if updated.state == .disconnected || updated.state == .disconnecting {
-                    EventManager.shared.triggerEvent(event: ClosedOutboundConnectionEvent(connection: updated))
+                    EventManager.shared.triggerEvent(event: ClosedConnectionEvent(connection: updated))
+                }
+            } else if let listen = self.listenState[tag] {
+                if update == .disconnected || update == .disconnecting {
+                    self.listenState.removeValue(forKey: tag)
+                    EventManager.shared.triggerEvent(event: ListenEndedEvent(listen: listen))
                 }
             }
+            
+            
         }
-        
     }
     
-    func dump() {
+    func listen(_ listen: SocketListen) {
         self.connectionQueue.async(flags: .barrier) { [weak self] in
             guard let self = self else {
                 return
             }
-            
-            for pair  in self.state {
-                let value = pair.value
-                print("\(value.displayName)->\(value.remoteSocket)  -- \(value.state) -- DupeHash: \(value.dupeHash)")
-            }
+
+            self.listenState[listen.tag!] = listen
+            EventManager.shared.triggerEvent(event: ListenStartedEvent(listen: listen))
         }
     }
-    
-    
 }

@@ -12,7 +12,8 @@ import Logging
 class ConnectionCounts : ObservableObject, EventListener {
     private let logger = Logger(label: "com.zerotrust.client.States.ConnectionCounts")
     private var currentOutboundConnections: Set<UUID> = []
-    
+    private var currentInboundConnections: Set<UUID> = []
+
     @Published var currentInboundCount : CGFloat = 0
     @Published var currentOutboundCount : CGFloat = 0
     
@@ -29,9 +30,22 @@ class ConnectionCounts : ObservableObject, EventListener {
         0.0,
     ]
     
+    @Published var inboundCounts : [CGFloat] = [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+    ]
+    
     init() {
-        EventManager.shared.addListener(type: .OpenedOutboundConnection, listener: self)
-        EventManager.shared.addListener(type: .ClosedOutboundConnection, listener: self)
+        EventManager.shared.addListener(type: .OpenedConnection, listener: self)
+        EventManager.shared.addListener(type: .ClosedConnection, listener: self)
         self.updatePublishedValues()
     }
     
@@ -42,15 +56,22 @@ class ConnectionCounts : ObservableObject, EventListener {
             }
             
             
-            let count = CGFloat(self.currentOutboundConnections.count)
             
-            var shadow = self.outboundCounts.dropFirst()
-            shadow.append(count)
+            let outboundCount = CGFloat(self.currentOutboundConnections.count)
+            let inboundCount  = CGFloat(self.currentInboundConnections.count)
+                        
+            var shadowOutbound = self.outboundCounts.dropFirst()
+            var shadowInbound = self.inboundCounts.dropLast()
             
-            self.logger.debug("connection count: \(count)")
+            shadowOutbound.append(outboundCount)
+            shadowInbound.append(inboundCount)
             
-            self.outboundCounts = Array(shadow)
-            self.currentOutboundCount = count
+            self.outboundCounts = Array(shadowOutbound)
+            self.inboundCounts = Array(shadowInbound)
+            
+            self.currentOutboundCount = outboundCount
+            self.currentInboundCount = inboundCount
+            
             self.updatePublishedValues()
         }
     }
@@ -58,17 +79,21 @@ class ConnectionCounts : ObservableObject, EventListener {
     
     func eventTriggered(event: BaseEvent) {
         switch event.type {
-        case .OpenedOutboundConnection:
-            let event = event as! OpenedOutboundConnectionEvent
+            
+        case .OpenedConnection:
+            let event = event as! OpenedConnectionEvent
             logger.debug("adding new connection \(event.connection.tag)")
-            self.currentOutboundConnections.insert(event.connection.tag)
-        case .ClosedOutboundConnection:
-            let event = event as! ClosedOutboundConnectionEvent
-            logger.debug("removing connection \(event.connection.tag) with count: \(self.currentOutboundConnections.count)")
-            if let _ = self.currentOutboundConnections.remove(event.connection.tag) {
-                logger.debug("successfully removed \(event.connection.id) with count: \(self.currentOutboundConnections.count)")
+            switch(event.connection.direction) {
+            case .inbound: self.currentInboundConnections.insert(event.connection.tag)
+            case .outbound: self.currentOutboundConnections.insert(event.connection.tag)
             }
             
+        case .ClosedConnection:
+            let event = event as! ClosedConnectionEvent
+            switch(event.connection.direction) {
+            case .inbound: let _ = self.currentInboundConnections.remove(event.connection.tag)
+            case .outbound: let _ = self.currentOutboundConnections.remove(event.connection.tag)
+            }
         default: ()
         }
     }

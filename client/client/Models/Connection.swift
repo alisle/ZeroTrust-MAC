@@ -23,7 +23,6 @@ struct Connection : Identifiable {
     let localSocket : SocketAddress
     let remoteSocket : SocketAddress
     let displayName : String
-    let image : NSImage?
     let state : ConnectionStateType
     let outcome : Outcome
     let alive : Bool
@@ -81,7 +80,6 @@ struct Connection : Identifiable {
         self.portProtocol = portProtocol
         self.displayName = connection.displayName
         self.state = ConnectionStateType.unknown
-        self.image = Connection.getImage(info: connection.process)
         self.endDateTimestamp = nil
         self.location = location
         self.process =  connection.process
@@ -113,7 +111,6 @@ struct Connection : Identifiable {
         self.localSocket = localSocket
         self.displayName = displayName
         self.state = state
-        self.image = Connection.getImage(info: processInfo)
         self.endDateTimestamp = updateDate
         self.location = location
         self.process = processInfo
@@ -142,28 +139,7 @@ struct Connection : Identifiable {
         return changeState(state: self.state, timestamp: self.endDateTimestamp ?? Date())
     }
     
-    
-    
-    private static func getImage(info: ProcessDetails) -> Optional<NSImage> {
-        if let nsimage = info.bundle?.icon {
-            return nsimage
-        }
         
-        if let nsimage = info.appBundle?.icon {
-            return nsimage
-        }
-        
-        if let nsimage = info.parent?.bundle?.icon {
-            return nsimage
-        }
-        
-        if let nsimage = info.parent?.appBundle?.icon {
-            return nsimage
-        }
-        
-        return nil
-    }
-    
 }
 
 extension Connection : Hashable {

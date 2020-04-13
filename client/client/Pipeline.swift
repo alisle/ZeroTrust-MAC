@@ -41,24 +41,32 @@ class Pipeline {
         logger.debug("processing \(event.eventType)")
         
         switch(event.eventType) {
-        case FirewallEventType.outboundConnection:
+        case .outboundConnection:
             let firewallEvent = event as! TCPConnection
             self.process(connection: firewallEvent)
 
-        case FirewallEventType.connectionUpdate:
+        case .connectionUpdate:
             let update = event as! FirewallConnectionUpdate
             self.process(update: update)
             
-        case FirewallEventType.dnsUpdate:
+        case .dnsUpdate:
             let update = event as! FirewallDNSUpdate
             self.process(dnsUpdate: update)
             
-        case FirewallEventType.query:
+        case .query:
             let query = event as! FirewallQuery
             self.process(query: query)
+            
+        case .socketListener:
+            let socketListen = event as! SocketListen
+            self.process(listen: socketListen)
                                  
         default: ()
         }
+    }
+    
+    func process(listen: SocketListen) {
+        connectionState.listen(listen)
     }
     
     func process(connection: TCPConnection) {
@@ -100,8 +108,12 @@ class Pipeline {
         query.localURL = localURL
         query.localProtocol = localProtocol
         
-                                                
+        
+        EventManager.shared.triggerEvent(event: DecisionQueryEvent(query: query))
         let decision = decisionEngine.decide(query)
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: query, decision: decision))
+        
         kextComm.postDecision(id: query.id, allowed: decision.toInt())
+        
     }
 }
