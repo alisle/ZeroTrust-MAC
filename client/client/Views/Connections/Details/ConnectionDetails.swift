@@ -125,12 +125,16 @@ struct ConnectionDetails_Previews: PreviewProvider {
     static var previews: some View {
         (0...1000).forEach { _ in
             let outbound = OpenedConnectionEvent.init(connection: generateTestConnection(direction: .outbound))
-            
+            let inbound = OpenedConnectionEvent.init(connection: generateTestConnection(direction: .inbound))
+ 
             RemoteHistoryCache.shared.eventTriggered(event: outbound)
             ProcessHistoryCache.shared.eventTriggered(event: outbound)
+            
+            RemoteHistoryCache.shared.eventTriggered(event: inbound)
+            ProcessHistoryCache.shared.eventTriggered(event: inbound)
         }
-        
-        return ConnectionDetails(connection: generateTestConnection(direction: .outbound))
-                .frame(width: 800, height: 600)
+
+        return ConnectionDetails(connection: generateTestConnection(direction: .inbound))
+                    .frame(width: 800, height: 600)
     }
 }

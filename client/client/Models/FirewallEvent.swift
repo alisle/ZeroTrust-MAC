@@ -133,10 +133,10 @@ class FirewallQuery : FirewallEvent, Identifiable {
     let localSocket : SocketAddress
     
     var remoteURL : Optional<String> = nil
-    var remoteProtocol: Optional<Protocol> = nil
+    var remoteProtocol: Optional<PortProtocolDetails> = nil
     
     var localURL: Optional<String> = nil
-    var localProtocol: Optional<Protocol> = nil
+    var localProtocol: Optional<PortProtocolDetails> = nil
     
     init(tag: UUID,
          id: UInt32,

@@ -22,7 +22,7 @@ struct ConnectionRow: View {
                 HStack {
                     Text(connection.remoteDisplayAddress)
                     Spacer()
-                    Text("\(connection.remoteProtocol)")
+                    Text("\(connection.remoteSocket.portDescription)")
                 }
             }
         }

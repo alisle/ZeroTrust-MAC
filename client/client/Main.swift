@@ -194,11 +194,11 @@ func generateLocalSocket() -> SocketAddress {
     return SocketAddress(address: IPAddress("0.0.0.0")!, port: localPort)
 }
 
-func generateTCPConnection() -> TCPConnection {
+func generateTCPConnection(direction: ConnectionDirection = .outbound) -> TCPConnection {
     return TCPConnection(
         tag: UUID(),
         timestamp: Date().timeIntervalSince1970,
-        inbound: false,
+        inbound: direction == .inbound,
         process: generateProcessInfo(),
         remoteSocket: generateRemoteSocket(),
         localSocket: generateLocalSocket(),
@@ -235,7 +235,7 @@ func generateTestConnection(direction: ConnectionDirection, includeLocation : Bo
     let protocolCache = ProtocolCache()
     let remoteProtocol = protocolCache.get(tcpConnection.remoteSocket.port)
     let connection = Connection(
-        connection: generateTCPConnection(),
+        connection: generateTCPConnection(direction: direction),
         location: includeLocation ? generateIP2LocationRecord() : nil,
         remoteURL: "www.google.com",
         portProtocol: remoteProtocol

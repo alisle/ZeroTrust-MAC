@@ -10,11 +10,12 @@ import Foundation
 
 
 class ProtocolCache {
-    private let Port2Protocol : [Int: Protocol]
+    static public let shared = ProtocolCache()
+    private let Port2Protocol : [Int: PortProtocolDetails]
     
     init() {
-        let protocols : [Protocol] = Helpers.loadJSON("protocols.json")
-        var map = [Int: Protocol]()
+        let protocols : [PortProtocolDetails] = Helpers.loadJSON("protocols.json")
+        var map = [Int: PortProtocolDetails]()
         protocols.forEach {
             map[$0.port] = $0
         }
@@ -23,7 +24,7 @@ class ProtocolCache {
     }
     
     
-    func get(_ port : Int) -> Optional<Protocol> {
+    func get(_ port : Int) -> Optional<PortProtocolDetails> {
         return Port2Protocol[port]
     }
     

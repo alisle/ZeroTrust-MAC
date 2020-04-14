@@ -11,17 +11,28 @@ import Foundation
 public struct SocketAddress {
     public let address : IPAddress
     public let port : Int
-
+    public let protocolDetails : PortProtocolDetails?
+    
     public init(address : IPAddress, port: Int)  {
         self.address = address
         self.port = port
+        self.protocolDetails = ProtocolCache.shared.get(self.port)
     }
     
     public init(_ sockaddr: sockaddr_in) {
         self.address = IPAddress(sockaddr.sin_addr)
         self.port = Int(UInt16(sockaddr.sin_port).byteSwapped)
+        self.protocolDetails = ProtocolCache.shared.get(self.port)
     }
     
+    var portDescription : String {
+        guard let port = self.protocolDetails else {
+            return "\(self.port)"
+        }
+        
+        return port.name
+    }
+
 }
 
 extension SocketAddress : Hashable {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Protocol : Codable {
+public struct PortProtocolDetails : Codable {
     var name : String
     var port : Int
     var description : String

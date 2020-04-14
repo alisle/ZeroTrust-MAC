@@ -49,8 +49,13 @@ struct ConnectionUserChain: View {
                     .resizable()
                     .frame(width: 64, height: 64, alignment: .leading)
                 
-                Text(connection.portProtocol?.name ?? connection.remoteProtocol)
-                    .bold()
+                if connection.direction == .outbound {
+                    Text(connection.remoteSocket.protocolDetails?.name ?? connection.remoteSocket.description)
+                        .bold()
+                } else {
+                    Text(connection.localSocket.protocolDetails?.name ?? connection.localSocket.portDescription)
+                        .bold()
+                }
             }
             
             HStack {
@@ -74,7 +79,15 @@ struct ConnectionUserChain: View {
 
 struct ConnectionUserChain_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionUserChain(connection: generateTestConnection(direction: .outbound))
+        return VStack {
+            Text("Outbound")
+            ConnectionUserChain(connection: generateTestConnection(direction: .outbound))
+            Spacer()
+            Text("Inbound")
+            ConnectionUserChain(connection: generateTestConnection(direction: .inbound))
+            Spacer()
+
+        }
         
     }
 }

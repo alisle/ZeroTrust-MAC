@@ -93,7 +93,7 @@
 		F0BD02FD2419CCBB0032CAA4 /* ConnectionCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BD02FC2419CCBB0032CAA4 /* ConnectionCountView.swift */; };
 		F0BED62424213A2A008672C6 /* Topojson in Frameworks */ = {isa = PBXBuildFile; productRef = F0BED62324213A2A008672C6 /* Topojson */; };
 		F0C157D0236A39570082F7E3 /* area.json in Resources */ = {isa = PBXBuildFile; fileRef = F0C157CF236A39570082F7E3 /* area.json */; };
-		F0D065E023064E300076A1AC /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065DF23064E300076A1AC /* Protocol.swift */; };
+		F0D065E023064E300076A1AC /* PortProtocolDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065DF23064E300076A1AC /* PortProtocolDetails.swift */; };
 		F0D065E3230652BD0076A1AC /* protocols.json in Resources */ = {isa = PBXBuildFile; fileRef = F0D065E2230652BD0076A1AC /* protocols.json */; };
 		F0D065E5230654120076A1AC /* DNSRecords.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065E4230654120076A1AC /* DNSRecords.swift */; };
 		F0D065E7230656A00076A1AC /* ProtocolCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D065E6230656A00076A1AC /* ProtocolCache.swift */; };
@@ -221,7 +221,7 @@
 		F0AE39C224213C3D00A6CC0A /* countries.topojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = countries.topojson; sourceTree = "<group>"; };
 		F0BD02FC2419CCBB0032CAA4 /* ConnectionCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCountView.swift; sourceTree = "<group>"; };
 		F0C157CF236A39570082F7E3 /* area.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = area.json; sourceTree = "<group>"; };
-		F0D065DF23064E300076A1AC /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		F0D065DF23064E300076A1AC /* PortProtocolDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortProtocolDetails.swift; sourceTree = "<group>"; };
 		F0D065E2230652BD0076A1AC /* protocols.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = protocols.json; sourceTree = "<group>"; };
 		F0D065E4230654120076A1AC /* DNSRecords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSRecords.swift; sourceTree = "<group>"; };
 		F0D065E6230656A00076A1AC /* ProtocolCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolCache.swift; sourceTree = "<group>"; };
@@ -350,7 +350,7 @@
 			children = (
 				F052C9F022C1743D005DE1D7 /* FirewallEvent.swift */,
 				F052C9FC22C17699005DE1D7 /* Connection.swift */,
-				F0D065DF23064E300076A1AC /* Protocol.swift */,
+				F0D065DF23064E300076A1AC /* PortProtocolDetails.swift */,
 				F0D065E4230654120076A1AC /* DNSRecords.swift */,
 				F043D4A2230DC51A00746BED /* ConnectionStateType.swift */,
 				F0269F34231F4D080067D3BA /* Outcome.swift */,
@@ -765,7 +765,7 @@
 				F02761C02436C4DB008290A7 /* ProtocolDetailsView.swift in Sources */,
 				F052CA0122C3C77F005DE1D7 /* ConnectionState.swift in Sources */,
 				F052C9EF22C1740A005DE1D7 /* Helpers.swift in Sources */,
-				F0D065E023064E300076A1AC /* Protocol.swift in Sources */,
+				F0D065E023064E300076A1AC /* PortProtocolDetails.swift in Sources */,
 				F03F28702433B9660046AB80 /* ProcessHistoryGraph.swift in Sources */,
 				F052C9F522C17531005DE1D7 /* kext-helpers.c in Sources */,
 				F0269E602444BDED005F2BFA /* AllListens.swift in Sources */,

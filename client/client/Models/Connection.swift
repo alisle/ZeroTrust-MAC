@@ -19,13 +19,12 @@ struct Connection : Identifiable {
     let process : ProcessDetails
     let location : IP2LocationRecord?
     let remoteURL: String?
-    let portProtocol : Protocol?
     let localSocket : SocketAddress
     let remoteSocket : SocketAddress
     let displayName : String
     let state : ConnectionStateType
     let outcome : Outcome
-    let alive : Bool
+    let alive : Bool 
     
     var dupeHash : Int {
         get {
@@ -44,13 +43,6 @@ struct Connection : Identifiable {
         return remoteURL ?? remoteSocket.address.description
     }
 
-    var remoteProtocol : String {
-        guard let port = self.portProtocol else {
-            return "\(self.remoteSocket.port)"
-        }
-        
-        return port.name
-    }
     
     var duration : TimeInterval {
         let date = self.endDateTimestamp ?? Date()
@@ -60,7 +52,7 @@ struct Connection : Identifiable {
     init(connection: TCPConnection,
          location: IP2LocationRecord?,
          remoteURL : String?,
-         portProtocol : Protocol? ) {
+         portProtocol : PortProtocolDetails? ) {
         
         self.direction = {
             switch(connection.inbound) {
@@ -77,7 +69,6 @@ struct Connection : Identifiable {
         self.localSocket = connection.localSocket
         
         self.remoteURL = remoteURL
-        self.portProtocol = portProtocol
         self.displayName = connection.displayName
         self.state = ConnectionStateType.unknown
         self.endDateTimestamp = nil
@@ -93,7 +84,6 @@ struct Connection : Identifiable {
         tag : UUID,
         start: Date,
         updateDate: Date?,
-        portProtocol : Protocol?,
         remoteURL: String?,
         remoteSocket : SocketAddress,
         localSocket : SocketAddress,
@@ -107,7 +97,6 @@ struct Connection : Identifiable {
         self.tag = tag
         self.remoteSocket = remoteSocket
         self.remoteURL = remoteURL
-        self.portProtocol = portProtocol
         self.localSocket = localSocket
         self.displayName = displayName
         self.state = state
@@ -125,7 +114,6 @@ struct Connection : Identifiable {
             tag : self.tag,
             start: self.startTimestamp,
             updateDate: timestamp,
-            portProtocol : self.portProtocol,
             remoteURL: self.remoteURL,
             remoteSocket: self.remoteSocket,
             localSocket: self.localSocket,

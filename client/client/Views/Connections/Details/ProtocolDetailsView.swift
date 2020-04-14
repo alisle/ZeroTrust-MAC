@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct PortProtocol : View {
-    let proto : Protocol
+    let proto : PortProtocolDetails
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -37,14 +37,18 @@ struct UnknownProtocol : View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("\(connection.remoteSocket.port)")
-                .bold()
-                .font(.title)
-                .padding(.init(top: 2, leading: 0, bottom: 5, trailing: 0))
-
+            HStack {
+                Text("\(connection.remoteSocket.port)")
+                    .bold()
+                    .font(.title)
+                    .padding(.init(top: 2, leading: 0, bottom: 5, trailing: 0))
+                Spacer()
+            }
+            
             Text("Hmmm, this isn't a port which is well known to us")
                 .lineLimit(nil)
                 .multilineTextAlignment(.leading)
+            
         }
     }
 }
@@ -53,8 +57,8 @@ struct ProtocolDetailsView: View {
     
     var body: some View {
         VStack {
-            if connection.portProtocol != nil {
-                PortProtocol(proto: connection.portProtocol!)
+            if connection.remoteSocket.protocolDetails != nil {
+                PortProtocol(proto: connection.remoteSocket.protocolDetails!)
             } else {
                 UnknownProtocol(connection: connection)
             }
@@ -66,7 +70,7 @@ struct ProtocolDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             Text("Protocol View")
-            PortProtocol(proto: generateTestConnection(direction: .outbound).portProtocol!)
+            PortProtocol(proto: generateTestConnection(direction: .outbound).remoteSocket.protocolDetails!)
             
             Text("Protocol Details")
             ProtocolDetailsView(connection: generateTestConnection(direction: .outbound))
