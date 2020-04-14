@@ -63,6 +63,28 @@ public class IPAddress {
         }
     }()
     
+    public lazy var isPrivate : Bool = {
+        switch(self.address) {
+        case (let .IPv4(addr)):
+            let ip = addr.s_addr.bigEndian
+            if ip > 167772160 && ip < 184549375 {
+                return true
+            }
+            
+            if ip > 2886729728 && ip < 2886795263 {
+                return true
+            }
+            
+            if ip > 3232235520 && ip < 3232301055 {
+                return true
+            }
+            
+            return false
+        default:
+            return false
+        }
+    }()
+    
     
     public lazy var representation : String = { [unowned self] in
         switch address {

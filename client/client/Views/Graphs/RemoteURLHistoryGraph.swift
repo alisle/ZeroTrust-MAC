@@ -17,11 +17,7 @@ struct RemoteURLHistoryGraph: View {
     
     var body: some View {
         VStack() {
-            BarChart( items: self.items )
-            
-            Text("# of Connections made to remote host")
-                .font(.caption)
-                .padding(.init(top: 5, leading: 1, bottom: 1, trailing: 1))
+            BarChart( items: self.items, caption: "# of Connections made to remote host")
         }
     }
 }

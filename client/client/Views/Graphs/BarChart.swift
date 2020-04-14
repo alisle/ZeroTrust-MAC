@@ -15,6 +15,11 @@ struct BarChartCell : View {
     let max : CGFloat
     let scale : CGFloat
     
+    let gradient : Gradient = Gradient(colors: [
+        Color.init(.sRGBLinear, red: 0.1, green: 0.01, blue: 0.1, opacity: 1.0),
+        Color.init(.sRGBLinear, red: 0.2, green: 0.01, blue: 0.1, opacity: 1.0)
+    ])
+    
     init(size: CGSize, item: ChartItem, max: CGFloat) {
         self.size = size
         self.item = item
@@ -23,22 +28,6 @@ struct BarChartCell : View {
     }
 
     var body: some View {
-        /*
-        VStack {
-            VStack {
-                Spacer()
-                ZStack {
-                    RoundedRectangle(cornerRadius: 2, style: .continuous)
-                        .fill(Color.init(.sRGBLinear, red: 0.1, green: 0.01, blue: 0.1, opacity: 1.0))
-                        .frame(width: self.size.width, height: (self.size.height / max) * value, alignment: .center)
-                    
-                    RoundedRectangle(cornerRadius: 2, style: .continuous)
-                        .stroke(Color.red)
-                        .frame(width: self.size.width, height: (self.size.height / max) * value, alignment: .center)
-                }
-            }
-        }.frame(width: self.size.width, height: self.size.height, alignment: .center)
-         */
         
         VStack {
             Spacer()
@@ -47,20 +36,19 @@ struct BarChartCell : View {
             }
             
             ZStack {
-                Rectangle()
-                    .fill(Color.init(.sRGBLinear, red: 0.1, green: 0.01, blue: 0.1, opacity: 1.0))
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(LinearGradient(gradient: self.gradient, startPoint: .bottom, endPoint: .top))
                     .frame(
                         width: self.size.width,
                         height: self.scale * self.size.height
                     )
-
-                Rectangle()
+                
+                RoundedRectangle(cornerRadius: 4)
                     .stroke(Color.red)
                     .frame(
                         width: self.size.width,
                         height: self.scale * self.size.height
                     )
-
             }
             
             Text(item.label)
@@ -89,8 +77,9 @@ struct BarChart: View {
     let items : [ChartItem]
     let max : CGFloat
     let count : CGFloat
+    let caption : String
     
-    init(items : [ChartItem]) {
+    init(items : [ChartItem], caption: String) {
         let max = items.max()?.value ?? 0
         self.items = items
         self.count = CGFloat(self.items.count)
@@ -106,63 +95,14 @@ struct BarChart: View {
         } else  {
             self.max = CGFloat(max + (100 - (max % 100)))
         }
+        
+        self.caption = caption
+
     }
     
     
     var body: some View {
         VStack {
-            /*
-            HStack(spacing: 0.0) {
-                ZStack() {
-                    GeometryReader { geometry in
-                        GridPath(x: CGFloat(self.items.count), y: (self.max))
-                            .stroke(Color.gray, lineWidth: 0.5)
-                            .frame(
-                                width: geometry.size.width,
-                                height: geometry.size.height - 25
-                            )
-
-                        HStack(spacing: 0.0) {
-                            ForEach(self.items) { item in
-                                ZStack() {
-                                    VStack(spacing: 0.0) {
-                                        BarChartCell(
-                                            size:
-                                                .init(
-                                                    width: geometry.size.width / CGFloat(self.items.count),
-                                                    height: geometry.size.height - 25
-                                            ),
-                                            value: CGFloat(item.value),
-                                            max: CGFloat(self.max)
-                                        )
-                                        .zIndex(2)
-                                        
-                                        Spacer()
-                                    }
-                                    
-                                    VStack(spacing: 0.0) {
-                                        if item.value != 0 {
-                                            Spacer()
-                                            Text("\(item.value)")
-                                                .font(.caption)
-                                                .bold()
-                                        }
-                                    }.frame(
-                                        width: geometry.size.width / CGFloat(self.items.count),
-                                        height: geometry.size.height - 55
-                                    )
-                                    
-                                    VStack {
-                                        Spacer()
-                                        Text(item.label)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-             */
             GeometryReader { geometry in
                 HStack(alignment: .lastTextBaseline, spacing: 0.1) {
                     ForEach(self.items) { item in
@@ -170,7 +110,7 @@ struct BarChart: View {
                             size:
                                 .init(
                                     width: (geometry.size.width - 10) / CGFloat(self.items.count),
-                                    height: geometry.size.height
+                                    height: geometry.size.height - 20
                                 ),
                             item: item,
                             max: self.max
@@ -178,6 +118,10 @@ struct BarChart: View {
                     }
                 }
             }
+            
+            Text(self.caption)
+                .font(.caption)
+                .padding(.init(top: 5, leading: 1, bottom: 1, trailing: 1))
         }
     }
 }
@@ -194,11 +138,11 @@ struct BarChart_Previews: PreviewProvider {
                     ChartItem(label: "Test 700", value: 700),
                     ChartItem(label: "Test 400", value: 400),
                     ChartItem(label: "Test 600", value: 600),
-                ]
+                ],
+                caption: "This is the caption"
             )
             
             Spacer()
-            /*
             Text("Large Range")
             BarChart(
                 items: [
@@ -209,9 +153,10 @@ struct BarChart_Previews: PreviewProvider {
                     ChartItem(label: "Test 40", value: 40),
                     ChartItem(label: "Test 50", value: 50),
                     ChartItem(label: "Test 60", value: 60),
-                ]
+                ],
+                caption: "This is the caption"
             )
-             */
+
         }
     }
 }

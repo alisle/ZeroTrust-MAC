@@ -50,7 +50,7 @@ struct ConnectionUserChain: View {
                     .frame(width: 64, height: 64, alignment: .leading)
                 
                 if connection.direction == .outbound {
-                    Text(connection.remoteSocket.protocolDetails?.name ?? connection.remoteSocket.description)
+                    Text(connection.remoteSocket.protocolDetails?.name ?? connection.remoteSocket.portDescription)
                         .bold()
                 } else {
                     Text(connection.localSocket.protocolDetails?.name ?? connection.localSocket.portDescription)

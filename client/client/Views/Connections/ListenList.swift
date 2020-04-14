@@ -23,12 +23,12 @@ struct ListenList: View {
                     HStack {
                         ProcessDetailsIcon(processInfo: listen.process, size: 32)
                         VStack(alignment: .leading) {
+                            Text("\(listen.process.command!)")
+                                .bold()
                             HStack {
-                                Text("\(listen.process.command!)")
-                                    .bold()
-                                    .padding(3)
+                                Text("PID:\(String(listen.process.pid))")
                                 Spacer()
-                                Text("\(String(listen.localSocket.port))")
+                                Text("Port:\(String(listen.localSocket.portDescription))")
                             }
                         }
                     }

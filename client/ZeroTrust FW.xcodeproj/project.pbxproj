@@ -17,6 +17,7 @@
 		F0269E5E2444BD09005F2BFA /* ListenList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269E5D2444BD09005F2BFA /* ListenList.swift */; };
 		F0269E602444BDED005F2BFA /* AllListens.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269E5F2444BDED005F2BFA /* AllListens.swift */; };
 		F0269E622444C796005F2BFA /* SocketListen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269E612444C796005F2BFA /* SocketListen.swift */; };
+		F0269E64244641D5005F2BFA /* ConnectionCountsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269E63244641D5005F2BFA /* ConnectionCountsRow.swift */; };
 		F0269F35231F4D080067D3BA /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269F34231F4D080067D3BA /* Outcome.swift */; };
 		F0269F3923201A7B0067D3BA /* ConnectionDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269F3823201A7B0067D3BA /* ConnectionDirection.swift */; };
 		F0269F3B23201EFB0067D3BA /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269F3A23201EFB0067D3BA /* TimeIntervalExtension.swift */; };
@@ -145,6 +146,7 @@
 		F0269E5D2444BD09005F2BFA /* ListenList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenList.swift; sourceTree = "<group>"; };
 		F0269E5F2444BDED005F2BFA /* AllListens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListens.swift; sourceTree = "<group>"; };
 		F0269E612444C796005F2BFA /* SocketListen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketListen.swift; sourceTree = "<group>"; };
+		F0269E63244641D5005F2BFA /* ConnectionCountsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCountsRow.swift; sourceTree = "<group>"; };
 		F0269F34231F4D080067D3BA /* Outcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
 		F0269F3823201A7B0067D3BA /* ConnectionDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDirection.swift; sourceTree = "<group>"; };
 		F0269F3A23201EFB0067D3BA /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 				F0AAA50C2427BEF4003A8F17 /* ConnectionRow.swift */,
 				F02D1F21243F79D300648163 /* QueriesList.swift */,
 				F0269E5D2444BD09005F2BFA /* ListenList.swift */,
+				F0269E63244641D5005F2BFA /* ConnectionCountsRow.swift */,
 			);
 			path = Connections;
 			sourceTree = "<group>";
@@ -746,6 +749,7 @@
 				F02761C6243E1F74008290A7 /* AllRules.swift in Sources */,
 				F0DB20F7243584BA00EAE2A0 /* ProcessDetailsViews.swift in Sources */,
 				F02EAC5423282928008186E7 /* DecisionEngine.swift in Sources */,
+				F0269E64244641D5005F2BFA /* ConnectionCountsRow.swift in Sources */,
 				F0269F3923201A7B0067D3BA /* ConnectionDirection.swift in Sources */,
 				F02761C22436CBEB008290A7 /* LocationDetails.swift in Sources */,
 				F0BD02FD2419CCBB0032CAA4 /* ConnectionCountView.swift in Sources */,

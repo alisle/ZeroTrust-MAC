@@ -11,11 +11,14 @@ import Logging
 
 class ConnectionCounts : ObservableObject, EventListener {
     private let logger = Logger(label: "com.zerotrust.client.States.ConnectionCounts")
+    
     private var currentOutboundConnections: Set<UUID> = []
     private var currentInboundConnections: Set<UUID> = []
-
+    private var currentListenSockets: Set<UUID> = []
+    
     @Published var currentInboundCount : CGFloat = 0
     @Published var currentOutboundCount : CGFloat = 0
+    @Published var currentSocketListenCount : CGFloat = 0
     
     @Published var outboundCounts : [CGFloat] = [
         0.0,
@@ -46,6 +49,8 @@ class ConnectionCounts : ObservableObject, EventListener {
     init() {
         EventManager.shared.addListener(type: .OpenedConnection, listener: self)
         EventManager.shared.addListener(type: .ClosedConnection, listener: self)
+        EventManager.shared.addListener(type: .ListenStarted, listener: self)
+        EventManager.shared.addListener(type: .ListenEnded, listener: self)
         self.updatePublishedValues()
     }
     
@@ -59,7 +64,8 @@ class ConnectionCounts : ObservableObject, EventListener {
             
             let outboundCount = CGFloat(self.currentOutboundConnections.count)
             let inboundCount  = CGFloat(self.currentInboundConnections.count)
-                        
+            let listenCount = CGFloat(self.currentListenSockets.count)
+            
             var shadowOutbound = self.outboundCounts.dropFirst()
             var shadowInbound = self.inboundCounts.dropLast()
             
@@ -71,6 +77,7 @@ class ConnectionCounts : ObservableObject, EventListener {
             
             self.currentOutboundCount = outboundCount
             self.currentInboundCount = inboundCount
+            self.currentSocketListenCount = listenCount
             
             self.updatePublishedValues()
         }
@@ -94,6 +101,15 @@ class ConnectionCounts : ObservableObject, EventListener {
             case .inbound: let _ = self.currentInboundConnections.remove(event.connection.tag)
             case .outbound: let _ = self.currentOutboundConnections.remove(event.connection.tag)
             }
+            
+        case .ListenStarted:
+            let event = event as! ListenStartedEvent
+            self.currentListenSockets.insert(event.listen.tag!)
+        
+        case .ListenEnded:
+            let event = event as! ListenStartedEvent
+            self.currentListenSockets.remove(event.listen.tag!)
+
         default: ()
         }
     }

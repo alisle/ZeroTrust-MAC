@@ -22,7 +22,11 @@ struct ConnectionRow: View {
                 HStack {
                     Text(connection.remoteDisplayAddress)
                     Spacer()
-                    Text("\(connection.remoteSocket.portDescription)")
+                    if connection.direction == .outbound {
+                        Text("\(connection.remoteSocket.portDescription)")
+                    } else {
+                        Text("\(connection.localSocket.portDescription)")
+                    }
                 }
             }
         }

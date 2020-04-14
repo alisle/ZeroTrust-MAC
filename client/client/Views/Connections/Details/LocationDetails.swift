@@ -22,11 +22,14 @@ struct FullLocationDetails : View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("\(location.country!)")
-                .bold()
-                .font(.title)
-                .padding(.init(top: 2, leading: 0, bottom: 5, trailing: 0))
-
+            HStack {
+                Text("\(location.country!)")
+                    .bold()
+                    .font(.title)
+                    .padding(.init(top: 2, leading: 0, bottom: 5, trailing: 0))
+                Spacer()
+            }
+            
             if location.city != nil {
                 Text("\(location.city!), \(location.region!), \(location.zipCode!)")
                     .lineLimit(nil)
@@ -51,12 +54,15 @@ struct FullLocationDetails : View {
 struct LocalLocationDetails : View {
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Local IP Address")
-                .bold()
-                .font(.title)
-                .padding(.init(top: 2, leading: 0, bottom: 5, trailing: 0))
+            HStack {
+                Text("Local IP Address")
+                    .bold()
+                    .font(.title)
+                    .padding(.init(top: 2, leading: 0, bottom: 5, trailing: 0))
+                Spacer()
+            }
 
-            Text("You should probably know the locatiob better than I?")
+            Text("ssssh, it's private....")
                 .font(.caption)
                 .opacity(0.75)
 

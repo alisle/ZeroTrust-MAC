@@ -33,12 +33,12 @@ struct PortProtocol : View {
 }
 
 struct UnknownProtocol : View {
-    let connection : Connection
+    let socket : SocketAddress
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("\(connection.remoteSocket.port)")
+                Text("\(socket.port)")
                     .bold()
                     .font(.title)
                     .padding(.init(top: 2, leading: 0, bottom: 5, trailing: 0))
@@ -49,18 +49,26 @@ struct UnknownProtocol : View {
                 .lineLimit(nil)
                 .multilineTextAlignment(.leading)
             
+            Spacer()
         }
     }
 }
 struct ProtocolDetailsView: View {
-    let connection : Connection
+    let socket : SocketAddress
+    
+    init(connection: Connection) {
+        switch(connection.direction) {
+        case .inbound: self.socket = connection.localSocket
+        case .outbound: self.socket = connection.remoteSocket
+        }
+    }
     
     var body: some View {
         VStack {
-            if connection.remoteSocket.protocolDetails != nil {
-                PortProtocol(proto: connection.remoteSocket.protocolDetails!)
+            if socket.protocolDetails != nil {
+                PortProtocol(proto: socket.protocolDetails!)
             } else {
-                UnknownProtocol(connection: connection)
+                UnknownProtocol(socket: socket)
             }
         }
     }
@@ -76,7 +84,7 @@ struct ProtocolDetailsView_Previews: PreviewProvider {
             ProtocolDetailsView(connection: generateTestConnection(direction: .outbound))
 
             Text("UnknownProtocol Details")
-            UnknownProtocol(connection: generateTestConnection(direction: .outbound))
+            UnknownProtocol(socket: generateTestConnection(direction: .outbound).remoteSocket)
 
         }
     }

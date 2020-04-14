@@ -19,11 +19,9 @@ struct ProcessHistoryGraph: View {
     var body: some View {
         VStack() {
             BarChart(
-                items: self.items
+                items: self.items,
+                caption: "# of Connections made by Process"
             )
-            Text("# of Connections made by Process")
-                .font(.caption)
-                .padding(.init(top: 5, leading: 1, bottom: 1, trailing: 1))
         }
     }
 }

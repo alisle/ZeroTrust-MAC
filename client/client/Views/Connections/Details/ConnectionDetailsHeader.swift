@@ -11,6 +11,31 @@ import SwiftUI
 struct ConnectionDetailsHeader: View {
     let connection : Connection
 
+    func locationDescription() -> String {
+        if let location = connection.location {
+            if location.iso != "-" {
+                var description = location.city ?? ""
+                if description.count > 0 {
+                    description.append(",")
+                }
+                
+                description.append(location.region ?? "")
+                if description.count > 0 {
+                    description.append(",")
+                }
+                
+                description.append(location.country ?? "")
+                return " - \(description)"
+            }
+        }
+        
+        if connection.remoteSocket.address.isPrivate {
+            return " - Private Address Range"
+        }
+        
+        return ""
+    }
+    
     var body: some View {
         let hstack = HStack(alignment: .top) {
             Rectangle()
@@ -29,7 +54,7 @@ struct ConnectionDetailsHeader: View {
                     .bold()
                 
                 HStack {
-                    Text("\(connection.state.description) - \(connection.location?.iso ?? "")")
+                    Text("\(connection.state.description)\(self.locationDescription())")
                         .font(.caption)
                         .opacity(0.75)
                 }

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct Indicator: View {
     let max: CGFloat
+    let color : Color
     var count: CGFloat
 
     var body: some View {
@@ -17,7 +18,7 @@ struct Indicator: View {
             Circle()
                 .fill(Color.clear)
                 .frame(width: geometry.size.width - 10, height: geometry.size.width - 10)
-                .modifier(CountIndicator(max: self.max, count: self.count))
+                .modifier(CountIndicator(max: self.max, color: self.color, count: self.count))
                 .animation(.easeInOut(duration: 0.5))
 
         }
@@ -26,6 +27,7 @@ struct Indicator: View {
 
 struct CountIndicator: AnimatableModifier {
     let max : CGFloat
+    let color : Color
     var count: CGFloat = 0
     
     var animatableData: CGFloat {
@@ -36,7 +38,7 @@ struct CountIndicator: AnimatableModifier {
     func body(content: Content) -> some View {
         content
             .overlay(ArcShape(max: 1, count: 1).foregroundColor(.gray))
-            .overlay(ArcShape(max: max, count: count).foregroundColor(.red))
+            .overlay(ArcShape(max: max, count: count).foregroundColor(self.color))
             .overlay(LabelView(max: max, count: count))
     }
     
@@ -88,6 +90,7 @@ struct CountIndicator: AnimatableModifier {
 
 struct ConnectionCountView : View {
     let max : CGFloat
+    let color : Color
     var count: CGFloat = 0
     
     var animatableData: CGFloat {
@@ -99,13 +102,13 @@ struct ConnectionCountView : View {
         ZStack {
             Color
                 .clear
-                .overlay(Indicator(max: self.max, count: self.count))
+                .overlay(Indicator(max: self.max, color: self.color, count: self.count))
         }
     }
 }
 
 struct OutboundConnectionCountView_Previews: PreviewProvider {
     static var previews: some View {
-        return ConnectionCountView(max: 30, count: 10)
+        return ConnectionCountView(max: 30, color: Color.red, count: 10)
     }
 }

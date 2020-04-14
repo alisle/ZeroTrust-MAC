@@ -13,29 +13,7 @@ struct ConnectionRootView: View {
     @EnvironmentObject var connectionCounts : ConnectionCounts
     @EnvironmentObject var locations : Locations
     
-    var outbound : some View {
-        return Section {
-            VStack {
-                ConnectionCountView(max: 100, count: connectionCounts.currentOutboundCount)
-                    .animation(nil)
-                    .frame(minWidth: 65, idealWidth: 65, maxWidth: 65, minHeight: 65, idealHeight: 65, maxHeight: 65, alignment: .center)
-                    .padding(.trailing)
-            }
-        }
-    }
-    
-    var inbound: some View {
-        return Section {
-            VStack {
-                ConnectionCountView(max: 10, count: connectionCounts.currentInboundCount)
-                    .animation(nil)
-                    .frame(minWidth: 65, idealWidth: 65, maxWidth: 65, minHeight: 65, idealHeight: 65, maxHeight: 65, alignment: .center)
-                    .padding(2)
-
-            }
-        }
-    }
-    
+  
     var connectionGraph : some View {
         return Section {
             VStack {
@@ -91,8 +69,7 @@ struct ConnectionRootView: View {
                     .frame(width: 128, height: 64, alignment: .center)
                     .padding(.horizontal)
                 connectionGraph
-                outbound
-                inbound
+                ConnectionCountsRow()
             }
             .padding(.init(top: 0, leading: 0, bottom: 5, trailing: 10))
             
@@ -132,6 +109,7 @@ struct Overview_Previews: PreviewProvider {
         let values = ConnectionCounts()
         values.currentInboundCount = 2
         values.currentOutboundCount = 14
+        values.currentSocketListenCount = 20
         values.outboundCounts = (0..<10).map{ _ in CGFloat.random(in: 0...20) }
         
         let listens = AllListens()

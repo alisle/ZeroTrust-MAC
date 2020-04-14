@@ -59,6 +59,12 @@ class Locations : ObservableObject, EventListener {
         switch event.type {
         case .OpenedConnection:
             let event = event as! OpenedConnectionEvent
+            
+            // This is a private network, we can't get the location.
+            if event.connection.remoteSocket.address.isPrivate {
+                return
+            }
+            
             if let location = event.connection.location {
                 guard let latitude = location.latitude else {
                     return

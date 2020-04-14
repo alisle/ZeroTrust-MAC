@@ -31,7 +31,7 @@ class Queries : ObservableObject, EventListener {
             }
             
             self.pendingQueries = self.shadowPendingQueries
-            var array = self.shadowMadeDecisions.sorted(by: { lhs, rhs in return lhs.0.timestamp < rhs.0.timestamp })
+            var array = self.shadowMadeDecisions.sorted(by: { lhs, rhs in return lhs.0.timestamp > rhs.0.timestamp })
             if array.count > 100 {
                 array = Array(array[array.startIndex..<array.startIndex + 100])
             }
