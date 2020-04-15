@@ -18,6 +18,8 @@
 		F0269E602444BDED005F2BFA /* AllListens.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269E5F2444BDED005F2BFA /* AllListens.swift */; };
 		F0269E622444C796005F2BFA /* SocketListen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269E612444C796005F2BFA /* SocketListen.swift */; };
 		F0269E64244641D5005F2BFA /* ConnectionCountsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269E63244641D5005F2BFA /* ConnectionCountsRow.swift */; };
+		F0269E66244750B3005F2BFA /* EnabledServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269E65244750B3005F2BFA /* EnabledServices.swift */; };
+		F0269E6824475510005F2BFA /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269E6724475510005F2BFA /* Header.swift */; };
 		F0269F35231F4D080067D3BA /* Outcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269F34231F4D080067D3BA /* Outcome.swift */; };
 		F0269F3923201A7B0067D3BA /* ConnectionDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269F3823201A7B0067D3BA /* ConnectionDirection.swift */; };
 		F0269F3B23201EFB0067D3BA /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0269F3A23201EFB0067D3BA /* TimeIntervalExtension.swift */; };
@@ -55,7 +57,6 @@
 		F052C9F922C17606005DE1D7 /* BundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052C9F822C17606005DE1D7 /* BundleExtension.swift */; };
 		F052C9FD22C17699005DE1D7 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052C9FC22C17699005DE1D7 /* Connection.swift */; };
 		F052CA0122C3C77F005DE1D7 /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F052CA0022C3C77F005DE1D7 /* ConnectionState.swift */; };
-		F054A6CE23D0E1F800B67460 /* ServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F054A6CD23D0E1F800B67460 /* ServiceState.swift */; };
 		F058177E238C2D35007F2D85 /* FilterCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F058177D238C2D35007F2D85 /* FilterCategory.swift */; };
 		F06CF75D239219AB00C7130B /* transformed_countries.json in Resources */ = {isa = PBXBuildFile; fileRef = F06CF75C239219AB00C7130B /* transformed_countries.json */; };
 		F0701C8F23F4838E0002DD82 /* IP2Location in Frameworks */ = {isa = PBXBuildFile; productRef = F0701C8E23F4838E0002DD82 /* IP2Location */; };
@@ -147,6 +148,8 @@
 		F0269E5F2444BDED005F2BFA /* AllListens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllListens.swift; sourceTree = "<group>"; };
 		F0269E612444C796005F2BFA /* SocketListen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketListen.swift; sourceTree = "<group>"; };
 		F0269E63244641D5005F2BFA /* ConnectionCountsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCountsRow.swift; sourceTree = "<group>"; };
+		F0269E65244750B3005F2BFA /* EnabledServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledServices.swift; sourceTree = "<group>"; };
+		F0269E6724475510005F2BFA /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		F0269F34231F4D080067D3BA /* Outcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Outcome.swift; sourceTree = "<group>"; };
 		F0269F3823201A7B0067D3BA /* ConnectionDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionDirection.swift; sourceTree = "<group>"; };
 		F0269F3A23201EFB0067D3BA /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
@@ -187,7 +190,6 @@
 		F052C9F822C17606005DE1D7 /* BundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtension.swift; sourceTree = "<group>"; };
 		F052C9FC22C17699005DE1D7 /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		F052CA0022C3C77F005DE1D7 /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
-		F054A6CD23D0E1F800B67460 /* ServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceState.swift; sourceTree = "<group>"; };
 		F058177D238C2D35007F2D85 /* FilterCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCategory.swift; sourceTree = "<group>"; };
 		F06CF75C239219AB00C7130B /* transformed_countries.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = transformed_countries.json; sourceTree = "<group>"; };
 		F0701C9023F4894E0002DD82 /* IP2LOCATION-LITE-DB11.BIN */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "IP2LOCATION-LITE-DB11.BIN"; sourceTree = "<group>"; };
@@ -294,13 +296,22 @@
 		F00A491522F20445006932A0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F0269E6724475510005F2BFA /* Header.swift */,
+				F0269E69244755DA005F2BFA /* Rules */,
 				F0DA25B12416CB6D006AB8DA /* Graphs */,
 				F0DA25AE24102DEF006AB8DA /* Connections */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F0269E69244755DA005F2BFA /* Rules */ = {
+			isa = PBXGroup;
+			children = (
 				F0925F32234B79BB00C01F72 /* RulesView.swift */,
 				F08982972356A554003DB49B /* RulesListView.swift */,
 				F08982992356A633003DB49B /* RulesDetailView.swift */,
 			);
-			path = Views;
+			path = Rules;
 			sourceTree = "<group>";
 		};
 		F0331F802360B7DE00A634D5 /* Protocols */ = {
@@ -360,7 +371,6 @@
 				F028F81D233B04DF003EA345 /* Rules.swift */,
 				F0331F872360F44000A634D5 /* Map.swift */,
 				F058177D238C2D35007F2D85 /* FilterCategory.swift */,
-				F054A6CD23D0E1F800B67460 /* ServiceState.swift */,
 				F0701C9523FC595B0002DD82 /* IPAddress.swift */,
 				F0701C9723FC7C2B0002DD82 /* SocketAddress.swift */,
 				F0701CC124096E0D0002DD82 /* ProcessDetails.swift */,
@@ -473,6 +483,7 @@
 				F02761C5243E1F74008290A7 /* AllRules.swift */,
 				F02D1F1F243F666800648163 /* Queries.swift */,
 				F0269E5F2444BDED005F2BFA /* AllListens.swift */,
+				F0269E65244750B3005F2BFA /* EnabledServices.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -755,6 +766,7 @@
 				F0BD02FD2419CCBB0032CAA4 /* ConnectionCountView.swift in Sources */,
 				F02761C8243E2010008290A7 /* RulesChangedEvent.swift in Sources */,
 				F0DA1B9F2301C50400D07905 /* Main.swift in Sources */,
+				F0269E66244750B3005F2BFA /* EnabledServices.swift in Sources */,
 				F02D1F22243F79D300648163 /* QueriesList.swift in Sources */,
 				F0DA25B32416CB82006AB8DA /* LineGraph.swift in Sources */,
 				F0FB570E23576E4300AAB5F6 /* URLExtension.swift in Sources */,
@@ -767,13 +779,13 @@
 				F0925F33234B79BB00C01F72 /* RulesView.swift in Sources */,
 				F03F286C243266660046AB80 /* ProcessHistoryCache.swift in Sources */,
 				F02761C02436C4DB008290A7 /* ProtocolDetailsView.swift in Sources */,
+				F0269E6824475510005F2BFA /* Header.swift in Sources */,
 				F052CA0122C3C77F005DE1D7 /* ConnectionState.swift in Sources */,
 				F052C9EF22C1740A005DE1D7 /* Helpers.swift in Sources */,
 				F0D065E023064E300076A1AC /* PortProtocolDetails.swift in Sources */,
 				F03F28702433B9660046AB80 /* ProcessHistoryGraph.swift in Sources */,
 				F052C9F522C17531005DE1D7 /* kext-helpers.c in Sources */,
 				F0269E602444BDED005F2BFA /* AllListens.swift in Sources */,
-				F054A6CE23D0E1F800B67460 /* ServiceState.swift in Sources */,
 				F0DB20F32435286900EAE2A0 /* RemoteHistoryCache.swift in Sources */,
 				F0AAA50424231358003A8F17 /* Locations.swift in Sources */,
 				F052C9ED22C163A2005DE1D7 /* KextComm.swift in Sources */,

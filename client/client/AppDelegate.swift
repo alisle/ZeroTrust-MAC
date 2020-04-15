@@ -63,15 +63,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
     }
     
     @IBAction func enabledClicked(_ sender: Any) {
-        main.serviceState.enabled.toggle()
+        main.enabled.toggle()
     }
     
     @IBAction func denyModeClicked(_ sender: Any) {
-        main.serviceState.denyMode.toggle()
+        main.denyMode.toggle()
     }
     
     @IBAction func inspectModeClicked(_ sender: Any) {
-        main.serviceState.inspectMode.toggle()
+        main.inspectMode.toggle()
     }
     
     @IBAction func showRulesClicked(_ sender: Any) {
@@ -100,7 +100,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
         connectionsWindow.setFrameAutosaveName("Connections Window")
         connectionsWindow.contentView = NSHostingView(rootView: ConnectionRootView()
             .environmentObject(main.allRules)
-            .environmentObject(main.serviceState)
+            .environmentObject(main.enabledServices)
             .environmentObject(main.connectionCounts)
             .environmentObject(main.locations)
             .environmentObject(main.allConnections)
@@ -118,7 +118,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
         rulesWindow.isReleasedWhenClosed = false
         rulesWindow.center()
         rulesWindow.setFrameAutosaveName("Rules Window")
-        rulesWindow.contentView = NSHostingView(rootView: RulesView().environmentObject(main.allRules))        
+        rulesWindow.contentView = NSHostingView(rootView: RulesView()
+            .environmentObject(main.allRules)
+            .environmentObject(main.enabledServices)
+            .environmentObject(main.connectionCounts)
+            .environmentObject(main.locations)
+            .environmentObject(main.allConnections)
+            .environmentObject(main.queries)
+            .environmentObject(main.allListens)
+        )
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -126,6 +134,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
         
         createConnectionsWindow()
         createRulesWindow()
+        main.enabled = true
         main.entryPoint()
         
         EventManager.shared.addListener(type: .FirewallEnabled, listener: self)
@@ -164,7 +173,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
     }
     
     func cleanup() {
-        main.serviceState.enabled = false
+        self.main.enabled = false
         main.exitPoint()
     }
     

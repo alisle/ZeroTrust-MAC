@@ -30,7 +30,7 @@ class Main {
     private let preferences : Preferences
     private let pipline : Pipeline
 
-    let serviceState = ServiceState()
+    //let serviceState = ServiceState()
     
     // States
     let connectionCounts = ConnectionCounts()
@@ -38,8 +38,45 @@ class Main {
     let allConnections = AllConnections()
     let allListens = AllListens()
     let queries = Queries()
+    let enabledServices = EnabledServices()
     let allRules : AllRules
+
+    var enabled : Bool {
+        get {
+            return self.enabledServices.enabled
+        }
+        
+        set {
+            switch(newValue) {
+            case true: EventManager.shared.triggerEvent(event: BaseEvent(.FirewallEnabled))
+            case false: EventManager.shared.triggerEvent(event: BaseEvent(.FirewallDisabled))
+            }
+        }
+    }
     
+    var denyMode : Bool {
+        get {
+            return self.enabledServices.denyMode
+        }
+        set {
+            switch(newValue) {
+            case true: EventManager.shared.triggerEvent(event: BaseEvent(.StartDenyMode))
+            case false: EventManager.shared.triggerEvent(event: BaseEvent(.StopDenyMode))
+            }
+        }
+    }
+    
+    var inspectMode : Bool {
+        get {
+            return self.enabledServices.inspectMode
+        }
+        set {
+            switch(newValue) {
+            case true: EventManager.shared.triggerEvent(event: BaseEvent(.StartInspectMode))
+            case false: EventManager.shared.triggerEvent(event: BaseEvent(.StopInspectMode))
+            }
+        }
+    }
     
     init() {                
         if let filepath = Bundle.main.url(forResource: "IP2LOCATION-LITE-DB11", withExtension: "BIN") {
@@ -78,7 +115,6 @@ class Main {
     }
     
     func entryPoint() {
-        serviceState.enabled = true
         consumerQueue.async { [weak self] in
             guard let self = self else {
                 return

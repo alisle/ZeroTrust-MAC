@@ -10,28 +10,10 @@ import SwiftUI
 
 
 struct ConnectionRootView: View {
-    @EnvironmentObject var connectionCounts : ConnectionCounts
     @EnvironmentObject var locations : Locations
     
   
-    var connectionGraph : some View {
-        return Section {
-            VStack {
-                LineGraph(series: connectionCounts.outboundCounts)
-                    .animation(.easeInOut(duration: 0.5))
-                    .frame(
-                        minWidth: 740,
-                        idealWidth: .infinity,
-                        maxWidth: .infinity,
-                        minHeight: 70,
-                        idealHeight: 70,
-                        maxHeight: 70,
-                        alignment:.center
-                    )
-            }
-        }
-    }
-    
+
     var globe : some View {
         Section {
             MapGraph(points: self.locations.points )
@@ -62,17 +44,7 @@ struct ConnectionRootView: View {
     
     var body: some View {
         VStack {
-            // Header
-            HStack {
-                Image("ZTN")
-                    .resizable()
-                    .frame(width: 128, height: 64, alignment: .center)
-                    .padding(.horizontal)
-                connectionGraph
-                ConnectionCountsRow()
-            }
-            .padding(.init(top: 0, leading: 0, bottom: 5, trailing: 10))
-            
+            Header()            
             // Middle
             HStack {
                 outboundList

@@ -13,7 +13,10 @@ struct RulesListView: View {
     
     var body: some View {
         List {
-            Section(header: Text("Rules")) {
+            Section() {
+                Text("Loaded Rules")
+                    .font(.subheadline)
+
                 ForEach(Array(allRules.rules.getSortedMetadata())) { metadata in
                     NavigationLink(destination: RulesDetailView(rule: metadata)) {
                         Text(metadata.name)
