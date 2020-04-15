@@ -11,6 +11,7 @@ import Foundation
 enum Outcome : Int {
     case allowed = 0,
     blocked,
+    inspectModeAllowed,
     inspectModeBlocked,
     denyModeBlocked,
     unknown
@@ -20,8 +21,20 @@ enum Outcome : Int {
         case .unknown : return "Unknown"
         case .allowed : return "Allowed"
         case .blocked : return "Blocked"
+        case .inspectModeAllowed : return "Inspect Mode - Allowed"
         case .inspectModeBlocked : return "Inspect Mode - Blocked"
         case .denyModeBlocked: return "Deny Mode - Blocked"
+        }
+    }
+    
+    func toInt() -> UInt32 {
+        switch self {
+        case .allowed : return 0
+        case .blocked : return 1
+        case .inspectModeAllowed : return 2
+        case .inspectModeBlocked : return 3
+        case .denyModeBlocked: return 4
+        case .unknown : return 99
         }
     }
 }

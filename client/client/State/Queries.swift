@@ -12,11 +12,11 @@ import Logging
 class Queries : ObservableObject, EventListener {
     private let logger = Logger(label: "com.zerotrust.client.States.Queries")
     
-    private var shadowMadeDecisions : [(FirewallQuery, Decision)] = []
+    private var shadowMadeDecisions : [(FirewallQuery, Outcome)] = []
     private var shadowPendingQueries : Set<FirewallQuery> = Set()
     
     @Published var pendingQueries : Set<FirewallQuery> = Set()
-    @Published var maadeDecisions : [(FirewallQuery, Decision)] = []
+    @Published var maadeDecisions : [(FirewallQuery, Outcome)] = []
     
     init() {
         EventManager.shared.addListener(type: .DecisionQuery, listener: self)

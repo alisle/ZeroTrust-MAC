@@ -44,14 +44,6 @@ protected:
     
     static IOReturn sDisable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
     
-    static IOReturn sQuarantineEnable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
-    
-    static IOReturn sQuarantineDisable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
-    
-    static IOReturn sIsolateEnable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
-    
-    static IOReturn sIsolateDisable(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
-
     static IOReturn sQueryDecision(com_notrust_firewall_driver* target, void* reference, IOExternalMethodArguments* arguments);
     
     IOReturn registerNotificationPort(mach_port_t port, UInt32 type, UInt32 ref) override;

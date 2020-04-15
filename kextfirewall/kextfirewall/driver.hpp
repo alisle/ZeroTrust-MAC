@@ -40,11 +40,6 @@ public:
     bool enable(void);
     void disable(void);
     
-    bool startQuarantine(void);
-    bool stopQuarantine(void);
-    
-    bool startIsolate(void);
-    bool stopIsolate(void);
     
     bool queryDecision(uint32_t query_id, uint32_t decision);
 };

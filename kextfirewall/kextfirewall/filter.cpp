@@ -18,8 +18,6 @@
 #include <IOKit/IOReturn.h>
 
 
-bool in_isolation = false;
-bool in_quarantine = false;
 bool filters_registered = false;
 
 
@@ -59,32 +57,6 @@ struct DNS_HEADER
 //
 
 
-
-kern_return_t start_isolation() {
-    in_isolation = true;
-    
-    return kIOReturnSuccess;
-}
-
-kern_return_t stop_isolation() {
-    in_isolation = false;
-    
-    return kIOReturnSuccess;
-}
-
-
-
-kern_return_t start_quarantine() {
-    in_quarantine = true;
-    
-    return kIOReturnSuccess;
-}
-
-kern_return_t stop_quaratine() {
-    in_quarantine = false;
-    
-    return kIOReturnSuccess;
-}
 
 kern_return_t register_filters() {
     os_log(OS_LOG_DEFAULT, "IOFirewall: registering socket filters");
@@ -185,7 +157,7 @@ static errno_t accept(void *cookie, socket_t so_listen, socket_t so, const struc
     
     send_tcpconnection_event((cookie_header*)cookie, so_listen, remote, outcome, accepted_connection);
 
-    if (outcome != ALLOWED) {
+    if (outcome != ALLOWED && outcome != INSPECT_MODE_ALLOWED) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: rejecting connection");
         return kIOReturnError;
     }
@@ -201,7 +173,7 @@ static errno_t connection_out(void *cookie, socket_t so, const struct sockaddr *
     firewall_outcome_type outcome = determineDecision((cookie_header*)cookie, so, to, outbound_tcp_v4);
     send_tcpconnection_event((cookie_header*)cookie, so, to, outcome, outbound_connection);
     
-    if (outcome != ALLOWED) {
+    if (outcome != ALLOWED && outcome != INSPECT_MODE_ALLOWED) {
         os_log(OS_LOG_DEFAULT, "IOFirewall: rejecting connection");
         return kIOReturnError;
     }
@@ -336,11 +308,6 @@ firewall_outcome_type determineDecision(cookie_header* header, socket_t local_so
     // Send the query then sleep waiting for response.
     query_offset += 1;
 
-    if(in_isolation) {
-        os_log(OS_LOG_DEFAULT, "IOFirewall: in quartine, setting it denied");
-        header->outcome = ISOLATED;
-    }
-    
     header->query_id = query_offset;
     send_firewall_query(header, local_socket, remote_socket, protocol);
     

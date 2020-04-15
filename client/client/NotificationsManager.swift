@@ -67,6 +67,10 @@ class NotficiationsManager : EventListener {
             if self.showNewConnections {
                 newConnection(connection)
             }
+        case .inspectModeAllowed:
+            if self.showNewConnections {
+                newConnection(connection)
+            }
         case .blocked: newBlocked(connection)
         case .denyModeBlocked: newDenyModeNotification(connection)
         case .inspectModeBlocked: newInspectModeNotification(connection)

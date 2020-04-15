@@ -42,10 +42,6 @@ class Consumer : EventListener {
         switch event.type {
         case .FirewallEnabled: let _ = self.open()
         case .FirewallDisabled: self.close()
-        case .StartInspectMode: comm.inspectMode(enable: true)
-        case .StopInspectMode: comm.inspectMode(enable: false)
-        case .StartDenyMode: comm.denyMode(enable: true)
-        case .StopDenyMode: comm.denyMode(enable: false)
         default: ()
         }
     }

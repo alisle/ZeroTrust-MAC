@@ -308,8 +308,9 @@ class KextComm {
             switch(event.data.tcp_connection.result) {
             case ALLOWED: return Outcome.allowed
             case BLOCKED: return Outcome.blocked
-            case QUARANTINED: return Outcome.inspectModeBlocked
-            case ISOLATED: return Outcome.denyModeBlocked
+            case INSPECT_MODE_ALLOWED: return Outcome.inspectModeAllowed
+            case INSPECT_MODE_DENIED: return Outcome.inspectModeBlocked
+            case DENY_MODE_DENIED: return Outcome.denyModeBlocked
             default: return Outcome.unknown
             }
         }()
@@ -499,52 +500,12 @@ class KextComm {
             logger.error("unable to communicate with driver!")
         }
     }
-    
-    func denyMode(enable: Bool) {
-        var output : UInt64 = 0
-        var outputCount : UInt32 = 1
-        
-        let methodNum : UInt32 = {
-            switch enable {
-            case true:
-                logger.debug("starting deny mode")
-                return 4
-            case false:
-                logger.debug("stopping deny mode")
-                return 5
-            }
-        }()
 
-        if kIOReturnSuccess != IOConnectCallScalarMethod(connection, methodNum, nil, 0, &output, &outputCount) {
-            logger.error("unable to communicate with driver!")
-        }
-    }
-    
-    
-    func inspectMode(enable: Bool) {
-        var output : UInt64 = 0
-        var outputCount : UInt32 = 1
-        
-        let methodNum : UInt32 = {
-            switch enable {
-            case true:
-                logger.debug("starting inspect mode")
-                return 2
-            case false:
-                logger.debug("stopping inspect mode")
-                return 3
-            }
-        }()
-
-        if kIOReturnSuccess != IOConnectCallScalarMethod(connection, methodNum, nil, 0, &output, &outputCount) {
-            logger.error("unable to communicate with driver!")
-        }
-    }
     
     func postDecision(id: UInt32, allowed: UInt32) {
         var inputs = [ UInt64(id), UInt64(allowed) ];
         
-        if kIOReturnSuccess != IOConnectCallScalarMethod(connection, 6, &inputs, 2, nil, nil) {
+        if kIOReturnSuccess != IOConnectCallScalarMethod(connection, 2, &inputs, 2, nil, nil) {
             logger.error("unable to write to driver!")
         }
     }

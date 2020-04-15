@@ -9,30 +9,6 @@
 import Foundation
 import Logging
 
-enum Decision : CaseIterable {
-    case Allow
-    case Deny
-    case Unknown
-    
-    func toInt() -> UInt32 {
-        switch self {
-        case .Allow: return 0
-        case .Deny: return 1
-        case .Unknown: return 2
-        }
-    }
-    
-    var description : String {
-        get {
-            switch(self) {
-            case .Allow: return   "ALLOW"
-            case .Deny: return    "DENY"
-            case .Unknown: return "UNKNOWN"
-            }
-        }
-    }
-}
-
 
 class DecisionEngine : EventListener {
     let logger = Logger(label: "com.zerotrust.client.DecisionEngine")
@@ -40,14 +16,25 @@ class DecisionEngine : EventListener {
     private var rules : Optional<Rules> = nil
     private let rulesLock = NSLock()
     private var lastUpdate = NSDate().timeIntervalSince1970
+    private var inDenial = false
     
     init() {
         EventManager.shared.addListener(type: .RulesChanged, listener: self)
+        EventManager.shared.addListener(type: .StartDenyMode, listener: self)
+        EventManager.shared.addListener(type: .StopDenyMode, listener: self)
     }
     
     func eventTriggered(event: BaseEvent) {
-        let event = event as! RulesChangedEvent
-        self.set(rules: event.rules)
+        switch(event.type) {
+        case .RulesChanged:
+            let event = event as! RulesChangedEvent
+            self.set(rules: event.rules)
+        case .StartDenyMode:
+            self.inDenial = true
+        case .StopDenyMode:
+            self.inDenial = false
+        default: return
+        }
     }
     
     func getRules() -> Optional<Rules> {
@@ -60,47 +47,47 @@ class DecisionEngine : EventListener {
         return copy
     }
     
-    private func checkDomain(_ query : Optional<String>) -> Decision {
+    private func checkDomain(_ query : Optional<String>) -> Outcome {
         guard let domain = query?.lowercased() else {
-            return Decision.Allow
+            return .allowed
         }
         
         guard let set = self.rules?.domains else {
-            return Decision.Allow
+            return .allowed
         }
         
         rulesLock.lock()
         for tld in set {
             if domain.hasSuffix(tld.indicator) {
                 rulesLock.unlock()
-                return Decision.Deny
+                return .blocked
             }
         }
         rulesLock.unlock()
         
-        return Decision.Allow
+        return .allowed
     }
     
-    private func checkHostname(_ query: Optional<String>) -> Decision {
+    private func checkHostname(_ query: Optional<String>) -> Outcome {
         guard let hostname = query?.lowercased() else {
-            return Decision.Allow
+            return .allowed
         }
         
         guard let set = self.rules?.hostnames else {
-            return Decision.Allow
+            return .allowed
         }
         
         rulesLock.lock()
         for actor in set {
             if hostname.contains(actor.indicator) {
                 rulesLock.unlock()
-                return Decision.Deny
+                return .blocked
             }
         }
         rulesLock.unlock()
         
         
-        return Decision.Allow
+        return .allowed
     }
     
     func set(rules : Rules)  {
@@ -110,24 +97,29 @@ class DecisionEngine : EventListener {
         rulesLock.unlock()
     }
     
-    func decide(_ query: FirewallQuery) -> Decision {
-        if checkDomain(query.remoteURL) == Decision.Deny {
-            logger.info("Denying connection based on domain rule");
-            return Decision.Deny
+    func decide(_ query: FirewallQuery) -> Outcome {
+        if inDenial {
+            logger.info("In denial, blocking connection");
+            return .denyModeBlocked
         }
         
-        if checkHostname(query.remoteURL) == Decision.Deny {
+        if checkDomain(query.remoteURL) == .blocked {
+            logger.info("Blocking connection based on domain rule");
+            return .blocked
+        }
+        
+        if checkHostname(query.remoteURL) == .blocked {
             logger.info("Denying connection based on hostname rule");
-            return Decision.Deny
+            return .blocked
         }
         
-        if checkHostname(query.remoteSocket.address.description) == Decision.Deny {
+        if checkHostname(query.remoteSocket.address.description) == .blocked {
             logger.info("Denying connection based on hostname rule for IP");
-            return Decision.Deny
+            return .blocked
         }
         
         
-        return Decision.Allow
+        return .allowed
     }
     
 }

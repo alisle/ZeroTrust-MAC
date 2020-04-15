@@ -17,6 +17,7 @@ extension Outcome {
             case .allowed : return Color.green
             case .blocked : return Color.red
             case .inspectModeBlocked : return Color.red
+            case .inspectModeAllowed : return Color.green
             case .denyModeBlocked: return Color.red
             }
         }

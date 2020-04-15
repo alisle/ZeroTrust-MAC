@@ -67,12 +67,6 @@ static void filter_event(void *cookie, socket_t so, sflt_event_t event, void* pa
 kern_return_t register_filters();
 kern_return_t unregister_filters();
 
-kern_return_t start_quarantine();
-kern_return_t stop_quaratine();
-
-kern_return_t start_isolation();
-kern_return_t stop_isolation();
-
 //socket filter, TCP IPV4
 static struct sflt_filter tcpFilterIPV4  = (struct sflt_filter) {
     .sf_handle =        TCPIPV4_HANDLE,

@@ -10,10 +10,10 @@ import Foundation
 
 
 public class DecisionMadeEvent : BaseEvent {
-    let decision : Decision
+    let decision : Outcome
     let query: FirewallQuery
     
-    init(query: FirewallQuery, decision: Decision) {
+    init(query: FirewallQuery, decision: Outcome) {
         self.query = query
         self.decision = decision
         super.init(.DecisionMade)

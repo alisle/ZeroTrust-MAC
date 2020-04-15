@@ -13,34 +13,25 @@ struct Header: View {
     @EnvironmentObject var services : EnabledServices
 
     var disabledFlag : some View {
-        return VStack {
-            Text("* Firewall Disabled *")
-                .font(.system(size: 30, design: .monospaced))
-        }.frame(
-            minWidth: 740,
-            idealWidth: .infinity,
-            maxWidth: .infinity,
-            minHeight: 70,
-            idealHeight: 70,
-            maxHeight: 70,
-            alignment:.center
-        )
-
+        HStack {
+            Text("Firewall Disabled")
+                .padding(.init(top: 1, leading: 20, bottom: 1, trailing: 20))
+            Spacer()
+        }
+        .background(Color.red)
+        .foregroundColor(Color.black)
+        .padding(.init(top: 1, leading: 5, bottom: 1, trailing: 5))
     }
     
     var denyModeFlag : some View {
-        return VStack {
-            Text("* Deny Mode Enabled *")
-                .font(.system(size: 30, design: .monospaced))
-        }.frame(
-            minWidth: 740,
-            idealWidth: .infinity,
-            maxWidth: .infinity,
-            minHeight: 70,
-            idealHeight: 70,
-            maxHeight: 70,
-            alignment:.center
-        )
+        HStack {
+            Text("Deny Mode Enabled")
+                .padding(.init(top: 1, leading: 20, bottom: 1, trailing: 20))
+            Spacer()
+        }
+        .background(Color.yellow)
+        .foregroundColor(Color.black)
+        .padding(.init(top: 1, leading: 5, bottom: 1, trailing: 5))
     }
     
     var inspectModeFlag : some View {
@@ -49,7 +40,7 @@ struct Header: View {
                 .padding(.init(top: 1, leading: 20, bottom: 1, trailing: 20))
             Spacer()
         }
-        .background(Color.yellow)
+        .background(Color.green)
         .foregroundColor(Color.black)
         .padding(.init(top: 1, leading: 5, bottom: 1, trailing: 5))
 
@@ -80,18 +71,16 @@ struct Header: View {
                     .resizable()
                     .frame(width: 128, height: 64, alignment: .center)
                     .padding(.horizontal)
-                    
-                if !services.enabled {
-                    self.disabledFlag
-                } else if services.denyMode {
-                    self.denyModeFlag
-                } else {
-                    connectionGraph
-                }
+                connectionGraph
                 ConnectionCountsRow()
                 
             }
-            if services.inspectMode {
+            
+            if !services.enabled {
+                self.disabledFlag
+            } else if services.denyMode {
+                self.denyModeFlag
+            } else if services.inspectMode {
                 inspectModeFlag
             }
         }
@@ -111,8 +100,6 @@ struct Header_Previews: PreviewProvider {
         values.outboundCounts = (0..<10).map{ _ in CGFloat.random(in: 0...20) }
 
         let services = EnabledServices()
-        
-        services.inspectMode = true
         
         return Header()
             .environmentObject(values)

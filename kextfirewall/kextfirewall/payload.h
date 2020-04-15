@@ -39,8 +39,9 @@ typedef enum {
 typedef enum {
     ALLOWED = 0,
     BLOCKED = 1,
-    QUARANTINED = 2,
-    ISOLATED = 3,
+    INSPECT_MODE_ALLOWED = 2,
+    INSPECT_MODE_DENIED = 3,
+    DENY_MODE_DENIED = 4,
     UNKNOWN = 99
 } firewall_outcome_type;
 

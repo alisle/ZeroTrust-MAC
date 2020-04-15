@@ -18,7 +18,7 @@ struct ConnectionRootView: View {
         Section {
             MapGraph(points: self.locations.points )
         }
-        .frame(minWidth: 800, idealWidth: .infinity, maxWidth: .infinity, minHeight: 400, idealHeight: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+        .frame(minWidth: 800, idealWidth: .infinity, maxWidth: .infinity, minHeight: 600, idealHeight: .infinity, maxHeight: .infinity, alignment: .center)
     }
     
     var outboundList : some View {
@@ -56,7 +56,7 @@ struct ConnectionRootView: View {
                 .frame(minWidth: 270, idealWidth: 270, maxWidth: 270, minHeight: 400, idealHeight: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }
             .padding(.init(top: 2, leading: 2, bottom: 2, trailing: 2))
-            
+
             HStack {
                 VStack(alignment: .leading, spacing: 1.4) {
                     Text("Pending Decisions")
@@ -71,7 +71,7 @@ struct ConnectionRootView: View {
                 }
             }
             .padding(.init(top: 0, leading: 0, bottom: 5, trailing: 2))
-            .frame(height: 100, alignment: .center)
+            .frame(minWidth: 400, idealWidth: .infinity, maxWidth: .infinity, minHeight: 100, idealHeight: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
     }
 }
@@ -102,12 +102,12 @@ struct Overview_Previews: PreviewProvider {
         EventManager.shared.triggerEvent(event: DecisionQueryEvent(query: generateFirewallQuery()))
         
         
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Allow))
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Allow))
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Allow))
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Deny))
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Allow))
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Deny))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .allowed))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .allowed))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .allowed))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .blocked))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .allowed))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .blocked))
         
         let allConnections = AllConnections()
              allConnections.eventTriggered(event: ConnectionChangedEvent(connection: generateTestConnection(direction: ConnectionDirection.outbound)))

@@ -52,12 +52,12 @@ struct PendingQueriesList_Previews: PreviewProvider {
         EventManager.shared.triggerEvent(event: DecisionQueryEvent(query: generateFirewallQuery()))
         EventManager.shared.triggerEvent(event: DecisionQueryEvent(query: generateFirewallQuery()))
         
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Allow))
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Allow))
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Allow))
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Deny))
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Allow))
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .Deny))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .allowed))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .allowed))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .allowed))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .blocked))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .allowed))
+        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: generateFirewallQuery(), decision: .blocked))
 
         return VStack {
             PendingQueriesList()
