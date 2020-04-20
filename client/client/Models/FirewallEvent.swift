@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import IP2Location
 
 enum FirewallEventType : Int {
     case outboundConnection = 0,
@@ -60,7 +61,23 @@ enum FirewallEventQueryProtocolType : Int {
             }
         }
     }
+    
+    var direction : ConnectionDirection {
+        get {
+            switch self {
+            case .InboundUDPV4:  return .inbound
+            case .OutboundUDPV4: return .outbound
+            case .InboundTCPV4:  return .inbound
+            case .OutboundTCPV4: return .outbound
+            case .InboundUDPV6:  return .inbound
+            case .OutboundUDPv6: return .outbound
+            case .InboundTCPV6:  return .inbound
+            case .OutboundTCPV6: return .outbound
+            }
+        }
+    }
 }
+
 
 class FirewallEvent : CustomStringConvertible {
     let eventType : FirewallEventType
@@ -124,10 +141,11 @@ class FirewallConnectionUpdate : FirewallEvent {
 
 
 
-class FirewallQuery : FirewallEvent, Identifiable {
+class FirewallQuery : FirewallEvent, Identifiable, RecordDetails {
     let id : UInt32
     let timestamp : Date
     let protocolVersion : FirewallEventQueryProtocolType
+    let direction : ConnectionDirection
     let process : ProcessDetails
     let remoteSocket : SocketAddress
     let localSocket : SocketAddress
@@ -137,6 +155,8 @@ class FirewallQuery : FirewallEvent, Identifiable {
     
     var localURL: Optional<String> = nil
     var localProtocol: Optional<PortProtocolDetails> = nil
+    
+    var location : Optional<IP2LocationRecord> = nil
     
     init(tag: UUID,
          id: UInt32,
@@ -152,13 +172,17 @@ class FirewallQuery : FirewallEvent, Identifiable {
         self.remoteSocket = remoteSocket
         self.process = process
         self.protocolVersion = version
+        self.direction = version.direction
         super.init(type: .query, tag: tag)
     }
     
     override var description: String {
         return "\(self.timestamp.description): \(id):\(self.protocolVersion.description):\(self.localSocket)\u{2192}\(self.remoteSocket):\(self.process.shortDescription)"
     }
-
+    
+    var remoteDisplayAddress : String {
+        return remoteURL ?? remoteSocket.address.description
+    }
 }
 
         
@@ -182,8 +206,6 @@ class TCPConnection : FirewallEvent {
     let inbound : Bool
     let process : ProcessDetails
     
-    var displayName : String = ""
-    
     init(tag: UUID,
          timestamp : TimeInterval,
          inbound : Bool,
@@ -201,37 +223,12 @@ class TCPConnection : FirewallEvent {
         self.remoteSocket = remoteSocket
         
         super.init(type: .outboundConnection, tag: tag)
-        displayName = createDisplayName()        
     }
-    
-    private func createDisplayName()  -> String {
-        if let name = process.bundle?.displayName  {
-            return name
-        }
         
-        if let name = process.parent?.bundle?.displayName {
-            return name
-        }
-        
-        if let name = process.appBundle?.displayName  {
-            return name
-        }
-        
-        if let name = process.parent?.appBundle?.displayName {
-            return name
-        }
-        
-        if let name = process.command {
-            return name
-        }
-        
-        return "Unknown"
-    }
-    
     public override var description : String {
         var description = super.description
         
-        description.append("\n\tApp Name: \(displayName)")
+        description.append("\n\tApp Name: \(self.process.displayName)")
         description.append("\n\tLocal Socket: \(localSocket)")
         description.append("\n\tRemote Socket: \(remoteSocket)")
         description.append("\n\t\(process.description)")

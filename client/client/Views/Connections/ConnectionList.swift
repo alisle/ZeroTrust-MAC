@@ -41,7 +41,7 @@ struct ConnectionList: View {
                         .tag(connection.id)
                         .foregroundColor(connection.alive ? .white : .gray)
                         .onTapGesture() {
-                            let controller = DetailWindowController(rootView: ConnectionDetails(connection: connection))
+                            let controller = DetailWindowController(rootView: RecordDetailsView(connection: connection))
                             controller.showWindow(nil)
                         }
                 }

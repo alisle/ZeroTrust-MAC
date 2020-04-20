@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct RulesView: View {
+struct RulesRootView: View {
     @EnvironmentObject var rules : AllRules
 
     var header : some View {
@@ -48,7 +48,7 @@ struct RulesView_Previews: PreviewProvider {
         values.currentSocketListenCount = 20
         values.outboundCounts = (0..<10).map{ _ in CGFloat.random(in: 0...20) }
 
-        return RulesView()
+        return RulesRootView()
             .environmentObject(allRules)
             .environmentObject(EnabledServices())
             .environmentObject(ConnectionCounts())

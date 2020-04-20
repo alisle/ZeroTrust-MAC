@@ -13,16 +13,25 @@ import Logging
 class DecisionEngine : EventListener {
     let logger = Logger(label: "com.zerotrust.client.DecisionEngine")
 
+    private let decisionQueue = DispatchQueue(label: "com.zerotrust.mac.DecisionEngine", attributes: .concurrent)
     private var rules : Optional<Rules> = nil
     private let rulesLock = NSLock()
     private var lastUpdate = NSDate().timeIntervalSince1970
     private var inDenial = false
+    private var inInspect = false
+    private var pendingQueries : [FirewallQuery] = []
+    
+    
+    
     
     init() {
         EventManager.shared.addListener(type: .RulesChanged, listener: self)
         EventManager.shared.addListener(type: .StartDenyMode, listener: self)
         EventManager.shared.addListener(type: .StopDenyMode, listener: self)
+        EventManager.shared.addListener(type: .StartInspectMode, listener: self)
+        EventManager.shared.addListener(type: .StopInspectMode, listener: self)
     }
+    
     
     func eventTriggered(event: BaseEvent) {
         switch(event.type) {
@@ -33,6 +42,12 @@ class DecisionEngine : EventListener {
             self.inDenial = true
         case .StopDenyMode:
             self.inDenial = false
+        case .StartInspectMode:
+            self.inInspect = true
+        case .StopInspectMode:
+            self.inInspect = false
+            self.flushPending()
+            
         default: return
         }
     }
@@ -97,7 +112,48 @@ class DecisionEngine : EventListener {
         rulesLock.unlock()
     }
     
-    func decide(_ query: FirewallQuery) -> Outcome {
+    func flushPending() {
+        decisionQueue.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            
+            self.pendingQueries.forEach { query in
+                if let outcome = self.decide(query) {
+                    EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: query, decision: outcome))
+                } else {
+                    EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: query, decision: .allowed))
+                }
+            }
+            
+            self.pendingQueries.removeAll()
+        }
+    }
+    
+    func append(_ query: FirewallQuery)  {
+        EventManager.shared.triggerEvent(event: DecisionQueryEvent(query: query))
+        decisionQueue.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            
+            if let outcome = self.decide(query) {
+                EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: query, decision: outcome))
+            } else {
+                self.logger.info("unable to make decision right away, queuing it")
+                self.pendingQueries.append(query)
+                EventManager.shared.triggerEvent(event: DecisionNeedsInputEvent(query: query))
+            }
+        }
+    }
+    
+    private func decide(_ query: FirewallQuery) -> Outcome? {
+        if inInspect {
+            logger.info("In inspect mode, I am not going to make any decision")
+            return nil
+        }
+        
         if inDenial {
             logger.info("In denial, blocking connection");
             return .denyModeBlocked

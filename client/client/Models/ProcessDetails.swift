@@ -22,7 +22,8 @@ public class ProcessDetails {
     public let sha256 : String?
     public let md5 : String?
     public let peers : [ProcessDetails]?
-    public lazy var image : NSImage? = ProcessDetails.getImage(info: self)
+    public lazy var image : NSImage? = ProcessDetails.getImage(process: self)
+    public lazy var displayName = ProcessDetails.createDisplayName(process: self)
     
     
     public var hasPeers : Bool {
@@ -35,24 +36,48 @@ public class ProcessDetails {
         }
     }
     
-    private static func getImage(info: ProcessDetails) -> NSImage? {
-        if let nsimage = info.bundle?.icon {
+    private static func getImage(process: ProcessDetails) -> NSImage? {
+        if let nsimage = process.bundle?.icon {
             return nsimage
         }
         
-        if let nsimage = info.appBundle?.icon {
+        if let nsimage = process.appBundle?.icon {
             return nsimage
         }
         
-        if let nsimage = info.parent?.bundle?.icon {
+        if let nsimage = process.parent?.bundle?.icon {
             return nsimage
         }
         
-        if let nsimage = info.parent?.appBundle?.icon {
+        if let nsimage = process.parent?.appBundle?.icon {
             return nsimage
         }
         
         return nil
+    }
+    
+    private static func createDisplayName(process: ProcessDetails) -> String {
+        if let name = process.bundle?.displayName  {
+            return name
+        }
+        
+        if let name = process.parent?.bundle?.displayName {
+            return name
+        }
+        
+        if let name = process.appBundle?.displayName  {
+            return name
+        }
+        
+        if let name = process.parent?.appBundle?.displayName {
+            return name
+        }
+        
+        if let name = process.command {
+            return name
+        }
+        
+        return "Unknown"
     }
 
     public init(pid : Int,

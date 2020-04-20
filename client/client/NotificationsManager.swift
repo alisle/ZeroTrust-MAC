@@ -23,7 +23,7 @@ class NotficiationsManager : EventListener {
         notification.identifier = "com.zeortrust.mac.notification.connection.new.\(connection.id)"
         notification.title = "New Connection"
         notification.subtitle = connection.remoteURL ?? connection.remoteSocket.description
-        notification.informativeText = "\(connection.displayName) made a connect to \(connection.remoteURL ?? connection.remoteSocket.description)"
+        notification.informativeText = "\(connection.process.displayName) made a connect to \(connection.remoteURL ?? connection.remoteSocket.description)"
         notification.soundName = NSUserNotificationDefaultSoundName
         NSUserNotificationCenter.default.deliver(notification)
     }
@@ -33,7 +33,7 @@ class NotficiationsManager : EventListener {
         notification.identifier = "com.zeortrust.mac.notification.connection.blocked.\(connection.id)"
         notification.title = "Blocked Connection"
         notification.subtitle = connection.remoteURL ?? connection.remoteSocket.description
-        notification.informativeText = "\(connection.displayName) to \(connection.remoteURL ?? connection.remoteSocket.description) has been blocked"
+        notification.informativeText = "\(connection.process.displayName) to \(connection.remoteURL ?? connection.remoteSocket.description) has been blocked"
         notification.soundName = NSUserNotificationDefaultSoundName
         NSUserNotificationCenter.default.deliver(notification)
     }
@@ -43,7 +43,7 @@ class NotficiationsManager : EventListener {
         notification.identifier = "com.zerotrust.mac.notification.connection.inspectmode.\(connection.id)"
         notification.title = "Inspect Mode"
         notification.subtitle = connection.remoteURL ?? connection.remoteSocket.description
-        notification.informativeText = "\(connection.displayName) to \(connection.remoteURL ?? connection.remoteSocket.description) has been attempted"
+        notification.informativeText = "\(connection.process.displayName) to \(connection.remoteURL ?? connection.remoteSocket.description) has been attempted"
         notification.soundName = NSUserNotificationDefaultSoundName
         NSUserNotificationCenter.default.deliver(notification)
     }
@@ -53,7 +53,7 @@ class NotficiationsManager : EventListener {
         notification.identifier = "com.zerotrust.mac.notification.connection.denymode.\(connection.id)"
         notification.title = "Deny Mode - Blocked"
         notification.subtitle = connection.remoteURL ?? connection.remoteSocket.description
-        notification.informativeText = "\(connection.displayName) to \(connection.remoteURL ?? connection.remoteSocket.description) was blocked, as we are in deny mode"
+        notification.informativeText = "\(connection.process.displayName) to \(connection.remoteURL ?? connection.remoteSocket.description) was blocked, as we are in deny mode"
         notification.soundName = NSUserNotificationDefaultSoundName
         NSUserNotificationCenter.default.deliver(notification)
     }

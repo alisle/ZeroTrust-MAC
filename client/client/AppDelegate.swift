@@ -118,7 +118,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, EventListener {
         rulesWindow.isReleasedWhenClosed = false
         rulesWindow.center()
         rulesWindow.setFrameAutosaveName("Rules Window")
-        rulesWindow.contentView = NSHostingView(rootView: RulesView()
+        rulesWindow.contentView = NSHostingView(rootView: RulesRootView()
             .environmentObject(main.allRules)
             .environmentObject(main.enabledServices)
             .environmentObject(main.connectionCounts)

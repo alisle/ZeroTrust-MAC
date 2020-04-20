@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ConnectionDetailsDirectionIcon: View {
+struct ConnectionDirectionIcon: View {
     let direction : ConnectionDirection
     let size : CGFloat
     
@@ -38,13 +38,13 @@ struct ConnectionDetailsDirectionIcon: View {
 struct ConnectionDetailsDirectionBanner_Previews: PreviewProvider {
     static var previews: some View {
         return VStack {
-            ConnectionDetailsDirectionIcon(direction: .inbound)
+            ConnectionDirectionIcon(direction: .inbound)
             Spacer()
-            ConnectionDetailsDirectionIcon(direction: .outbound)
+            ConnectionDirectionIcon(direction: .outbound)
             Spacer()
-            ConnectionDetailsDirectionIcon(direction: .inbound, size: 32)
+            ConnectionDirectionIcon(direction: .inbound, size: 32)
             Spacer()
-            ConnectionDetailsDirectionIcon(direction: .outbound, size: 16)
+            ConnectionDirectionIcon(direction: .outbound, size: 16)
         }
     }
 }

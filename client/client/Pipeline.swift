@@ -11,7 +11,7 @@ import IP2Location
 import Logging
 
 
-class Pipeline {
+class Pipeline : EventListener {
     let logger = Logger(label: "com.zerotrust.client.Pipeline")
 
     private let decisionEngine : DecisionEngine
@@ -35,6 +35,8 @@ class Pipeline {
         self.connectionState = connectionState
         self.ipdb = ipdb
         self.kextComm = kextComm
+        
+        EventManager.shared.addListener(type: .DecisionMade, listener: self)
     }
     
     public func process(event: FirewallEvent) {
@@ -99,21 +101,25 @@ class Pipeline {
         
         let localURL = dnsCache.get(query.localSocket.address)
         let localProtocol = protocolCache.get(query.localSocket.port)
-        
-        
-        
+                
+        let location = self.ipdb?.find(query.remoteSocket.address.representation)
+
         query.remoteURL = remoteURL
         query.remoteProtocol = remoteProtocol
         
         query.localURL = localURL
         query.localProtocol = localProtocol
         
+        query.location = location
         
-        EventManager.shared.triggerEvent(event: DecisionQueryEvent(query: query))
-        let decision = decisionEngine.decide(query)
-        EventManager.shared.triggerEvent(event: DecisionMadeEvent(query: query, decision: decision))
+        decisionEngine.append(query)
+    }
+    
+    func eventTriggered(event: BaseEvent) {
+        let event = event as! DecisionMadeEvent
+        let id = event.query.id
+        let decision = event.decision.toInt()
         
-        kextComm.postDecision(id: query.id, allowed: decision.toInt())
-        
+        kextComm.postDecision(id: id, allowed: decision)
     }
 }

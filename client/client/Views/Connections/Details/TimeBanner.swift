@@ -8,14 +8,16 @@
 
 import SwiftUI
 
-struct ConnectionDetailsTimeBanner: View {
-    let connection: Connection
+struct TimeBanner: View {
+    let state : ConnectionStateType
+    let start: Date
+    let end: Date?
     
     func getEndDate() -> String {
-        if connection.state == .disconnected ||
-            connection.state == .disconnecting ||
-            connection.state == .closed {
-            if let end = connection.endDateTimestamp {
+        if self.state == .disconnected ||
+            self.state == .disconnecting ||
+            self.state == .closed {
+            if let end = end {
                 return end.timeAgoSinceDate()
             }
         }
@@ -29,7 +31,7 @@ struct ConnectionDetailsTimeBanner: View {
                 HStack(alignment: .center) {
                     Text("Start Time:")
                         .bold()
-                    Text("\(self.connection.startTimestamp.timeAgoSinceDate())")
+                    Text("\(self.start.timeAgoSinceDate())")
                     Spacer()
                 }
                 .frame(width: geometry.size.width / 2)
@@ -50,6 +52,10 @@ struct ConnectionDetailsTimeBanner: View {
 
 struct ConnectionDetailsTimeBanner_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionDetailsTimeBanner(connection: generateTestConnection(direction: .outbound))
+        TimeBanner(
+            state: .closed,
+            start: Date(),
+            end: Date()
+        )
     }
 }

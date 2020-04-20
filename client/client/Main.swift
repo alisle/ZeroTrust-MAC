@@ -191,8 +191,8 @@ func generateProcessInfo(_ generatePeers : Bool = true, _ numberOfPeers : Int = 
     )
 }
 
-func generateFirewallQuery() -> FirewallQuery {
-    return FirewallQuery(
+func generateFirewallQuery(hasLocation: Bool = true ) -> FirewallQuery {
+    let query = FirewallQuery(
         tag: UUID(),
         id: UInt32.random(in: 1..<40000),
         timestamp: Date().timeIntervalSince1970,
@@ -201,6 +201,11 @@ func generateFirewallQuery() -> FirewallQuery {
         localSocket: generateLocalSocket(),
         process: generateProcessInfo()
     )
+    if hasLocation {
+        query.location = generateIP2LocationRecord()
+    }
+    
+    return query
 }
 
 func generateRemoteSocket() -> SocketAddress {

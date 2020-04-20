@@ -52,6 +52,12 @@
         "port": 5223,
         "description" : "Apple Push Notification service is a platform notification service created by Apple Inc. that enables third party application developers to send notification data to applications installed on Apple devices.",
         "url" : "https://en.wikipedia.org/wiki/Apple_Push_Notification_service"
+    },
+    {
+        "name" : "Rapport Framework",
+        "port": 54252,
+        "description" : "Apple Rapport Framework, used to communicate between local apple devices.",
+        "url" : ""
     }
-    
+
 ]

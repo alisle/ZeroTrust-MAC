@@ -72,13 +72,14 @@ struct LocalLocationDetails : View {
     }
 }
 struct LocationDetails: View {
-    let connection : Connection
+    let location : IP2LocationRecord?
+    
     var body: some View {
         VStack {
-            if connection.location == nil {
+            if self.location == nil {
                 NoLocationDetails()
-            } else if connection.location!.iso! != "-" {
-                FullLocationDetails(location: connection.location!)
+            } else if self.location!.iso! != "-" {
+                FullLocationDetails(location: self.location!)
             } else {
                 LocalLocationDetails()
             }
@@ -90,10 +91,10 @@ struct LocationDetails_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             Text("No Location Record")
-            LocationDetails(connection: generateTestConnection(direction: .outbound))
+            LocationDetails(location: generateIP2LocationRecord())
             Spacer()
             Text("Location Record")
-            LocationDetails(connection: generateTestConnection(direction: .outbound, includeLocation: true))
+            LocationDetails(location: generateIP2LocationRecord())
             Spacer()
             Text("Local Record")
             LocalLocationDetails()

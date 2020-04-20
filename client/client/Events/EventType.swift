@@ -26,8 +26,10 @@ public enum EventType : CaseIterable {
     ListenEnded,
     
     ConnectionChanged,
+    
+    DecisionNeedsInput,
     DecisionQuery,
     DecisionMade,
     
-    RulesChanged
+    RulesChanged        
 }

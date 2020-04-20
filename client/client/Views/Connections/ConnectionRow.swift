@@ -18,7 +18,7 @@ struct ConnectionRow: View {
                 .frame(width: 5, height: 32)
             ProcessDetailsIcon(processInfo: connection.process, size: 32)
             VStack(alignment: .leading) {
-                Text(connection.displayName).bold()
+                Text(connection.process.displayName).bold()
                 HStack {
                     Text(connection.remoteDisplayAddress)
                     Spacer()

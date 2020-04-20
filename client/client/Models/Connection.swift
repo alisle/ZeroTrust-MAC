@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import IP2Location
 
-struct Connection : Identifiable {
+struct Connection : Identifiable, RecordDetails {
     let direction : ConnectionDirection
     let id = UUID()
     let tag : UUID
@@ -21,7 +21,6 @@ struct Connection : Identifiable {
     let remoteURL: String?
     let localSocket : SocketAddress
     let remoteSocket : SocketAddress
-    let displayName : String
     let state : ConnectionStateType
     let outcome : Outcome
     let alive : Bool 
@@ -69,7 +68,6 @@ struct Connection : Identifiable {
         self.localSocket = connection.localSocket
         
         self.remoteURL = remoteURL
-        self.displayName = connection.displayName
         self.state = ConnectionStateType.unknown
         self.endDateTimestamp = nil
         self.location = location
@@ -88,7 +86,6 @@ struct Connection : Identifiable {
         remoteSocket : SocketAddress,
         localSocket : SocketAddress,
         processInfo: ProcessDetails,
-        displayName : String,
         location: IP2LocationRecord?) {
         
         self.outcome = outcome
@@ -98,7 +95,6 @@ struct Connection : Identifiable {
         self.remoteSocket = remoteSocket
         self.remoteURL = remoteURL
         self.localSocket = localSocket
-        self.displayName = displayName
         self.state = state
         self.endDateTimestamp = updateDate
         self.location = location
@@ -118,7 +114,6 @@ struct Connection : Identifiable {
             remoteSocket: self.remoteSocket,
             localSocket: self.localSocket,
             processInfo: self.process,
-            displayName : self.displayName,
             location: self.location
         )
     }

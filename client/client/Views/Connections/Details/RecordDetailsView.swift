@@ -8,26 +8,49 @@
 
 import SwiftUI
 
-struct ConnectionDetails: View {
-    let connection : Connection
+struct RecordDetailsView: View {
+    let record : RecordDetails
+    let outcome : Outcome?
+    let state : ConnectionStateType?
+    let start : Date?
+    let end: Date?
+    
+    init(connection: Connection) {
+        self.outcome = connection.outcome
+        self.state = connection.state
+        self.record = connection
+        self.start = connection.startTimestamp
+        self.end = connection.endDateTimestamp
+    }
     
     var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .leading) {
-                ConnectionDetailsHeader(connection: connection)
-                ConnectionDetailsTimeBanner(connection: connection)
+                DetailsHeader(
+                    record: self.record,
+                    outcome: self.outcome,
+                    state: self.state
+                )
+                
+                if self.start != nil && self.start != nil {
+                    TimeBanner(
+                        state: self.state!,
+                        start: self.start!,
+                        end: self.end
+                    )
+                }
                 
                 GeometryReader { geometry in
                     HStack(spacing: 0) {
-                        if self.connection.process.sha256 != nil {
-                            ProcessHistoryGraph(sha: self.connection.process.sha256!)
+                        if self.record.process.sha256 != nil {
+                            ProcessHistoryGraph(sha: self.record.process.sha256!)
                                 .frame(width: geometry.size.width / 2, height: 200)
                         } else {
                             Text("Unknown Process")
                                 .frame(width: geometry.size.width / 2, height: 200)
                         }
 
-                        RemoteURLHistoryGraph(remoteURL: self.connection.remoteDisplayAddress)
+                        RemoteURLHistoryGraph(remoteURL: self.record.remoteDisplayAddress)
                             .frame(width: geometry.size.width / 2, height: 200)
                     }
                 }
@@ -39,7 +62,7 @@ struct ConnectionDetails: View {
                         .font(.subheadline)
                         .bold()
                     
-                    ConnectionUserChain(connection: connection)
+                    UserChain(record: record)
                     .padding()
                 }
                 .padding(.init(top: 20, leading: 5, bottom: 5, trailing: 1))
@@ -49,7 +72,7 @@ struct ConnectionDetails: View {
                         .font(.subheadline)
                         .bold()
 
-                    ProcessDetailsView(process: connection.process)
+                    ProcessDetailsView(process: self.record.process)
                 }
                 
                 HStack {
@@ -58,7 +81,7 @@ struct ConnectionDetails: View {
                             .font(.subheadline)
                             .bold()
 
-                        ProtocolDetailsView(connection: self.connection)
+                        ProtocolDetailsView(record: self.record)
                     }
                     .frame(height: 200, alignment: .center)
                             
@@ -68,7 +91,7 @@ struct ConnectionDetails: View {
                         Text("Location Details")
                             .font(.subheadline)
                             .bold()
-                        LocationDetails(connection: self.connection)
+                        LocationDetails(location: self.record.location)
                     }
                 }                
                 
@@ -84,7 +107,7 @@ struct ConnectionDetails: View {
                                 .padding(2)
                             }.padding(.init(top: 20, leading: 5, bottom: 5, trailing: 1))
                             
-                            ProcessDetailsCallTree(process: self.connection.process)
+                            ProcessDetailsCallTree(process: self.record.process)
                         }.frame(width: geometry.size.width)
                     }
                 }.frame(height: 300, alignment: .center)
@@ -102,7 +125,7 @@ struct ConnectionDetails: View {
                                 .padding(2)
                             }
                             
-                                ProcessDetailsPeersView(process: self.connection.process)
+                                ProcessDetailsPeersView(process: self.record.process)
                         }.frame(width: geometry.size.width)
                     }
                 }.frame(height: 300, alignment: .center)
@@ -121,7 +144,7 @@ struct ConnectionDetails: View {
     }
 }
 
-struct ConnectionDetails_Previews: PreviewProvider {
+struct RecordDetailsView_Previews: PreviewProvider {
     static var previews: some View {
         (0...1000).forEach { _ in
             let outbound = OpenedConnectionEvent.init(connection: generateTestConnection(direction: .outbound))
@@ -134,7 +157,7 @@ struct ConnectionDetails_Previews: PreviewProvider {
             ProcessHistoryCache.shared.eventTriggered(event: inbound)
         }
 
-        return ConnectionDetails(connection: generateTestConnection(direction: .inbound))
+        return RecordDetailsView(connection: generateTestConnection(direction: .inbound))
                     .frame(width: 800, height: 600)
     }
 }
